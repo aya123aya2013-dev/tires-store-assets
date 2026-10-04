@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Tires store brand layer — black + yellow identity on top of the base theme.
+   Loaded last among components so it wins over the base component styles.
+   ========================================================================== */
+
+:root {
+  --tires-yellow: #ffb71b;
+  --tires-yellow-dark: #e5a00f;
+  --tires-black: #2f3337;
+
+  /* Store primary colour drives buttons, links and badges across the engine
+     and Salla web components — pin it to the brand yellow. */
+  --color-primary: var(--tires-yellow) !important;
+  --color-primary-dark: var(--tires-yellow-dark) !important;
+  --color-primary-reverse: var(--tires-black) !important;
+
+  /* Brand typeface, loaded in __root.tsx. */
+  --font-main: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* The base theme leaves the page background transparent, so browsers in dark
+   mode paint it dark under our light, dark-text design. Pin it light. */
+html {
+  color-scheme: light;
+}
+
+html,
+body {
+  background-color: #fff;
+}
+
+/* Product cards: price in brand colour, solid yellow add-to-cart. */
+.s-product-card-entry {
+  @apply rounded-xl border border-gray-100 transition-shadow;
+
+  &:hover {
+    @apply shadow-light;
+  }
+
+  .s-product-card-price,
+  .s-product-card-sale-price h4 {
+    color: var(--tires-yellow-dark);
+    font-weight: 700;
+  }
+
+  /* Tires are sold per piece — say so under the price. */
+  .s-product-card-content-sub::after {
+    content: 'للإطار الواحد';
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #6b7280;
+  }
+}
+
+/* Footer: dark band, yellow accents. */
+.store-footer {
+  background-color: var(--tires-black) !important;
+  color: #d1d5db;
+
+  a,
+  h3,
+  .store-footer__desc {
+    color: #d1d5db;
+  }
+
+  h3 {
+    color: #fff;
+  }
+
+  a:hover {
+    color: var(--tires-yellow);
+  }
+
+  .store-footer__bottom {
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+  }
+}

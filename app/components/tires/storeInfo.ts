@@ -34,6 +34,7 @@ export const PROMO: { title: string; text: string; link: string; endsAt: string 
  * live store — on a demo store these links 404, which is expected.
  */
 export const STORE_CATEGORIES = {
+  tash: '/كفرات-تاش/c834517795',
   thai: '/كفرات-تايلندي/c1045693629',
   chinese: '/كفرات-صيني/c748170334',
 };

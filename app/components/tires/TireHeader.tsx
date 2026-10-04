@@ -8,7 +8,8 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { menu } from '@salla.sa/twilight-theme-engine/api/menu';
 import { HeaderNav } from '../layout/HeaderNav';
 import { ACCOUNT_PATH, useCartCount } from '../layout/MobileBottomBar';
-import { IconArrow, IconBag, IconMenu, IconSearch, IconUser } from './DesignIcons';
+import { IconArrow, IconBag, IconMenu, IconSearch, IconUser, IconWhatsapp } from './DesignIcons';
+import { STORE_CONTACT, whatsappUrl } from './storeInfo';
 
 /** Opens the Salla search modal (the `<SallaSearch />` mounted below). */
 const openSearch = () => window.salla?.event?.dispatch('search::open');
@@ -88,6 +89,18 @@ export function TireHeader({ navOpen, onNavOpenChange }: TireHeaderProps) {
     // hydration — hide it so it doesn't paint a gray bar under the header.
     <header className="th-header [&_.s-skeleton-search]:hidden" suppressHydrationWarning>
       <HookSlot name="header:start" />
+
+      <div className="announce">
+        <div className="wrap">
+          <span className="announce-msg">
+            <i /> تركيب مجاني في مراكزنا بالرياض
+            <em>· إطارات أصلية بضمان الوكيل · قسّطها مع تابي وتمارا</em>
+          </span>
+          <a className="announce-link" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+            <IconWhatsapp /> <span dir="ltr">{STORE_CONTACT.phone}</span>
+          </a>
+        </div>
+      </div>
 
       <div className="wrap nav">
         <button

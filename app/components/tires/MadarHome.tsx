@@ -30,6 +30,12 @@ const IMG = '/assets/images/home';
 
 /* ── hero ─────────────────────────────────────────────────────────────────── */
 
+const HERO_TRUST = [
+  { Icon: IconShield, title: 'إطارات أصلية', text: 'بضمان الوكيل' },
+  { Icon: IconCard, title: 'تابي وتمارا', text: '4 دفعات' },
+  { Icon: IconTruck, title: 'توصيل سريع', text: 'لكل المناطق' },
+];
+
 function Hero() {
   return (
     <section className="md-hero">
@@ -56,9 +62,24 @@ function Hero() {
             اكتشف خدمة التركيب <span>↗</span>
           </a>
         </div>
-        <div className="md-hero-note">
-          <span className="md-star">✳</span> مقاسك الصحيح. راحة بالك.
+        <div className="md-hero-trust">
+          {HERO_TRUST.map(({ Icon, title, text }) => (
+            <div key={title}>
+              <span>
+                <Icon />
+              </span>
+              <p>
+                <b>{title}</b>
+                <small>{text}</small>
+              </p>
+            </div>
+          ))}
         </div>
+      </div>
+      <div className="md-hero-offer">
+        <small>تركيب</small>
+        <b>مجاني</b>
+        <small>بالرياض</small>
       </div>
     </section>
   );
@@ -241,7 +262,7 @@ function Services() {
             <circle cx="97" cy="152" r="11" fill="#d4d6d8" />
             <circle cx="265" cy="152" r="23" fill="#2f3337" />
             <circle cx="265" cy="152" r="11" fill="#d4d6d8" />
-            <text x="64" y="112" fontSize="22" fill="#2f3337" fontWeight="700" fontFamily="Arial">
+            <text x="127" y="112" fontSize="17" textAnchor="middle" fill="#2f3337" fontWeight="700" fontFamily="Arial">
               TIRES STORE
             </text>
           </svg>

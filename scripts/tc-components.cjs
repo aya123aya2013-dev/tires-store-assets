@@ -165,6 +165,48 @@ const components = [
     F.sw('reverse', 'عكس ترتيب الكرتين', false),
     ...F.common('my-double-banner'),
   ]),
+
+  // #10 مقارنة الفئات
+  def('home.tire-picker', 'مقارنة الفئات (وش أهم شيء عندك؟)', 'Tire Picker (What Matters Most?)', 'sicon-chart-bar', [
+    F.cover('مقارنة الفئات'),
+    F.tip('الزبون يختار المقاس وأولويته (قيمة، سعر، عمر، هدوء) ونوصيه بفئة من 3. السعر = سعر المقاس الأساسي × نسبة الفئة.'),
+    F.head('h-texts', 'النصوص'),
+    F.text('kicker', 'السطر الصغير فوق العنوان', 'قارن قبل ما تختار', 40),
+    F.text('title', 'العنوان', 'وش أهم شيء عندك؟', 60),
+    F.head('h-sizes', 'المقاسات والأسعار'),
+    F.collection('sizes', 'المقاسات', 'مقاس', [
+      F.plain('size', 'المقاس', '205/55 R16', { maxLength: 20 }),
+      F.num('price', 'السعر الأساسي للحبة (ر.س)', 290, 1, 100000),
+    ], [['205/55 R16', 290], ['215/60 R17', 330], ['225/45 R18', 360], ['265/65 R17', 420], ['275/65 R18', 450]].map(([a, b]) => ({ 'sizes.size': a, 'sizes.price': b })), 1, 20),
+    F.head('h-tiers', 'الفئات (3)'),
+    F.collection('tiers', 'الفئات', 'فئة', [
+      F.text('tier', 'اسم الفئة', 'متوسط', 20),
+      F.text('name', 'اسم الإطار', 'كفر تايلندي', 40),
+      F.num('factor', 'نسبة السعر من الأساسي (%)', 100, 10, 1000, { description: '100 = نفس السعر الأساسي، 124 = أغلى بـ 24%' }),
+      F.num('life', 'العمر المتوقع (كم)', 60000, 0, 300000),
+      F.text('quiet', 'الهدوء', 'عالي', 20),
+      F.text('warranty', 'الضمان', 'سنتين', 20),
+      F.text('origin', 'المنشأ', 'تايلند', 20),
+      F.text('fit', 'مناسب لـ', 'يومي وسفر', 30),
+      F.link('link', 'رابط زر «اختر»'),
+    ], [
+      { 'tiers.tier': 'اقتصادي', 'tiers.name': 'كفر صيني', 'tiers.factor': 100, 'tiers.life': 40000, 'tiers.quiet': 'مقبول', 'tiers.warranty': 'سنة', 'tiers.origin': 'الصين', 'tiers.fit': 'داخل المدينة' },
+      { 'tiers.tier': 'متوسط', 'tiers.name': 'كفر تايلندي', 'tiers.factor': 124, 'tiers.life': 60000, 'tiers.quiet': 'عالي', 'tiers.warranty': 'سنتين', 'tiers.origin': 'تايلند', 'tiers.fit': 'يومي وسفر' },
+      { 'tiers.tier': 'ممتاز', 'tiers.name': 'هانكوك', 'tiers.factor': 145, 'tiers.life': 75000, 'tiers.quiet': 'عالي جداً', 'tiers.warranty': '5 سنوات', 'tiers.origin': 'كوريا', 'tiers.fit': 'سفر وطرق سريعة' },
+    ], 1, 3),
+    F.head('h-prio', 'أزرار الأولويات (حتى 4)'),
+    F.collection('priorities', 'الأولويات', 'أولوية', [
+      F.text('label', 'نص الزر', 'الأفضل قيمة', 20),
+      F.dd('tier', 'الفئة الموصى فيها', [['الفئة الأولى', '1'], ['الفئة الثانية', '2'], ['الفئة الثالثة', '3']], '2'),
+      F.text('reason', 'جملة السبب', 'يعطيك أقل تكلفة لكل كيلومتر مع عمر وهدوء ممتازين.', 120),
+    ], [
+      { 'priorities.label': 'الأفضل قيمة', 'priorities.tier': '2', 'priorities.reason': 'يعطيك أقل تكلفة لكل كيلومتر مع عمر وهدوء ممتازين.' },
+      { 'priorities.label': 'أقل سعر', 'priorities.tier': '1', 'priorities.reason': 'أقل دفعة اليوم، ومناسب للمشاوير داخل المدينة.' },
+      { 'priorities.label': 'أطول عمر', 'priorities.tier': '3', 'priorities.reason': 'يعيش أطول، فتبدّل أقل على المدى البعيد.' },
+      { 'priorities.label': 'أهدأ قيادة', 'priorities.tier': '3', 'priorities.reason': 'أهدأ صوت وأنعم قيادة على الطرق السريعة.' },
+    ], 1, 4),
+    ...F.common('my-picker'),
+  ]),
 ];
 
 let after = 'home.size-finder';

@@ -17,3 +17,4 @@ export { CategoryCards } from './CategoryCards';
 export { ShopByCar } from './ShopByCar';
 export { TireGrid } from './TireGrid';
 export { DoubleBanner } from './DoubleBanner';
+export { TirePicker } from './TirePicker';

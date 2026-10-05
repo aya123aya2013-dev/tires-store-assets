@@ -9,6 +9,7 @@ import { CategoryCards } from './CategoryCards';
 import { ShopByCar } from './ShopByCar';
 import { TireGrid } from './TireGrid';
 import { DoubleBanner } from './DoubleBanner';
+import { TirePicker } from './TirePicker';
 
 const IMG = '/assets/images/home';
 
@@ -81,6 +82,7 @@ export function TcPreview() {
         <ShopByCar data={{}} />
         <TireGrid data={{}} />
         <DoubleBanner data={{}} />
+        <TirePicker data={{}} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>
         <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>

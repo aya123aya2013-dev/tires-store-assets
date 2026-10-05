@@ -8,6 +8,7 @@ import { CategoryCards } from '../../app/components/home/CategoryCards';
 import { ShopByCar } from '../../app/components/home/ShopByCar';
 import { TireGrid } from '../../app/components/home/TireGrid';
 import { DoubleBanner } from '../../app/components/home/DoubleBanner';
+import { TirePicker } from '../../app/components/home/TirePicker';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -103,5 +104,14 @@ describe('#9 double banner', () => {
     expect(html).toContain('أربع إطارات.<br/>اختيار واحد مدروس.');
     expect(html).toContain('background:#e11d48');
     expect(html.indexOf('dcard light')).toBeLessThan(html.indexOf('dcard dark'));
+  });
+});
+
+describe('#10 tire picker', () => {
+  it('recommends the mid tier for "best value" with the design prices', () => {
+    const html = renderToString(<TirePicker data={{}} />);
+    expect(html).toContain('ننصحك بـ <b>كفر تايلندي</b>');
+    expect(html).toContain('<b>360</b>'); // 290 × 1.24 → 360
+    expect(html).toContain('tier rec');
   });
 });

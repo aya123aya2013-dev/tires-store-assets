@@ -27,6 +27,7 @@ import {
   ShopByCar,
   TireGrid,
   DoubleBanner,
+  TirePicker,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -72,6 +73,7 @@ registerHomeComponents({
   'shop-by-car': ShopByCar,
   'tire-grid': TireGrid,
   'double-banner': DoubleBanner,
+  'tire-picker': TirePicker,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

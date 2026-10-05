@@ -12,6 +12,7 @@ import { TirePicker } from '../../app/components/home/TirePicker';
 import { ServicesBento } from '../../app/components/home/ServicesBento';
 import { Ticker } from '../../app/components/home/Ticker';
 import { ServicesRow } from '../../app/components/home/ServicesRow';
+import { InstallBanner } from '../../app/components/home/InstallBanner';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -148,5 +149,14 @@ describe('#13 services row', () => {
     expect(html).toContain('svc-art truck');
     expect(html).toContain('svc-art guide');
     expect(html).toContain('كل ما تحتاجه<br/>لإطاراتك.');
+  });
+});
+
+describe('#14 install banner', () => {
+  it('renders the dark split, numbered steps and the gold second line', () => {
+    const html = renderToString(<InstallBanner data={{ image_side: 'right' }} />);
+    expect(html).toContain('<em>وركّبها عندنا.</em>');
+    expect(html).toContain('<span>03</span>');
+    expect(html).toContain('fitd tc-img-right');
   });
 });

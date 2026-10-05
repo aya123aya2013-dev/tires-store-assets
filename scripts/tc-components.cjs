@@ -294,6 +294,12 @@ const components = [
   ]),
 ];
 
+// components #14 onwards live one per file in scripts/tc/ (NN-name.cjs, sorted), each exporting (F, def) => component
+const dir = path.join(__dirname, 'tc');
+if (fs.existsSync(dir)) {
+  for (const f of fs.readdirSync(dir).filter(x => x.endsWith('.cjs')).sort()) components.push(require(path.join(dir, f))(F, def));
+}
+
 let after = 'home.size-finder';
 for (const c of components) { F.upsert(json, c, after); after = c.path; }
 fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');

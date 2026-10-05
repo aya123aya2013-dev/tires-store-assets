@@ -31,6 +31,7 @@ import {
   ServicesBento,
   Ticker,
   ServicesRow,
+  InstallBanner,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -80,6 +81,7 @@ registerHomeComponents({
   'services-bento': ServicesBento,
   ticker: Ticker,
   'services-row': ServicesRow,
+  'install-banner': InstallBanner,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

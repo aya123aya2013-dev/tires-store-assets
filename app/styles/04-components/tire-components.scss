@@ -349,3 +349,6 @@
 .tc-s .secbar.tc-gold .tk-track a b { color: var(--ink) !important; }
 .tc-s .secbar.tc-gold .tk-track span::before { background: var(--ink); }
 .tc-s .secbar.tc-nopause:hover .tk-track { animation-play-state: running; }
+
+/* #14 dark install banner: photo on the other side */
+@media (min-width: 901px) { .tc-s .fitd.tc-img-right .fitd-img { order: 0; } }

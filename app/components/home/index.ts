@@ -21,3 +21,4 @@ export { TirePicker } from './TirePicker';
 export { ServicesBento } from './ServicesBento';
 export { Ticker } from './Ticker';
 export { ServicesRow } from './ServicesRow';
+export { InstallBanner } from './InstallBanner';

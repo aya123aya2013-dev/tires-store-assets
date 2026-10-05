@@ -305,9 +305,9 @@ if (fs.existsSync(dir)) {
 
 let after = 'home.size-finder';
 for (const c of components) { F.upsert(json, c, after); after = c.path; }
-// editor cover images (shot from the approved design) — hosted with the GitHub Pages preview
-const COVERS = 'https://mohammedaboseedo.github.io/tires-store-preview/covers/';
-const coversDir = path.join(__dirname, '../../design/store-pub/covers');
+// editor cover images (shot from the approved design), shipped inside the theme
+const COVERS = '/assets/covers/'; // theme public folder (public/assets/covers)
+const coversDir = path.join(__dirname, '../public/assets/covers');
 for (const c of json.components) {
   const key = c.path.replace(/^home\./, '');
   if (!fs.existsSync(path.join(coversDir, `${key}.webp`))) continue;

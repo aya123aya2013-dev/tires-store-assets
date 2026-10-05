@@ -317,3 +317,10 @@
   .tc-s .bstrip.tc-n-2 { grid-template-columns: repeat(2, 1fr); }
   .tc-s .bstrip.tc-n-3 { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* #5 brands marquee: logos (when uploaded), grey logos, still mode */
+.tc-s .brands .mq a img { height: 34px; width: auto; max-width: 140px; object-fit: contain; display: block; }
+.tc-s .brands.tc-grey .mq a img { filter: grayscale(1); opacity: .75; transition: filter .2s, opacity .2s; }
+.tc-s .brands.tc-grey .mq a:hover img { filter: none; opacity: 1; }
+.tc-s .brands.tc-still .mq-track { animation: none; flex-wrap: wrap; width: auto; row-gap: 14px; }
+.tc-s .brands.tc-still .mq { -webkit-mask: none; mask: none; }

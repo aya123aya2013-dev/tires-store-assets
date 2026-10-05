@@ -47,6 +47,27 @@ const components = [
     F.sw('feature_first', 'تمييز أول منتج بإطار ذهبي', true),
     ...F.common('my-slider'),
   ]),
+
+  // #5 شريط الماركات
+  def('home.brands-marquee', 'شريط الماركات', 'Brands Marquee', 'sicon-award-ribbon', [
+    F.cover('شريط الماركات'),
+    F.tip('شريط متحرك بأسماء أو شعارات الماركات. يقرأ ماركات متجرك تلقائياً، أو تضيفها بنفسك.'),
+    F.head('h-texts', 'النصوص'),
+    F.text('line_1', 'النص الجانبي — السطر الأول', 'علامات أصلية', 30),
+    F.text('line_2', 'النص الجانبي — السطر الثاني (غامق)', 'من الوكيل مباشرة', 30),
+    F.head('h-brands', 'الماركات'),
+    F.dd('brands_source', 'مصدر الماركات', [['ماركات متجري تلقائياً', 'store'], ['أضيفها بنفسي', 'manual']], 'store'),
+    F.when(F.collection('brands', 'الماركات', 'ماركة', [
+      F.plain('name', 'اسم الماركة', 'MICHELIN', { maxLength: 30 }),
+      F.image('logo', 'الشعار (اختياري)', 'PNG بخلفية شفافة، ارتفاع 80 بكسل تقريباً. بدون شعار يظهر الاسم بخط عريض.', 300, 80),
+      F.link('link', 'الرابط'),
+    ], [], 0, 30), 'brands_source', 'manual'),
+    F.head('h-motion', 'الحركة'),
+    F.sw('animate', 'تحريك الشريط', true, 'يتوقف عند مرور الماوس'),
+    F.when(F.dd('speed', 'السرعة', [['عادية', 'normal'], ['بطيئة', 'slow'], ['سريعة', 'fast']], 'normal'), 'animate', true),
+    F.sw('grayscale', 'الشعارات رمادية (تتلوّن عند المرور)', true),
+    ...F.common('my-brands'),
+  ]),
 ];
 
 let after = 'home.size-finder';

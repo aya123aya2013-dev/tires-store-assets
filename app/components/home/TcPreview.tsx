@@ -4,6 +4,7 @@ import { TireHero } from './TireHero';
 import { SizeFinder } from './SizeFinder';
 import { BenefitsStrip } from './BenefitsStrip';
 import { TireSlider } from './TireSlider';
+import { BrandsMarquee } from './BrandsMarquee';
 
 const IMG = '/assets/images/home';
 
@@ -71,6 +72,7 @@ export function TcPreview() {
         <SizeFinder data={{}} />
         <BenefitsStrip data={{}} />
         <TireSlider data={{}} />
+        <BrandsMarquee data={{ brands_source: 'manual' }} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>
         <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>

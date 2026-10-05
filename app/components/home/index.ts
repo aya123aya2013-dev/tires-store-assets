@@ -12,3 +12,4 @@ export { TireHero } from './TireHero';
 export { SizeFinder } from './SizeFinder';
 export { BenefitsStrip } from './BenefitsStrip';
 export { TireSlider } from './TireSlider';
+export { BrandsMarquee } from './BrandsMarquee';

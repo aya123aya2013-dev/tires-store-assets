@@ -6,9 +6,11 @@ import { TireSlider } from '../../app/components/home/TireSlider';
 import { BrandsMarquee } from '../../app/components/home/BrandsMarquee';
 import { CategoryCards } from '../../app/components/home/CategoryCards';
 import { ShopByCar } from '../../app/components/home/ShopByCar';
+import { TireGrid } from '../../app/components/home/TireGrid';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
+vi.mock('@salla.sa/twilight-theme-engine/hooks/useWishlist', () => ({ useWishlist: () => ({ has: () => false, toggle: () => {} }) }));
 vi.mock('@tanstack/react-query', () => ({ useQuery: () => ({ data: { items: [] }, isLoading: false }) }));
 vi.mock('@salla.sa/twilight-theme-engine/api/brands', () => ({ brand: { queries: { list: () => ({ queryKey: ['b'] }) } } }));
 vi.mock('@salla.sa/twilight-theme-engine/api/product', () => ({ product: { queries: { list: () => ({}) } } }));
@@ -81,5 +83,15 @@ describe('#7 shop by car', () => {
     expect(html).toContain('مازda');
     expect(html).not.toContain('بلا');
     expect(html).toContain('tc-plain');
+  });
+});
+
+describe('#8 tire grid', () => {
+  it('renders the approved card with the faded rim and price for four', () => {
+    const html = renderToString(<TireGrid data={{ columns: '3' }} />);
+    expect(html).toContain('cgrid tc-cols-3');
+    expect(html).toContain('class="cghost">R16<');
+    expect(html).toContain('للحبة · 1680 للأربع');
+    expect(html).toContain('اختيار مميز');
   });
 });

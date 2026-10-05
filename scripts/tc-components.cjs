@@ -120,6 +120,27 @@ const components = [
     F.sw('gold_bg', 'خلفية ذهبية فاتحة', true),
     ...F.common('my-cars'),
   ]),
+
+  // #8 شبكة منتجات
+  def('home.tire-grid', 'شبكة منتجات (إطارات لكل رحلة)', 'Product Grid (Tires for Every Trip)', 'sicon-grid', [
+    F.cover('شبكة المنتجات'),
+    F.tip('شبكة منتجات من متجرك مع فلاتر بالماركات وترتيب وزر مفضلة. القطر الباهت ورا الصورة يُقرأ من مقاس المنتج.'),
+    F.head('h-texts', 'النصوص'),
+    F.text('kicker', 'السطر الصغير فوق العنوان', 'اختياراتنا لك', 40),
+    F.text('title', 'العنوان', 'إطارات لكل رحلة.', 60),
+    F.sw('show_view_all', 'إظهار رابط «عرض الكل»', true),
+    F.when(F.text('view_all_text', 'نص الرابط', 'عرض جميع الإطارات', 40), 'show_view_all', true),
+    F.when(F.link('view_all_link', 'رابط «عرض الكل»'), 'show_view_all', true),
+    F.head('h-products', 'المنتجات'),
+    ...F.productSource('products', 'latest'),
+    F.num('limit', 'عدد المنتجات', 8, 4, 16),
+    F.head('h-look', 'الشكل'),
+    F.dd('columns', 'عدد الأعمدة على الكمبيوتر', [['4 أعمدة', '4'], ['3 أعمدة', '3']], '4'),
+    F.sw('show_toolbar', 'إظهار شريط العدد والترتيب', true),
+    F.sw('show_filters', 'إظهار فلاتر الماركات', true, 'الماركات تنقرأ تلقائياً من المنتجات المعروضة'),
+    F.sw('feature_first', 'تمييز أول منتج («اختيار مميز»)', true),
+    ...F.common('my-grid'),
+  ]),
 ];
 
 let after = 'home.size-finder';

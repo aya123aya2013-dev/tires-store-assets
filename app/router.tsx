@@ -25,6 +25,7 @@ import {
   BrandsMarquee,
   CategoryCards,
   ShopByCar,
+  TireGrid,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -68,6 +69,7 @@ registerHomeComponents({
   'brands-marquee': BrandsMarquee,
   'category-cards': CategoryCards,
   'shop-by-car': ShopByCar,
+  'tire-grid': TireGrid,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

@@ -24,6 +24,7 @@ export interface TcProduct {
   tag?: string;
   image: string;
   year?: string;
+  sold?: number;
 }
 
 /** ids picked in a `dropdown-list` (source: products / categories / brands): [1,2] | [{value:1}] | "1,2" */
@@ -68,6 +69,7 @@ export function toTcProduct(p: Product, offerLabel: string): TcProduct {
     tag: p.promotion_title || (old ? offerLabel : undefined),
     image: p.image?.url ?? '',
     year,
+    sold: p.sold_quantity ?? 0,
   };
 }
 

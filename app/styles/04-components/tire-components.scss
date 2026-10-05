@@ -335,3 +335,7 @@
 
 /* #7 shop by car: light gold background is the approved look; merchant may turn it off */
 .tc-s .cars.tc-plain { background: transparent !important; }
+
+/* #8 product grid: 3 or 4 columns on desktop (approved: 4) */
+@media (min-width: 1101px) { .tc-s .cgrid.tc-cols-3 { grid-template-columns: repeat(3, 1fr); } }
+.tc-s .ccard .cimg { color: inherit; }

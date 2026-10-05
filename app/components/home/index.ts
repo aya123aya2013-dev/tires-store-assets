@@ -15,3 +15,4 @@ export { TireSlider } from './TireSlider';
 export { BrandsMarquee } from './BrandsMarquee';
 export { CategoryCards } from './CategoryCards';
 export { ShopByCar } from './ShopByCar';
+export { TireGrid } from './TireGrid';

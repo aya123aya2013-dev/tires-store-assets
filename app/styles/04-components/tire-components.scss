@@ -108,3 +108,51 @@
 
 @keyframes tc-float { 50% { transform: translateY(-14px); } }
 @media (prefers-reduced-motion: reduce) { .tc-hero__tire.is-floating { animation: none; } .tc-btn { transition: none; } }
+
+/* ---------- #1 image mode: plain banner / slider (desktop + mobile images) ---------- */
+.tc-banner {
+  position: relative; overflow: hidden; background: var(--tc-bg-2);
+  &--boxed { width: min(1240px, calc(100% - 40px)); margin: 20px auto 0; border-radius: var(--tc-r); }
+  &__track { display: flex; direction: ltr; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+  &__slide { position: relative; flex: 0 0 100%; direction: rtl; }
+  &__slide > a { display: block; color: inherit; }
+  picture, img { display: block; width: 100%; }
+  img { height: auto; }
+
+  // fixed heights (desktop): image fills the frame
+  &--h-21-9 &__slide { aspect-ratio: 21 / 9; }
+  &--h-16-9 &__slide { aspect-ratio: 16 / 9; }
+  &--h-3-1 &__slide { aspect-ratio: 3 / 1; }
+  &--h-screen &__slide { height: calc(100svh - 140px); min-height: 420px; }
+  &:not(&--h-auto) &__slide :is(picture, img) { width: 100%; height: 100%; }
+  &:not(&--h-auto) &__slide img { object-fit: cover; }
+  &--contain:not(&--h-auto) &__slide img { object-fit: contain; }
+
+  &__over { position: absolute; inset: 0; display: flex; align-items: center; background: linear-gradient(270deg, rgba(14, 15, 16, .7), transparent 65%); color: #fff; }
+  &__over h2 { font-size: clamp(26px, 3.6vw, 52px); line-height: 1.2; margin: 0 0 10px; max-width: 560px; }
+  &__over p { max-width: 460px; color: #e3e4e5; margin: 0 0 20px; }
+
+  &__arrow {
+    position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(255, 255, 255, .9); color: var(--tc-ink); font-size: 22px; border: 0; cursor: pointer; z-index: 2;
+    &.is-prev { right: 16px; } &.is-next { left: 16px; }
+  }
+  &__dots { position: absolute; bottom: 14px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; z-index: 2; }
+  &__dots button { width: 8px; height: 8px; border-radius: 4px; border: 0; padding: 0; background: rgba(255, 255, 255, .6); cursor: pointer; transition: width .25s; }
+  &__dots button.on { width: 26px; background: var(--tc-gold); }
+  &--empty { padding: 60px 0; text-align: center; color: var(--tc-muted); border: 1px dashed var(--tc-line); }
+
+  @media (max-width: 767px) {
+    // mobile ratio overrides the desktop one
+    &--m-1-1 &__slide { aspect-ratio: 1 / 1; height: auto; }
+    &--m-4-5 &__slide { aspect-ratio: 4 / 5; height: auto; }
+    &--m-9-16 &__slide { aspect-ratio: 9 / 16; height: auto; max-height: 85svh; }
+    &--m-auto &__slide { aspect-ratio: auto; height: auto; }
+    &--m-auto &__slide :is(picture, img) { height: auto; }
+    &:not(&--m-auto) &__slide :is(picture, img) { height: 100%; }
+    &:not(&--m-auto) &__slide img { object-fit: cover; }
+    &__arrow { display: none; }
+    &__over { align-items: flex-end; padding-bottom: 40px; background: linear-gradient(0deg, rgba(14, 15, 16, .75), transparent 70%); }
+  }
+}
+@media (prefers-reduced-motion: reduce) { .tc-banner__track { transition: none; } }

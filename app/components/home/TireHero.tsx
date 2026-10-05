@@ -44,11 +44,111 @@ const DEFAULT_PARTS = [
 // how the size code is laid out on the sidewall: which parts sit together
 const JOIN_BEFORE: Record<number, string> = { 1: ' ', 2: '/', 3: ' ', 5: ' ', 7: '   ' };
 
+// dropdown values arrive as [{ value }], { value } or a plain string
+const opt = (v: unknown, d: string): string => {
+  if (Array.isArray(v)) return opt(v[0], d);
+  if (v && typeof v === 'object' && 'value' in (v as Row)) return String((v as Row).value);
+  return typeof v === 'string' && v ? v : d;
+};
+
 export interface TireHeroProps {
   data: Row;
 }
 
+/** Entry: the merchant either uses our tire design, or just uploads banner images. */
 export function TireHero({ data }: TireHeroProps) {
+  return asBool(data.image_mode, false) ? <BannerSlider data={data} /> : <TireDesign data={data} />;
+}
+
+/* ===================== image mode: plain banner / slider ===================== */
+interface Slide { desk: string; mob: string; link: string; title: string; text: string; btn: string }
+
+function BannerSlider({ data }: TireHeroProps) {
+  const slides = useMemo<Slide[]>(() => {
+    const rows = Array.isArray(data.slides) ? (data.slides as Row[]) : [];
+    return rows
+      .map(r => {
+        const desk = asImage(r.image ?? r['slides.image'], '');
+        return {
+          desk,
+          mob: asImage(r.mobile_image ?? r['slides.mobile_image'], '') || desk,
+          link: asText(r.link ?? r['slides.link'], ''),
+          title: asText(r.title ?? r['slides.title'], ''),
+          text: asText(r.text ?? r['slides.text'], ''),
+          btn: asText(r.btn ?? r['slides.btn'], ''),
+        };
+      })
+      .filter(s => s.desk);
+  }, [data.slides]);
+
+  const height = opt(data.banner_height, 'auto'); // auto | 21-9 | 16-9 | 3-1 | screen
+  const fit = opt(data.banner_fit, 'cover'); // cover | contain
+  const mobRatio = opt(data.banner_mobile_height, 'auto'); // auto | 1-1 | 4-5 | 9-16
+  const autoplay = asBool(data.slides_autoplay, true);
+  const every = Math.max(2, Number(data.slides_interval) || 5) * 1000;
+  const boxed = asBool(data.banner_boxed, false);
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const many = slides.length > 1;
+
+  useEffect(() => {
+    if (!many || !autoplay || paused) return;
+    const t = setInterval(() => setI(n => (n + 1) % slides.length), every);
+    return () => clearInterval(t);
+  }, [many, autoplay, paused, every, slides.length]);
+
+  if (!slides.length) {
+    return (
+      <div className="tc tc-banner tc-banner--empty">
+        <div className="tc-wrap">أضف صورة البنر من إعدادات العنصر (صورة للكمبيوتر وصورة للجوال).</div>
+      </div>
+    );
+  }
+
+  const cls = ['tc', 'tc-banner', `tc-banner--h-${height}`, `tc-banner--m-${mobRatio}`, `tc-banner--${fit}`, boxed ? 'tc-banner--boxed' : ''].join(' ');
+  return (
+    <div className={cls} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} aria-roledescription={many ? 'carousel' : undefined}>
+      <div className="tc-banner__track" style={{ transform: `translateX(-${i * 100}%)` }}>
+        {slides.map((s, n) => {
+          const pic = (
+            <picture>
+              <source media="(max-width: 767px)" srcSet={s.mob} />
+              <img src={s.desk} alt={s.title || 'بنر'} loading={n ? 'lazy' : 'eager'} fetchPriority={n ? undefined : 'high'} />
+            </picture>
+          );
+          const overlay = (s.title || s.text || s.btn) ? (
+            <div className="tc-banner__over">
+              <div className="tc-wrap">
+                {s.title && <h2>{s.title}</h2>}
+                {s.text && <p>{s.text}</p>}
+                {s.btn && <span className="tc-btn tc-btn--gold">{s.btn} <span aria-hidden="true">←</span></span>}
+              </div>
+            </div>
+          ) : null;
+          return (
+            <div className="tc-banner__slide" key={s.desk + n} aria-hidden={n !== i}>
+              {s.link ? <Link to={s.link}>{pic}{overlay}</Link> : <>{pic}{overlay}</>}
+            </div>
+          );
+        })}
+      </div>
+      {many && (
+        <>
+          <button type="button" className="tc-banner__arrow is-prev" aria-label="السابق" onClick={() => setI(n => (n - 1 + slides.length) % slides.length)}>›</button>
+          <button type="button" className="tc-banner__arrow is-next" aria-label="التالي" onClick={() => setI(n => (n + 1) % slides.length)}>‹</button>
+          <div className="tc-banner__dots">
+            {slides.map((_, n) => (
+              <button key={n} type="button" className={n === i ? 'on' : undefined} aria-label={`الشريحة ${n + 1}`} onClick={() => setI(n)} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+/* ===================== tire mode: our designed hero ===================== */
+function TireDesign({ data }: TireHeroProps) {
   const kicker = asText(data.kicker, 'إطارات أصلية · تركيب بنفس اليوم بالرياض');
   const title1 = asText(data.title_1, 'مقاسك مكتوب');
   const title2 = asText(data.title_2, 'على إطارك.');

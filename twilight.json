@@ -314,7 +314,315 @@
           "type": "static",
           "format": "description",
           "id": "tc-tip",
-          "value": "<div>💡 يفضّل أن يكون أول عنصر بالصفحة. استخدم صورة إطار بخلفية شفافة (PNG) ومن الأمام حتى تظهر أرقام المقاس على جانبه.</div>"
+          "value": "<div>💡 طريقتين: <b>تصميم الإطار</b> (نصوص + إطار + أرقام المقاس)، أو <b>صور فقط</b> لرفع بنر جاهز بصورة للكمبيوتر وصورة للجوال. يفضّل أن يكون أول عنصر بالصفحة.</div>"
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "استخدام صور فقط (بانر / سلايدر صور)",
+          "description": "شغّلها إذا بدك ترفع صورة بنر جاهزة بدل تصميم الإطار. صورة واحدة = بانر ثابت، أكثر من صورة = سلايدر.",
+          "id": "image_mode",
+          "format": "switch",
+          "required": false,
+          "value": false,
+          "selected": false
+        },
+        {
+          "id": "slides",
+          "type": "collection",
+          "format": "collection",
+          "required": false,
+          "minLength": 1,
+          "maxLength": 8,
+          "label": "الصور",
+          "item_label": "شريحة",
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ],
+          "value": [],
+          "fields": [
+            {
+              "type": "string",
+              "icon": "sicon-image",
+              "value": null,
+              "label": "صورة الكمبيوتر واللابتوب",
+              "id": "slides.image",
+              "format": "image",
+              "required": true,
+              "placeholder": null,
+              "description": "* المقاس المقترح 1920×800 بكسل (أو حسب الارتفاع المختار)",
+              "settings": {
+                "width": 1920,
+                "height": 800
+              }
+            },
+            {
+              "type": "string",
+              "icon": "sicon-image",
+              "value": null,
+              "label": "صورة الجوال (اختياري)",
+              "id": "slides.mobile_image",
+              "format": "image",
+              "required": false,
+              "placeholder": null,
+              "description": "* المقاس المقترح 800×1000 بكسل. إذا تركتها فارغة تُستخدم صورة الكمبيوتر.",
+              "settings": {
+                "width": 800,
+                "height": 1000
+              }
+            },
+            {
+              "type": "string",
+              "icon": "sicon-link",
+              "label": "الرابط عند الضغط (اختياري)",
+              "multilanguage": false,
+              "id": "slides.link",
+              "value": null,
+              "required": false,
+              "format": "text",
+              "description": "مثل /category أو رابط كامل",
+              "placeholder": "/",
+              "minLength": 0,
+              "maxLength": 300
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "عنوان فوق الصورة (اختياري)",
+              "multilanguage": true,
+              "id": "slides.title",
+              "value": null,
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "اتركه فارغ إذا الصورة فيها الكتابة",
+              "minLength": 0,
+              "maxLength": 100
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "نص فوق الصورة (اختياري)",
+              "multilanguage": true,
+              "id": "slides.text",
+              "value": null,
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "",
+              "minLength": 0,
+              "maxLength": 160
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "نص زر فوق الصورة (اختياري)",
+              "multilanguage": true,
+              "id": "slides.btn",
+              "value": null,
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "",
+              "minLength": 0,
+              "maxLength": 30
+            }
+          ]
+        },
+        {
+          "id": "banner_height",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "ارتفاع البنر على الكمبيوتر",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "تلقائي حسب الصورة (أنصح فيه)",
+              "value": "auto",
+              "key": "banner_height-auto"
+            }
+          ],
+          "options": [
+            {
+              "label": "تلقائي حسب الصورة (أنصح فيه)",
+              "value": "auto",
+              "key": "banner_height-auto"
+            },
+            {
+              "label": "عريض 21:9",
+              "value": "21-9",
+              "key": "banner_height-21-9"
+            },
+            {
+              "label": "قياسي 16:9",
+              "value": "16-9",
+              "key": "banner_height-16-9"
+            },
+            {
+              "label": "شريط 3:1",
+              "value": "3-1",
+              "key": "banner_height-3-1"
+            },
+            {
+              "label": "بطول الشاشة",
+              "value": "screen",
+              "key": "banner_height-screen"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "banner_mobile_height",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "ارتفاع البنر على الجوال",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "تلقائي حسب الصورة",
+              "value": "auto",
+              "key": "banner_mobile_height-auto"
+            }
+          ],
+          "options": [
+            {
+              "label": "تلقائي حسب الصورة",
+              "value": "auto",
+              "key": "banner_mobile_height-auto"
+            },
+            {
+              "label": "مربع 1:1",
+              "value": "1-1",
+              "key": "banner_mobile_height-1-1"
+            },
+            {
+              "label": "طولي 4:5",
+              "value": "4-5",
+              "key": "banner_mobile_height-4-5"
+            },
+            {
+              "label": "بطول الشاشة 9:16",
+              "value": "9-16",
+              "key": "banner_mobile_height-9-16"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "banner_fit",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "طريقة ملء الصورة (للارتفاع الثابت)",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "تغطية كامل المساحة (قص الأطراف)",
+              "value": "cover",
+              "key": "banner_fit-cover"
+            }
+          ],
+          "options": [
+            {
+              "label": "تغطية كامل المساحة (قص الأطراف)",
+              "value": "cover",
+              "key": "banner_fit-cover"
+            },
+            {
+              "label": "إظهار الصورة كاملة",
+              "value": "contain",
+              "key": "banner_fit-contain"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "البنر داخل حاوية (بزوايا مدوّرة) بدل عرض الشاشة",
+          "description": null,
+          "id": "banner_boxed",
+          "format": "switch",
+          "required": false,
+          "value": false,
+          "selected": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "تنقّل تلقائي بين الشرائح",
+          "description": null,
+          "id": "slides_autoplay",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "icon": "sicon-time",
+          "label": "مدة كل شريحة (ثواني)",
+          "id": "slides_interval",
+          "format": "integer",
+          "required": false,
+          "value": 5,
+          "minimum": 2,
+          "maximum": 15,
+          "description": null,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
         },
         {
           "type": "string",
@@ -328,7 +636,14 @@
           "description": null,
           "placeholder": "إطارات أصلية · تركيب بنفس اليوم بالرياض",
           "minLength": 0,
-          "maxLength": 100
+          "maxLength": 100,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "string",
@@ -342,7 +657,14 @@
           "description": null,
           "placeholder": "مقاسك مكتوب",
           "minLength": 0,
-          "maxLength": 100
+          "maxLength": 100,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "string",
@@ -356,7 +678,14 @@
           "description": null,
           "placeholder": "على إطارك.",
           "minLength": 0,
-          "maxLength": 100
+          "maxLength": 100,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "string",
@@ -370,7 +699,14 @@
           "required": false,
           "placeholder": "اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.",
           "minLength": 0,
-          "maxLength": "256"
+          "maxLength": "256",
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "string",
@@ -384,7 +720,14 @@
           "description": null,
           "placeholder": "تسوّق حسب المقاس",
           "minLength": 0,
-          "maxLength": 40
+          "maxLength": 40,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "string",
@@ -398,7 +741,14 @@
           "description": "رابط داخل المتجر مثل /help أو رابط كامل",
           "placeholder": "/#size",
           "minLength": 0,
-          "maxLength": 300
+          "maxLength": 300,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "boolean",
@@ -409,7 +759,14 @@
           "format": "switch",
           "required": false,
           "value": true,
-          "selected": true
+          "selected": true,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "string",
@@ -425,6 +782,11 @@
           "minLength": 0,
           "maxLength": 40,
           "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            },
             {
               "id": "btn2_show",
               "operation": "=",
@@ -447,6 +809,11 @@
           "maxLength": 300,
           "conditions": [
             {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            },
+            {
               "id": "btn2_show",
               "operation": "=",
               "value": true
@@ -462,7 +829,14 @@
           "format": "switch",
           "required": false,
           "value": true,
-          "selected": true
+          "selected": true,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "id": "stats",
@@ -474,6 +848,11 @@
           "label": "الأرقام",
           "item_label": "رقم",
           "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            },
             {
               "id": "stats_show",
               "operation": "=",
@@ -538,7 +917,14 @@
           "settings": {
             "height": 1400,
             "width": 1400
-          }
+          },
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "boolean",
@@ -549,7 +935,14 @@
           "format": "switch",
           "required": false,
           "value": true,
-          "selected": true
+          "selected": true,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "string",
@@ -566,6 +959,11 @@
           "maxLength": 4,
           "conditions": [
             {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            },
+            {
               "id": "giant_show",
               "operation": "=",
               "value": true
@@ -581,7 +979,14 @@
           "format": "switch",
           "required": false,
           "value": true,
-          "selected": true
+          "selected": true,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "type": "boolean",
@@ -592,7 +997,14 @@
           "format": "switch",
           "required": false,
           "value": true,
-          "selected": true
+          "selected": true,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
         },
         {
           "id": "parts",
@@ -604,6 +1016,11 @@
           "label": "أجزاء المقاس",
           "item_label": "جزء",
           "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            },
             {
               "id": "parts_show",
               "operation": "=",
@@ -709,6 +1126,11 @@
           "maximum": 10,
           "description": null,
           "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            },
             {
               "id": "parts_show",
               "operation": "=",

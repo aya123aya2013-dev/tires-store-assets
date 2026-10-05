@@ -44,6 +44,20 @@ const DEFAULT_PARTS = [
 // how the size code is laid out on the sidewall: which parts sit together
 const JOIN_BEFORE: Record<number, string> = { 1: ' ', 2: '/', 3: ' ', 5: ' ', 7: '   ' };
 
+// Salla link picker (variable-list): product / category / brand / page / blog / offers / external.
+// The engine usually hands us the resolved url string; some payloads keep it inside an object.
+const asLink = (v: unknown, d: string): string => {
+  if (Array.isArray(v)) return asLink(v[0], d);
+  if (typeof v === 'string') return v.trim() ? v.trim() : d;
+  if (v && typeof v === 'object') {
+    const o = v as Row;
+    const val = typeof o.value === 'string' && /^(\/|https?:)/.test(o.value) ? o.value : undefined;
+    const url = o.url ?? o.link ?? o.href ?? val;
+    if (typeof url === 'string' && url) return url;
+  }
+  return d;
+};
+
 // dropdown values arrive as [{ value }], { value } or a plain string
 const opt = (v: unknown, d: string): string => {
   if (Array.isArray(v)) return opt(v[0], d);
@@ -72,7 +86,7 @@ function BannerSlider({ data }: TireHeroProps) {
         return {
           desk,
           mob: asImage(r.mobile_image ?? r['slides.mobile_image'], '') || desk,
-          link: asText(r.link ?? r['slides.link'], ''),
+          link: asLink(r.link ?? r['slides.link'] ?? r.url, ''),
           title: asText(r.title ?? r['slides.title'], ''),
           text: asText(r.text ?? r['slides.text'], ''),
           btn: asText(r.btn ?? r['slides.btn'], ''),
@@ -160,8 +174,8 @@ function TireDesign({ data }: TireHeroProps) {
   const title1 = asText(data.title_1, 'مقاسك مكتوب');
   const title2 = asText(data.title_2, 'على إطارك.');
   const text = asText(data.text, 'اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.');
-  const btn1 = { text: asText(data.btn1_text, 'تسوّق حسب المقاس'), link: asText(data.btn1_link, '/search') };
-  const btn2 = { show: asBool(data.btn2_show, true), text: asText(data.btn2_text, 'اكتشف خدمة التركيب'), link: asText(data.btn2_link, '/help#install') };
+  const btn1 = { text: asText(data.btn1_text, 'تسوّق حسب المقاس'), link: asLink(data.btn1_link, '/search') };
+  const btn2 = { show: asBool(data.btn2_show, true), text: asText(data.btn2_text, 'اكتشف خدمة التركيب'), link: asLink(data.btn2_link, '/help#install') };
   const image = asImage(data.tire_image, '/assets/images/home/tire-hero.webp');
   const giant = { show: asBool(data.giant_show, true), text: asText(data.giant_text, 'R16') };
   const float = asBool(data.float_anim, true);

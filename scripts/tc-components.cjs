@@ -244,6 +244,27 @@ const components = [
     F.link('fleet_link', 'الرابط'),
     ...F.common('my-bento'),
   ]),
+
+  // #12 شريط متحرك
+  def('home.ticker', 'شريط متحرك', 'Moving Ticker', 'sicon-arrow-left-right', [
+    F.cover('شريط متحرك'),
+    F.tip('شريط غامق يتحرك بروابط مرقّمة وجمل قصيرة. العنصر بدون رابط يظهر كجملة بنقطة ذهبية.'),
+    F.head('h-items', 'العناصر (حتى 10)'),
+    F.collection('items', 'العناصر', 'عنصر', [
+      F.text('text', 'النص', 'المقاس', 50),
+      F.link('link', 'الرابط (اختياري)', 'بدون رابط = جملة بنقطة ذهبية'),
+      F.sw('number', 'رقم قبله (01، 02…)', true),
+    ], [
+      { 'items.text': 'المقاس', 'items.number': true }, { 'items.text': 'الإطارات', 'items.number': true },
+      { 'items.text': 'التركيب', 'items.number': true }, { 'items.text': 'الدليل', 'items.number': true },
+      { 'items.text': 'إطارات أصلية بضمان الوكيل', 'items.number': false }, { 'items.text': 'تركيب مجاني بالرياض', 'items.number': false }, { 'items.text': 'قسّطها مع تابي وتمارا', 'items.number': false },
+    ], 1, 10),
+    F.head('h-look', 'الشكل والحركة'),
+    F.dd('speed', 'السرعة', [['عادية', 'normal'], ['بطيئة', 'slow'], ['سريعة', 'fast']], 'normal'),
+    F.sw('pause_on_hover', 'إيقاف عند مرور الماوس', true),
+    F.dd('bg', 'لون الخلفية', [['غامق', 'dark'], ['ذهبي', 'gold']], 'dark'),
+    ...F.common('my-ticker'),
+  ]),
 ];
 
 let after = 'home.size-finder';

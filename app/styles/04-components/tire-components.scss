@@ -342,3 +342,10 @@
 
 /* #11 bento without the calculator: the small photo tile takes its place too */
 @media (min-width: 1101px) { .tc-s .bento.tc-nocalc .tile.photo:not(.t-install) { grid-column: span 2; } }
+
+/* #12 ticker: gold band option, no pause on hover option */
+.tc-s .secbar.tc-gold { background: var(--gold); }
+.tc-s .secbar.tc-gold a, .tc-s .secbar.tc-gold .tk-track span { color: #3d2e00; }
+.tc-s .secbar.tc-gold .tk-track a b { color: var(--ink) !important; }
+.tc-s .secbar.tc-gold .tk-track span::before { background: var(--ink); }
+.tc-s .secbar.tc-nopause:hover .tk-track { animation-play-state: running; }

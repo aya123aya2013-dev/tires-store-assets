@@ -11,6 +11,7 @@ import { TireGrid } from './TireGrid';
 import { DoubleBanner } from './DoubleBanner';
 import { TirePicker } from './TirePicker';
 import { ServicesBento } from './ServicesBento';
+import { Ticker } from './Ticker';
 
 const IMG = '/assets/images/home';
 
@@ -85,6 +86,7 @@ export function TcPreview() {
         <DoubleBanner data={{}} />
         <TirePicker data={{}} />
         <ServicesBento data={{}} />
+        <Ticker data={{}} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>
         <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>

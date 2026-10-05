@@ -10,6 +10,7 @@ import { TireGrid } from '../../app/components/home/TireGrid';
 import { DoubleBanner } from '../../app/components/home/DoubleBanner';
 import { TirePicker } from '../../app/components/home/TirePicker';
 import { ServicesBento } from '../../app/components/home/ServicesBento';
+import { Ticker } from '../../app/components/home/Ticker';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -127,5 +128,15 @@ describe('#11 services bento', () => {
     const html = renderToString(<ServicesBento data={{ calc_show: false }} />);
     expect(html).not.toContain('t-calc');
     expect(html).toContain('bento tc-nocalc');
+  });
+});
+
+describe('#12 ticker', () => {
+  it('numbers the links, dots the phrases, loops once', () => {
+    const html = renderToString(<Ticker data={{ bg: 'gold' }} />);
+    expect(html).toContain('<b>01</b>المقاس');
+    expect(html).toContain('<span>تركيب مجاني بالرياض</span>');
+    expect(html.split('<b>04</b>').length - 1).toBe(2);
+    expect(html).toContain('secbar tc-gold');
   });
 });

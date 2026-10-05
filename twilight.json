@@ -308,7 +308,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">بنر الإطار</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/tire-hero.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -1926,7 +1926,8 @@
           "maxLength": 60
         }
       ],
-      "is_default": true
+      "is_default": true,
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/tire-hero.webp"
     },
     {
       "key": "d73259fe-3160-41c2-b792-91eb581fabba",
@@ -1942,7 +1943,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">أداة اختيار المقاس</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/size-finder.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -2174,13 +2175,24 @@
         {
           "type": "boolean",
           "icon": "sicon-toggle-off",
-          "label": "إظهار مقاسات الشاحنات (مثل 900/16)",
+          "label": "إظهار مقاسات النقل الخفيف (مثل 900/16)",
           "description": null,
           "id": "show_trucks",
           "format": "switch",
           "required": false,
           "value": true,
           "selected": true
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إظهار مقاسات الشاحنات الكبيرة والباصات (مثل 315/80 R22.5 و 11R22.5)",
+          "description": "تضيف جنوط 17.5 و 19.5 و 22.5، وعرض 385، والمقاسات 11R و 12R و 13R. تظهر بقسم «شاحنات وباصات» داخل القائمة.",
+          "id": "show_heavy",
+          "format": "switch",
+          "required": false,
+          "value": false,
+          "selected": false
         },
         {
           "type": "static",
@@ -2294,7 +2306,8 @@
           "minLength": 0,
           "maxLength": 60
         }
-      ]
+      ],
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/size-finder.webp"
     },
     {
       "title": {
@@ -2309,7 +2322,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">شريط المميزات</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/benefits-strip.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -2367,89 +2380,89 @@
                 {
                   "label": "درع (أصلي / ضمان)",
                   "value": "shield",
-                  "key": "b1c7c291-bedd-40cd-b2d7-547903a9332b"
+                  "key": "6f09645b-5dd4-4682-8d12-95421e1fc54f"
                 }
               ],
               "options": [
                 {
                   "label": "درع (أصلي / ضمان)",
                   "value": "shield",
-                  "key": "b1c7c291-bedd-40cd-b2d7-547903a9332b"
+                  "key": "6f09645b-5dd4-4682-8d12-95421e1fc54f"
                 },
                 {
                   "label": "مفتاح (تركيب)",
                   "value": "wrench",
-                  "key": "06223d7d-ad50-4797-9c4e-1c59699f4a10"
+                  "key": "c3dd61bf-27cb-4dbc-95b5-b5b1e3ebf9e5"
                 },
                 {
                   "label": "بطاقة (دفع)",
                   "value": "card",
-                  "key": "957b57c3-25a0-4e41-b7ab-27da7e656d51"
+                  "key": "18dd9b53-313e-4837-9540-efb71b16c388"
                 },
                 {
                   "label": "شاحنة (توصيل)",
                   "value": "truck",
-                  "key": "21b8aefd-3792-472a-bff2-4bed559c154a"
+                  "key": "9442c163-4d7d-4e24-8665-2400e033238f"
                 },
                 {
                   "label": "إطار",
                   "value": "tire",
-                  "key": "4975144f-0e7b-4bb3-90da-e7e7bcaf80f3"
+                  "key": "3a6534a7-7b83-4052-962b-3cc31088a0e9"
                 },
                 {
                   "label": "تقويم",
                   "value": "cal",
-                  "key": "8dfaaf52-a002-4335-b169-1b0850048e83"
+                  "key": "ae0960f3-a732-4245-9926-0b8666988f3a"
                 },
                 {
                   "label": "موقع",
                   "value": "pin",
-                  "key": "db16b361-5ef8-4194-a46f-c183ec6e9fbe"
+                  "key": "54dd18c5-8e05-44a1-8b3e-6d6188686a4c"
                 },
                 {
                   "label": "جوال",
                   "value": "phone",
-                  "key": "aadf94c0-39c0-4624-ad1a-c82e6f1243e6"
+                  "key": "91b195ef-bede-4b11-95ea-821f0e0b67a3"
                 },
                 {
                   "label": "بحث",
                   "value": "search",
-                  "key": "b7faef84-7585-4f79-b3b5-3d6841bcb9f7"
+                  "key": "7de4d9bd-2270-40b0-85c6-133ce2edb2d5"
                 },
                 {
                   "label": "قلب",
                   "value": "heart",
-                  "key": "42bc9b18-5315-43eb-8e5a-8ab0f11d4a47"
+                  "key": "8bbc64bb-a526-4fb8-911e-cd436e70662f"
                 },
                 {
                   "label": "شبكة",
                   "value": "grid",
-                  "key": "63678202-db55-43db-a6dd-763679215789"
+                  "key": "58170b13-f95c-441a-8d87-deb1a96e9555"
                 },
                 {
                   "label": "بيت",
                   "value": "home",
-                  "key": "1e546408-6e02-46dd-89fc-d805b4d76e3c"
+                  "key": "4b07692f-6633-40b4-8c66-057767e8c747"
                 },
                 {
                   "label": "كل الإطارات",
                   "value": "cat-all",
-                  "key": "caa81a61-38d2-41cf-ad7f-0830695fe5da"
+                  "key": "890e9230-c38e-4048-87db-3b3f5db27139"
                 },
                 {
                   "label": "سيدان",
                   "value": "cat-sedan",
-                  "key": "3d13a828-5a2b-4969-85fc-76f52742e55f"
+                  "key": "bffe5c26-e90f-4db5-9f56-ecf013a7cf69"
                 },
                 {
                   "label": "دفع رباعي",
                   "value": "cat-suv",
-                  "key": "7d1af207-ddf3-4666-9891-efdf8ef0e40f"
+                  "key": "5a112b1d-4691-407a-b6bc-d1630e401bfe"
                 },
                 {
                   "label": "نقل وبيك أب",
                   "value": "cat-truck",
-                  "key": "7f6c812f-8f56-4788-b1b8-2f3ecc8dd558"
+                  "key": "cb33411c-17f1-452b-b1d1-cb133d337252"
                 }
               ],
               "source": "Manual",
@@ -2525,29 +2538,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "64f85782-bcc5-44c8-bf42-d4d67e99ba67"
+              "key": "36fd67bf-9abc-4882-bb6f-9cd7e5ab50bd"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "64f85782-bcc5-44c8-bf42-d4d67e99ba67"
+              "key": "36fd67bf-9abc-4882-bb6f-9cd7e5ab50bd"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "e814a37b-b54a-4d45-9cce-551853fcff22"
+              "key": "abdf24c9-7fa8-487d-a384-dc8566da5698"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "0838c307-e4b6-41b0-bb88-19fa696f74cb"
+              "key": "7791ec34-b1c3-48ae-b73c-e583c5294168"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "c27349fe-bcf1-43e1-b3f7-bb09f3cb2612"
+              "key": "746af62e-a361-42a9-8ee0-13ae540a3997"
             }
           ],
           "source": "Manual",
@@ -2565,29 +2578,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "9e0be2b7-5a02-460d-834a-18ba7b1b0c99"
+              "key": "14c677c5-2f8a-42c2-8e11-3cf37629bba9"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "9e0be2b7-5a02-460d-834a-18ba7b1b0c99"
+              "key": "14c677c5-2f8a-42c2-8e11-3cf37629bba9"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "a0f7bc39-744a-4133-a654-8f2e11a62ace"
+              "key": "d9f9f65f-0e2e-4096-893d-a9d009762959"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "296d4152-61eb-43f3-9378-aa0bd4279c68"
+              "key": "e8cea19a-224c-4840-a0e3-522868817bf6"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "12128aa3-dfed-44bb-a372-72bee4feb4eb"
+              "key": "c3a3f66e-204f-47f1-b853-0c00221e5ace"
             }
           ],
           "source": "Manual",
@@ -2608,7 +2621,8 @@
           "maxLength": 60
         }
       ],
-      "key": "2b41a6d5-69da-4165-9d98-61e70291fb85"
+      "key": "2b41a6d5-69da-4165-9d98-61e70291fb85",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/benefits-strip.webp"
     },
     {
       "title": {
@@ -2623,7 +2637,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">إطارات الأسبوع</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/tire-slider.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -2683,44 +2697,44 @@
             {
               "label": "الأكثر مبيعاً",
               "value": "best_selling",
-              "key": "c896e950-6833-4d04-919c-5dc9330e0ef2"
+              "key": "ccbe6344-a932-4428-a0bb-d96470a58125"
             }
           ],
           "options": [
             {
               "label": "الأكثر مبيعاً",
               "value": "best_selling",
-              "key": "c896e950-6833-4d04-919c-5dc9330e0ef2"
+              "key": "ccbe6344-a932-4428-a0bb-d96470a58125"
             },
             {
               "label": "الأحدث",
               "value": "latest",
-              "key": "5b6bc6cb-0205-4ba0-a886-009837157b9c"
+              "key": "85e4dc95-457a-4a0c-b28d-eb9abf32321b"
             },
             {
               "label": "العروض والتخفيضات",
               "value": "offers",
-              "key": "4cd01c66-1ce8-43f1-87f6-27affa46b931"
+              "key": "9828856d-2021-4536-8b53-60bdf5cfb799"
             },
             {
               "label": "الأعلى تقييماً",
               "value": "top-rated",
-              "key": "e350ddc8-b136-40d7-8535-f8db354312f1"
+              "key": "8c69c881-b127-4c37-a2c6-fbaa31d0b270"
             },
             {
               "label": "من تصنيف",
               "value": "categories",
-              "key": "8e6d0aa6-289a-4d86-b802-11fa7d53a4a4"
+              "key": "dd356e25-1170-483e-aabc-c78378b5a24e"
             },
             {
               "label": "من ماركة",
               "value": "brands",
-              "key": "e04ed4e8-52d9-4371-8a9f-f507af418164"
+              "key": "5dd559a7-f3a1-4e70-bac7-ade30ab0fa48"
             },
             {
               "label": "منتجات أختارها",
               "value": "selected",
-              "key": "65efbd59-2b81-4d44-baa8-20d0e2861c09"
+              "key": "9d70cd74-2816-48e9-8232-8dc26bfcbef2"
             }
           ],
           "source": "Manual",
@@ -2817,24 +2831,24 @@
             {
               "label": "إطار واحد",
               "value": "1",
-              "key": "816996e9-880f-42f6-abfe-5f89571e6290"
+              "key": "af32cb90-5a65-4041-a117-3f3190f9853d"
             }
           ],
           "options": [
             {
               "label": "إطار واحد",
               "value": "1",
-              "key": "816996e9-880f-42f6-abfe-5f89571e6290"
+              "key": "af32cb90-5a65-4041-a117-3f3190f9853d"
             },
             {
               "label": "إطارين",
               "value": "2",
-              "key": "21d46d71-83e5-4f65-90cf-b789194da9cf"
+              "key": "11c88aeb-42f3-4c73-be1f-09fd07fbc511"
             },
             {
               "label": "4 إطارات",
               "value": "4",
-              "key": "bef9367f-3260-4741-9128-72557193a6a8"
+              "key": "a5530304-bce9-4d12-8560-2e6423c3488f"
             }
           ],
           "source": "Manual",
@@ -2919,29 +2933,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "3c277353-8aed-48fa-8848-aa50d2650b1e"
+              "key": "c503fbf6-2c84-49b4-b29b-4afeaf251810"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "3c277353-8aed-48fa-8848-aa50d2650b1e"
+              "key": "c503fbf6-2c84-49b4-b29b-4afeaf251810"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "5ad65a3e-28d2-46bf-ae95-77defa6c87d2"
+              "key": "28e71bca-cac6-4a16-a0e2-b9e2e08b0146"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "508ab694-a1be-47d6-88d9-5af9c0bf78c1"
+              "key": "44660d90-1e50-437a-93e3-915d6cdcf4ee"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "c3a5ed09-2178-4723-8cf8-34111b9e9d70"
+              "key": "ea241efa-2835-4fda-ac6a-41823d704040"
             }
           ],
           "source": "Manual",
@@ -2959,29 +2973,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "412ea41d-1b42-4e74-9477-ec597e92429b"
+              "key": "18693e29-ffe5-4641-b8cc-2a8f99d2f657"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "412ea41d-1b42-4e74-9477-ec597e92429b"
+              "key": "18693e29-ffe5-4641-b8cc-2a8f99d2f657"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "c934dc8e-00b1-4259-bcd5-2d92d9a4f732"
+              "key": "dc66792c-a833-4d3c-811b-93fb3774456e"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "5124cf84-6ff6-4a40-8657-af31e0b5956b"
+              "key": "5cd1468e-dcf2-4340-9136-cd8f888b6e92"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "70fbef6c-e27b-4b9e-b70a-bfca9f1c51aa"
+              "key": "a287103c-3568-434d-a4e8-a1deec900c43"
             }
           ],
           "source": "Manual",
@@ -3002,7 +3016,8 @@
           "maxLength": 60
         }
       ],
-      "key": "a9911614-9454-4f8b-8046-6f8f3cfd82f3"
+      "key": "a9911614-9454-4f8b-8046-6f8f3cfd82f3",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/tire-slider.webp"
     },
     {
       "title": {
@@ -3017,7 +3032,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">شريط الماركات</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/brands-marquee.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -3077,19 +3092,19 @@
             {
               "label": "ماركات متجري تلقائياً",
               "value": "store",
-              "key": "63bf5775-ba8b-4450-be2b-0c1efa587363"
+              "key": "0873836f-d1bd-4c27-9db2-ecb6a065d200"
             }
           ],
           "options": [
             {
               "label": "ماركات متجري تلقائياً",
               "value": "store",
-              "key": "63bf5775-ba8b-4450-be2b-0c1efa587363"
+              "key": "0873836f-d1bd-4c27-9db2-ecb6a065d200"
             },
             {
               "label": "أضيفها بنفسي",
               "value": "manual",
-              "key": "859f43f1-9232-49b4-99d3-45d4ed4101ec"
+              "key": "893f6bd2-9da0-484f-a875-aa15bcf27f05"
             }
           ],
           "source": "Manual",
@@ -3242,24 +3257,24 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "45208f10-7d51-4d15-b472-1ff1d5c6c443"
+              "key": "52cd673a-201f-4908-9e93-0cdfc4e4711d"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "45208f10-7d51-4d15-b472-1ff1d5c6c443"
+              "key": "52cd673a-201f-4908-9e93-0cdfc4e4711d"
             },
             {
               "label": "بطيئة",
               "value": "slow",
-              "key": "d2535a26-c7f6-4442-87a2-e4c9618c5659"
+              "key": "6033f1cd-1155-4572-8686-85f0dc3be028"
             },
             {
               "label": "سريعة",
               "value": "fast",
-              "key": "f489f66c-c715-4179-a3ba-30b28a9068fb"
+              "key": "7bfc2a7b-4555-4121-b22d-603641957ba3"
             }
           ],
           "source": "Manual",
@@ -3323,29 +3338,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "f56ba81d-c027-41d5-8b8d-a42ac2a2bd27"
+              "key": "b7a17f9d-00b4-4476-9d1f-5364f85eeaef"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "f56ba81d-c027-41d5-8b8d-a42ac2a2bd27"
+              "key": "b7a17f9d-00b4-4476-9d1f-5364f85eeaef"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "d6a8a28c-0159-4021-b788-374d11ef8ce1"
+              "key": "b4237128-f084-449e-8df6-d20eadf3b549"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "0791bf00-1088-43ce-91ca-1253ff3882c2"
+              "key": "0500e950-7653-49ff-80ed-f9d934ea52f0"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "9657ee3c-630d-436e-b1ed-f18fa395d385"
+              "key": "d6aa5705-1df0-412b-9fa9-0ad7c46b8939"
             }
           ],
           "source": "Manual",
@@ -3363,29 +3378,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ebd96ad1-5c54-496c-9bae-78c44ba7e2b7"
+              "key": "c625cec2-6148-4d9d-b3f4-4dfec883bd6a"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ebd96ad1-5c54-496c-9bae-78c44ba7e2b7"
+              "key": "c625cec2-6148-4d9d-b3f4-4dfec883bd6a"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "cef59647-306a-4c28-9f82-e41004992d15"
+              "key": "cb1b0649-58db-4eec-ba8e-c263ba100028"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "fcae0f5e-3daf-4131-b873-c110e253f1c0"
+              "key": "9f15efc7-14f4-4d06-a261-33e50649576e"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "4dd457e8-52ea-4bf5-92a7-68ea7ff841ac"
+              "key": "dc77b684-a204-4824-97ed-fb473bad35a9"
             }
           ],
           "source": "Manual",
@@ -3406,7 +3421,8 @@
           "maxLength": 60
         }
       ],
-      "key": "058666b7-9f90-49b9-9d6d-adc34e224d54"
+      "key": "058666b7-9f90-49b9-9d6d-adc34e224d54",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/brands-marquee.webp"
     },
     {
       "title": {
@@ -3421,7 +3437,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">كروت الفئات</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/category-cards.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -3531,89 +3547,89 @@
                 {
                   "label": "كل الإطارات",
                   "value": "cat-all",
-                  "key": "fcf5aaf3-358e-44db-a08c-ed22a6acf5fd"
+                  "key": "f52399f7-5780-43ec-8127-cce839948b9e"
                 }
               ],
               "options": [
                 {
                   "label": "درع (أصلي / ضمان)",
                   "value": "shield",
-                  "key": "96fac5c8-c0a1-4e18-b341-e41c3fd53d47"
+                  "key": "8fc0c26c-99a1-46fb-8e31-bafb70a0a134"
                 },
                 {
                   "label": "مفتاح (تركيب)",
                   "value": "wrench",
-                  "key": "a67efb92-2b27-4395-8e7a-ee5d1da5c0b0"
+                  "key": "42ffd6ff-6cfc-40c4-b6ad-ed6d94ace379"
                 },
                 {
                   "label": "بطاقة (دفع)",
                   "value": "card",
-                  "key": "a8a38516-37dc-4588-852e-f320d7180b2f"
+                  "key": "aaf24ed2-4f0e-4555-b41e-5e3635316230"
                 },
                 {
                   "label": "شاحنة (توصيل)",
                   "value": "truck",
-                  "key": "03328089-d2ed-4e86-adf5-6b154f162598"
+                  "key": "8f622e67-3f99-48fa-bdc7-f4c1705e1412"
                 },
                 {
                   "label": "إطار",
                   "value": "tire",
-                  "key": "92a3d78f-d8b5-4769-84ea-0edab5da3fd9"
+                  "key": "800df8a4-8a9f-4d77-8c9a-c9cf4d55637c"
                 },
                 {
                   "label": "تقويم",
                   "value": "cal",
-                  "key": "e804aa05-9fa5-49ec-aec3-b7e64882639e"
+                  "key": "136375ab-8314-49c4-b716-ae03ef32f4fa"
                 },
                 {
                   "label": "موقع",
                   "value": "pin",
-                  "key": "c1919d89-2e9e-4740-bd28-37d75fb9e35d"
+                  "key": "2421acc1-0481-4ffe-ad8c-62fc3c721d46"
                 },
                 {
                   "label": "جوال",
                   "value": "phone",
-                  "key": "e421afb1-b7dd-4b02-a397-7aadef6958d7"
+                  "key": "f3ba81da-2ce8-4880-893e-7da1b00a82a2"
                 },
                 {
                   "label": "بحث",
                   "value": "search",
-                  "key": "0e5075e7-fd7e-4f19-8847-c5ac5c54935f"
+                  "key": "2ccdc568-9269-4a7d-a4db-860cb0f56638"
                 },
                 {
                   "label": "قلب",
                   "value": "heart",
-                  "key": "8ea9b5e8-6f60-45c1-8260-77215184d79c"
+                  "key": "af05f53d-17a4-4bb7-b2fb-a993db606bbf"
                 },
                 {
                   "label": "شبكة",
                   "value": "grid",
-                  "key": "677e1269-a4a5-4922-8344-2b04c3145905"
+                  "key": "14b11f64-e8d7-48dd-a660-83d168971c32"
                 },
                 {
                   "label": "بيت",
                   "value": "home",
-                  "key": "90bd1f7b-91d3-47af-ac9a-6d0d9bf234d9"
+                  "key": "60d907cb-9979-4041-98f0-1f38ebc08a18"
                 },
                 {
                   "label": "كل الإطارات",
                   "value": "cat-all",
-                  "key": "fcf5aaf3-358e-44db-a08c-ed22a6acf5fd"
+                  "key": "f52399f7-5780-43ec-8127-cce839948b9e"
                 },
                 {
                   "label": "سيدان",
                   "value": "cat-sedan",
-                  "key": "98e160ce-dcad-4600-b573-2f5713cd35d2"
+                  "key": "c884a74f-406d-46ee-bb64-05b6553c7d93"
                 },
                 {
                   "label": "دفع رباعي",
                   "value": "cat-suv",
-                  "key": "a864e965-6cd3-4f6e-81fa-77546a9d4d92"
+                  "key": "a4927141-49ea-47f6-8428-42a1b9f3998d"
                 },
                 {
                   "label": "نقل وبيك أب",
                   "value": "cat-truck",
-                  "key": "397f9256-9365-4fe3-84f7-6ff2be577354"
+                  "key": "2c28f061-bf8b-4a74-9e0d-153fce20540a"
                 }
               ],
               "source": "Manual",
@@ -3801,29 +3817,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "f7471abd-f2b9-46b5-8a6c-a6dde5957862"
+              "key": "18615345-f179-45e8-b583-ff45c182efb0"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "f7471abd-f2b9-46b5-8a6c-a6dde5957862"
+              "key": "18615345-f179-45e8-b583-ff45c182efb0"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "d8ea5c6a-a4e6-4626-a7bb-bbd76b6bfbd7"
+              "key": "229a169c-13dc-4c01-8999-c500653ad675"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "324d4294-971f-48be-a0ee-d12994e4b1ab"
+              "key": "433d43d6-317f-47e7-9c0a-fcdcb6bdbec8"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "33611b3e-f0f9-4b8c-9c6a-f4e4a4cb67c5"
+              "key": "5ec45589-9b6f-4779-a5ad-ce214997bd05"
             }
           ],
           "source": "Manual",
@@ -3841,29 +3857,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "8bda8b64-afd1-492f-b385-13d125ce0b32"
+              "key": "4937c9e5-3947-4e20-90cb-9cfb1d6f63ef"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "8bda8b64-afd1-492f-b385-13d125ce0b32"
+              "key": "4937c9e5-3947-4e20-90cb-9cfb1d6f63ef"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "eb94cae8-2d9e-4c76-871e-e1d4ee77f40e"
+              "key": "465c0778-9207-462d-925a-5f82e13f097b"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "cf7eb2fc-33bc-4ffb-9aa1-56ff2f752271"
+              "key": "153a9fdb-2d48-4088-9c47-70a578270d5d"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "11d45ff4-d28a-4711-ad67-12bcc85d5cf3"
+              "key": "4ab61708-531e-4059-a1ab-9e80f124de13"
             }
           ],
           "source": "Manual",
@@ -3884,7 +3900,8 @@
           "maxLength": 60
         }
       ],
-      "key": "ef08fbba-a643-476c-8909-46610e2a8e61"
+      "key": "ef08fbba-a643-476c-8909-46610e2a8e61",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/category-cards.webp"
     },
     {
       "title": {
@@ -3899,7 +3916,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">تسوّق حسب سيارتك</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/shop-by-car.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -4177,29 +4194,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "f5151744-01bd-43c8-b90d-84fa294af42f"
+              "key": "1f247e40-9217-4c45-931a-8684c580f273"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "f5151744-01bd-43c8-b90d-84fa294af42f"
+              "key": "1f247e40-9217-4c45-931a-8684c580f273"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "511f2ebd-7f8e-42e2-bc1e-15545b101eaa"
+              "key": "fa5e778b-3df0-4b66-b33a-4f552533eb34"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "30622553-37f9-4727-9481-df1df3bc8593"
+              "key": "f41908db-bd2b-4237-8e91-50ec4690a849"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "35ff7697-c42d-4e44-b276-772908ad5845"
+              "key": "6f9032bc-8ec3-4b8d-8df3-afdc645cadf3"
             }
           ],
           "source": "Manual",
@@ -4217,29 +4234,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "c445f369-5617-46ab-a672-3f2ca5ace3db"
+              "key": "0ccaf721-2dd7-41fb-880b-8e5f50de2231"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "c445f369-5617-46ab-a672-3f2ca5ace3db"
+              "key": "0ccaf721-2dd7-41fb-880b-8e5f50de2231"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "7a91f3ae-bded-437d-b310-c3520c66c4a5"
+              "key": "248ea6eb-e79b-4b7f-8e28-a798fcd6e47e"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "b1d3fc61-9578-4b3d-94d0-e5ac2a9eebf5"
+              "key": "7e74d263-7693-4510-8b84-21767168f776"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "d9330b96-c405-473f-a5d5-2cb0cf4fa849"
+              "key": "0b57d37a-03bc-4685-aa9f-6055b1ccc75b"
             }
           ],
           "source": "Manual",
@@ -4260,7 +4277,8 @@
           "maxLength": 60
         }
       ],
-      "key": "1be5ad44-e7ec-41a3-ac74-2f9d5f5e66b2"
+      "key": "1be5ad44-e7ec-41a3-ac74-2f9d5f5e66b2",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/shop-by-car.webp"
     },
     {
       "title": {
@@ -4275,7 +4293,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">شبكة المنتجات</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/tire-grid.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -4443,44 +4461,44 @@
             {
               "label": "الأحدث",
               "value": "latest",
-              "key": "7a904281-06ae-414c-b2e8-4f149664e442"
+              "key": "5442949f-f370-4bb5-9587-afb7b941275b"
             }
           ],
           "options": [
             {
               "label": "الأكثر مبيعاً",
               "value": "best_selling",
-              "key": "a2b62b76-99e3-45c4-8e9a-d1f8f51aab07"
+              "key": "2a1a16c6-62b8-4833-b01a-30b0b003eb26"
             },
             {
               "label": "الأحدث",
               "value": "latest",
-              "key": "7a904281-06ae-414c-b2e8-4f149664e442"
+              "key": "5442949f-f370-4bb5-9587-afb7b941275b"
             },
             {
               "label": "العروض والتخفيضات",
               "value": "offers",
-              "key": "bc8d3672-8904-4d66-a5d4-1ca740a83914"
+              "key": "babe1fa5-6b3f-42bb-a7af-0412daa46793"
             },
             {
               "label": "الأعلى تقييماً",
               "value": "top-rated",
-              "key": "81873e86-e3ad-4f09-b7e9-c34edbfb6b1a"
+              "key": "e0d5c598-6590-4673-a4f9-8ae7e22fbf08"
             },
             {
               "label": "من تصنيف",
               "value": "categories",
-              "key": "1b0d55c9-e349-47f1-b348-34863f08e745"
+              "key": "fc4e941a-4336-4747-8e3b-513020a4f2ea"
             },
             {
               "label": "من ماركة",
               "value": "brands",
-              "key": "e42ac34c-e3a9-4ad6-8fc1-b519ecdfc903"
+              "key": "dd4eeb64-e9b6-4a23-ba21-eab1e18d28de"
             },
             {
               "label": "منتجات أختارها",
               "value": "selected",
-              "key": "e3146dc7-590d-4469-abe2-5166e7d424e0"
+              "key": "54c9f1cb-481b-43c8-b001-e6f10d5312c7"
             }
           ],
           "source": "Manual",
@@ -4583,19 +4601,19 @@
             {
               "label": "4 أعمدة",
               "value": "4",
-              "key": "e0dba439-9dff-4dea-b75b-bab11bacd246"
+              "key": "6f7324fb-77f5-4dfb-b551-466677c5a16c"
             }
           ],
           "options": [
             {
               "label": "4 أعمدة",
               "value": "4",
-              "key": "e0dba439-9dff-4dea-b75b-bab11bacd246"
+              "key": "6f7324fb-77f5-4dfb-b551-466677c5a16c"
             },
             {
               "label": "3 أعمدة",
               "value": "3",
-              "key": "751f3973-6055-4f92-add1-fbd67af86c35"
+              "key": "281c7748-086d-4c14-abb7-d8d0c60afadd"
             }
           ],
           "source": "Manual",
@@ -4674,29 +4692,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "37a1e81b-7514-4009-973f-74b5fcddbcc6"
+              "key": "ab80eddc-d87e-438f-9900-8a6000af520a"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "37a1e81b-7514-4009-973f-74b5fcddbcc6"
+              "key": "ab80eddc-d87e-438f-9900-8a6000af520a"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "609b79c9-ae94-4a6a-a41b-96eb8ee5ecc2"
+              "key": "7c71873c-2896-4c6f-af03-1b9d264dd433"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "600e41e7-5880-4c05-9439-70fabf3a4445"
+              "key": "1243f4ab-db87-4597-95d4-dcc2286facd9"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "13578a8b-32d4-4162-ba7a-387c45de21df"
+              "key": "e817b5ec-3207-4a56-b6c8-2a16b0d055d2"
             }
           ],
           "source": "Manual",
@@ -4714,29 +4732,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "4c3ec0ee-1e3a-4a98-b64c-3c59214a7b70"
+              "key": "e0a10159-8de5-4908-8401-6ed06811e76f"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "4c3ec0ee-1e3a-4a98-b64c-3c59214a7b70"
+              "key": "e0a10159-8de5-4908-8401-6ed06811e76f"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "9bd7130f-a229-45c7-a6bb-20b97236e16f"
+              "key": "1fec295d-8457-404e-9bdf-7c21acd50f82"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "df80d80a-6e36-4c7c-812a-3fa589a4c2f2"
+              "key": "79fd8655-e59f-4bc7-8df0-e85e3cf7a396"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "886368b4-e445-4db4-bac9-a53375cb5c91"
+              "key": "89464992-a797-4b86-8d17-ae7862ad439f"
             }
           ],
           "source": "Manual",
@@ -4757,7 +4775,8 @@
           "maxLength": 60
         }
       ],
-      "key": "0a5918bc-6181-4b79-bafc-1a49870f5eb1"
+      "key": "0a5918bc-6181-4b79-bafc-1a49870f5eb1",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/tire-grid.webp"
     },
     {
       "title": {
@@ -4772,7 +4791,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">بانر مزدوج</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/double-banner.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -5138,29 +5157,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "d837cccb-e041-4b9c-969c-d7e378c91f67"
+              "key": "842fe541-38da-46fa-af58-328d14ec6e4b"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "d837cccb-e041-4b9c-969c-d7e378c91f67"
+              "key": "842fe541-38da-46fa-af58-328d14ec6e4b"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "e2417b4c-3300-4ce3-9afb-78de21c1a858"
+              "key": "7e7eb33a-cf7c-46e7-99be-9986d086e028"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "c6db6f33-a1bb-4de5-8c3f-35f067b073c5"
+              "key": "89a00c88-18bb-4e57-b942-626f15be24e6"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "b08114e7-2e41-4799-bbd7-20a7ee2658c0"
+              "key": "8182340e-15e3-4009-99a1-779b42981318"
             }
           ],
           "source": "Manual",
@@ -5178,29 +5197,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "fb54f624-6a93-4a04-a99d-dccea340b8a7"
+              "key": "7f7749cc-4b3f-4aa4-8ea7-e86ecc8ab2a8"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "fb54f624-6a93-4a04-a99d-dccea340b8a7"
+              "key": "7f7749cc-4b3f-4aa4-8ea7-e86ecc8ab2a8"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "d380720a-ff36-4dd4-b6db-2f331ca08882"
+              "key": "0e6fab25-b37f-4c35-9a1b-394cba2ea037"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "17642d61-36a3-471a-9ffd-3b8b8538e229"
+              "key": "f338d145-9fae-455d-8da8-0bd93e6386fc"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "a064b32a-3e2f-43a3-a307-227877a72b39"
+              "key": "49fe3bdb-9ad0-437a-b9b2-1c222a937691"
             }
           ],
           "source": "Manual",
@@ -5221,7 +5240,8 @@
           "maxLength": 60
         }
       ],
-      "key": "f124fdcf-a27a-4f33-a3cb-0821294346cb"
+      "key": "f124fdcf-a27a-4f33-a3cb-0821294346cb",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/double-banner.webp"
     },
     {
       "title": {
@@ -5236,7 +5256,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">مقارنة الفئات</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/tire-picker.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -5635,24 +5655,24 @@
                 {
                   "label": "الفئة الثانية",
                   "value": "2",
-                  "key": "45367600-fa64-4fc6-8f7e-352bbe7d563f"
+                  "key": "99ce288c-eee3-4359-b1ed-68784307b57a"
                 }
               ],
               "options": [
                 {
                   "label": "الفئة الأولى",
                   "value": "1",
-                  "key": "76e23b19-b08b-49ce-8a40-38176210fc09"
+                  "key": "13c801f4-87ec-4279-a89a-6f97a105888e"
                 },
                 {
                   "label": "الفئة الثانية",
                   "value": "2",
-                  "key": "45367600-fa64-4fc6-8f7e-352bbe7d563f"
+                  "key": "99ce288c-eee3-4359-b1ed-68784307b57a"
                 },
                 {
                   "label": "الفئة الثالثة",
                   "value": "3",
-                  "key": "54ee390b-e87a-46f8-b383-0ae80dd91862"
+                  "key": "7ac53200-070b-44d4-8b49-1b7244298311"
                 }
               ],
               "source": "Manual",
@@ -5714,29 +5734,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "13914ba2-9dcb-4ae3-9724-700082f6a055"
+              "key": "85e064b4-4717-45d7-986b-1fa0d47dc70e"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "13914ba2-9dcb-4ae3-9724-700082f6a055"
+              "key": "85e064b4-4717-45d7-986b-1fa0d47dc70e"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "65a706c1-e4de-48af-8ea9-fb35dc6c6bf8"
+              "key": "5bf752f2-eb5d-4900-a14f-d684ad3ae686"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "2c2710a8-87c9-4c95-8084-a952611b4690"
+              "key": "ed31d846-616d-4abe-9dce-65d5487af429"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "505d4edb-5513-418f-8c53-6d02d48fada7"
+              "key": "95af17b4-2e1e-450e-8f90-1b7fc96a1aa8"
             }
           ],
           "source": "Manual",
@@ -5754,29 +5774,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "a3ae31cc-e835-473a-95b9-99a879da7f9e"
+              "key": "8f3616fa-9f73-4749-a457-b48764d47c6e"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "a3ae31cc-e835-473a-95b9-99a879da7f9e"
+              "key": "8f3616fa-9f73-4749-a457-b48764d47c6e"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "060109ac-22f5-43ae-962c-bf124560621b"
+              "key": "248d664f-14b4-4341-92e5-ea2d3351d29d"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "420d6bb6-e9bd-4226-b457-4679f745c569"
+              "key": "61ac57bc-8fb7-4f58-a0da-2142ef158b5a"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "f8f24da9-a4f7-481a-92b7-8a15e648e321"
+              "key": "055ce50a-9f21-4eb1-8346-23140d13c3c3"
             }
           ],
           "source": "Manual",
@@ -5797,7 +5817,8 @@
           "maxLength": 60
         }
       ],
-      "key": "c5efcf3b-a7b3-41de-840d-2b99c25aa46a"
+      "key": "c5efcf3b-a7b3-41de-840d-2b99c25aa46a",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/tire-picker.webp"
     },
     {
       "title": {
@@ -5812,7 +5833,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">شبكة الخدمات</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/services-bento.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -6506,29 +6527,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "1e6f4cf2-0e63-426a-8c19-a29c7eab9d3d"
+              "key": "1af86c8e-bc2a-44b7-b93b-8ab2e2bee0a5"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "1e6f4cf2-0e63-426a-8c19-a29c7eab9d3d"
+              "key": "1af86c8e-bc2a-44b7-b93b-8ab2e2bee0a5"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "cec958f3-b217-4794-bdfe-8ec1b2a35524"
+              "key": "c616f2ac-aece-4220-8822-7ed523e9a7ac"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "6d71a4c2-e0b4-4d7d-ae07-4a51255ac71f"
+              "key": "35228436-d398-4c20-b0f5-ea1b732e8519"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "726799d9-d2b0-4a2d-8505-62977b3cb988"
+              "key": "f95601fe-a20b-4817-8e16-6762d4ee9c9a"
             }
           ],
           "source": "Manual",
@@ -6546,29 +6567,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "6c31bf64-520d-4b26-9e50-183de1fe5b9d"
+              "key": "676c9da8-75b6-42f9-b402-378037c250fa"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "6c31bf64-520d-4b26-9e50-183de1fe5b9d"
+              "key": "676c9da8-75b6-42f9-b402-378037c250fa"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "eedafe69-a4f1-41dc-919c-a4a1cdf5f45a"
+              "key": "0ab2054f-3693-4763-a3d2-0192b4caffa6"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "8c6b6ed0-92c3-48b7-baff-ea61a6fcc57f"
+              "key": "e1a70d98-f1a8-42c9-a9df-466074edafe2"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "27eb3f45-3856-469a-9ce6-802b54d6e684"
+              "key": "1bc88143-cf26-4449-8ab8-75812ed5fa84"
             }
           ],
           "source": "Manual",
@@ -6589,7 +6610,8 @@
           "maxLength": 60
         }
       ],
-      "key": "3e7d0969-53a7-4087-b309-559b09554f57"
+      "key": "3e7d0969-53a7-4087-b309-559b09554f57",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/services-bento.webp"
     },
     {
       "title": {
@@ -6604,7 +6626,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">شريط متحرك</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/ticker.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -6772,24 +6794,24 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "c4653692-8121-4236-a29f-7f9a32d86260"
+              "key": "5e09ccee-f638-4d2c-9be2-7fca483e6215"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "c4653692-8121-4236-a29f-7f9a32d86260"
+              "key": "5e09ccee-f638-4d2c-9be2-7fca483e6215"
             },
             {
               "label": "بطيئة",
               "value": "slow",
-              "key": "6aaa3a73-c723-4479-8d66-2b8bdfac1ba8"
+              "key": "deb674f9-3e0b-4375-9adb-fbbf491bdc6b"
             },
             {
               "label": "سريعة",
               "value": "fast",
-              "key": "f5335ade-d1b2-4000-a2e5-63319c4b3303"
+              "key": "a5b330b2-a2b8-4587-8d1f-4d446308895d"
             }
           ],
           "source": "Manual",
@@ -6818,19 +6840,19 @@
             {
               "label": "غامق",
               "value": "dark",
-              "key": "56714330-a711-4da2-ad04-d1cd524a77fc"
+              "key": "102e732f-05b3-4187-a504-1f53b1210efd"
             }
           ],
           "options": [
             {
               "label": "غامق",
               "value": "dark",
-              "key": "56714330-a711-4da2-ad04-d1cd524a77fc"
+              "key": "102e732f-05b3-4187-a504-1f53b1210efd"
             },
             {
               "label": "ذهبي",
               "value": "gold",
-              "key": "46382a6c-0eaf-4912-8450-522e91f2ccbd"
+              "key": "422c7452-1971-4fe3-854f-64bdecd0c584"
             }
           ],
           "source": "Manual",
@@ -6876,29 +6898,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "bc1b88d0-ac98-4175-9653-089ba7983326"
+              "key": "d2a51270-8deb-4d87-a14b-f6a6f06565f3"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "bc1b88d0-ac98-4175-9653-089ba7983326"
+              "key": "d2a51270-8deb-4d87-a14b-f6a6f06565f3"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "d1564703-e9da-4ed4-a062-627baf7dca50"
+              "key": "7d4de224-2059-4696-a6a7-5933175562e3"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "4b347a23-cfe4-4ade-9dd3-348396a81ed6"
+              "key": "11392e03-dc08-40fc-9e7e-9a16272f68c7"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "f9fbcd64-d420-4cd2-bbf1-b90df27a2f01"
+              "key": "df2cfe08-2fc7-421c-8a8d-ff4d526bae74"
             }
           ],
           "source": "Manual",
@@ -6916,29 +6938,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "44705515-cb02-42af-a09f-32ea136e07a0"
+              "key": "76133c36-0d6e-470b-9fd4-3f2f47512ed2"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "44705515-cb02-42af-a09f-32ea136e07a0"
+              "key": "76133c36-0d6e-470b-9fd4-3f2f47512ed2"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "6ba115ae-eddc-41ed-941e-9edfedf80ed2"
+              "key": "188dea69-bad9-4112-874e-08648135f362"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "2fcf44d8-f2d3-405a-9374-15bdf87f689b"
+              "key": "ba34309b-f8e3-4a4e-afd9-4e14df29f5ac"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "1acc717c-d21d-4511-b383-6f10ea14b9fe"
+              "key": "9a6a3c64-a946-444e-986a-b6c9455efccc"
             }
           ],
           "source": "Manual",
@@ -6959,7 +6981,8 @@
           "maxLength": 60
         }
       ],
-      "key": "031644d2-cc8a-4cf0-ba88-940bbe577446"
+      "key": "031644d2-cc8a-4cf0-ba88-940bbe577446",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/ticker.webp"
     },
     {
       "title": {
@@ -6974,7 +6997,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">صف الخدمات</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/services-row.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -7161,24 +7184,24 @@
                 {
                   "label": "صورة",
                   "value": "photo",
-                  "key": "e7fb71a3-e175-4b42-babd-b7b7401dfbf9"
+                  "key": "71492310-3f6b-4e4e-a5b0-9c2c0395e74d"
                 }
               ],
               "options": [
                 {
                   "label": "صورة",
                   "value": "photo",
-                  "key": "e7fb71a3-e175-4b42-babd-b7b7401dfbf9"
+                  "key": "71492310-3f6b-4e4e-a5b0-9c2c0395e74d"
                 },
                 {
                   "label": "رسمة شاحنة التوصيل",
                   "value": "truck",
-                  "key": "1aac48c7-d638-4c12-b434-cf173a0c6945"
+                  "key": "17fc393e-1f3a-433d-84c4-f35ecf389181"
                 },
                 {
                   "label": "رسمة دليل المقاسات (غامقة)",
                   "value": "guide",
-                  "key": "32959014-bd5c-4095-b1af-6bb67c72c2ff"
+                  "key": "c5daa8ed-3c2f-4fa4-b269-969c0ac7827b"
                 }
               ],
               "source": "Manual",
@@ -7380,29 +7403,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "1ff7cd8b-6bd8-44d5-bcc7-ce8bfe01edcc"
+              "key": "351d98e7-cd5e-4f91-8fe4-e53cd49180af"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "1ff7cd8b-6bd8-44d5-bcc7-ce8bfe01edcc"
+              "key": "351d98e7-cd5e-4f91-8fe4-e53cd49180af"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "34544dbc-10b4-4127-a186-f766848a3466"
+              "key": "344fe26b-91a9-4605-a923-8a812947dd3c"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "db037d7c-f7bf-4110-8d01-254b7cab96bb"
+              "key": "e2e6c5ab-2f36-4f72-8485-660270a5391d"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "84567875-417d-41a4-a721-41c43d0ac2ed"
+              "key": "74c6e12c-4dd0-4948-8241-eb64f0725896"
             }
           ],
           "source": "Manual",
@@ -7420,29 +7443,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "a2f4877d-5cf4-4c9a-bf53-ece9b6862916"
+              "key": "860a211b-302b-4c44-b18b-9d45c831130a"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "a2f4877d-5cf4-4c9a-bf53-ece9b6862916"
+              "key": "860a211b-302b-4c44-b18b-9d45c831130a"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "220332b7-f8e4-44a2-9b53-7fe561565a78"
+              "key": "a47e4b2a-87fc-4f9e-9470-19075f6de9b1"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "f44df037-b776-49e4-a344-c90a257d706f"
+              "key": "335cd927-d973-4f17-b131-2f4c7f6cbab4"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "cee18db3-c0c6-453a-8d0f-97f01f91906f"
+              "key": "82bc6099-96f9-4f11-a385-10e337cdb9e2"
             }
           ],
           "source": "Manual",
@@ -7463,7 +7486,8 @@
           "maxLength": 60
         }
       ],
-      "key": "ced1208b-fd64-4768-9a43-d937f5fb8594"
+      "key": "ced1208b-fd64-4768-9a43-d937f5fb8594",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/services-row.webp"
     },
     {
       "title": {
@@ -7478,7 +7502,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">بنر التركيب الغامق</span></div>"
+          "value": "<div><img class='w-full' src='https://mohammedaboseedo.github.io/tires-store-preview/covers/install-banner.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -7547,19 +7571,19 @@
             {
               "label": "يسار",
               "value": "left",
-              "key": "5ad87afe-349e-42ea-921d-c330f05d2e7d"
+              "key": "a9c0ecea-9b55-49cc-bc5b-85d3a6823eda"
             }
           ],
           "options": [
             {
               "label": "يسار",
               "value": "left",
-              "key": "5ad87afe-349e-42ea-921d-c330f05d2e7d"
+              "key": "a9c0ecea-9b55-49cc-bc5b-85d3a6823eda"
             },
             {
               "label": "يمين",
               "value": "right",
-              "key": "80205887-e035-4093-bf14-5075e63174af"
+              "key": "ece5e0f2-6bc9-4fea-8d39-31a07b71da06"
             }
           ],
           "source": "Manual",
@@ -7813,29 +7837,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "2737ab88-68a8-4cd1-aa18-c9e8ebd0f704"
+              "key": "5b116472-4414-49d6-a9a4-2c850e93d713"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "2737ab88-68a8-4cd1-aa18-c9e8ebd0f704"
+              "key": "5b116472-4414-49d6-a9a4-2c850e93d713"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "e2054537-6230-4e02-a312-e136f8715a34"
+              "key": "14d0c542-85e7-4156-b926-b95d95ae3904"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "e8ff8b7c-f6dc-4703-aa65-0a32cbad81a3"
+              "key": "61110d38-8a50-4697-a50c-9cfd9c1948f3"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "fed1a5af-0a89-4ca5-9468-fc23efa6db2a"
+              "key": "93ddcd97-886b-4197-99b4-b403491fe85a"
             }
           ],
           "source": "Manual",
@@ -7853,29 +7877,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "cf0237f6-68e3-4352-ada8-87437650132e"
+              "key": "ed830091-ce8f-47ab-99bf-5e7e1a149458"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "cf0237f6-68e3-4352-ada8-87437650132e"
+              "key": "ed830091-ce8f-47ab-99bf-5e7e1a149458"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "52b9bdb5-c648-4d5e-bca2-b65fbccdba16"
+              "key": "5c31eeb3-d0ec-476a-84c0-721c6c574e76"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "f9e1fb76-bf1d-4a52-88e6-ab969c336ca7"
+              "key": "0186f644-f398-458e-9f28-86b9b8280e0f"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "0b91d2b9-05f5-477e-b06e-71db3c45f49f"
+              "key": "bf961c6d-b024-4d3f-8bbd-ec546d5fc4a6"
             }
           ],
           "source": "Manual",
@@ -7896,7 +7920,8 @@
           "maxLength": 60
         }
       ],
-      "key": "02995e8c-a38f-4ec5-90a8-870140cb5b4f"
+      "key": "02995e8c-a38f-4ec5-90a8-870140cb5b4f",
+      "image": "https://mohammedaboseedo.github.io/tires-store-preview/covers/install-banner.webp"
     },
     {
       "key": "186b3f4f-25cf-4d3c-abca-cef7eed6f0ab",

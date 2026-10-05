@@ -324,3 +324,11 @@
 .tc-s .brands.tc-grey .mq a:hover img { filter: none; opacity: 1; }
 .tc-s .brands.tc-still .mq-track { animation: none; flex-wrap: wrap; width: auto; row-gap: 14px; }
 .tc-s .brands.tc-still .mq { -webkit-mask: none; mask: none; }
+
+/* #6 category cards: 2–6 cards, optional light background, custom image in the icon tile */
+@media (min-width: 1101px) {
+  .tc-s .catg.tc-n-2 { grid-template-columns: repeat(2, 1fr); }
+  .tc-s .catg.tc-n-3, .tc-s .catg.tc-n-5, .tc-s .catg.tc-n-6 { grid-template-columns: repeat(3, 1fr); }
+}
+.tc-s .cats.tc-light { background: #faf8f2; }
+.tc-s .cat .cic img { position: static; width: 70%; height: 70%; max-width: none; object-fit: contain; transform: none; }

@@ -4,6 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { BenefitsStrip } from '../../app/components/home/BenefitsStrip';
 import { TireSlider } from '../../app/components/home/TireSlider';
 import { BrandsMarquee } from '../../app/components/home/BrandsMarquee';
+import { CategoryCards } from '../../app/components/home/CategoryCards';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -55,5 +56,14 @@ describe('#5 brands marquee', () => {
     const html = renderToString(<BrandsMarquee data={{ brands_source: 'manual', animate: false, brands: [{ 'brands.name': 'ACME' }] }} />);
     expect(html.match(/ACME/g)?.length).toBe(1);
     expect(html).toContain('tc-still');
+  });
+});
+
+describe('#6 category cards', () => {
+  it('renders 4 numbered cards with the first highlighted', () => {
+    const html = renderToString(<CategoryCards data={{}} />);
+    expect(html).toContain('catg tc-n-4');
+    expect(html).toContain('class="cat on"');
+    expect(html).toContain('>04<');
   });
 });

@@ -23,6 +23,7 @@ import {
   BenefitsStrip,
   TireSlider,
   BrandsMarquee,
+  CategoryCards,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -64,6 +65,7 @@ registerHomeComponents({
   'benefits-strip': BenefitsStrip,
   'tire-slider': TireSlider,
   'brands-marquee': BrandsMarquee,
+  'category-cards': CategoryCards,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

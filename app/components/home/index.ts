@@ -13,3 +13,4 @@ export { SizeFinder } from './SizeFinder';
 export { BenefitsStrip } from './BenefitsStrip';
 export { TireSlider } from './TireSlider';
 export { BrandsMarquee } from './BrandsMarquee';
+export { CategoryCards } from './CategoryCards';

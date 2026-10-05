@@ -68,6 +68,33 @@ const components = [
     F.sw('grayscale', 'الشعارات رمادية (تتلوّن عند المرور)', true),
     ...F.common('my-brands'),
   ]),
+
+  // #6 كروت الفئات
+  def('home.category-cards', 'كروت الفئات', 'Category Cards', 'sicon-layout-grid-rearrange', [
+    F.cover('كروت الفئات'),
+    F.tip('كروت مرقّمة توصل الزبون لفئات سيارته (سيدان، دفع رباعي…). اربط كل كرت بتصنيف من متجرك.'),
+    F.head('h-texts', 'النصوص'),
+    F.text('kicker', 'السطر الصغير فوق العنوان', 'لكل سيارة، اختيار', 40),
+    F.text('title', 'العنوان', 'جاهزة لطريقك.', 60),
+    F.text('text', 'النص الجانبي', 'اختر فئة سيارتك، واكتشف الخيارات المناسبة.', 120),
+    F.head('h-cards', 'الكروت'),
+    F.collection('cards', 'الكروت', 'كرت', [
+      F.icon('icon', 'الأيقونة', 'cat-all'),
+      F.image('image', 'صورة بدل الأيقونة (اختياري)', 'PNG بخلفية شفافة، 200×200 بكسل', 200, 200),
+      F.text('title', 'العنوان', 'سيارات سيدان', 30),
+      F.text('text', 'السطر', 'راحة للاستخدام اليومي', 50),
+      F.link('link', 'الرابط', 'اختر التصنيف المرتبط بهالفئة'),
+      F.sw('highlight', 'كرت مميّز (ذهبي)', false),
+    ], [
+      { 'cards.icon': 'cat-all', 'cards.title': 'جميع الإطارات', 'cards.text': 'استكشف المجموعة', 'cards.highlight': true },
+      { 'cards.icon': 'cat-sedan', 'cards.title': 'سيارات سيدان', 'cards.text': 'راحة للاستخدام اليومي', 'cards.highlight': false },
+      { 'cards.icon': 'cat-suv', 'cards.title': 'دفع رباعي', 'cards.text': 'ثقة في كل رحلة', 'cards.highlight': false },
+      { 'cards.icon': 'cat-truck', 'cards.title': 'نقل و بيك أب', 'cards.text': 'تحمّل ومسافات طويلة', 'cards.highlight': false },
+    ], 2, 6),
+    F.head('h-look', 'الشكل'),
+    F.sw('light_bg', 'خلفية القسم فاتحة (بيج)', false),
+    ...F.common('my-categories'),
+  ]),
 ];
 
 let after = 'home.size-finder';

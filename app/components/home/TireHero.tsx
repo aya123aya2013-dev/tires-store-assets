@@ -105,7 +105,14 @@ function BannerSlider({ data }: TireHeroProps) {
     );
   }
 
-  const cls = ['tc', 'tc-banner', `tc-banner--h-${height}`, `tc-banner--m-${mobRatio}`, `tc-banner--${fit}`, boxed ? 'tc-banner--boxed' : ''].join(' ');
+  const posX = opt(data.content_x, 'start'); // start | center | end
+  const posY = opt(data.content_y, 'center'); // top | center | bottom
+  const posYm = opt(data.content_y_mobile, 'bottom');
+  const shade = opt(data.shade, 'light'); // none | light | medium | strong
+  const cls = [
+    'tc', 'tc-banner', `tc-banner--h-${height}`, `tc-banner--m-${mobRatio}`, `tc-banner--${fit}`, boxed ? 'tc-banner--boxed' : '',
+    `tc-banner--x-${posX}`, `tc-banner--y-${posY}`, `tc-banner--ym-${posYm}`, `tc-banner--shade-${shade}`,
+  ].join(' ');
   return (
     <div className={cls} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} aria-roledescription={many ? 'carousel' : undefined}>
       <div className="tc-banner__track" style={{ transform: `translateX(-${i * 100}%)` }}>
@@ -215,7 +222,14 @@ function TireDesign({ data }: TireHeroProps) {
   const cur = parts[active] ?? parts[0];
 
   return (
-    <div className="tc tc-hero">
+    <div
+      className={[
+        'tc', 'tc-hero',
+        `tc-hero--m-${opt(data.mobile_order, 'image')}`, // image | text — what comes first on phones
+        `tc-hero--d-${opt(data.desktop_side, 'text-right')}`, // text-right | text-left
+        `tc-hero--a-${opt(data.mobile_align, 'center')}`, // center | start
+      ].join(' ')}
+    >
       <div className="tc-wrap tc-hero__grid">
         <div className="tc-hero__copy">
           <span className="tc-kicker">{kicker}</span>

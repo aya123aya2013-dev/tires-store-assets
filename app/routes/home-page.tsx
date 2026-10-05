@@ -10,6 +10,8 @@ import { Home } from '@salla.sa/twilight-theme-engine/routes/home';
 import type { HomeLoaderData } from '@salla.sa/twilight-theme-engine/routes/home';
 import { HomeSkeleton } from '@salla.sa/twilight-theme-engine/skeleton';
 import { withHead } from '@salla.sa/twilight-theme-engine/tanstack';
+import { useEffect, useState } from 'react';
+import { TcPreview } from '../components/home/TcPreview';
 
 export const Route = createFileRoute('/{-$locale}/')({
   loader: ({ params }): Promise<HomeLoaderData> => Home.loader({ locale: params.locale }),
@@ -20,5 +22,8 @@ export const Route = createFileRoute('/{-$locale}/')({
 
 function HomeComponent() {
   const data: HomeLoaderData = Route.useLoaderData();
-  return <Home.Component {...data} />;
+  // DEV-ONLY: /?tc-preview shows our components with sample data (no Salla editor needed).
+  const [preview, setPreview] = useState(false);
+  useEffect(() => setPreview(new URLSearchParams(window.location.search).has('tc-preview')), []);
+  return preview ? <TcPreview /> : <Home.Component {...data} />;
 }

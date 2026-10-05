@@ -156,3 +156,43 @@
   }
 }
 @media (prefers-reduced-motion: reduce) { .tc-banner__track { transition: none; } }
+
+/* ---------- #1 layout controls (merchant) ---------- */
+// tire mode: desktop side + mobile order + mobile text alignment
+.tc-hero--d-text-left .tc-hero__copy { order: 2; }
+@media (max-width: 1100px) {
+  .tc-hero--m-image .tc-hero__stage { order: -1; margin-top: 0; }
+  .tc-hero--m-image .tc-hero__grid { padding-top: 10px; }
+  .tc-hero--a-start .tc-hero__copy { text-align: start; }
+  .tc-hero--a-start .tc-hero__cta,
+  .tc-hero--a-start .tc-hero__proof { justify-content: flex-start; }
+  .tc-hero--a-start .tc-lead { margin-inline: 0; }
+}
+@media (max-width: 640px) {
+  .tc-hero--m-image .tc-hero__stage { margin-top: 70px; margin-bottom: 10px; } // room for the size popup above the tire
+}
+
+// image mode: the picture fills the whole slide; text + buttons sit ON the image
+.tc-banner__slide > a { height: 100%; }
+.tc-banner:not(.tc-banner--h-auto) .tc-banner__slide :is(a, picture, img) { height: 100%; }
+.tc-banner__over { padding-block: 32px; }
+.tc-banner__over .tc-wrap { display: flex; flex-direction: column; align-items: flex-start; }
+.tc-banner--x-center .tc-banner__over .tc-wrap { align-items: center; text-align: center; }
+.tc-banner--x-end .tc-banner__over .tc-wrap { align-items: flex-end; text-align: end; }
+.tc-banner--y-top .tc-banner__over { align-items: flex-start; }
+.tc-banner--y-center .tc-banner__over { align-items: center; }
+.tc-banner--y-bottom .tc-banner__over { align-items: flex-end; }
+// shade = light shadow that separates text from the photo (merchant picks strength)
+.tc-banner--shade-none .tc-banner__over { background: none; text-shadow: 0 2px 10px rgba(0, 0, 0, .35); }
+.tc-banner--shade-light .tc-banner__over { background: linear-gradient(270deg, rgba(14, 15, 16, .45), rgba(14, 15, 16, .08) 70%); }
+.tc-banner--shade-medium .tc-banner__over { background: linear-gradient(270deg, rgba(14, 15, 16, .65), rgba(14, 15, 16, .15) 75%); }
+.tc-banner--shade-strong .tc-banner__over { background: rgba(14, 15, 16, .55); }
+@media (max-width: 767px) {
+  .tc-banner:not(.tc-banner--m-auto) .tc-banner__slide :is(a, picture, img) { height: 100%; }
+  .tc-banner__over { padding-block: 22px 40px; }
+  .tc-banner--ym-top .tc-banner__over { align-items: flex-start; }
+  .tc-banner--ym-center .tc-banner__over { align-items: center; }
+  .tc-banner--ym-bottom .tc-banner__over { align-items: flex-end; }
+  .tc-banner--shade-light .tc-banner__over { background: linear-gradient(0deg, rgba(14, 15, 16, .55), rgba(14, 15, 16, .05) 70%); }
+  .tc-banner--shade-medium .tc-banner__over { background: linear-gradient(0deg, rgba(14, 15, 16, .72), rgba(14, 15, 16, .12) 75%); }
+}

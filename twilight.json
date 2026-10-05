@@ -625,6 +625,179 @@
           ]
         },
         {
+          "id": "content_x",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "مكان النص والأزرار فوق الصورة (أفقي)",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "يمين",
+              "value": "start",
+              "key": "content_x-start"
+            }
+          ],
+          "options": [
+            {
+              "label": "يمين",
+              "value": "start",
+              "key": "content_x-start"
+            },
+            {
+              "label": "منتصف",
+              "value": "center",
+              "key": "content_x-center"
+            },
+            {
+              "label": "يسار",
+              "value": "end",
+              "key": "content_x-end"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "content_y",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "مكان النص والأزرار (عمودي) على الكمبيوتر",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "منتصف",
+              "value": "center",
+              "key": "content_y-center"
+            }
+          ],
+          "options": [
+            {
+              "label": "أعلى",
+              "value": "top",
+              "key": "content_y-top"
+            },
+            {
+              "label": "منتصف",
+              "value": "center",
+              "key": "content_y-center"
+            },
+            {
+              "label": "أسفل",
+              "value": "bottom",
+              "key": "content_y-bottom"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "content_y_mobile",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "مكان النص والأزرار (عمودي) على الجوال",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "أسفل",
+              "value": "bottom",
+              "key": "content_y_mobile-bottom"
+            }
+          ],
+          "options": [
+            {
+              "label": "أعلى",
+              "value": "top",
+              "key": "content_y_mobile-top"
+            },
+            {
+              "label": "منتصف",
+              "value": "center",
+              "key": "content_y_mobile-center"
+            },
+            {
+              "label": "أسفل",
+              "value": "bottom",
+              "key": "content_y_mobile-bottom"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "shade",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "الظل خلف النص (للوضوح)",
+          "description": "ظل خفيف بيفصل الكتابة عن الصورة",
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "خفيف",
+              "value": "light",
+              "key": "shade-light"
+            }
+          ],
+          "options": [
+            {
+              "label": "بدون",
+              "value": "none",
+              "key": "shade-none"
+            },
+            {
+              "label": "خفيف",
+              "value": "light",
+              "key": "shade-light"
+            },
+            {
+              "label": "متوسط",
+              "value": "medium",
+              "key": "shade-medium"
+            },
+            {
+              "label": "قوي",
+              "value": "strong",
+              "key": "shade-strong"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
           "type": "string",
           "icon": "sicon-format-text-alt",
           "label": "السطر الصغير فوق العنوان",
@@ -1135,6 +1308,117 @@
               "id": "parts_show",
               "operation": "=",
               "value": true
+            }
+          ]
+        },
+        {
+          "id": "desktop_side",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "مكان النصوص على الكمبيوتر",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "النصوص يمين والإطار يسار",
+              "value": "text-right",
+              "key": "desktop_side-text-right"
+            }
+          ],
+          "options": [
+            {
+              "label": "النصوص يمين والإطار يسار",
+              "value": "text-right",
+              "key": "desktop_side-text-right"
+            },
+            {
+              "label": "النصوص يسار والإطار يمين",
+              "value": "text-left",
+              "key": "desktop_side-text-left"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "mobile_order",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "الترتيب على الجوال",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "الصورة أولاً ثم النصوص والأزرار",
+              "value": "image",
+              "key": "mobile_order-image"
+            }
+          ],
+          "options": [
+            {
+              "label": "الصورة أولاً ثم النصوص والأزرار",
+              "value": "image",
+              "key": "mobile_order-image"
+            },
+            {
+              "label": "النصوص والأزرار أولاً ثم الصورة",
+              "value": "text",
+              "key": "mobile_order-text"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
+            }
+          ]
+        },
+        {
+          "id": "mobile_align",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "محاذاة النصوص على الجوال",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "في المنتصف",
+              "value": "center",
+              "key": "mobile_align-center"
+            }
+          ],
+          "options": [
+            {
+              "label": "في المنتصف",
+              "value": "center",
+              "key": "mobile_align-center"
+            },
+            {
+              "label": "على اليمين",
+              "value": "start",
+              "key": "mobile_align-start"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": false
             }
           ]
         }

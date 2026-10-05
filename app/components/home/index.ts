@@ -8,3 +8,4 @@ export { PhotosSlider } from './PhotosSlider';
 export { ProductsSlider } from './ProductsSlider';
 export { SliderProductsWithHeader } from './SliderProductsWithHeader';
 export { EnhancedSquareBanners } from './EnhancedSquareBanners';
+export { TireHero } from './TireHero';

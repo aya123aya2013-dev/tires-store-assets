@@ -296,6 +296,429 @@
   ],
   "components": [
     {
+      "key": "7b2c9f3e-tire-hero-0001-ts0000000001",
+      "title": {
+        "ar": "بنر الإطار (تايرز ستور)",
+        "en": "Tire Hero (Tires Store)"
+      },
+      "icon": "sicon-image",
+      "path": "home.tire-hero",
+      "fields": [
+        {
+          "type": "static",
+          "format": "description",
+          "id": "tc-cover",
+          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">بنر الإطار</span></div>"
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "tc-tip",
+          "value": "<div>💡 يفضّل أن يكون أول عنصر بالصفحة. استخدم صورة إطار بخلفية شفافة (PNG) ومن الأمام حتى تظهر أرقام المقاس على جانبه.</div>"
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "السطر الصغير فوق العنوان",
+          "multilanguage": true,
+          "id": "kicker",
+          "value": "إطارات أصلية · تركيب بنفس اليوم بالرياض",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "إطارات أصلية · تركيب بنفس اليوم بالرياض",
+          "minLength": 0,
+          "maxLength": 100
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "العنوان — السطر الأول",
+          "multilanguage": true,
+          "id": "title_1",
+          "value": "مقاسك مكتوب",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "مقاسك مكتوب",
+          "minLength": 0,
+          "maxLength": 100
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "العنوان — السطر الثاني (ذهبي)",
+          "multilanguage": true,
+          "id": "title_2",
+          "value": "على إطارك.",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "على إطارك.",
+          "minLength": 0,
+          "maxLength": 100
+        },
+        {
+          "type": "string",
+          "icon": "sicon-typography",
+          "label": "الوصف",
+          "multilanguage": true,
+          "id": "text",
+          "value": "اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.",
+          "description": null,
+          "format": "textarea",
+          "required": false,
+          "placeholder": "اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.",
+          "minLength": 0,
+          "maxLength": "256"
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "الزر الأساسي — النص",
+          "multilanguage": true,
+          "id": "btn1_text",
+          "value": "تسوّق حسب المقاس",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "تسوّق حسب المقاس",
+          "minLength": 0,
+          "maxLength": 40
+        },
+        {
+          "type": "string",
+          "icon": "sicon-link",
+          "label": "الزر الأساسي — الرابط",
+          "multilanguage": false,
+          "id": "btn1_link",
+          "value": "/#size",
+          "required": false,
+          "format": "text",
+          "description": "رابط داخل المتجر مثل /help أو رابط كامل",
+          "placeholder": "/#size",
+          "minLength": 0,
+          "maxLength": 300
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إظهار الزر الثاني",
+          "description": null,
+          "id": "btn2_show",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "الزر الثاني — النص",
+          "multilanguage": true,
+          "id": "btn2_text",
+          "value": "اكتشف خدمة التركيب",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "اكتشف خدمة التركيب",
+          "minLength": 0,
+          "maxLength": 40,
+          "conditions": [
+            {
+              "id": "btn2_show",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "icon": "sicon-link",
+          "label": "الزر الثاني — الرابط",
+          "multilanguage": false,
+          "id": "btn2_link",
+          "value": "/help#install",
+          "required": false,
+          "format": "text",
+          "description": "رابط داخل المتجر مثل /help أو رابط كامل",
+          "placeholder": "/help#install",
+          "minLength": 0,
+          "maxLength": 300,
+          "conditions": [
+            {
+              "id": "btn2_show",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إظهار شريط الأرقام تحت الأزرار",
+          "description": null,
+          "id": "stats_show",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "id": "stats",
+          "type": "collection",
+          "format": "collection",
+          "required": false,
+          "minLength": 0,
+          "maxLength": 3,
+          "label": "الأرقام",
+          "item_label": "رقم",
+          "conditions": [
+            {
+              "id": "stats_show",
+              "operation": "=",
+              "value": true
+            }
+          ],
+          "value": [
+            {
+              "stats.value": "+5,000",
+              "stats.label": "عميل"
+            },
+            {
+              "stats.value": "4.9 ★",
+              "stats.label": "تقييم المتجر"
+            },
+            {
+              "stats.value": "نفس اليوم",
+              "stats.label": "تركيب بالرياض"
+            }
+          ],
+          "fields": [
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "الرقم",
+              "multilanguage": true,
+              "id": "stats.value",
+              "value": "+5,000",
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "+5,000",
+              "minLength": 0,
+              "maxLength": 20
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "الوصف",
+              "multilanguage": true,
+              "id": "stats.label",
+              "value": "عميل",
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "عميل",
+              "minLength": 0,
+              "maxLength": 30
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "icon": "sicon-image",
+          "value": null,
+          "label": "صورة الإطار",
+          "id": "tire_image",
+          "format": "image",
+          "required": false,
+          "placeholder": null,
+          "description": "* PNG بخلفية شفافة، 1400×1400 بكسل. اتركها فارغة لاستخدام صورة الثيم.",
+          "settings": {
+            "height": 1400,
+            "width": 1400
+          }
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إظهار الحرف الكبير خلف الإطار",
+          "description": null,
+          "id": "giant_show",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "الحرف الكبير",
+          "multilanguage": true,
+          "id": "giant_text",
+          "value": "R16",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "R16",
+          "minLength": 0,
+          "maxLength": 4,
+          "conditions": [
+            {
+              "id": "giant_show",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "حركة طفو الإطار",
+          "description": null,
+          "id": "float_anim",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إظهار أرقام المقاس على جانب الإطار",
+          "description": "عند المرور على كل رقم تظهر بطاقة تشرح معناه",
+          "id": "parts_show",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "id": "parts",
+          "type": "collection",
+          "format": "collection",
+          "required": false,
+          "minLength": 0,
+          "maxLength": 8,
+          "label": "أجزاء المقاس",
+          "item_label": "جزء",
+          "conditions": [
+            {
+              "id": "parts_show",
+              "operation": "=",
+              "value": true
+            }
+          ],
+          "value": [
+            {
+              "parts.code": "P",
+              "parts.name": "نوع الإطار",
+              "parts.text": "P لسيارات الركاب، و LT للنقل الخفيف."
+            },
+            {
+              "parts.code": "205",
+              "parts.name": "العرض",
+              "parts.text": "عرض الإطار من جانب لجانب بالمليمتر."
+            },
+            {
+              "parts.code": "55",
+              "parts.name": "نسبة الارتفاع",
+              "parts.text": "ارتفاع جانب الإطار = 55% من عرضه."
+            },
+            {
+              "parts.code": "R",
+              "parts.name": "نوع البناء",
+              "parts.text": "R يعني بناء شعاعي، و ZR للسرعات العالية."
+            },
+            {
+              "parts.code": "16",
+              "parts.name": "قطر الجنط",
+              "parts.text": "بالبوصة، ولازم يطابق جنط سيارتك."
+            },
+            {
+              "parts.code": "91",
+              "parts.name": "مؤشر الحمولة",
+              "parts.text": "يتحمّل حتى 615 كغ لكل إطار."
+            },
+            {
+              "parts.code": "V",
+              "parts.name": "مؤشر السرعة",
+              "parts.text": "مناسب لسرعات حتى 240 كم/س."
+            },
+            {
+              "parts.code": "0324",
+              "parts.name": "تاريخ الصنع",
+              "parts.text": "الأسبوع 03 من سنة 2024 — نضمن تاريخ حديث."
+            }
+          ],
+          "fields": [
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "الرقم كما يظهر على الإطار",
+              "multilanguage": true,
+              "id": "parts.code",
+              "value": "205",
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "205",
+              "minLength": 0,
+              "maxLength": 6
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "الاسم",
+              "multilanguage": true,
+              "id": "parts.name",
+              "value": "العرض",
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "العرض",
+              "minLength": 0,
+              "maxLength": 30
+            },
+            {
+              "type": "string",
+              "icon": "sicon-typography",
+              "label": "الشرح",
+              "multilanguage": true,
+              "id": "parts.text",
+              "value": "عرض الإطار بالمليمتر.",
+              "description": null,
+              "format": "textarea",
+              "required": false,
+              "placeholder": "عرض الإطار بالمليمتر.",
+              "minLength": 0,
+              "maxLength": "256"
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "icon": "sicon-time",
+          "label": "مدة التنقل بين البطاقات (ثواني)",
+          "id": "parts_interval",
+          "format": "integer",
+          "required": false,
+          "value": 4,
+          "minimum": 2,
+          "maximum": 10,
+          "description": null,
+          "conditions": [
+            {
+              "id": "parts_show",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
       "key": "186b3f4f-25cf-4d3c-abca-cef7eed6f0ab",
       "title": {
         "en": "Enhances Animated Images",

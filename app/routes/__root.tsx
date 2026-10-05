@@ -54,7 +54,7 @@ function RootComponent() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Archivo:wght@700;800;900&display=swap"
         />
         {/* Home: paint from the inline critical CSS and load the full sheet
             without blocking. Other routes: the full sheet blocks, as before. */}

@@ -1,0 +1,110 @@
+// Tires Store component pack — shared tokens + one block per component.
+// Source of truth for the look: design/final.html (approved home).
+// Every block is scoped under `.tc` so it never leaks into engine/theme styles.
+
+.tc {
+  --tc-gold: #ffb71b;
+  --tc-gold-2: #e9a000;
+  --tc-gold-3: #9a6a00;
+  --tc-gold-soft: #fff4d8;
+  --tc-ink: #1d2023;
+  --tc-slate: #4a4f54;
+  --tc-muted: #767b80;
+  --tc-line: #e8e7e3;
+  --tc-bg-2: #f5f4f0;
+  --tc-r: 14px;
+  --tc-en: 'Archivo', Arial, sans-serif;
+  color: var(--tc-ink);
+  font-family: 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+  line-height: 1.7;
+
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+  img { display: block; max-width: 100%; }
+}
+
+.tc-wrap { width: min(1240px, calc(100% - 40px)); margin-inline: auto; }
+.tc-kicker { display: block; font-size: 13px; font-weight: 600; color: var(--tc-gold-3); margin-bottom: 10px; }
+.tc-lead { color: var(--tc-muted); }
+
+// buttons: primary gold / secondary outline, radius 12px everywhere
+.tc-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 22px;
+  height: 54px; padding: 0 26px; border-radius: 12px;
+  font-weight: 600; font-size: 15px; white-space: nowrap;
+  transition: background .2s, transform .2s, border-color .2s;
+  &:hover { transform: translateY(-1px); }
+  &--gold { background: var(--tc-gold); color: #221800; &:hover { background: #ffc23f; } }
+  &--line { background: transparent; border: 1.5px solid #d9d7cf; color: var(--tc-ink); &:hover { border-color: var(--tc-ink); } }
+}
+
+/* ================= #1 بنر الإطار — home.tire-hero ================= */
+.tc-hero {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 30%, rgba(255, 183, 27, .22), transparent 34%),
+    radial-gradient(circle at 5% 85%, rgba(255, 183, 27, .14), transparent 30%),
+    linear-gradient(180deg, #fcfbf7, #f8f6f0);
+
+  &__grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 20px; align-items: center; min-height: 700px; padding: 40px 0 120px; }
+  h1 { font-size: clamp(40px, 4.8vw, 68px); line-height: 1.12; font-weight: 700; letter-spacing: -1.5px; margin: 0; }
+  h1 span { color: var(--tc-gold-2); }
+  .tc-lead { font-size: 16.5px; margin: 20px 0 30px; max-width: 430px; }
+  &__cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  &__proof { display: flex; flex-wrap: wrap; margin-top: 34px; }
+  &__proof span { font-size: 13.5px; color: var(--tc-muted); padding-inline: 18px; border-inline-start: 1px solid #dcdad3; }
+  &__proof span:first-child { padding-inline-start: 0; border: 0; }
+  &__proof b { color: var(--tc-ink); font-family: var(--tc-en); font-weight: 800; font-size: 16px; margin-inline-end: 4px; }
+
+  &__stage { position: relative; aspect-ratio: 1 / 1; width: 100%; max-width: 660px; margin-inline: auto; }
+  &__giant {
+    position: absolute; inset: 0; display: grid; place-items: center; direction: ltr; user-select: none;
+    font-family: var(--tc-en); font-weight: 900; font-size: min(23vw, 330px); letter-spacing: -8px; line-height: 1;
+    transform: translateY(-4%);
+    background: linear-gradient(180deg, var(--tc-gold) 30%, rgba(255, 183, 27, .15));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  &__tire { position: absolute; inset: 7%; }
+  &__tire.is-floating { animation: tc-float 6s ease-in-out infinite; }
+  &__tire img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 40px 35px rgba(0, 0, 0, .25)); }
+  &__sw { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  &__sw text { font-family: var(--tc-en); font-weight: 800; fill: #c9c9c9; letter-spacing: 6px; }
+  &__sw tspan tspan { cursor: pointer; transition: fill .2s; }
+  &__sw tspan tspan.on { fill: var(--tc-gold); }
+
+  &__pop {
+    position: absolute; z-index: 6; pointer-events: none; transform: translate(-50%, -100%);
+    background: #fff; border: 1px solid var(--tc-line); border-radius: 14px; padding: 12px 16px;
+    box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .28); min-width: 180px; max-width: 240px;
+    font-size: 13px; color: var(--tc-slate);
+    b { display: block; font-size: 15px; color: var(--tc-ink); margin-bottom: 2px; }
+    em { font-style: normal; font-family: var(--tc-en); color: var(--tc-gold-2); margin-inline-end: 6px; }
+    &::after {
+      content: ''; position: absolute; bottom: -7px; left: 50%; width: 12px; height: 12px; background: #fff;
+      border-right: 1px solid var(--tc-line); border-bottom: 1px solid var(--tc-line); transform: translateX(-50%) rotate(45deg);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    &__grid { grid-template-columns: 1fr; padding-top: 30px; }
+    &__copy { text-align: center; }
+    .tc-lead { margin-inline: auto; }
+    &__cta, &__proof { justify-content: center; }
+    &__stage { max-width: 560px; }
+  }
+  @media (max-width: 640px) {
+    &__grid { padding: 24px 0 90px; min-height: 0; }
+    h1 { font-size: 38px; letter-spacing: -.8px; }
+    .tc-lead { font-size: 15px; }
+    &__cta .tc-btn { flex: 1 1 100%; }
+    &__stage { margin-top: 90px; }
+    &__giant { font-size: 40vw; letter-spacing: -4px; }
+    &__proof span { padding-inline: 10px; font-size: 12px; }
+    &__pop { min-width: 150px; max-width: 200px; padding: 9px 12px; font-size: 12px; }
+  }
+}
+
+@keyframes tc-float { 50% { transform: translateY(-14px); } }
+@media (prefers-reduced-motion: reduce) { .tc-hero__tire.is-floating { animation: none; } .tc-btn { transition: none; } }

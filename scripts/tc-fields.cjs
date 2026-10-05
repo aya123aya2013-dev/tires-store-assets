@@ -7,6 +7,7 @@ const { randomUUID: uuid } = require('crypto');
 const cover = (name) => ({ type: 'static', format: 'description', id: 'tc-cover',
   value: `<div style="background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700">TIRES STORE<br><span style="color:#fff;font-size:18px">${name}</span></div>` });
 const tip = (text) => ({ type: 'static', format: 'description', id: 'tc-tip', value: `<div>💡 ${text}</div>` });
+const staticHtml = (id, html) => ({ type: 'static', format: 'description', id, value: html });
 const head = (id, title) => ({ type: 'static', format: 'description', id,
   value: `<div style="font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3">${title}</div>` });
 const text = (id, label, value, max = 100, extra = {}) => ({ type: 'string', icon: 'sicon-format-text-alt', label, multilanguage: true, id, value, required: false, format: 'text', description: null, placeholder: value, minLength: 0, maxLength: max, ...extra });
@@ -69,4 +70,4 @@ function upsert(json, comp, afterPath) {
   json.components.splice(at > 0 ? at : json.components.length, 0, comp);
 }
 
-module.exports = { productSource, cover, tip, head, text, area, plain, image, sw, num, color, dd, link, pickFrom, collection, when, common, icon, upsert, uuid };
+module.exports = { static: staticHtml, productSource, cover, tip, head, text, area, plain, image, sw, num, color, dd, link, pickFrom, collection, when, common, icon, upsert, uuid };

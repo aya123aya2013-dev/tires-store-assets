@@ -1,7 +1,8 @@
 /**
  * Component #7 — تسوّق حسب سيارتك (`home.shop-by-car`).
  * Design: design/final.html → `#cars` (make → model → year columns + dark result card).
- * The merchant fills the car list (make, model, years, size); the button opens the exact-size search.
+ * Cars: a pasted Excel list (replaces all), or the ready-made list (tc/cars.ts) + manual rows.
+ * The button opens the exact-size search.
  */
 import { useMemo, useState } from 'react';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
@@ -9,6 +10,8 @@ import { parseTireSize, tireSizeQuery, formatTireSize } from '../tires/sizes';
 import { asBool, asText, makeT, rows, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
+import { BUILTIN_CARS } from './tc/cars';
+import type { CarRow } from './tc/cars';
 
 const EN: Record<string, string> = {
   'ما تعرف مقاسك؟': "Don't know your size?", 'اختر سيارتك، ونطلع لك المقاس.': "Pick your car — we'll find the size.",
@@ -16,42 +19,59 @@ const EN: Record<string, string> = {
   'المقاس الأصلي من المصنع. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.': 'The factory size. Double-check it on your current tire or the driver-door sticker.',
   'اعرض الإطارات': 'Show tires', 'اختر سيارتك عشان نعرض المقاس والإطارات المتوفرة.': 'Pick your car to see its size and available tires.',
 };
-// design data (final.html → CARS)
-const DESIGN: [string, string, number, number, string][] = [
-  ['تويوتا', 'كامري', 2018, 2024, '215/55 R17'], ['تويوتا', 'لاند كروزر', 2016, 2024, '285/60 R18'], ['تويوتا', 'هايلكس', 2016, 2024, '265/65 R17'], ['تويوتا', 'يارس', 2018, 2024, '185/60 R15'],
-  ['هيونداي', 'النترا', 2017, 2024, '205/55 R16'], ['هيونداي', 'توسان', 2019, 2024, '225/60 R17'], ['هيونداي', 'أكسنت', 2018, 2024, '185/65 R15'], ['هيونداي', 'سوناتا', 2020, 2024, '215/55 R17'],
-  ['نيسان', 'باترول', 2014, 2024, '275/70 R18'], ['نيسان', 'ألتيما', 2019, 2024, '215/60 R16'], ['نيسان', 'صني', 2018, 2024, '185/65 R15'],
-  ['كيا', 'سبورتاج', 2019, 2024, '225/60 R17'], ['كيا', 'سيراتو', 2019, 2024, '205/55 R16'], ['كيا', 'K5', 2021, 2024, '215/55 R17'],
-  ['شفروليه', 'تاهو', 2015, 2024, '275/55 R20'], ['شفروليه', 'ماليبو', 2017, 2024, '225/55 R17'],
-  ['فورد', 'F-150', 2018, 2024, '275/65 R18'], ['فورد', 'إكسبلورر', 2020, 2024, '255/65 R18'],
-  ['جي إم سي', 'يوكن', 2015, 2024, '275/55 R20'], ['جي إم سي', 'سييرا', 2019, 2024, '265/70 R17'],
-  ['لكزس', 'LX', 2016, 2024, '275/50 R21'], ['لكزس', 'ES', 2019, 2024, '235/45 R18'],
-];
-interface Car { make: string; model: string; from: number; to: number; size: string }
+type Car = CarRow;
+
+const clean = (s: string) => s.replace(/\s+/g, ' ').trim();
+const toCar = (make: string, model: string, from: number, to: number, sizeText: string): Car | null => {
+  const size = parseTireSize(sizeText);
+  if (!make || !model || !size || !from) return null;
+  return { make: clean(make), model: clean(model), from, to: to >= from ? to : from, size: formatTireSize(size) };
+};
+
+/**
+ * Pasted from Excel / Google Sheets: one car per line, columns separated by tab, comma, «،», «;» or «|»:
+ *   make, model, from, to, size   — or —   make, model, 2018-2024, size
+ * Lines without a valid size/year (e.g. a header row) are skipped.
+ */
+export function parseCarsPaste(text: string): Car[] {
+  return text.split(/\r?\n/).map(line => {
+    const c = line.split(/\t|,|،|;|\|/).map(x => x.trim()).filter(Boolean);
+    if (c.length >= 5) return toCar(c[0], c[1], Number(c[2]), Number(c[3]), c.slice(4).join(' '));
+    if (c.length === 4) {
+      const [from, to] = c[2].split(/\s*[-–]\s*/).map(Number);
+      return toCar(c[0], c[1], from, to || from, c[3]);
+    }
+    return null;
+  }).filter((x): x is Car => !!x);
+}
 
 export function ShopByCar({ data }: { data: Row }) {
   const lang = useLang();
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
   const cars: Car[] = useMemo(() => {
-    const list = rows(data.cars, 'cars')
-      .map(r => {
-        const size = parseTireSize(asText(r.size, '', lang));
-        const from = Number(r.year_from) || 0;
-        return { make: asText(r.make, '', lang).trim(), model: asText(r.model, '', lang).trim(), from, to: Number(r.year_to) || from, size: size ? formatTireSize(size) : '' };
-      })
-      .filter(c => c.make && c.model && c.size && c.from);
-    return list.length ? list : DESIGN.map(([make, model, from, to, size]) => ({ make, model, from, to, size }));
-  }, [data.cars, lang]);
+    // 1) a pasted list replaces everything; 2) otherwise ready-made list (unless cleared) + manual rows (manual wins)
+    const pasted = parseCarsPaste(asText(data.cars_paste, '', lang));
+    if (pasted.length) return pasted;
+    const manual = rows(data.cars, 'cars')
+      .map(r => toCar(asText(r.make, '', lang), asText(r.model, '', lang), Number(r.year_from) || 0, Number(r.year_to) || 0, asText(r.size, '', lang)))
+      .filter((x): x is Car => !!x);
+    if (!asBool(data.use_builtin, true)) return manual;
+    const key = (c: Car) => `${c.make}|${c.model}`;
+    const overridden = new Set(manual.map(key));
+    return [...BUILTIN_CARS.filter(c => !overridden.has(key(c))), ...manual];
+  }, [data.cars, data.cars_paste, data.use_builtin, lang]);
 
   const makes = [...new Set(cars.map(c => c.make))];
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
   const [year, setYear] = useState(0);
-  const models = cars.filter(c => c.make === make);
-  const car = models.find(c => c.model === model);
-  const years = car ? Array.from({ length: Math.max(0, car.to - car.from + 1) }, (_, i) => car.to - i) : [];
-  const parsed = car && year ? parseTireSize(car.size) : null;
+  // a model may have several rows (generations with different sizes)
+  const models = [...new Set(cars.filter(c => c.make === make).map(c => c.model))];
+  const gens = cars.filter(c => c.make === make && c.model === model);
+  const years = [...new Set(gens.flatMap(g => Array.from({ length: g.to - g.from + 1 }, (_, i) => g.from + i)))].sort((x, y) => y - x);
+  const car = year ? gens.find(g => year >= g.from && year <= g.to) : undefined;
+  const parsed = car ? parseTireSize(car.size) : null;
   const pick = (f: () => void) => () => { f(); };
 
   const btn = (label: string, on: boolean, onClick: () => void, cls?: string) => (
@@ -77,17 +97,17 @@ export function ShopByCar({ data }: { data: Row }) {
             <div className="car-col">
               <span className="cstep">2 · {isEn ? 'Model' : 'الموديل'}</span>
               <div className="list">
-                {make ? models.map(c => btn(c.model, c.model === model, pick(() => { setModel(c.model); setYear(0); }), 'ar')) : <p className="hint">{isEn ? 'Pick the make first' : 'اختر الماركة أول'}</p>}
+                {make ? models.map(m => btn(m, m === model, pick(() => { setModel(m); setYear(0); }), 'ar')) : <p className="hint">{isEn ? 'Pick the make first' : 'اختر الماركة أول'}</p>}
               </div>
             </div>
             <div className="car-col">
               <span className="cstep">3 · {isEn ? 'Year' : 'السنة'}</span>
               <div className="list">
-                {car ? years.map(y => btn(String(y), y === year, pick(() => setYear(y)))) : <p className="hint">{isEn ? 'Pick the model' : 'اختر الموديل'}</p>}
+                {model ? years.map(y => btn(String(y), y === year, pick(() => setYear(y)))) : <p className="hint">{isEn ? 'Pick the model' : 'اختر الموديل'}</p>}
               </div>
             </div>
             <div className="car-out">
-              {car && year && parsed ? (
+              {car && parsed ? (
                 <>
                   <span className="cstep" style={{ color: '#9a9ea2' }}>{`${make} ${model} ${year}`}</span>
                   <div className="cres">{car.size}</div>

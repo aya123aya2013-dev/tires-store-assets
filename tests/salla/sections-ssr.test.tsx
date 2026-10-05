@@ -5,7 +5,7 @@ import { BenefitsStrip } from '../../app/components/home/BenefitsStrip';
 import { TireSlider } from '../../app/components/home/TireSlider';
 import { BrandsMarquee } from '../../app/components/home/BrandsMarquee';
 import { CategoryCards } from '../../app/components/home/CategoryCards';
-import { ShopByCar } from '../../app/components/home/ShopByCar';
+import { ShopByCar, parseCarsPaste } from '../../app/components/home/ShopByCar';
 import { TireGrid } from '../../app/components/home/TireGrid';
 import { DoubleBanner } from '../../app/components/home/DoubleBanner';
 import { TirePicker } from '../../app/components/home/TirePicker';
@@ -158,5 +158,31 @@ describe('#14 install banner', () => {
     expect(html).toContain('<em>وركّبها عندنا.</em>');
     expect(html).toContain('<span>03</span>');
     expect(html).toContain('fitd tc-img-right');
+  });
+});
+
+describe('#7 shop by car — car lists', () => {
+  it('ships the ready-made list (many makes) by default', () => {
+    const html = renderToString(<ShopByCar data={{}} />);
+    for (const m of ['تويوتا', 'مازدا', 'هوندا', 'ميتسوبيشي']) expect(html).toContain(m);
+  });
+  it('a pasted Excel list replaces everything', () => {
+    const TAB = String.fromCharCode(9), NL = String.fromCharCode(10);
+    const paste = ['الماركة', 'الموديل', 'من', 'إلى', 'المقاس'].join(TAB) + NL + ['بي واي دي', 'أتو 3', '2023', '2025', '215/55 R18'].join(TAB);
+    const html = renderToString(<ShopByCar data={{ cars_paste: paste }} />);
+    expect(html).toContain('بي واي دي');
+    expect(html).not.toContain('تويوتا');
+  });
+  it('clearing the ready-made list leaves only manual cars', () => {
+    const html = renderToString(<ShopByCar data={{ use_builtin: false, cars: [{ 'cars.make': 'شيري', 'cars.model': 'تيغو 8', 'cars.year_from': 2022, 'cars.year_to': 2025, 'cars.size': '235/55 R19' }] }} />);
+    expect(html).toContain('شيري');
+    expect(html).not.toContain('تويوتا');
+  });
+  it('parses comma / Arabic comma / year range rows and skips headers', () => {
+    const cars = parseCarsPaste(['make,model,from,to,size', 'تويوتا، كامري، 2018، 2024، 215/55/17', 'كيا | K5 | 2021-2025 | 215/55 R17'].join(String.fromCharCode(10)));
+    expect(cars).toEqual([
+      { make: 'تويوتا', model: 'كامري', from: 2018, to: 2024, size: '215/55 R17' },
+      { make: 'كيا', model: 'K5', from: 2021, to: 2025, size: '215/55 R17' },
+    ]);
   });
 });

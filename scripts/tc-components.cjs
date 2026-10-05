@@ -99,19 +99,22 @@ const components = [
   // #7 تسوّق حسب سيارتك
   def('home.shop-by-car', 'تسوّق حسب سيارتك', 'Shop by Car', 'sicon-car', [
     F.cover('تسوّق حسب سيارتك'),
-    F.tip('الزبون يختار الماركة ثم الموديل ثم السنة، ويطلع له المقاس مع زر يعرض الإطارات المطابقة بالزبط. القائمة جاهزة بسيارات شائعة وتقدر تعدّلها.'),
+    F.tip('الزبون يختار الماركة ثم الموديل ثم السنة، ويطلع له المقاس مع زر يعرض الإطارات المطابقة بالزبط. الثيم فيه قائمة جاهزة بسيارات السوق السعودي، وتقدر تلصق قائمتك من إكسل أو تضيف يدوي.'),
     F.head('h-texts', 'النصوص'),
     F.text('kicker', 'السطر الصغير فوق العنوان', 'ما تعرف مقاسك؟', 40),
     F.text('title', 'العنوان', 'اختر سيارتك، ونطلع لك المقاس.', 80),
     F.text('text', 'النص الجانبي', 'الماركة، الموديل، السنة — وبس.', 120),
     F.head('h-cars', 'السيارات'),
-    F.collection('cars', 'السيارات', 'سيارة', [
+    F.static('cars-help', '<div>طريقة القائمة:<br>• <b>القائمة الجاهزة</b> تشتغل لحالها (أشهر سيارات السوق السعودي).<br>• <b>لصق من إكسل</b>: يستبدل كل القوائم ويظهر بس اللي لصقته.<br>• <b>تفريغ القائمة الجاهزة</b> ثم <b>الإضافة اليدوية</b>: لعدد قليل من السيارات.</div>'),
+    F.area('cars_paste', 'لصق قائمة من إكسل (يستبدل كل القوائم)', '', 20000, { multilanguage: false, placeholder: 'تويوتا, كامري, 2018, 2024, 215/55 R17', description: 'سطر لكل سيارة: الماركة، الموديل، من سنة، إلى سنة، المقاس. انسخ الأعمدة من إكسل أو Google Sheets والصقها هنا. لإلغاء اللصق امسح الخانة.' }),
+    F.sw('use_builtin', 'استخدام القائمة الجاهزة', true, 'أطفئها لتفريغ القائمة الجاهزة واستخدام السيارات اللي تضيفها يدوي فقط'),
+    F.collection('cars', 'إضافة يدوية', 'سيارة', [
       F.plain('make', 'الماركة', 'تويوتا', { maxLength: 30 }),
       F.plain('model', 'الموديل', 'كامري', { maxLength: 30 }),
       F.num('year_from', 'من سنة', 2018, 1980, 2035),
       F.num('year_to', 'إلى سنة', 2024, 1980, 2035),
       F.plain('size', 'المقاس', '215/55 R17', { maxLength: 20, description: 'مثل 215/55 R17 أو 215/55/17' }),
-    ], [{"cars.make":"تويوتا","cars.model":"كامري","cars.year_from":2018,"cars.year_to":2024,"cars.size":"215/55 R17"},{"cars.make":"تويوتا","cars.model":"لاند كروزر","cars.year_from":2016,"cars.year_to":2024,"cars.size":"285/60 R18"},{"cars.make":"تويوتا","cars.model":"هايلكس","cars.year_from":2016,"cars.year_to":2024,"cars.size":"265/65 R17"},{"cars.make":"تويوتا","cars.model":"يارس","cars.year_from":2018,"cars.year_to":2024,"cars.size":"185/60 R15"},{"cars.make":"هيونداي","cars.model":"النترا","cars.year_from":2017,"cars.year_to":2024,"cars.size":"205/55 R16"},{"cars.make":"هيونداي","cars.model":"توسان","cars.year_from":2019,"cars.year_to":2024,"cars.size":"225/60 R17"},{"cars.make":"هيونداي","cars.model":"أكسنت","cars.year_from":2018,"cars.year_to":2024,"cars.size":"185/65 R15"},{"cars.make":"هيونداي","cars.model":"سوناتا","cars.year_from":2020,"cars.year_to":2024,"cars.size":"215/55 R17"},{"cars.make":"نيسان","cars.model":"باترول","cars.year_from":2014,"cars.year_to":2024,"cars.size":"275/70 R18"},{"cars.make":"نيسان","cars.model":"ألتيما","cars.year_from":2019,"cars.year_to":2024,"cars.size":"215/60 R16"},{"cars.make":"نيسان","cars.model":"صني","cars.year_from":2018,"cars.year_to":2024,"cars.size":"185/65 R15"},{"cars.make":"كيا","cars.model":"سبورتاج","cars.year_from":2019,"cars.year_to":2024,"cars.size":"225/60 R17"},{"cars.make":"كيا","cars.model":"سيراتو","cars.year_from":2019,"cars.year_to":2024,"cars.size":"205/55 R16"},{"cars.make":"كيا","cars.model":"K5","cars.year_from":2021,"cars.year_to":2024,"cars.size":"215/55 R17"},{"cars.make":"شفروليه","cars.model":"تاهو","cars.year_from":2015,"cars.year_to":2024,"cars.size":"275/55 R20"},{"cars.make":"شفروليه","cars.model":"ماليبو","cars.year_from":2017,"cars.year_to":2024,"cars.size":"225/55 R17"},{"cars.make":"فورد","cars.model":"F-150","cars.year_from":2018,"cars.year_to":2024,"cars.size":"275/65 R18"},{"cars.make":"فورد","cars.model":"إكسبلورر","cars.year_from":2020,"cars.year_to":2024,"cars.size":"255/65 R18"},{"cars.make":"جي إم سي","cars.model":"يوكن","cars.year_from":2015,"cars.year_to":2024,"cars.size":"275/55 R20"},{"cars.make":"جي إم سي","cars.model":"سييرا","cars.year_from":2019,"cars.year_to":2024,"cars.size":"265/70 R17"},{"cars.make":"لكزس","cars.model":"LX","cars.year_from":2016,"cars.year_to":2024,"cars.size":"275/50 R21"},{"cars.make":"لكزس","cars.model":"ES","cars.year_from":2019,"cars.year_to":2024,"cars.size":"235/45 R18"}], 0, 200),
+    ], [], 0, 200, { description: 'تُضاف للقائمة الجاهزة، وإذا نفس الماركة والموديل موجودين تغلب قيمتك' }),
     F.head('h-result', 'كرت النتيجة'),
     F.area('result_text', 'نص الشرح تحت المقاس', 'المقاس الأصلي من المصنع. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.', 200),
     F.text('btn_text', 'نص الزر', 'اعرض الإطارات', 30),

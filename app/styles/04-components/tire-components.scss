@@ -352,3 +352,9 @@
 
 /* #14 dark install banner: photo on the other side */
 @media (min-width: 901px) { .tc-s .fitd.tc-img-right .fitd-img { order: 0; } }
+
+/* #7 shop by car: the makes column scrolls like models/years, so the three columns stay level */
+.tc-s .cars .makes { max-height: 236px; overflow: auto; scrollbar-width: thin; scrollbar-color: #d6d4cc transparent; padding-inline-end: 4px; align-content: start; }
+.tc-s .cars .makes::-webkit-scrollbar { width: 4px; }
+.tc-s .cars .makes::-webkit-scrollbar-thumb { background: #d6d4cc; border-radius: 4px; }
+@media (max-width: 640px) { .tc-s .cars .makes { max-height: 200px; } }

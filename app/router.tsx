@@ -21,6 +21,7 @@ import {
   TireHero,
   SizeFinder,
   BenefitsStrip,
+  TireSlider,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -60,6 +61,7 @@ registerHomeComponents({
   'tire-hero': TireHero,
   'size-finder': SizeFinder,
   'benefits-strip': BenefitsStrip,
+  'tire-slider': TireSlider,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

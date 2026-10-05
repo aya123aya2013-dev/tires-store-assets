@@ -29,6 +29,24 @@ const components = [
     ], 2, 4),
     ...F.common('my-benefits'),
   ]),
+
+  // #4 منتجات بسلايدر (إطارات الأسبوع)
+  def('home.tire-slider', 'إطارات الأسبوع (سلايدر منتجات)', 'Tires of the Week (Product Slider)', 'sicon-list-play', [
+    F.cover('إطارات الأسبوع'),
+    F.tip('سلايدر منتجات من متجرك، مع فلاتر بالماركات وأسهم. اختر مصدر المنتجات وعددها.'),
+    F.head('h-texts', 'النصوص'),
+    F.text('kicker', 'السطر الصغير فوق العنوان', 'الأكثر طلباً', 40),
+    F.text('title', 'العنوان', 'إطارات هالأسبوع', 60),
+    F.head('h-products', 'المنتجات'),
+    ...F.productSource('products', 'best_selling'),
+    F.num('limit', 'عدد المنتجات', 8, 4, 12),
+    F.dd('add_qty', 'كمية «أضف للسلة» من الكرت', [['إطار واحد', '1'], ['إطارين', '2'], ['4 إطارات', '4']], '1'),
+    F.head('h-look', 'الشكل'),
+    F.sw('show_filters', 'إظهار فلاتر الماركات', true, 'الماركات تنقرأ تلقائياً من المنتجات المعروضة'),
+    F.sw('show_arrows', 'إظهار الأسهم', true),
+    F.sw('feature_first', 'تمييز أول منتج بإطار ذهبي', true),
+    ...F.common('my-slider'),
+  ]),
 ];
 
 let after = 'home.size-finder';

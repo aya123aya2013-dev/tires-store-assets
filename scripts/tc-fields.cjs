@@ -52,6 +52,14 @@ const ICONS = [
 ];
 const icon = (id, label, sel) => dd(id, label, ICONS, sel);
 
+/** where the products come from: best sellers / latest / offers / category / brand / hand-picked */
+const productSource = (prefix, sel = 'best_selling') => [
+  dd(`${prefix}_source`, 'مصدر المنتجات', [['الأكثر مبيعاً', 'best_selling'], ['الأحدث', 'latest'], ['العروض والتخفيضات', 'offers'], ['الأعلى تقييماً', 'top-rated'], ['من تصنيف', 'categories'], ['من ماركة', 'brands'], ['منتجات أختارها', 'selected']], sel),
+  when(pickFrom(`${prefix}_category`, 'التصنيف', 'categories', true), `${prefix}_source`, 'categories'),
+  when(pickFrom(`${prefix}_brand`, 'الماركة', 'brands', true), `${prefix}_source`, 'brands'),
+  when(pickFrom(`${prefix}_selected`, 'المنتجات', 'products', true, { maxLength: 16 }), `${prefix}_source`, 'selected'),
+];
+
 /** add or replace a component (matched by path) in twilight.json, keeping its key */
 function upsert(json, comp, afterPath) {
   const i = json.components.findIndex(c => c.path === comp.path);
@@ -61,4 +69,4 @@ function upsert(json, comp, afterPath) {
   json.components.splice(at > 0 ? at : json.components.length, 0, comp);
 }
 
-module.exports = { cover, tip, head, text, area, plain, image, sw, num, color, dd, link, pickFrom, collection, when, common, icon, upsert, uuid };
+module.exports = { productSource, cover, tip, head, text, area, plain, image, sw, num, color, dd, link, pickFrom, collection, when, common, icon, upsert, uuid };

@@ -2,8 +2,13 @@
 import { describe, expect, it, vi } from 'vitest';
 import { renderToString } from 'react-dom/server';
 import { BenefitsStrip } from '../../app/components/home/BenefitsStrip';
+import { TireSlider } from '../../app/components/home/TireSlider';
+import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
+vi.mock('@tanstack/react-query', () => ({ useQuery: () => ({ data: { items: [] }, isLoading: false }) }));
+vi.mock('@salla.sa/twilight-theme-engine/api/product', () => ({ product: { queries: { list: () => ({}) } } }));
+vi.mock('@salla.sa/twilight-theme-engine/common', () => ({ Link: ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => <a href={to} className={className}>{children}</a> }));
 
 describe('#3 benefits strip', () => {
   it('renders the 4 approved defaults', () => {
@@ -20,5 +25,19 @@ describe('#3 benefits strip', () => {
     expect(html).toContain('شاحنات');
     expect(html).toContain('tc-hide-m');
     expect(html).toContain('x1');
+  });
+});
+
+describe('#4 tire slider', () => {
+  it('renders the approved card (samples in dev when the store has none)', () => {
+    const html = renderToString(<TireSlider data={{ add_qty: '4' }} />);
+    expect(html).toContain('pcard feat');
+    expect(html).toContain('إطارات هالأسبوع');
+    expect(html).toContain('أضف 4 إطارات للسلة');
+    expect(html).toContain('205/55 R16');
+  });
+  it('maps a Salla product: size out of the name, sale price, offer tag', () => {
+    const p = toTcProduct({ id: 9, url: '/p9', name: 'كفر هانكوك 205/55/16', brand: { id: 1, name: 'Hankook' }, price: 400, sale_price: 380, regular_price: 400, is_on_sale: true, image: { url: '/x.webp' }, category: { name: 'سيدان', url: '' } } as never, 'عرض');
+    expect(p).toMatchObject({ name: 'كفر هانكوك', size: '205/55 R16', rim: 'R16', price: 380, old: 400, tag: 'عرض', brand: 'Hankook', type: 'سيدان' });
   });
 });

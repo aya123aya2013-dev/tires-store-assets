@@ -1,0 +1,109 @@
+/**
+ * Component #4 — منتجات بسلايدر «إطارات هالأسبوع» (`home.tire-slider`).
+ * Design: design/final.html → `#types` (.sec-head + brand filters + arrows, `.slider` of `.pcard`).
+ */
+import { useRef, useState } from 'react';
+import { Link } from '@salla.sa/twilight-theme-engine/common';
+import { asBool, makeT, useLang } from './fields';
+import type { Row } from './fields';
+import { Section } from './tc/Section';
+import { Icon } from './tc/Icon';
+import { SAMPLE_PRODUCTS, addToCart, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
+import type { TcProduct } from './tc/products';
+
+const EN: Record<string, string> = {
+  'الأكثر طلباً': 'Most requested', 'إطارات هالأسبوع': 'Tires of the week', 'الكل': 'All',
+  'عرض': 'Offer', 'للإطار الواحد': 'per tire', 'عرض التفاصيل': 'View details', 'ر.س': 'SAR',
+  'أُضيف للسلة': 'Added to cart', 'إطار': 'Tire',
+};
+
+export function TireSlider({ data }: { data: Row }) {
+  const lang = useLang();
+  const isEn = lang === 'en';
+  const t = makeT(lang, EN);
+  const limit = Math.min(12, Math.max(4, Number(data.limit) || 8));
+  const qty = [1, 2, 4].includes(Number(data.add_qty)) ? Number(data.add_qty) : 1;
+  const { items, loading } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), limit);
+  const list: TcProduct[] = items.length
+    ? items.map(p => toTcProduct(p, t('عرض', 'عرض')))
+    : import.meta.env.DEV && !loading ? SAMPLE_PRODUCTS.slice(0, limit) : [];
+
+  const [brand, setBrand] = useState('');
+  const [added, setAdded] = useState<Record<number, boolean>>({});
+  const slider = useRef<HTMLDivElement>(null);
+  if (!list.length) return null;
+
+  const brands = asBool(data.show_filters, true) ? [...new Set(list.map(p => p.brand).filter(Boolean))].slice(0, 6) : [];
+  const shown = brand ? list.filter(p => p.brand === brand) : list;
+  // RTL: "next" moves left; LTR: right
+  const move = (dir: 1 | -1) => slider.current?.scrollBy({ left: (isEn ? 1 : -1) * dir * slider.current.clientWidth * 0.75, behavior: 'smooth' });
+  const addLabel = qty === 1 ? (isEn ? '+ Add a tire to cart' : '+ أضف إطارًا للسلة') : isEn ? `+ Add ${qty} tires to cart` : `+ أضف ${qty} إطارات للسلة`;
+
+  return (
+    <Section data={data}>
+      <section className="sec" id="types">
+        <div className="wrap">
+          <div className="sec-head">
+            <div>
+              <span className="kicker">{t(data.kicker, 'الأكثر طلباً')}</span>
+              <h2 className="h2">{t(data.title, 'إطارات هالأسبوع')}</h2>
+            </div>
+            <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
+              {brands.length > 1 && (
+                <div className="filters">
+                  <button type="button" className={brand ? undefined : 'on'} onClick={() => setBrand('')}>{t('الكل', 'الكل')}</button>
+                  {brands.map(b => (
+                    <button type="button" key={b} className={brand === b ? 'on' : undefined} onClick={() => setBrand(b)}>{b}</button>
+                  ))}
+                </div>
+              )}
+              {asBool(data.show_arrows, true) && (
+                <div className="nav-btns">
+                  <button type="button" className="sq" aria-label={isEn ? 'Previous' : 'السابق'} onClick={() => move(-1)}><Icon name={isEn ? 'next' : 'prev'} /></button>
+                  <button type="button" className="sq" aria-label={isEn ? 'Next' : 'التالي'} onClick={() => move(1)}><Icon name={isEn ? 'prev' : 'next'} /></button>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="slider" ref={slider}>
+            {shown.map((p, i) => (
+              <article className={'pcard' + (i === 0 && asBool(data.feature_first, true) ? ' feat' : '')} key={p.id}>
+                <div className="pimg">
+                  {p.tag && <span className={'ptag' + (p.old ? ' g' : '')}>{p.tag}</span>}
+                  {p.image && <img src={p.image} alt={p.name} loading="lazy" />}
+                </div>
+                <div className="pbody">
+                  {p.brand && <span className="pbrand">{p.brand}</span>}
+                  <h3>{p.name}</h3>
+                  <span className="pline">
+                    {p.type || t('إطار', 'إطار')}
+                    {p.size && <> · <b dir="ltr">{p.size}</b></>}
+                  </span>
+                  <div className="pfoot2">
+                    <div className="pprice2">
+                      <div>
+                        <b>{p.price}</b> <span>{t('ر.س', 'ر.س')}</span>
+                        {p.old && <s>{p.old}</s>}
+                      </div>
+                      <small>{t('للإطار الواحد', 'للإطار الواحد')}</small>
+                    </div>
+                    <Link className="pdetails" to={p.url}>
+                      {t('عرض التفاصيل', 'عرض التفاصيل')} <span>{isEn ? '→' : '←'}</span>
+                    </Link>
+                  </div>
+                  <button
+                    type="button"
+                    className={'add2' + (added[p.id] ? ' done' : '')}
+                    onClick={() => addToCart(p.id, qty)?.then(() => setAdded(a => ({ ...a, [p.id]: true })))}
+                  >
+                    {added[p.id] ? `✓ ${t('أُضيف للسلة', 'أُضيف للسلة')}` : addLabel}
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </Section>
+  );
+}

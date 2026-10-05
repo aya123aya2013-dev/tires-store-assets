@@ -14,7 +14,14 @@ import { useEffect, useState } from 'react';
 import { TcPreview } from '../components/home/TcPreview';
 
 export const Route = createFileRoute('/{-$locale}/')({
-  loader: ({ params }): Promise<HomeLoaderData> => Home.loader({ locale: params.locale }),
+  // DEV-ONLY: with ?tc-preview skip the Salla API (it answers 422 for the local
+  // store and the whole page goes blank) — the preview needs no store data.
+  loader: ({ params, location }): Promise<HomeLoaderData> => {
+    const isPreview = import.meta.env.DEV && 'tc-preview' in ((location.search ?? {}) as Record<string, unknown>);
+    if (isPreview) return Promise.resolve({} as HomeLoaderData);
+    const load = Home.loader({ locale: params.locale });
+    return import.meta.env.DEV ? load.catch(() => ({}) as HomeLoaderData) : load;
+  },
   head: withHead(Home),
   pendingComponent: () => <HomeSkeleton />,
   component: HomeComponent,

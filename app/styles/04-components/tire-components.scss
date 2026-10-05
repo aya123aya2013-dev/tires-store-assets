@@ -301,3 +301,19 @@
 .tc-finder--page { padding: 24px 0 8px; }
 .tc-finder__title h1 { font-size: 24px; margin: 0 0 4px; line-height: 1.5; color: #fff; bdi { font-family: var(--tc-en); font-weight: 800; } }
 @media (max-width: 640px) { .tc-finder__title h1 { font-size: 20px; margin: 0; } .tc-finder--page { padding-top: 16px; } }
+
+/* ---------- shared section settings (tc/Section.tsx) ---------- */
+@media (max-width: 767px) { .tc-s.tc-hide-m { display: none; } }
+@media (min-width: 768px) { .tc-s.tc-hide-d { display: none; } }
+.tc-s.tc-pt-small > * { padding-top: 32px !important; }
+.tc-s.tc-pt-large > * { padding-top: 140px !important; }
+.tc-s.tc-pb-small > * { padding-bottom: 32px !important; }
+.tc-s.tc-pb-large > * { padding-bottom: 140px !important; }
+.tc-s.tc-pt-none > * { padding-top: 0 !important; }
+.tc-s.tc-pb-none > * { padding-bottom: 0 !important; }
+
+/* #3 benefits strip: 2–4 columns on desktop (the design shows 4) */
+@media (min-width: 901px) {
+  .tc-s .bstrip.tc-n-2 { grid-template-columns: repeat(2, 1fr); }
+  .tc-s .bstrip.tc-n-3 { grid-template-columns: repeat(3, 1fr); }
+}

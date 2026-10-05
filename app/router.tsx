@@ -20,6 +20,7 @@ import {
   EnhancedSquareBanners,
   TireHero,
   SizeFinder,
+  BenefitsStrip,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -58,6 +59,7 @@ registerHomeComponents({
   // Tires Store component pack (twilight.json → components, path home.<key>)
   'tire-hero': TireHero,
   'size-finder': SizeFinder,
+  'benefits-strip': BenefitsStrip,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

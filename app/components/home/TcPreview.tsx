@@ -2,6 +2,7 @@
 // (rendered by app/routes/home-page.tsx). REMOVE before release.
 import { TireHero } from './TireHero';
 import { SizeFinder } from './SizeFinder';
+import { BenefitsStrip } from './BenefitsStrip';
 
 const IMG = '/assets/images/home';
 
@@ -67,6 +68,13 @@ export function TcPreview() {
         </div>
         <TireHero data={{}} />
         <SizeFinder data={{}} />
+        <BenefitsStrip data={{}} />
+      </section>
+      <section style={{ borderTop: '6px solid #1d2023' }}>
+        <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>
+          <b style={{ color: '#ffb71b' }}>3-ب · شريط المميزات بـ 3 عناصر</b>
+        </div>
+        <BenefitsStrip data={{ items: [{ 'items.icon': 'tire', 'items.title': 'مقاسات للشاحنات', 'items.text': 'من 650 إلى 900' }, { 'items.icon': 'cal', 'items.title': 'حجز موعد', 'items.text': 'بنفس اليوم' }, { 'items.icon': 'phone', 'items.title': 'دعم واتساب', 'items.text': 'رد خلال دقائق' }] }} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>
         <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>

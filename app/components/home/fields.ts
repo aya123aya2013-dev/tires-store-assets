@@ -43,7 +43,7 @@ export const asImage = (v: unknown, d: string): string => {
 };
 // optional class from the merchant / designer (letters, digits, - and _ only)
 export const customClass = (v: unknown) =>
-  typeof v === 'string' ? v.split(/s+/).filter(c => /^[A-Za-z_][w-]*$/.test(c)).join(' ') : '';
+  typeof v === 'string' ? v.split(/\s+/).filter(c => /^[A-Za-z_][\w-]*$/.test(c)).join(' ') : '';
 
 // Salla link picker (variable-list): product / category / brand / page / blog / offers / external.
 // The engine usually hands us the resolved url string; some payloads keep it inside an object.
@@ -64,4 +64,21 @@ export const opt = (v: unknown, d: string): string => {
   if (Array.isArray(v)) return opt(v[0], d);
   if (v && typeof v === 'object' && 'value' in (v as Row)) return String((v as Row).value);
   return typeof v === 'string' && v ? v : d;
+};
+
+/** collection rows → plain objects keyed by sub-field id (accepts `key` or `prefix.key`) */
+export const rows = (v: unknown, prefix: string): Row[] =>
+  (Array.isArray(v) ? v.filter(isRow) : []).map(r => {
+    const out: Row = {};
+    for (const [k, val] of Object.entries(r)) out[k.startsWith(`${prefix}.`) ? k.slice(prefix.length + 1) : k] = val;
+    return out;
+  });
+
+/**
+ * Text in the storefront language. `en` maps our Arabic defaults to English, so the
+ * English storefront never shows an untouched Arabic default.
+ */
+export const makeT = (lang: Lang, en: Record<string, string>) => (v: unknown, d: string) => {
+  const s = asText(v, d, lang);
+  return lang === 'en' ? en[s.trim()] ?? s : s;
 };

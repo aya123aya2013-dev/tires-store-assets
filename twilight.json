@@ -2297,6 +2297,320 @@
       ]
     },
     {
+      "title": {
+        "ar": "شريط المميزات (تايرز ستور)",
+        "en": "Benefits Strip (Tires Store)"
+      },
+      "icon": "sicon-award-ribbon",
+      "path": "home.benefits-strip",
+      "is_default": true,
+      "fields": [
+        {
+          "type": "static",
+          "format": "description",
+          "id": "tc-cover",
+          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">شريط المميزات</span></div>"
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "tc-tip",
+          "value": "<div>💡 من 2 إلى 4 مميزات، كل وحدة: أيقونة + عنوان + سطر. يفضّل تحت أداة اختيار المقاس.</div>"
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "h-items",
+          "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">المميزات</div>"
+        },
+        {
+          "id": "items",
+          "type": "collection",
+          "format": "collection",
+          "required": false,
+          "minLength": 2,
+          "maxLength": 4,
+          "label": "المميزات",
+          "item_label": "ميزة",
+          "value": [
+            {
+              "items.icon": "shield",
+              "items.title": "إطارات أصلية",
+              "items.text": "من علامات تثق بها"
+            },
+            {
+              "items.icon": "wrench",
+              "items.title": "تركيب بالرياض",
+              "items.text": "عناية بكل التفاصيل"
+            },
+            {
+              "items.icon": "card",
+              "items.title": "خيارات دفع مرنة",
+              "items.text": "تابي وتمارا ومدى"
+            },
+            {
+              "items.icon": "truck",
+              "items.title": "توصيل لجميع المناطق",
+              "items.text": "رحلتك تبدأ من بابك"
+            }
+          ],
+          "fields": [
+            {
+              "id": "items.icon",
+              "type": "items",
+              "format": "dropdown-list",
+              "label": "الأيقونة",
+              "description": null,
+              "labelHTML": null,
+              "icon": "sicon-list",
+              "selected": [
+                {
+                  "label": "درع (أصلي / ضمان)",
+                  "value": "shield",
+                  "key": "59cceba7-5796-4a99-bf50-e7f81bbc7c4c"
+                }
+              ],
+              "options": [
+                {
+                  "label": "درع (أصلي / ضمان)",
+                  "value": "shield",
+                  "key": "59cceba7-5796-4a99-bf50-e7f81bbc7c4c"
+                },
+                {
+                  "label": "مفتاح (تركيب)",
+                  "value": "wrench",
+                  "key": "f90980dc-39de-4eff-8b08-1b7a462eeee7"
+                },
+                {
+                  "label": "بطاقة (دفع)",
+                  "value": "card",
+                  "key": "d007c38a-1326-48e1-9bf4-5f67f0600f63"
+                },
+                {
+                  "label": "شاحنة (توصيل)",
+                  "value": "truck",
+                  "key": "d70f1476-f8ba-4f4c-a839-90e3dcef3ce5"
+                },
+                {
+                  "label": "إطار",
+                  "value": "tire",
+                  "key": "f69b26f9-82f7-4709-b8fd-9859cc4729b0"
+                },
+                {
+                  "label": "تقويم",
+                  "value": "cal",
+                  "key": "bf6ffe06-b1ff-4ae9-a6b1-5b5c351bb311"
+                },
+                {
+                  "label": "موقع",
+                  "value": "pin",
+                  "key": "37f6884f-0360-4d83-8fc2-63e88c15a070"
+                },
+                {
+                  "label": "جوال",
+                  "value": "phone",
+                  "key": "18fe548c-7268-407f-914c-87e32faf458a"
+                },
+                {
+                  "label": "بحث",
+                  "value": "search",
+                  "key": "0a8f9e6d-41bc-4c1c-b646-e59c07a37010"
+                },
+                {
+                  "label": "قلب",
+                  "value": "heart",
+                  "key": "293ba98c-3a21-4661-be57-33613f210674"
+                },
+                {
+                  "label": "شبكة",
+                  "value": "grid",
+                  "key": "a216fa80-2d12-4d77-83fd-f47a9a6270a7"
+                },
+                {
+                  "label": "بيت",
+                  "value": "home",
+                  "key": "c74efc2a-8f82-48d5-830f-11316f326e85"
+                },
+                {
+                  "label": "كل الإطارات",
+                  "value": "cat-all",
+                  "key": "f35fe45c-13ec-4f58-8171-7c821da5202f"
+                },
+                {
+                  "label": "سيدان",
+                  "value": "cat-sedan",
+                  "key": "eb73be72-6ef0-49da-9aff-7a4526ce8c6b"
+                },
+                {
+                  "label": "دفع رباعي",
+                  "value": "cat-suv",
+                  "key": "bab51d7d-7dc0-47ec-af1d-277d2f57df15"
+                },
+                {
+                  "label": "نقل وبيك أب",
+                  "value": "cat-truck",
+                  "key": "13cdd8fe-8a80-4e10-a8f3-e01248f95923"
+                }
+              ],
+              "source": "Manual",
+              "required": false
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "العنوان",
+              "multilanguage": true,
+              "id": "items.title",
+              "value": "إطارات أصلية",
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "إطارات أصلية",
+              "minLength": 0,
+              "maxLength": 30
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-text-alt",
+              "label": "السطر",
+              "multilanguage": true,
+              "id": "items.text",
+              "value": "من علامات تثق بها",
+              "required": false,
+              "format": "text",
+              "description": null,
+              "placeholder": "من علامات تثق بها",
+              "minLength": 0,
+              "maxLength": 50
+            }
+          ]
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "h-common",
+          "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">إعدادات عامة</div>"
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إظهار على الجوال",
+          "description": null,
+          "id": "show_mobile",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إظهار على الكمبيوتر",
+          "description": null,
+          "id": "show_desktop",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "id": "space_top",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "المسافة فوق القسم",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "عادية",
+              "value": "normal",
+              "key": "12ffba5d-a6bd-42da-af60-a0c5eb3dc31b"
+            }
+          ],
+          "options": [
+            {
+              "label": "عادية",
+              "value": "normal",
+              "key": "12ffba5d-a6bd-42da-af60-a0c5eb3dc31b"
+            },
+            {
+              "label": "صغيرة",
+              "value": "small",
+              "key": "1782a121-142d-4cfa-8225-2d155ab01c3c"
+            },
+            {
+              "label": "كبيرة",
+              "value": "large",
+              "key": "a44f33da-2e36-4c01-9c3e-bd3492fb9210"
+            },
+            {
+              "label": "بدون",
+              "value": "none",
+              "key": "e43e3771-65a1-4f9f-9bd9-42a490d4f697"
+            }
+          ],
+          "source": "Manual",
+          "required": false
+        },
+        {
+          "id": "space_bottom",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "المسافة تحت القسم",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "عادية",
+              "value": "normal",
+              "key": "993716b6-26ac-4d77-9f1b-6c705067e9ee"
+            }
+          ],
+          "options": [
+            {
+              "label": "عادية",
+              "value": "normal",
+              "key": "993716b6-26ac-4d77-9f1b-6c705067e9ee"
+            },
+            {
+              "label": "صغيرة",
+              "value": "small",
+              "key": "fb167ea9-d38a-4338-aa85-88a10619f9df"
+            },
+            {
+              "label": "كبيرة",
+              "value": "large",
+              "key": "289fded1-f235-4a5c-94e8-0b4ee03d4809"
+            },
+            {
+              "label": "بدون",
+              "value": "none",
+              "key": "ecad171c-c625-420e-88b4-50836de560b3"
+            }
+          ],
+          "source": "Manual",
+          "required": false
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "كلاس CSS مخصص",
+          "multilanguage": false,
+          "id": "custom_class",
+          "value": null,
+          "required": false,
+          "format": "text",
+          "description": "حقل خاص بالمطورين ومصممين المتاجر: اسم كلاس يضاف للعنصر لتعديل شكله من CSS المتجر",
+          "placeholder": "my-benefits",
+          "minLength": 0,
+          "maxLength": 60
+        }
+      ],
+      "key": "2b41a6d5-69da-4165-9d98-61e70291fb85"
+    },
+    {
       "key": "186b3f4f-25cf-4d3c-abca-cef7eed6f0ab",
       "title": {
         "en": "Enhances Animated Images",

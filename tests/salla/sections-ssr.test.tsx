@@ -9,6 +9,7 @@ import { ShopByCar } from '../../app/components/home/ShopByCar';
 import { TireGrid } from '../../app/components/home/TireGrid';
 import { DoubleBanner } from '../../app/components/home/DoubleBanner';
 import { TirePicker } from '../../app/components/home/TirePicker';
+import { ServicesBento } from '../../app/components/home/ServicesBento';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -113,5 +114,18 @@ describe('#10 tire picker', () => {
     expect(html).toContain('ننصحك بـ <b>كفر تايلندي</b>');
     expect(html).toContain('<b>360</b>'); // 290 × 1.24 → 360
     expect(html).toContain('tier rec');
+  });
+});
+
+describe('#11 services bento', () => {
+  it('shows the calculator with the design numbers (1160 / 4 = 290)', () => {
+    const html = renderToString(<ServicesBento data={{}} />);
+    expect(html).toContain('<span>290</span>');
+    expect(html).toContain('tile photo t-install');
+  });
+  it('hides the calculator and widens the small tile', () => {
+    const html = renderToString(<ServicesBento data={{ calc_show: false }} />);
+    expect(html).not.toContain('t-calc');
+    expect(html).toContain('bento tc-nocalc');
   });
 });

@@ -28,6 +28,7 @@ import {
   TireGrid,
   DoubleBanner,
   TirePicker,
+  ServicesBento,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -74,6 +75,7 @@ registerHomeComponents({
   'tire-grid': TireGrid,
   'double-banner': DoubleBanner,
   'tire-picker': TirePicker,
+  'services-bento': ServicesBento,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

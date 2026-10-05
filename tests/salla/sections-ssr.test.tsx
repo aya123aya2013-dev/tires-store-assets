@@ -7,6 +7,7 @@ import { BrandsMarquee } from '../../app/components/home/BrandsMarquee';
 import { CategoryCards } from '../../app/components/home/CategoryCards';
 import { ShopByCar } from '../../app/components/home/ShopByCar';
 import { TireGrid } from '../../app/components/home/TireGrid';
+import { DoubleBanner } from '../../app/components/home/DoubleBanner';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -93,5 +94,14 @@ describe('#8 tire grid', () => {
     expect(html).toContain('class="cghost">R16<');
     expect(html).toContain('للحبة · 1680 للأربع');
     expect(html).toContain('اختيار مميز');
+  });
+});
+
+describe('#9 double banner', () => {
+  it('renders both cards with line breaks and the custom slab colour', () => {
+    const html = renderToString(<DoubleBanner data={{ slab_color: '#e11d48', reverse: true }} />);
+    expect(html).toContain('أربع إطارات.<br/>اختيار واحد مدروس.');
+    expect(html).toContain('background:#e11d48');
+    expect(html.indexOf('dcard light')).toBeLessThan(html.indexOf('dcard dark'));
   });
 });

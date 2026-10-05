@@ -26,6 +26,7 @@ import {
   CategoryCards,
   ShopByCar,
   TireGrid,
+  DoubleBanner,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -70,6 +71,7 @@ registerHomeComponents({
   'category-cards': CategoryCards,
   'shop-by-car': ShopByCar,
   'tire-grid': TireGrid,
+  'double-banner': DoubleBanner,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

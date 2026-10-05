@@ -141,6 +141,30 @@ const components = [
     F.sw('feature_first', 'تمييز أول منتج («اختيار مميز»)', true),
     ...F.common('my-grid'),
   ]),
+
+  // #9 بانر مزدوج
+  def('home.double-banner', 'بانر مزدوج', 'Double Banner', 'sicon-image', [
+    F.cover('بانر مزدوج'),
+    F.tip('كرتين جنب بعض: غامق بصورة إطار وقطعة ذهبية مائلة، وفاتح بالمقاس كبير. لكتابة سطر جديد بالعنوان اضغط Enter.'),
+    F.head('h-dark', 'الكرت الغامق'),
+    F.text('dark_kicker', 'السطر الصغير', 'للرحلة، من أولها', 40),
+    F.area('dark_title', 'العنوان', 'أربع إطارات.\nاختيار واحد مدروس.', 80),
+    F.text('dark_text', 'النص', 'ابدأ بالمقاس، وقارن المجموعة المناسبة لسيارتك.', 120),
+    F.text('dark_link_text', 'نص الرابط', 'اكتشف الإطارات', 30),
+    F.link('dark_link', 'الرابط'),
+    F.image('dark_image', 'صورة الإطار', 'PNG بخلفية شفافة، 800×800 بكسل. اتركها فارغة لاستخدام صورة الثيم.', 800, 800),
+    F.color('slab_color', 'لون القطعة المائلة', '#ffb71b'),
+    F.head('h-light', 'الكرت الفاتح'),
+    F.text('light_kicker', 'السطر الصغير', 'دقيقة وحدة تكفي', 40),
+    F.text('light_size', 'النص الكبير', '205 / 55 R16', 20),
+    F.text('light_ghost', 'الحرف الباهت بالخلفية', 'R', 3),
+    F.area('light_text', 'النص', 'ثلاثة أرقام، وكل رقم له معنى.\nخلّينا نساعدك تفهم مقاسك.', 160),
+    F.text('light_link_text', 'نص الرابط', 'افتح دليل المقاسات', 30),
+    F.link('light_link', 'الرابط'),
+    F.head('h-look', 'الشكل'),
+    F.sw('reverse', 'عكس ترتيب الكرتين', false),
+    ...F.common('my-double-banner'),
+  ]),
 ];
 
 let after = 'home.size-finder';

@@ -16,3 +16,4 @@ export { BrandsMarquee } from './BrandsMarquee';
 export { CategoryCards } from './CategoryCards';
 export { ShopByCar } from './ShopByCar';
 export { TireGrid } from './TireGrid';
+export { DoubleBanner } from './DoubleBanner';

@@ -89,18 +89,30 @@ function useCatalogLoader(
   }, [next]);
 
   return useCallback(async () => {
-    const nextUrl = nextCursorRef.current;
-    const cursorMatch = nextUrl?.match(/[?&]cursor=([^&]+)/);
-    const cursor = cursorMatch ? decodeURIComponent(cursorMatch[1]) : (nextUrl ?? undefined);
-    const result = await product.list({
-      source: source.type,
-      sourceValue: source.value,
-      ...(cursor && { cursor }),
-      sort: selectedSort,
-      ...(filters && { filterable: true, filters }),
-    });
-    nextCursorRef.current = result.next;
-    return keep ? { ...result, items: result.items.filter(keep) } : result;
+    const fetchPage = async () => {
+      const nextUrl = nextCursorRef.current;
+      const cursorMatch = nextUrl?.match(/[?&]cursor=([^&]+)/);
+      const cursor = cursorMatch ? decodeURIComponent(cursorMatch[1]) : (nextUrl ?? undefined);
+      const result = await product.list({
+        source: source.type,
+        sourceValue: source.value,
+        ...(cursor && { cursor }),
+        sort: selectedSort,
+        ...(filters && { filterable: true, filters }),
+      });
+      nextCursorRef.current = result.next;
+      return result;
+    };
+    let result = await fetchPage();
+    if (!keep) return result;
+    // Exact-match mode: a page with no match must not end the list while more
+    // pages exist — keep reading until something matches or the catalog ends.
+    let items = result.items.filter(keep);
+    for (let guard = 0; !items.length && result.next && guard < 30; guard++) {
+      result = await fetchPage();
+      items = result.items.filter(keep);
+    }
+    return { ...result, items };
   }, [source.type, source.value, selectedSort, filters, keep]);
 }
 
@@ -480,6 +492,24 @@ export function ProductListPage({
   );
   const loader = useCatalogLoader(source, selectedSort, shownNext, appliedFilters, keep);
 
+  // Exact-match mode: if the first page has no match but more pages exist, read on
+  // before showing anything — never "no products" while matching ones exist.
+  const [found, setFound] = useState<{ key: string; items: Product[]; next: string | null } | null>(null);
+  const firstEmpty = !!keep && filterStatus !== 'loading' && shownProducts.length === 0 && !!shownNext;
+  const searchKey = `${listKey}-${selectedSort}`;
+  useEffect(() => {
+    if (!firstEmpty || found?.key === searchKey) return;
+    let live = true;
+    loader()
+      .then(r => { if (live) setFound({ key: searchKey, items: r.items, next: r.next ?? null }); })
+      .catch(() => { if (live) setFound({ key: searchKey, items: [], next: null }); });
+    return () => { live = false; };
+  }, [firstEmpty, found?.key, searchKey, loader]);
+  const useFound = firstEmpty && found?.key === searchKey;
+  const searching = firstEmpty && !useFound;
+  const listProducts = useFound ? found.items : shownProducts;
+  const listNext = useFound ? found.next : shownNext;
+
   const listLayoutClass =
     view === 'list' ? 's-products-list-horizontal-cards' : 's-products-list-vertical-cards';
   // Offers (and other filter-less lists) get the full row: 5 columns on desktop.
@@ -515,7 +545,7 @@ export function ProductListPage({
         // `products.length` (this page only) isn't the true total then, and
         // the API's cursor pagination has no total-count field to fall back
         // to, so show nothing rather than a number that's quietly wrong.
-        productsCount={shownNext ? undefined : shownProducts.length}
+        productsCount={searching || listNext ? undefined : listProducts.length}
         view={view}
         onViewChange={setView}
         selectedSort={selectedSort}
@@ -528,12 +558,12 @@ export function ProductListPage({
         filtersVisible={filtersVisible}
         filters={filters}
         listKey={`${listKey}${filteredKey}`}
-        filterStatus={filterStatus}
+        filterStatus={searching ? 'loading' : filterStatus}
         onRetry={retryFilters}
         selectedSort={selectedSort}
         view={view}
-        products={shownProducts}
-        pagination={{ next: shownNext ?? null }}
+        products={listProducts}
+        pagination={{ next: listNext ?? null }}
         loader={loader}
         listLayoutClass={listLayoutClass}
         wideGridClass={wideGridClass}

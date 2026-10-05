@@ -9,13 +9,13 @@
   --tires-black: #2f3337;
 
   /* Store primary colour drives buttons, links and badges across the engine
-     and Salla web components — pin it to the brand yellow. */
-  --color-primary: var(--tires-yellow) !important;
-  --color-primary-dark: var(--tires-yellow-dark) !important;
-  --color-primary-reverse: var(--tires-black) !important;
+     and Salla web components — brand yellow by default; the merchant colour (Salla settings) overrides it. */
+  --color-primary: var(--tires-yellow);
+  --color-primary-dark: var(--tires-yellow-dark);
+  --color-primary-reverse: var(--tires-black);
 
   /* Brand typeface, loaded in __root.tsx. */
-  --font-main: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  --font-main: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* The base theme leaves the page background transparent, so browsers in dark

@@ -10,8 +10,11 @@ import { Home } from '@salla.sa/twilight-theme-engine/routes/home';
 import type { HomeLoaderData } from '@salla.sa/twilight-theme-engine/routes/home';
 import { HomeSkeleton } from '@salla.sa/twilight-theme-engine/skeleton';
 import { withHead } from '@salla.sa/twilight-theme-engine/tanstack';
-import { useEffect, useState } from 'react';
-import { TcPreview } from '../components/home/TcPreview';
+import { lazy, Suspense, useEffect, useState } from 'react';
+
+// DEV-only: `import.meta.env.DEV` is false in production, so this import (and the
+// samples) is dropped from the build entirely.
+const TcPreview = import.meta.env.DEV ? lazy(() => import('../components/home/TcPreview').then(m => ({ default: m.TcPreview }))) : null;
 
 export const Route = createFileRoute('/{-$locale}/')({
   // DEV-ONLY: with ?tc-preview skip the Salla API (it answers 422 for the local
@@ -32,5 +35,12 @@ function HomeComponent() {
   // DEV-ONLY: /?tc-preview shows our components with sample data (no Salla editor needed).
   const [preview, setPreview] = useState(false);
   useEffect(() => setPreview(import.meta.env.DEV && new URLSearchParams(window.location.search).has('tc-preview')), []);
-  return preview ? <TcPreview /> : <Home.Component {...data} />;
+  if (TcPreview && preview) {
+    return (
+      <Suspense fallback={null}>
+        <TcPreview />
+      </Suspense>
+    );
+  }
+  return <Home.Component {...data} />;
 }

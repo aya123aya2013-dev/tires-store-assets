@@ -5,24 +5,43 @@
  * Styles: styles/04-components/tire-components.scss (scoped under `.tc-hero`).
  */
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useParams } from '@tanstack/react-router';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
 
 type Row = Record<string, unknown>;
-const pick = (row: Row, key: string, prefix: string) => (row[key] ?? row[`${prefix}.${key}`]) as string | undefined;
+type Lang = 'ar' | 'en';
+const isRow = (v: unknown): v is Row => !!v && typeof v === 'object' && !Array.isArray(v);
+const pick = (row: Row, key: string, prefix: string) => row[key] ?? row[`${prefix}.${key}`];
+// same language on server and browser (SSR-safe): read it from the route, not from document
+const useLang = (): Lang => {
+  const { locale } = useParams({ strict: false }) as { locale?: string };
+  return String(locale ?? '').toLowerCase().startsWith('en') ? 'en' : 'ar';
+};
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    if (!mq) return;
+    const on = () => setReduced(mq.matches);
+    on();
+    mq.addEventListener?.('change', on);
+    return () => mq.removeEventListener?.('change', on);
+  }, []);
+  return reduced;
+}
 const asBool = (v: unknown, d: boolean) => (v === undefined || v === null || v === '' ? d : v === true || v === 'true' || v === 1 || v === '1');
 // multilanguage fields may arrive as { ar, en } before the engine resolves them
-const asText = (v: unknown, d: string): string => {
+const asText = (v: unknown, d: string, lang: Lang = 'ar'): string => {
   if (typeof v === 'string') return v.trim() ? v : d;
-  if (v && typeof v === 'object') {
-    const o = v as Row;
-    const lang = typeof document !== 'undefined' && document.documentElement.lang === 'en' ? 'en' : 'ar';
-    return asText(o[lang] ?? o.ar ?? o.en, d);
-  }
+  if (typeof v === 'number') return String(v);
+  if (isRow(v)) return asText(v[lang] ?? v.ar ?? v.en, d, lang);
   return d;
 };
-const asImage = (v: unknown, d: string) => {
-  if (typeof v === 'string' && v) return v;
-  if (v && typeof v === 'object' && 'url' in (v as Row)) return String((v as Row).url);
+// url | [url] | { url } | [{ url }] — never turns a missing url into "null"
+const asImage = (v: unknown, d: string): string => {
+  if (Array.isArray(v)) return asImage(v[0], d);
+  if (typeof v === 'string') return /^(https?:|\/|data:)/.test(v.trim()) ? v.trim() : d;
+  if (isRow(v)) return asImage(v.url ?? v.src ?? v.path, d);
   return d;
 };
 
@@ -76,59 +95,69 @@ export function TireHero({ data }: TireHeroProps) {
 
 /* ===================== image mode: plain banner / slider ===================== */
 interface Slide {
-  desk: string; mob: string; video: string; link: string; wholeLink: boolean; title: string; text: string;
+  desk: string; mob: string; video: Video | null; link: string; wholeLink: boolean; title: string; text: string;
   btn: string; btnBg: string; btnColor: string; btnOutline: boolean; focus: string; posX: string;
 }
 
 function BannerSlider({ data }: TireHeroProps) {
-  const isEn = typeof document !== 'undefined' && document.documentElement.lang === 'en';
+  const lang = useLang();
+  const isEn = lang === 'en';
+  const reduced = useReducedMotion();
   const slides = useMemo<Slide[]>(() => {
-    const rows = Array.isArray(data.slides) ? (data.slides as Row[]) : [];
-    const f = (r: Row, k: string) => r[k] ?? r[`slides.${k}`];
+    const rows = Array.isArray(data.slides) ? data.slides.filter(isRow) : [];
+    const f = (r: Row, k: string) => pick(r, k, 'slides');
+    const t = (v: unknown) => asText(v, '', lang);
     return rows
       .map(r => {
         const useEn = isEn && asBool(f(r, 'en_images'), false);
         const deskAr = asImage(f(r, 'image'), '');
-        const desk = (useEn && asImage(f(r, 'image_en'), '')) || deskAr;
-        const mob = (useEn && asImage(f(r, 'mobile_image_en'), '')) || asImage(f(r, 'mobile_image'), '') || desk;
-        const video = asBool(f(r, 'use_video'), false) ? asText(f(r, 'video'), '') : '';
+        const mobAr = asImage(f(r, 'mobile_image'), '');
+        // either image stands in for the other
+        const desk = (useEn && asImage(f(r, 'image_en'), '')) || deskAr || mobAr;
+        const mob = (useEn && asImage(f(r, 'mobile_image_en'), '')) || mobAr || desk;
+        const video = asBool(f(r, 'use_video'), false) ? videoSrc(t(f(r, 'video'))) : null;
         return {
           desk, mob, video,
           link: asLink(f(r, 'link') ?? r.url, ''),
           wholeLink: asBool(f(r, 'whole_link'), true),
-          title: asText(f(r, 'title'), ''),
-          text: asText(f(r, 'text'), ''),
-          btn: asText(f(r, 'btn'), ''),
-          btnBg: asText(f(r, 'btn_bg'), ''),
-          btnColor: asText(f(r, 'btn_color'), ''),
+          title: t(f(r, 'title')),
+          text: t(f(r, 'text')),
+          btn: t(f(r, 'btn')),
+          btnBg: t(f(r, 'btn_bg')),
+          btnColor: t(f(r, 'btn_color')),
           btnOutline: asBool(f(r, 'btn_outline'), false),
           focus: opt(f(r, 'focus'), 'center'),
           posX: opt(f(r, 'pos_x'), ''),
         };
       })
       .filter(s => s.desk || s.video);
-  }, [data.slides, isEn]);
+  }, [data.slides, isEn, lang]);
 
   const height = opt(data.banner_height, 'auto'); // auto | 21-9 | 16-9 | 3-1 | screen
   const fit = opt(data.banner_fit, 'cover');
   const mobRatio = opt(data.banner_mobile_height, 'auto');
   const autoplay = asBool(data.slides_autoplay, true);
   const every = Math.max(2, Number(data.slides_interval) || 5) * 1000;
-  const speed = Math.min(3, Math.max(0.2, Number(data.slides_speed) || 0.6));
+  const rawSpeed = data.slides_speed === '' || data.slides_speed == null ? NaN : Number(data.slides_speed);
+  const speed = Number.isFinite(rawSpeed) ? Math.min(3, Math.max(0, rawSpeed)) : 0.6; // 0 = instant
   const effect = opt(data.slides_effect, 'slide'); // slide | fade
   const showArrows = asBool(data.show_arrows, true);
   const showDots = asBool(data.show_dots, true);
   const boxed = asBool(data.banner_boxed, false);
   const topSpace = asBool(data.top_space, false);
-  const [i, setI] = useState(0);
+  const [rawI, setI] = useState(0);
+  const i = slides.length ? rawI % slides.length : 0; // the merchant may remove slides while a later one is showing
   const [paused, setPaused] = useState(false);
+  const [stopped, setStopped] = useState(false);
+  const touchX = useRef<number | null>(null);
   const many = slides.length > 1;
+  const running = many && autoplay && !paused && !stopped && !reduced;
 
   useEffect(() => {
-    if (!many || !autoplay || paused) return;
+    if (!running) return;
     const t = setInterval(() => setI(n => (n + 1) % slides.length), every);
     return () => clearInterval(t);
-  }, [many, autoplay, paused, every, slides.length]);
+  }, [running, every, slides.length]);
 
   if (!slides.length) {
     return (
@@ -148,16 +177,40 @@ function BannerSlider({ data }: TireHeroProps) {
     `tc-banner--fx-${effect}`, topSpace ? 'tc-banner--top-space' : '',
   ].join(' ');
   const go = (n: number) => setI((n + slides.length) % slides.length);
+  // swipe: phones always have a way to move, even with arrows / dots / autoplay off
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current === null || !many) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1)); // the track is laid out left-to-right in both languages
+  };
 
   return (
-    <div className={cls} style={{ ['--tc-speed' as string]: `${speed}s` }} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} aria-roledescription={many ? 'carousel' : undefined}>
+    <div
+      className={cls}
+      dir={isEn ? 'ltr' : 'rtl'}
+      style={{ ['--tc-speed' as string]: `${speed}s` }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
+      onTouchEnd={onTouchEnd}
+      role={many ? 'region' : undefined}
+      aria-roledescription={many ? 'carousel' : undefined}
+      aria-label={many ? (isEn ? 'Banner' : 'البنر') : undefined}
+    >
       <div className="tc-banner__track" style={effect === 'slide' ? { transform: `translateX(-${i * 100}%)` } : undefined}>
         {slides.map((s, n) => {
+          const on = n === i;
+          // only the visible slide plays its video
           const media = s.video ? (
-            /youtu\.?be/.test(s.video) ? (
-              <iframe className="tc-banner__video" src={youTube(s.video)} title={s.title || 'فيديو'} allow="autoplay; encrypted-media" loading="lazy" />
+            !on ? (
+              <div className="tc-banner__video" aria-hidden="true" />
+            ) : s.video.kind === 'youtube' ? (
+              <iframe className="tc-banner__video" src={youTubeEmbed(s.video.id)} title={s.title || (isEn ? 'Video' : 'فيديو')} allow="autoplay; encrypted-media" />
             ) : (
-              <video className="tc-banner__video" src={s.video} autoPlay muted loop playsInline preload="metadata" />
+              <video className="tc-banner__video" src={s.video.src} autoPlay={!reduced} controls={reduced} muted loop playsInline preload="metadata" />
             )
           ) : (
             <picture>
@@ -184,7 +237,15 @@ function BannerSlider({ data }: TireHeroProps) {
           ) : null;
           const inner = <>{media}{overlay}</>;
           return (
-            <div className={'tc-banner__slide' + (n === i ? ' is-on' : '')} key={(s.desk || s.video) + n} aria-hidden={n !== i}>
+            <div
+              className={'tc-banner__slide' + (on ? ' is-on' : '')}
+              key={(s.desk || s.video?.src || '') + n}
+              aria-hidden={!on}
+              inert={!on}
+              role={many ? 'group' : undefined}
+              aria-roledescription={many ? 'slide' : undefined}
+              aria-label={many ? `${n + 1} / ${slides.length}` : undefined}
+            >
               {s.link && s.wholeLink ? <Link to={s.link}>{inner}</Link> : inner}
             </div>
           );
@@ -192,14 +253,19 @@ function BannerSlider({ data }: TireHeroProps) {
       </div>
       {many && showArrows && (
         <>
-          <button type="button" className="tc-banner__arrow is-prev" aria-label="السابق" onClick={() => go(i - 1)}>›</button>
-          <button type="button" className="tc-banner__arrow is-next" aria-label="التالي" onClick={() => go(i + 1)}>‹</button>
+          <button type="button" className="tc-banner__arrow is-prev" aria-label={isEn ? 'Previous' : 'السابق'} onClick={() => go(i - 1)}>{isEn ? '‹' : '›'}</button>
+          <button type="button" className="tc-banner__arrow is-next" aria-label={isEn ? 'Next' : 'التالي'} onClick={() => go(i + 1)}>{isEn ? '›' : '‹'}</button>
         </>
+      )}
+      {many && autoplay && !reduced && (
+        <button type="button" className="tc-banner__pause" aria-pressed={stopped} aria-label={stopped ? (isEn ? 'Play' : 'تشغيل') : (isEn ? 'Pause' : 'إيقاف')} onClick={() => setStopped(v => !v)}>
+          {stopped ? '▶' : '❚❚'}
+        </button>
       )}
       {many && showDots && (
         <div className="tc-banner__dots">
           {slides.map((_, n) => (
-            <button key={n} type="button" className={n === i ? 'on' : undefined} aria-label={`الشريحة ${n + 1}`} onClick={() => go(n)} />
+            <button key={n} type="button" className={n === i ? 'on' : undefined} aria-label={isEn ? `Slide ${n + 1}` : `الشريحة ${n + 1}`} aria-current={n === i || undefined} onClick={() => go(n)} />
           ))}
         </div>
       )}
@@ -207,36 +273,59 @@ function BannerSlider({ data }: TireHeroProps) {
   );
 }
 
-const youTube = (u: string) => {
-  const id = (u.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/) || [])[1] || '';
-  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&playsinline=1`;
+type Video = { kind: 'youtube'; id: string; src: string } | { kind: 'file'; src: string };
+// YouTube is recognised by hostname + an 11-char id; anything else must be a direct video url
+const videoSrc = (u: string): Video | null => {
+  if (!u) return null;
+  let url: URL;
+  try { url = new URL(u, 'https://local.invalid'); } catch { return null; }
+  const host = url.hostname.replace(/^(www\.|m\.)/, '');
+  if (host === 'youtube.com' || host === 'youtube-nocookie.com' || host === 'youtu.be') {
+    const id = host === 'youtu.be'
+      ? url.pathname.slice(1)
+      : url.searchParams.get('v') || (url.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/) || [])[1] || '';
+    return /^[\w-]{11}$/.test(id) ? { kind: 'youtube', id, src: u } : null;
+  }
+  return /^(https?:|\/)/.test(u) ? { kind: 'file', src: u } : null;
 };
+const youTubeEmbed = (id: string) => `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&playsinline=1`;
 
 /* ===================== tire mode: our designed hero ===================== */
 function TireDesign({ data }: TireHeroProps) {
-  const kicker = asText(data.kicker, 'إطارات أصلية · تركيب بنفس اليوم بالرياض');
-  const title1 = asText(data.title_1, 'مقاسك مكتوب');
-  const title2 = asText(data.title_2, 'على إطارك.');
-  const text = asText(data.text, 'اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.');
-  const btn1 = { text: asText(data.btn1_text, 'تسوّق حسب المقاس'), link: asLink(data.btn1_link, '/search') };
-  const btn2 = { show: asBool(data.btn2_show, true), text: asText(data.btn2_text, 'اكتشف خدمة التركيب'), link: asLink(data.btn2_link, '/help#install') };
+  const lang = useLang();
+  const reduced = useReducedMotion();
+  const text_ = (v: unknown, d: string) => asText(v, d, lang);
+  const kicker = text_(data.kicker, 'إطارات أصلية · تركيب بنفس اليوم بالرياض');
+  const title1 = text_(data.title_1, 'مقاسك مكتوب');
+  const title2 = text_(data.title_2, 'على إطارك.');
+  const text = text_(data.text, 'اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.');
+  const btn1 = { text: text_(data.btn1_text, 'تسوّق حسب المقاس'), link: asLink(data.btn1_link, '/search') };
+  const btn2 = { show: asBool(data.btn2_show, true), text: text_(data.btn2_text, 'اكتشف خدمة التركيب'), link: asLink(data.btn2_link, '/help#install') };
   const image = asImage(data.tire_image, '/assets/images/home/tire-hero.webp');
-  const giant = { show: asBool(data.giant_show, true), text: asText(data.giant_text, 'R16') };
+  const giant = { show: asBool(data.giant_show, true), text: text_(data.giant_text, 'R16') };
   const float = asBool(data.float_anim, true);
   const showStats = asBool(data.stats_show, true);
   const showParts = asBool(data.parts_show, true);
   const interval = Math.max(1.5, Number(data.parts_interval) || 3.5) * 1000;
 
   const stats = useMemo(() => {
-    const rows = Array.isArray(data.stats) ? (data.stats as Row[]) : [];
-    const list = rows.map(r => ({ value: pick(r, 'value', 'stats') || '', label: pick(r, 'label', 'stats') || '' })).filter(r => r.value);
+    const rows = Array.isArray(data.stats) ? data.stats.filter(isRow) : [];
+    const list = rows
+      .map(r => ({ value: asText(pick(r, 'value', 'stats'), '', lang), label: asText(pick(r, 'label', 'stats'), '', lang) }))
+      .filter(r => r.value);
     return list.length ? list : DEFAULT_STATS;
-  }, [data.stats]);
+  }, [data.stats, lang]);
   const parts = useMemo(() => {
-    const rows = Array.isArray(data.parts) ? (data.parts as Row[]) : [];
-    const list = rows.map(r => ({ code: pick(r, 'code', 'parts') || '', name: pick(r, 'name', 'parts') || '', text: pick(r, 'text', 'parts') || '' })).filter(r => r.code);
+    const rows = Array.isArray(data.parts) ? data.parts.filter(isRow) : [];
+    const list = rows
+      .map(r => ({
+        code: asText(pick(r, 'code', 'parts'), '', lang).trim(),
+        name: asText(pick(r, 'name', 'parts'), '', lang),
+        text: asText(pick(r, 'text', 'parts'), '', lang),
+      }))
+      .filter(r => r.code);
     return list.length ? list : DEFAULT_PARTS;
-  }, [data.parts]);
+  }, [data.parts, lang]);
 
   // ----- sidewall size code + popup -----
   const textRef = useRef<SVGTextElement>(null);
@@ -256,10 +345,10 @@ function TireDesign({ data }: TireHeroProps) {
   }, [parts]);
 
   useEffect(() => {
-    if (!showParts || hover) return;
+    if (!showParts || hover || reduced) return;
     const t = setInterval(() => setActive(a => (a + 1) % parts.length), interval);
     return () => clearInterval(t);
-  }, [showParts, hover, parts.length, interval]);
+  }, [showParts, hover, reduced, parts.length, interval]);
 
   useEffect(() => {
     const el = textRef.current;
@@ -296,7 +385,7 @@ function TireDesign({ data }: TireHeroProps) {
           <h1>
             {title1}
             <br />
-            <span>{title2}</span>
+            <LastWordGold text={title2} />
           </h1>
           <p className="tc-lead">{text}</p>
           <div className="tc-hero__cta">
@@ -313,7 +402,8 @@ function TireDesign({ data }: TireHeroProps) {
             <div className="tc-hero__proof">
               {stats.map(s => (
                 <span key={s.value + s.label}>
-                  <b>{s.value}</b> {s.label}
+                  <b>{s.value.replace(/\s*★\s*/g, '')}</b>
+                  {s.value.includes('★') && <em> ★</em>} {s.label}
                 </span>
               ))}
             </div>
@@ -336,8 +426,13 @@ function TireDesign({ data }: TireHeroProps) {
                         {JOIN_BEFORE[n] ?? (n ? ' ' : '')}
                         <tspan
                           className={n === active ? 'on' : undefined}
+                          tabIndex={0}
+                          role="button"
+                          aria-label={`${p.code} — ${p.name}`}
                           onMouseEnter={() => { setHover(true); setActive(n); }}
                           onMouseLeave={() => setHover(false)}
+                          onFocus={() => { setHover(true); setActive(n); }}
+                          onBlur={() => setHover(false)}
                           onClick={() => setActive(n)}
                         >
                           {p.code}
@@ -362,4 +457,11 @@ function TireDesign({ data }: TireHeroProps) {
       </div>
     </div>
   );
+}
+
+// approved design: only the last word of the 2nd title line is gold — «على <span>إطارك.</span>»
+function LastWordGold({ text }: { text: string }) {
+  const k = text.trimEnd().lastIndexOf(' ');
+  if (k < 0) return <span>{text}</span>;
+  return <>{text.slice(0, k + 1)}<span>{text.slice(k + 1)}</span></>;
 }

@@ -1,6 +1,7 @@
 // DEV-ONLY preview of the Tires Store component pack: open the home page with ?tc-preview
 // (rendered by app/routes/home-page.tsx). REMOVE before release.
 import { TireHero } from './TireHero';
+import { SizeFinder } from './SizeFinder';
 
 const IMG = '/assets/images/home';
 
@@ -59,6 +60,20 @@ export function TcPreview() {
           <TireHero data={s.data} />
         </section>
       ))}
+      {/* #2 size finder — riding on the hero exactly like final.html */}
+      <section style={{ borderTop: '6px solid #1d2023' }}>
+        <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>
+          <b style={{ color: '#ffb71b' }}>2-أ · البنر + أداة اختيار المقاس (الافتراضي)</b>
+        </div>
+        <TireHero data={{}} />
+        <SizeFinder data={{}} />
+      </section>
+      <section style={{ borderTop: '6px solid #1d2023' }}>
+        <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>
+          <b style={{ color: '#ffb71b' }}>2-ب · أداة المقاس لحالها (بدون ركوب، بدون شاحنات، صيغة 205/55 R16)</b>
+        </div>
+        <SizeFinder data={{ overlap_hero: false, show_trucks: false, query_format: 'r', title: 'دوّر بالمقاس', popular_widths: '205, 225, 245' }} />
+      </section>
     </div>
   );
 }

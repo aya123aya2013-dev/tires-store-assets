@@ -28,15 +28,15 @@
 .tc-kicker { display: block; font-size: 13px; font-weight: 600; color: var(--tc-gold-3); margin-bottom: 10px; }
 .tc-lead { color: var(--tc-muted); }
 
-// buttons: primary gold / secondary outline, radius 12px everywhere
+// buttons: primary gold / secondary outline — final.html "v5 (k) button system" (54px, gap 22, transparent outline)
 .tc-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  height: 52px; padding: 0 26px; border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 22px;
+  height: 54px; padding: 0 26px; border-radius: 12px;
   font-weight: 600; font-size: 15px; white-space: nowrap;
   transition: background .2s, transform .2s, border-color .2s;
   &:hover { transform: translateY(-1px); }
   &--gold { background: var(--tc-gold); color: #221800; &:hover { background: #ffc23f; } }
-  &--line { background: #fff; border: 1.5px solid #d6d5d0; color: var(--tc-ink); &:hover { border-color: var(--tc-ink); } }
+  &--line { background: transparent; border: 1.5px solid #d9d7cf; color: var(--tc-ink); &:hover { border-color: var(--tc-ink); } }
 }
 
 /* ================= #1 بنر الإطار — home.tire-hero ================= */
@@ -227,3 +227,72 @@
   background: rgba(255, 255, 255, .85); color: var(--tc-ink); font-size: 11px; cursor: pointer;
 }
 .tc-hero__sw tspan tspan:focus { outline: none; fill: var(--tc-gold); text-decoration: underline; }
+
+/* ================= #2 أداة اختيار المقاس — home.size-finder =================
+   1:1 with design/final.html "size finder" (incl. the v5 overrides). */
+.tc-finder-band { padding-bottom: 30px; }
+.tc-finder-wrap { position: relative; z-index: 5; }
+.tc-finder--overlap .tc-finder-wrap { margin-top: -70px; }
+.tc-finder--overlap { background: transparent; }
+.tc-finder-band:not(.tc-finder--overlap) { padding-top: 30px; }
+.tc-finder {
+  display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 1.2fr; align-items: center; gap: 25px;
+  background: var(--tc-ink); color: #fff; border: 1px solid var(--tc-ink); border-radius: 16px; padding: 29px 32px;
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .45);
+  button { font-family: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+  svg.i { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+}
+.tc-finder__title {
+  .eb { display: block; font-size: 11px; font-weight: 600; color: var(--tc-gold); }
+  h2 { font-size: 24px; margin: 0 0 4px; line-height: 1.5; color: #fff; }
+  a { font-size: 12px; color: #b9bcbf; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+}
+.tc-sel {
+  position: relative;
+  label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 8px; color: #e6e7e8; }
+  label span { font-size: 9px; color: #8d9196; font-family: Arial, sans-serif; }
+}
+.tc-finder .tc-dd-btn {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 14px;
+  background: #2a2e31; border: 1px solid #3a3f43; border-radius: 8px; color: #fff;
+  font-family: var(--tc-en); font-weight: 800; font-size: 17px; direction: ltr; transition: border-color .2s;
+  svg.i { transition: transform .2s; color: #9a9ea2; }
+  &:hover:not(:disabled) { border-color: var(--tc-gold); }
+  &:disabled { opacity: .5; cursor: not-allowed; }
+}
+.tc-sel.open .tc-dd-btn { border-color: var(--tc-gold); svg.i { transform: rotate(180deg); color: var(--tc-gold); } }
+.tc-dd-panel {
+  position: absolute; top: calc(100% + 10px); inset-inline-start: 0; z-index: 30; width: max(100%, 300px);
+  background: #fff; color: var(--tc-ink); border-radius: 14px; padding: 14px;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .45); animation: tc-dd-in .18s ease;
+  .t { font-size: 12px; color: var(--tc-muted); margin: 0 2px 8px; display: flex; justify-content: space-between; }
+}
+@keyframes tc-dd-in { from { opacity: 0; transform: translateY(-6px); } }
+.tc-dd-pop { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--tc-line); }
+.tc-dd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; max-height: 220px; overflow: auto; direction: ltr; padding-right: 2px; }
+.tc-finder .tc-dd-o {
+  height: 40px; border-radius: 8px; border: 1px solid var(--tc-line); font-family: var(--tc-en); font-weight: 700; font-size: 14px;
+  transition: background .15s, border-color .15s;
+  &:hover { border-color: var(--tc-ink); }
+  &.on { background: var(--tc-gold); border-color: var(--tc-gold); }
+}
+.tc-finder .tc-dd-pop .tc-dd-o { padding: 0 12px; background: var(--tc-gold-soft); border-color: transparent; &.on { background: var(--tc-gold); } }
+.tc-finder .tc-finder__go {
+  margin-top: 20px; height: 50px; border-radius: 12px; background: var(--tc-gold); color: #221800; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+}
+@media (max-width: 1100px) {
+  .tc-finder { grid-template-columns: repeat(3, 1fr); }
+  .tc-finder__title { grid-column: 1 / -1; }
+  .tc-finder .tc-finder__go { grid-column: 1 / -1; margin: 0; }
+}
+@media (max-width: 640px) {
+  .tc-finder-band { padding-bottom: 0; }
+  .tc-finder--overlap .tc-finder-wrap { margin-top: -40px; }
+  .tc-finder { gap: 12px; padding: 20px; border-radius: 14px; }
+  .tc-finder__title { display: flex; align-items: center; justify-content: space-between; .eb { display: none; } h2 { font-size: 20px; margin: 0; } }
+  .tc-sel label span { display: none; }
+  .tc-dd-panel { width: calc(100vw - 72px); }
+  .tc-sel .tc-dd-panel { inset-inline: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .tc-dd-panel { animation: none; } }

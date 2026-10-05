@@ -19,6 +19,7 @@ import {
   SliderProductsWithHeader,
   EnhancedSquareBanners,
   TireHero,
+  SizeFinder,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -56,6 +57,7 @@ registerHomeComponents({
   'enhanced-square-banners': EnhancedSquareBanners,
   // Tires Store component pack (twilight.json → components, path home.<key>)
   'tire-hero': TireHero,
+  'size-finder': SizeFinder,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

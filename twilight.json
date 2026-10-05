@@ -1929,6 +1929,334 @@
       "is_default": true
     },
     {
+      "key": "d73259fe-3160-41c2-b792-91eb581fabba",
+      "title": {
+        "ar": "أداة اختيار المقاس (تايرز ستور)",
+        "en": "Tire Size Finder (Tires Store)"
+      },
+      "icon": "sicon-search",
+      "path": "home.size-finder",
+      "is_default": true,
+      "fields": [
+        {
+          "type": "static",
+          "format": "description",
+          "id": "tc-cover",
+          "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:12px;padding:22px;text-align:center;font-weight:700\">TIRES STORE<br><span style=\"color:#fff;font-size:18px\">أداة اختيار المقاس</span></div>"
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "tc-tip",
+          "value": "<div>💡 كرت البحث بالمقاس: الزبون يختار العرض والنسبة والجنط، وينتقل لنتائج البحث. يفضّل أن يكون مباشرة بعد «بنر الإطار».</div>"
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "h-texts",
+          "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">النصوص</div>"
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "السطر الصغير فوق العنوان",
+          "multilanguage": true,
+          "id": "kicker",
+          "value": "البداية الصحيحة",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "البداية الصحيحة",
+          "minLength": 0,
+          "maxLength": 40
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "العنوان",
+          "multilanguage": true,
+          "id": "title",
+          "value": "اختر مقاس إطارك",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "اختر مقاس إطارك",
+          "minLength": 0,
+          "maxLength": 60
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "نص رابط المساعدة",
+          "multilanguage": true,
+          "id": "help_text",
+          "value": "كيف أعرف مقاسي؟",
+          "required": false,
+          "format": "text",
+          "description": "لإخفاء الرابط اترك الحقل فارغاً",
+          "placeholder": "كيف أعرف مقاسي؟",
+          "minLength": 0,
+          "maxLength": 40
+        },
+        {
+          "type": "items",
+          "icon": "sicon-link",
+          "label": "رابط المساعدة",
+          "id": "help_link",
+          "value": null,
+          "description": "صفحة تشرح كيف يقرأ الزبون مقاس إطاره",
+          "required": false,
+          "format": "variable-list",
+          "searchable": true,
+          "source": "custom",
+          "sources": [
+            {
+              "label": "منتج",
+              "key": "products",
+              "value": "products"
+            },
+            {
+              "label": "منتجات مع وسم",
+              "key": "products_tags",
+              "value": "products_tags"
+            },
+            {
+              "label": "تصنيف",
+              "key": "categories",
+              "value": "categories"
+            },
+            {
+              "label": "ماركة تجارية",
+              "key": "brands",
+              "value": "brands"
+            },
+            {
+              "label": "صفحة تعريفية",
+              "key": "pages",
+              "value": "pages"
+            },
+            {
+              "label": "مقالة",
+              "key": "blog_articles",
+              "value": "blog_articles"
+            },
+            {
+              "label": "تصنيف ضمن المدونة",
+              "key": "blog_categories",
+              "value": "blog_categories"
+            },
+            {
+              "label": "التخفيضات",
+              "key": "offers_link",
+              "value": "offers_link"
+            },
+            {
+              "label": "الماركات التجارية",
+              "key": "brands_link",
+              "value": "brands_link"
+            },
+            {
+              "label": "المدونة",
+              "key": "blog_link",
+              "value": "blog_link"
+            },
+            {
+              "label": "رابط خارجي",
+              "key": "custom",
+              "value": "custom"
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "نص الزر",
+          "multilanguage": true,
+          "id": "btn_text",
+          "value": "اعرض الإطارات",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "اعرض الإطارات",
+          "minLength": 0,
+          "maxLength": 30
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "h-values",
+          "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">القيم</div>"
+        },
+        {
+          "type": "string",
+          "icon": "sicon-list",
+          "label": "العرض الافتراضي",
+          "multilanguage": false,
+          "id": "default_width",
+          "value": "205",
+          "required": false,
+          "format": "text",
+          "description": "القيمة اللي تظهر أول ما تفتح الصفحة",
+          "placeholder": "205",
+          "minLength": 0,
+          "maxLength": 60
+        },
+        {
+          "type": "string",
+          "icon": "sicon-list",
+          "label": "نسبة الارتفاع الافتراضية",
+          "multilanguage": false,
+          "id": "default_ratio",
+          "value": "55",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "55",
+          "minLength": 0,
+          "maxLength": 60
+        },
+        {
+          "type": "string",
+          "icon": "sicon-list",
+          "label": "قطر الجنط الافتراضي",
+          "multilanguage": false,
+          "id": "default_rim",
+          "value": "16",
+          "required": false,
+          "format": "text",
+          "description": null,
+          "placeholder": "16",
+          "minLength": 0,
+          "maxLength": 60
+        },
+        {
+          "type": "string",
+          "icon": "sicon-list",
+          "label": "«الأكثر طلباً» — العرض",
+          "multilanguage": false,
+          "id": "popular_widths",
+          "value": "195, 205, 215, 225, 265",
+          "required": false,
+          "format": "text",
+          "description": "حتى 6 قيم، افصل بينها بفاصلة",
+          "placeholder": "195, 205, 215, 225, 265",
+          "minLength": 0,
+          "maxLength": 60
+        },
+        {
+          "type": "string",
+          "icon": "sicon-list",
+          "label": "«الأكثر طلباً» — النسبة",
+          "multilanguage": false,
+          "id": "popular_ratios",
+          "value": "55, 60, 65, 70",
+          "required": false,
+          "format": "text",
+          "description": "حتى 6 قيم، افصل بينها بفاصلة",
+          "placeholder": "55, 60, 65, 70",
+          "minLength": 0,
+          "maxLength": 60
+        },
+        {
+          "type": "string",
+          "icon": "sicon-list",
+          "label": "«الأكثر طلباً» — الجنط",
+          "multilanguage": false,
+          "id": "popular_rims",
+          "value": "15, 16, 17, 18",
+          "required": false,
+          "format": "text",
+          "description": "حتى 6 قيم، افصل بينها بفاصلة",
+          "placeholder": "15, 16, 17, 18",
+          "minLength": 0,
+          "maxLength": 60
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إظهار مقاسات الشاحنات (مثل 900/16)",
+          "description": null,
+          "id": "show_trucks",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "h-search",
+          "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">البحث</div>"
+        },
+        {
+          "id": "query_format",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "طريقة كتابة المقاس بأسماء منتجاتك",
+          "description": "لازم تطابق طريقة كتابة المقاس بأسماء المنتجات عشان يلاقيها البحث",
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "205/55/16",
+              "value": "slash",
+              "key": "5564edc2-ca0d-4195-b31b-092977c61b88"
+            }
+          ],
+          "options": [
+            {
+              "label": "205/55/16",
+              "value": "slash",
+              "key": "5564edc2-ca0d-4195-b31b-092977c61b88"
+            },
+            {
+              "label": "205/55 R16",
+              "value": "r",
+              "key": "204d94ca-e53c-47da-9ead-254206957a65"
+            },
+            {
+              "label": "205/55R16",
+              "value": "r-tight",
+              "key": "5ceb502d-d0c0-44e7-99ff-f2a4b9b38329"
+            }
+          ],
+          "source": "Manual",
+          "required": false
+        },
+        {
+          "type": "static",
+          "format": "description",
+          "id": "h-layout",
+          "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الشكل</div>"
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "ركوب الكرت على طرف البنر اللي فوقه",
+          "description": "أطفئها إذا العنصر مش تحت البنر مباشرة",
+          "id": "overlap_hero",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true
+        },
+        {
+          "type": "string",
+          "icon": "sicon-format-text-alt",
+          "label": "كلاس CSS مخصص",
+          "multilanguage": false,
+          "id": "custom_class",
+          "value": null,
+          "required": false,
+          "format": "text",
+          "description": "حقل خاص بالمطورين ومصممين المتاجر: اسم كلاس يضاف للعنصر لتعديل شكله من CSS المتجر",
+          "placeholder": "my-finder",
+          "minLength": 0,
+          "maxLength": 60
+        }
+      ]
+    },
+    {
       "key": "186b3f4f-25cf-4d3c-abca-cef7eed6f0ab",
       "title": {
         "en": "Enhances Animated Images",

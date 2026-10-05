@@ -1911,7 +1911,8 @@
             }
           ]
         }
-      ]
+      ],
+      "is_default": true
     },
     {
       "key": "186b3f4f-25cf-4d3c-abca-cef7eed6f0ab",

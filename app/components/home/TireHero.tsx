@@ -60,6 +60,32 @@ const DEFAULT_PARTS = [
   { code: 'V', name: 'مؤشر السرعة', text: 'مناسب لسرعات حتى 240 كم/س.' },
   { code: '0324', name: 'تاريخ الصنع', text: 'الأسبوع 03 من سنة 2024 — نضمن تاريخ حديث.' },
 ];
+// English defaults: shown on the English storefront while a field still holds our Arabic default
+const EN: Record<string, string> = {
+  'إطارات أصلية · تركيب بنفس اليوم بالرياض': 'Genuine tires · same-day fitting in Riyadh',
+  'مقاسك مكتوب': 'Your size is written',
+  'على إطارك.': 'on your tire.',
+  'اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.':
+    'Read the numbers on your current tire’s sidewall and pick the right one at a clear per-tire price — fitting is on us.',
+  'تسوّق حسب المقاس': 'Shop by size',
+  'اكتشف خدمة التركيب': 'Discover our fitting service',
+  'عميل': 'customers',
+  'تقييم المتجر': 'store rating',
+  'نفس اليوم': 'Same day',
+  'تركيب بالرياض': 'fitting in Riyadh',
+  'نوع الإطار': 'Tire type', 'P لسيارات الركاب، و LT للنقل الخفيف.': 'P for passenger cars, LT for light trucks.',
+  'العرض': 'Width', 'عرض الإطار من جانب لجانب بالمليمتر.': 'Tire width from side to side, in millimetres.',
+  'نسبة الارتفاع': 'Aspect ratio', 'ارتفاع جانب الإطار = 55% من عرضه.': 'Sidewall height = 55% of the width.',
+  'نوع البناء': 'Construction', 'R يعني بناء شعاعي، و ZR للسرعات العالية.': 'R means radial construction, ZR is for high speeds.',
+  'قطر الجنط': 'Rim diameter', 'بالبوصة، ولازم يطابق جنط سيارتك.': 'In inches — it must match your car’s rim.',
+  'مؤشر الحمولة': 'Load index', 'يتحمّل حتى 615 كغ لكل إطار.': 'Carries up to 615 kg per tire.',
+  'مؤشر السرعة': 'Speed rating', 'مناسب لسرعات حتى 240 كم/س.': 'Rated for speeds up to 240 km/h.',
+  'تاريخ الصنع': 'Production date', 'الأسبوع 03 من سنة 2024 — نضمن تاريخ حديث.': 'Week 03 of 2024 — we guarantee fresh stock.',
+};
+const tr = (s: string, lang: Lang) => (lang === 'en' ? EN[s.trim()] ?? s : s);
+// optional class from the merchant / designer (letters, digits, - and _ only)
+const customClass = (v: unknown) => (typeof v === 'string' ? v.split(/s+/).filter(c => /^[A-Za-z_][w-]*$/.test(c)).join(' ') : '');
+
 // how the size code is laid out on the sidewall: which parts sit together
 const JOIN_BEFORE: Record<number, string> = { 1: ' ', 2: '/', 3: ' ', 5: ' ', 7: '   ' };
 
@@ -161,7 +187,7 @@ function BannerSlider({ data }: TireHeroProps) {
 
   if (!slides.length) {
     return (
-      <div className="tc tc-banner tc-banner--empty">
+      <div className={'tc tc-banner tc-banner--empty ' + customClass(data.custom_class)}>
         <div className="tc-wrap">أضف صورة البنر من إعدادات العنصر (صورة للكمبيوتر وصورة للجوال).</div>
       </div>
     );
@@ -174,7 +200,7 @@ function BannerSlider({ data }: TireHeroProps) {
   const cls = [
     'tc', 'tc-banner', `tc-banner--h-${height}`, `tc-banner--m-${mobRatio}`, `tc-banner--${fit}`, boxed ? 'tc-banner--boxed' : '',
     `tc-banner--x-${posX}`, `tc-banner--y-${posY}`, `tc-banner--ym-${posYm}`, `tc-banner--shade-${shade}`,
-    `tc-banner--fx-${effect}`, topSpace ? 'tc-banner--top-space' : '',
+    `tc-banner--fx-${effect}`, topSpace ? 'tc-banner--top-space' : '', customClass(data.custom_class),
   ].join(' ');
   const go = (n: number) => setI((n + slides.length) % slides.length);
   // swipe: phones always have a way to move, even with arrows / dots / autoplay off
@@ -294,7 +320,7 @@ const youTubeEmbed = (id: string) => `https://www.youtube.com/embed/${id}?autopl
 function TireDesign({ data }: TireHeroProps) {
   const lang = useLang();
   const reduced = useReducedMotion();
-  const text_ = (v: unknown, d: string) => asText(v, d, lang);
+  const text_ = (v: unknown, d: string) => tr(asText(v, d, lang), lang);
   const kicker = text_(data.kicker, 'إطارات أصلية · تركيب بنفس اليوم بالرياض');
   const title1 = text_(data.title_1, 'مقاسك مكتوب');
   const title2 = text_(data.title_2, 'على إطارك.');
@@ -311,20 +337,20 @@ function TireDesign({ data }: TireHeroProps) {
   const stats = useMemo(() => {
     const rows = Array.isArray(data.stats) ? data.stats.filter(isRow) : [];
     const list = rows
-      .map(r => ({ value: asText(pick(r, 'value', 'stats'), '', lang), label: asText(pick(r, 'label', 'stats'), '', lang) }))
+      .map(r => ({ value: text_(pick(r, 'value', 'stats'), ''), label: text_(pick(r, 'label', 'stats'), '') }))
       .filter(r => r.value);
-    return list.length ? list : DEFAULT_STATS;
+    return list.length ? list : DEFAULT_STATS.map(r => ({ value: tr(r.value, lang), label: tr(r.label, lang) }));
   }, [data.stats, lang]);
   const parts = useMemo(() => {
     const rows = Array.isArray(data.parts) ? data.parts.filter(isRow) : [];
     const list = rows
       .map(r => ({
         code: asText(pick(r, 'code', 'parts'), '', lang).trim(),
-        name: asText(pick(r, 'name', 'parts'), '', lang),
-        text: asText(pick(r, 'text', 'parts'), '', lang),
+        name: text_(pick(r, 'name', 'parts'), ''),
+        text: text_(pick(r, 'text', 'parts'), ''),
       }))
       .filter(r => r.code);
-    return list.length ? list : DEFAULT_PARTS;
+    return list.length ? list : DEFAULT_PARTS.map(r => ({ ...r, name: tr(r.name, lang), text: tr(r.text, lang) }));
   }, [data.parts, lang]);
 
   // ----- sidewall size code + popup -----
@@ -377,6 +403,7 @@ function TireDesign({ data }: TireHeroProps) {
         `tc-hero--m-${opt(data.mobile_order, 'image')}`, // image | text — what comes first on phones
         `tc-hero--d-${opt(data.desktop_side, 'text-right')}`, // text-right | text-left
         `tc-hero--a-${opt(data.mobile_align, 'center')}`, // center | start
+        customClass(data.custom_class),
       ].join(' ')}
     >
       <div className="tc-wrap tc-hero__grid">

@@ -4,7 +4,7 @@
  * field is optional here so the block still renders with the defaults below.
  * Styles: styles/04-components/tire-components.scss (scoped under `.tc-hero`).
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
 
 type Row = Record<string, unknown>;
@@ -160,7 +160,7 @@ function TireDesign({ data }: TireHeroProps) {
   const title1 = asText(data.title_1, 'مقاسك مكتوب');
   const title2 = asText(data.title_2, 'على إطارك.');
   const text = asText(data.text, 'اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.');
-  const btn1 = { text: asText(data.btn1_text, 'تسوّق حسب المقاس'), link: asText(data.btn1_link, '/#size') };
+  const btn1 = { text: asText(data.btn1_text, 'تسوّق حسب المقاس'), link: asText(data.btn1_link, '/search') };
   const btn2 = { show: asBool(data.btn2_show, true), text: asText(data.btn2_text, 'اكتشف خدمة التركيب'), link: asText(data.btn2_link, '/help#install') };
   const image = asImage(data.tire_image, '/assets/images/home/tire-hero.webp');
   const giant = { show: asBool(data.giant_show, true), text: asText(data.giant_text, 'R16') };
@@ -182,7 +182,9 @@ function TireDesign({ data }: TireHeroProps) {
 
   // ----- sidewall size code + popup -----
   const textRef = useRef<SVGTextElement>(null);
-  const [active, setActive] = useState(1);
+  const arcId = 'tc-arc-' + useId().replace(/[^a-zA-Z0-9-]/g, '');
+  const [rawActive, setActive] = useState(1);
+  const active = parts.length ? rawActive % parts.length : 0; // merchant may have fewer parts
   const [hover, setHover] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const ranges = useMemo(() => {
@@ -267,10 +269,10 @@ function TireDesign({ data }: TireHeroProps) {
             {showParts && (
               <svg viewBox="0 0 1000 1000" className="tc-hero__sw" aria-label="أرقام المقاس على جانب الإطار">
                 <defs>
-                  <path id="tc-arc" d="M 165 500 A 335 335 0 0 1 835 500" />
+                  <path id={arcId} d="M 165 500 A 335 335 0 0 1 835 500" />
                 </defs>
                 <text ref={textRef} fontSize="44">
-                  <textPath href="#tc-arc" startOffset="50%" textAnchor="middle">
+                  <textPath href={`#${arcId}`} startOffset="50%" textAnchor="middle">
                     {parts.map((p, n) => (
                       <tspan key={p.code + n}>
                         {JOIN_BEFORE[n] ?? (n ? ' ' : '')}

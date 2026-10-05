@@ -24,6 +24,6 @@ function HomeComponent() {
   const data: HomeLoaderData = Route.useLoaderData();
   // DEV-ONLY: /?tc-preview shows our components with sample data (no Salla editor needed).
   const [preview, setPreview] = useState(false);
-  useEffect(() => setPreview(new URLSearchParams(window.location.search).has('tc-preview')), []);
+  useEffect(() => setPreview(import.meta.env.DEV && new URLSearchParams(window.location.search).has('tc-preview')), []);
   return preview ? <TcPreview /> : <Home.Component {...data} />;
 }

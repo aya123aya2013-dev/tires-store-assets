@@ -296,7 +296,7 @@
   ],
   "components": [
     {
-      "key": "7b2c9f3e-tire-hero-0001-ts0000000001",
+      "key": "33e9daa1-3914-4a56-9a9f-ad90455b8d94",
       "title": {
         "ar": "بنر الإطار (تايرز ستور)",
         "en": "Tire Hero (Tires Store)"
@@ -445,34 +445,34 @@
             {
               "label": "تلقائي حسب الصورة (أنصح فيه)",
               "value": "auto",
-              "key": "banner_height-auto"
+              "key": "2ba98e68-5ec0-4805-b4ba-5405659bd2c1"
             }
           ],
           "options": [
             {
               "label": "تلقائي حسب الصورة (أنصح فيه)",
               "value": "auto",
-              "key": "banner_height-auto"
+              "key": "2ba98e68-5ec0-4805-b4ba-5405659bd2c1"
             },
             {
               "label": "عريض 21:9",
               "value": "21-9",
-              "key": "banner_height-21-9"
+              "key": "f87a2a62-bac4-44ed-9dcd-804d1aeb0712"
             },
             {
               "label": "قياسي 16:9",
               "value": "16-9",
-              "key": "banner_height-16-9"
+              "key": "743adad2-ab39-4aa7-9147-c4c6453beae6"
             },
             {
               "label": "شريط 3:1",
               "value": "3-1",
-              "key": "banner_height-3-1"
+              "key": "0173e5a1-35de-41d6-bc77-458faf5f408e"
             },
             {
               "label": "بطول الشاشة",
               "value": "screen",
-              "key": "banner_height-screen"
+              "key": "ebb1e1d6-2f9e-401a-bf2b-d767fb8ce9be"
             }
           ],
           "source": "Manual",
@@ -497,29 +497,29 @@
             {
               "label": "تلقائي حسب الصورة",
               "value": "auto",
-              "key": "banner_mobile_height-auto"
+              "key": "9b1e0209-64e4-4fbb-82af-b326556110fb"
             }
           ],
           "options": [
             {
               "label": "تلقائي حسب الصورة",
               "value": "auto",
-              "key": "banner_mobile_height-auto"
+              "key": "9b1e0209-64e4-4fbb-82af-b326556110fb"
             },
             {
               "label": "مربع 1:1",
               "value": "1-1",
-              "key": "banner_mobile_height-1-1"
+              "key": "6817476e-7fc5-411d-8cc9-c3c21187a52f"
             },
             {
               "label": "طولي 4:5",
               "value": "4-5",
-              "key": "banner_mobile_height-4-5"
+              "key": "bd27dbfa-832d-46c1-ac17-25cf50b915b2"
             },
             {
               "label": "بطول الشاشة 9:16",
               "value": "9-16",
-              "key": "banner_mobile_height-9-16"
+              "key": "8aee3829-e21a-41c2-8a6c-588e2964cbf0"
             }
           ],
           "source": "Manual",
@@ -544,19 +544,19 @@
             {
               "label": "تغطية كامل المساحة (قص الأطراف)",
               "value": "cover",
-              "key": "banner_fit-cover"
+              "key": "341986e3-ae3d-4ba1-9b40-61dbd40e0470"
             }
           ],
           "options": [
             {
               "label": "تغطية كامل المساحة (قص الأطراف)",
               "value": "cover",
-              "key": "banner_fit-cover"
+              "key": "341986e3-ae3d-4ba1-9b40-61dbd40e0470"
             },
             {
               "label": "إظهار الصورة كاملة",
               "value": "contain",
-              "key": "banner_fit-contain"
+              "key": "6cc55387-575c-4f82-86c0-251a5e2c39ec"
             }
           ],
           "source": "Manual",
@@ -636,24 +636,24 @@
             {
               "label": "يمين",
               "value": "start",
-              "key": "content_x-start"
+              "key": "363e46eb-3707-425b-ae9c-ca7f84296b87"
             }
           ],
           "options": [
             {
               "label": "يمين",
               "value": "start",
-              "key": "content_x-start"
+              "key": "363e46eb-3707-425b-ae9c-ca7f84296b87"
             },
             {
               "label": "منتصف",
               "value": "center",
-              "key": "content_x-center"
+              "key": "f6de97fe-36d7-400d-84f0-223163a06688"
             },
             {
               "label": "يسار",
               "value": "end",
-              "key": "content_x-end"
+              "key": "44d6ab43-5496-4456-b398-5bdf6786299d"
             }
           ],
           "source": "Manual",
@@ -678,24 +678,24 @@
             {
               "label": "منتصف",
               "value": "center",
-              "key": "content_y-center"
+              "key": "3a6e2480-b5e0-4e1b-a03e-8d5c2a72428c"
             }
           ],
           "options": [
             {
               "label": "أعلى",
               "value": "top",
-              "key": "content_y-top"
+              "key": "0fbd3d52-289b-4b3f-b042-b2f62d18417f"
             },
             {
               "label": "منتصف",
               "value": "center",
-              "key": "content_y-center"
+              "key": "3a6e2480-b5e0-4e1b-a03e-8d5c2a72428c"
             },
             {
               "label": "أسفل",
               "value": "bottom",
-              "key": "content_y-bottom"
+              "key": "6b7a0cec-f151-49f2-8926-0a9e47b82886"
             }
           ],
           "source": "Manual",
@@ -720,24 +720,24 @@
             {
               "label": "أسفل",
               "value": "bottom",
-              "key": "content_y_mobile-bottom"
+              "key": "4bde61c2-efeb-4a3b-9ea6-440902e15be6"
             }
           ],
           "options": [
             {
               "label": "أعلى",
               "value": "top",
-              "key": "content_y_mobile-top"
+              "key": "3074fa85-cfad-42cc-b0aa-51f1748bab82"
             },
             {
               "label": "منتصف",
               "value": "center",
-              "key": "content_y_mobile-center"
+              "key": "bd4bb7c1-80d4-4cac-a495-a0ccc360d8f6"
             },
             {
               "label": "أسفل",
               "value": "bottom",
-              "key": "content_y_mobile-bottom"
+              "key": "4bde61c2-efeb-4a3b-9ea6-440902e15be6"
             }
           ],
           "source": "Manual",
@@ -762,29 +762,29 @@
             {
               "label": "خفيف",
               "value": "light",
-              "key": "shade-light"
+              "key": "298f6360-37fe-48f9-8b5c-9103176d5843"
             }
           ],
           "options": [
             {
               "label": "بدون",
               "value": "none",
-              "key": "shade-none"
+              "key": "592275f8-976e-4e3f-b502-64f7940d49f2"
             },
             {
               "label": "خفيف",
               "value": "light",
-              "key": "shade-light"
+              "key": "298f6360-37fe-48f9-8b5c-9103176d5843"
             },
             {
               "label": "متوسط",
               "value": "medium",
-              "key": "shade-medium"
+              "key": "1a3e06e8-b99b-4afa-91dc-08ce3d31dba3"
             },
             {
               "label": "قوي",
               "value": "strong",
-              "key": "shade-strong"
+              "key": "d60a863c-f81c-4e70-bf8b-6c384c15615a"
             }
           ],
           "source": "Manual",
@@ -908,11 +908,11 @@
           "label": "الزر الأساسي — الرابط",
           "multilanguage": false,
           "id": "btn1_link",
-          "value": "/#size",
+          "value": "/search",
           "required": false,
           "format": "text",
-          "description": "رابط داخل المتجر مثل /help أو رابط كامل",
-          "placeholder": "/#size",
+          "description": "رابط داخل المتجر مثل /search أو رابط تصنيف. بعد إضافة عنصر «أداة اختيار المقاس» تقدر تحط #size",
+          "placeholder": "/search",
           "minLength": 0,
           "maxLength": 300,
           "conditions": [
@@ -1323,19 +1323,19 @@
             {
               "label": "النصوص يمين والإطار يسار",
               "value": "text-right",
-              "key": "desktop_side-text-right"
+              "key": "0c71dff5-5491-4819-ac1b-62ad7c012c53"
             }
           ],
           "options": [
             {
               "label": "النصوص يمين والإطار يسار",
               "value": "text-right",
-              "key": "desktop_side-text-right"
+              "key": "0c71dff5-5491-4819-ac1b-62ad7c012c53"
             },
             {
               "label": "النصوص يسار والإطار يمين",
               "value": "text-left",
-              "key": "desktop_side-text-left"
+              "key": "1a99a17e-1f1e-4b37-b887-7bff2e994c03"
             }
           ],
           "source": "Manual",
@@ -1360,19 +1360,19 @@
             {
               "label": "الصورة أولاً ثم النصوص والأزرار",
               "value": "image",
-              "key": "mobile_order-image"
+              "key": "108132bb-2ad3-4758-bafb-2b766a6d154b"
             }
           ],
           "options": [
             {
               "label": "الصورة أولاً ثم النصوص والأزرار",
               "value": "image",
-              "key": "mobile_order-image"
+              "key": "108132bb-2ad3-4758-bafb-2b766a6d154b"
             },
             {
               "label": "النصوص والأزرار أولاً ثم الصورة",
               "value": "text",
-              "key": "mobile_order-text"
+              "key": "4c48e96f-9ea3-49a0-bd72-21acce9186d1"
             }
           ],
           "source": "Manual",
@@ -1397,19 +1397,19 @@
             {
               "label": "في المنتصف",
               "value": "center",
-              "key": "mobile_align-center"
+              "key": "3c83f73c-cef5-4a5a-9ac0-040ffcf78767"
             }
           ],
           "options": [
             {
               "label": "في المنتصف",
               "value": "center",
-              "key": "mobile_align-center"
+              "key": "3c83f73c-cef5-4a5a-9ac0-040ffcf78767"
             },
             {
               "label": "على اليمين",
               "value": "start",
-              "key": "mobile_align-start"
+              "key": "d2235933-1328-4a2d-83d6-5f0a8ecde198"
             }
           ],
           "source": "Manual",

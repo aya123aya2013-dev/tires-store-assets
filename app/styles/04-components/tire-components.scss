@@ -358,3 +358,17 @@
 .tc-s .cars .makes::-webkit-scrollbar { width: 4px; }
 .tc-s .cars .makes::-webkit-scrollbar-thumb { background: #d6d4cc; border-radius: 4px; }
 @media (max-width: 640px) { .tc-s .cars .makes { max-height: 200px; } }
+
+/* #2 size finder: trucks & buses get their own labelled group under the main grid */
+.tc-dd-panel .t.tc-dd-group { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--tc-line); }
+.tc-dd-grid.tc-dd-trucks { max-height: none; }
+
+/* #2 size finder: each box is a combobox (type with suggestions, or open the list with the arrow) */
+.tc-finder .tc-dd-btn.tc-dd-combo { padding: 0; cursor: text; }
+.tc-finder .tc-dd-combo:focus-within { border-color: var(--tc-gold); }
+.tc-finder .tc-dd-combo input { flex: 1; min-width: 0; width: 100%; background: transparent; border: 0; outline: none; color: inherit; font: inherit; padding: 12px 14px; direction: ltr; text-align: left; }
+.tc-finder .tc-dd-combo input:disabled { cursor: not-allowed; }
+.tc-finder .tc-dd-combo .tc-dd-arrow { display: grid; place-items: center; padding: 0 14px; align-self: stretch; color: #9a9ea2; }
+.tc-finder .tc-dd-combo.is-off { opacity: .5; }
+.tc-sel.open .tc-dd-combo .tc-dd-arrow svg.i { transform: rotate(180deg); color: var(--tc-gold); }
+.tc-dd-none { font-size: 13px; color: var(--tc-muted); padding: 6px 2px; }

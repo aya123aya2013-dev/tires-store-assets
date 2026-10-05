@@ -6,13 +6,24 @@ const range = (from: number, to: number, step: number): string[] => {
   return out;
 };
 
-/** Truck sizes ("900/16") are written width/rim with no aspect ratio. */
-const TRUCK_WIDTHS = ['650', '700', '750', '825', '900'];
+/** Light-truck / pickup sizes ("900/16") are written width/rim with no aspect ratio. */
+export const TRUCK_WIDTHS = ['650', '700', '750', '825', '900'];
 
-export const TIRE_WIDTHS = [...range(155, 335, 10), ...TRUCK_WIDTHS];
+/**
+ * Heavy trucks & buses (tubeless, 17.5″–22.5″ rims): metric ones use the normal
+ * width/ratio (e.g. 315/80 R22.5, 385/65 R22.5); the inch ones are "11R22.5", "12R22.5"
+ * — a 2-digit width and no ratio.
+ */
+export const HEAVY_METRIC_WIDTHS = ['385'];
+export const HEAVY_INCH_WIDTHS = ['11', '12', '13'];
+export const HEAVY_RIMS = ['17.5', '19.5', '22.5'];
 
-/** Truck widths carry no aspect ratio, so the ratio field doesn't apply to them. */
-export const isTruckWidth = (width: string) => Number(width) >= 600;
+export const PASSENGER_WIDTHS = range(155, 335, 10);
+export const TIRE_WIDTHS = [...PASSENGER_WIDTHS, ...TRUCK_WIDTHS];
+
+/** Truck widths (900/16) and inch widths (11R22.5) carry no aspect ratio, so the ratio field doesn't apply. */
+export const isTruckWidth = (width: string) => Number(width) >= 600 || (Number(width) > 0 && Number(width) < 100);
+const isInchWidth = (width: string) => Number(width) > 0 && Number(width) < 100;
 export const TIRE_RATIOS = range(25, 85, 5);
 export const TIRE_RIMS = range(13, 22, 1);
 
@@ -29,20 +40,26 @@ export const DEFAULT_TIRE_SIZE: TireSize = { width: '205', ratio: '55', rim: '16
  * spelling ("كفر تاش 275/65/18") as well as "205/55 R16", "205/55R16", "205 55 16".
  */
 export function parseTireSize(text: string | undefined | null): TireSize | null {
-  const match = text?.match(/(\d{3})\s*[/\s]\s*(\d{2})\s*[/\sRr]*\s*(\d{2})(?!\d)/);
+  // 205/55/16 · 205/55 R16 · 315/80 R22.5 (rims may be 17.5 / 19.5 / 22.5)
+  const match = text?.match(/(\d{3})\s*[/\s]\s*(\d{2})\s*[/\sRr]*\s*(\d{2}(?:\.5)?)(?![\d.])/);
   if (match) return { width: match[1], ratio: match[2], rim: match[3] };
-  // Truck: "كفر تاش نقشة شاهين 900/16".
-  const truck = text?.match(/(\d{3})\s*\/\s*(\d{2})(?![\d/])/);
+  // Heavy truck / bus, inch width: "11R22.5", "12 R 22.5"
+  const inch = text?.match(/(?<!\d)(1[1-3])\s*R\s*(\d{2}\.5)(?![\d.])/i);
+  if (inch) return { width: inch[1], ratio: '', rim: inch[2] };
+  // Light truck: "كفر تاش نقشة شاهين 900/16".
+  const truck = text?.match(/(\d{3})\s*\/\s*(\d{2})(?![\d/.])/);
   return truck && isTruckWidth(truck[1]) ? { width: truck[1], ratio: '', rim: truck[2] } : null;
 }
 
-/** "205/55 R16" (or "900/16" for trucks) — the way to show a size to shoppers. */
+/** "205/55 R16" · "900/16" · "11R22.5" — the way to show a size to shoppers. */
 export function formatTireSize({ width, ratio, rim }: TireSize): string {
+  if (isInchWidth(width)) return `${width}R${rim}`;
   return isTruckWidth(width) ? `${width}/${rim}` : `${width}/${ratio} R${rim}`;
 }
 
-/** "205/55/16" (or "900/16") — how the store names its products, so it is the search query. */
+/** "205/55/16" · "900/16" · "11R22.5" — how stores name their products, so it is the search query. */
 export function tireSizeQuery({ width, ratio, rim }: TireSize): string {
+  if (isInchWidth(width)) return `${width}R${rim}`;
   return isTruckWidth(width) ? `${width}/${rim}` : `${width}/${ratio}/${rim}`;
 }
 

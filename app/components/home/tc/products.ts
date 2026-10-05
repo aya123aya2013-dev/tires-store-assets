@@ -75,6 +75,8 @@ export function toTcProduct(p: Product, offerLabel: string): TcProduct {
 
 export function useTcProducts(src: { source: ProductsListSource; value?: number[] }, limit: number) {
   const q = useQuery(productApi.queries.list({ source: src.source, sourceValue: src.value, perPage: limit }));
+  // DEV only: `?tc-samples` shows the design's sample tires (used to shoot the editor cover images)
+  if (import.meta.env.DEV && typeof window !== 'undefined' && window.location.search.includes('tc-samples')) return { items: [], loading: false };
   return { items: (q.data?.items ?? []).slice(0, limit), loading: q.isLoading };
 }
 

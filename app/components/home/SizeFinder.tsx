@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { useNavigate } from '@salla.sa/twilight-theme-engine/providers';
-import { TIRE_RATIOS, TIRE_RIMS, TIRE_WIDTHS, isTruckWidth } from '../tires/sizes';
+import { HEAVY_INCH_WIDTHS, HEAVY_METRIC_WIDTHS, HEAVY_RIMS, PASSENGER_WIDTHS, TIRE_RATIOS, TIRE_RIMS, TRUCK_WIDTHS, isTruckWidth } from '../tires/sizes';
 import type { TireSize } from '../tires/sizes';
 import { asBool, asLink, asText, customClass, isRow, opt, useLang } from './fields';
 import type { Lang, Row } from './fields';
@@ -23,6 +23,10 @@ const EN: Record<string, string> = {
   'قطر الجنط': 'Rim',
   'الأكثر طلباً': 'Most requested',
   'كل القيم': 'All values',
+  'شاحنات': 'Trucks',
+  'باصات': 'Buses',
+  'اقتراحات': 'Suggestions',
+  'ما في مقاس بهالرقم': 'No size matches that number',
 };
 const tr = (s: string, lang: Lang) => (lang === 'en' ? EN[s.trim()] ?? s : s);
 
@@ -49,21 +53,37 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
   const t = (v: unknown, d: string) => tr(asText(v, d, lang), lang);
   const navigate = useNavigate();
 
-  const trucks = asBool(data.show_trucks, true);
-  const widths = trucks ? TIRE_WIDTHS : TIRE_WIDTHS.filter(w => !isTruckWidth(w));
-  const lists: Record<Key, string[]> = { w: widths, r: TIRE_RATIOS, j: TIRE_RIMS };
+  // the merchant switches each vehicle family on/off; the results page keeps a searched one selectable
+  const searchedHeavy = !!initial && (initial.rim.includes('.') || Number(initial.width) < 100 || Number(initial.width) >= 600);
+  const trucks = asBool(data.show_trucks, true) || searchedHeavy;
+  const buses = asBool(data.show_buses, false) || (!!initial && Number(initial.width) < 100);
+  // main grid: passenger sizes
+  const lists: Record<Key, string[]> = { w: PASSENGER_WIDTHS, r: TIRE_RATIOS, j: TIRE_RIMS };
+  // own labelled groups under it, so these sizes are never lost at the bottom of the scroll
+  const groups: { name: string; vals: Record<Key, string[]> }[] = [
+    ...(trucks ? [{ name: 'شاحنات', vals: { w: [...TRUCK_WIDTHS, ...HEAVY_METRIC_WIDTHS], r: [], j: HEAVY_RIMS } }] : []),
+    ...(buses ? [{ name: 'باصات', vals: { w: HEAVY_INCH_WIDTHS, r: [], j: trucks ? [] : ['22.5'] } }] : []),
+  ];
+  const all: Record<Key, string[]> = {
+    w: [...lists.w, ...groups.flatMap(g => g.vals.w)],
+    r: lists.r,
+    j: [...lists.j, ...groups.flatMap(g => g.vals.j)],
+  };
+  const widths = all.w;
+  const rims = all.j;
   const popular: Record<Key, string[]> = {
     w: asList(data.popular_widths, '195,205,215,225,265', widths),
     r: asList(data.popular_ratios, '55,60,65,70', TIRE_RATIOS),
-    j: asList(data.popular_rims, '15,16,17,18', TIRE_RIMS),
+    j: asList(data.popular_rims, '15,16,17,18', rims),
   };
   const first = (v: unknown, d: string, all: string[]) => (all.includes(String(v ?? '').trim()) ? String(v).trim() : d);
   const [value, setValue] = useState<Record<Key, string>>(() => ({
     w: first(initial?.width ?? data.default_width, '205', widths),
     r: first(initial?.ratio || data.default_ratio, '55', TIRE_RATIOS),
-    j: first(initial?.rim ?? data.default_rim, '16', TIRE_RIMS),
+    j: first(initial?.rim ?? data.default_rim, '16', rims),
   }));
   const [open, setOpen] = useState<Key | null>(null);
+  const [draft, setDraft] = useState<Record<Key, string | null>>({ w: null, r: null, j: null }); // typed text while editing
   const root = useRef<HTMLFormElement>(null);
 
   // close on outside click / Escape (same as the approved design)
@@ -79,7 +99,7 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
   const truck = isTruckWidth(value.w);
   const query = () => {
     const { w, r, j } = value;
-    if (truck) return `${w}/${j}`;
+    if (truck) return Number(w) < 100 ? `${w}R${j}` : `${w}/${j}`; // 11R22.5 · 900/16
     const fmt = opt(data.query_format, 'slash'); // how the store names its products
     return fmt === 'r' ? `${w}/${r} R${j}` : fmt === 'r-tight' ? `${w}/${r}R${j}` : `${w}/${r}/${j}`;
   };
@@ -98,39 +118,85 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
   const helpText = helpCleared ? '' : t(data.help_text, 'كيف أعرف مقاسي؟');
   const helpLink = asLink(data.help_link, '/help#size');
 
+  // each box: type the number (suggestions appear as you type) or open the full list with the arrow
   const picker = (k: Key, label: string, en: string) => {
     const isOpen = open === k;
-    const pickValue = (v: string) => { setValue(s => ({ ...s, [k]: v })); setOpen(null); };
-    const disabled = k === 'r' && truck; // truck sizes (900/16) have no profile
+    const disabled = k === 'r' && truck; // 900/16 and 11R22.5 have no profile
+    const typing = draft[k] !== null;
+    const q = (draft[k] ?? '').trim();
+    const suggestions = q
+      ? [...all[k].filter(v => v.startsWith(q)), ...all[k].filter(v => !v.startsWith(q) && v.includes(q))].slice(0, 12)
+      : [];
+    const pickValue = (v: string) => {
+      setValue(s => ({ ...s, [k]: v }));
+      setDraft(d => ({ ...d, [k]: null }));
+      setOpen(null);
+    };
+    const commit = () => {
+      if (!typing) return;
+      if (all[k].includes(q)) pickValue(q);
+      else if (suggestions[0] && q) pickValue(suggestions[0]);
+      else setDraft(d => ({ ...d, [k]: null }));
+    };
     const opts = (vals: string[]) =>
       vals.map(v => (
-        <button type="button" key={v} className={'tc-dd-o' + (v === value[k] ? ' on' : '')} onClick={() => pickValue(v)}>
+        <button type="button" key={v} className={'tc-dd-o' + (v === value[k] ? ' on' : '')} onMouseDown={e => e.preventDefault()} onClick={() => pickValue(v)}>
           {v}
         </button>
       ));
     return (
       <div className={'tc-sel' + (isOpen ? ' open' : '')}>
-        <label id={`tc-sel-${k}`}>
+        <label htmlFor={`tc-in-${k}`} id={`tc-sel-${k}`}>
           {t(label, label)} <span>{en}</span>
         </label>
-        <button
-          type="button"
-          className="tc-dd-btn"
-          aria-haspopup="listbox"
-          aria-expanded={isOpen}
-          aria-labelledby={`tc-sel-${k}`}
-          disabled={disabled}
-          onClick={e => { e.stopPropagation(); setOpen(isOpen ? null : k); }}
-        >
-          <span>{disabled ? '—' : value[k]}</span>
-          <svg className="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-        </button>
+        <div className={'tc-dd-btn tc-dd-combo' + (disabled ? ' is-off' : '')}>
+          <input
+            id={`tc-in-${k}`}
+            type="text"
+            inputMode="decimal"
+            autoComplete="off"
+            role="combobox"
+            aria-expanded={isOpen}
+            aria-controls={`tc-list-${k}`}
+            disabled={disabled}
+            value={disabled ? '—' : typing ? (draft[k] as string) : value[k]}
+            onFocus={e => e.currentTarget.select()}
+            onClick={e => e.stopPropagation()}
+            onChange={e => { setDraft(d => ({ ...d, [k]: e.target.value.replace(/[^\d.rR]/g, '') })); setOpen(k); }}
+            onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } }}
+            onBlur={commit}
+          />
+          <button
+            type="button"
+            className="tc-dd-arrow"
+            aria-label={isEn ? 'Show all sizes' : 'عرض كل المقاسات'}
+            disabled={disabled}
+            onClick={e => { e.stopPropagation(); setDraft(d => ({ ...d, [k]: null })); setOpen(isOpen ? null : k); }}
+          >
+            <svg className="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </button>
+        </div>
         {isOpen && (
-          <div className="tc-dd-panel" role="listbox" aria-labelledby={`tc-sel-${k}`}>
-            <div className="t"><span>{tr('الأكثر طلباً', lang)}</span></div>
-            <div className="tc-dd-pop">{opts(popular[k])}</div>
-            <div className="t"><span>{tr('كل القيم', lang)}</span><span>{lists[k].length}</span></div>
-            <div className="tc-dd-grid">{opts(lists[k])}</div>
+          <div className="tc-dd-panel" role="listbox" id={`tc-list-${k}`} aria-labelledby={`tc-sel-${k}`}>
+            {typing && q ? (
+              <>
+                <div className="t"><span>{tr('اقتراحات', lang)}</span><span>{suggestions.length}</span></div>
+                {suggestions.length ? <div className="tc-dd-grid tc-dd-suggest">{opts(suggestions)}</div> : <p className="tc-dd-none">{tr('ما في مقاس بهالرقم', lang)}</p>}
+              </>
+            ) : (
+              <>
+                <div className="t"><span>{tr('الأكثر طلباً', lang)}</span></div>
+                <div className="tc-dd-pop">{opts(popular[k])}</div>
+                <div className="t"><span>{tr('كل القيم', lang)}</span><span>{lists[k].length}</span></div>
+                <div className="tc-dd-grid">{opts(lists[k])}</div>
+                {groups.filter(g => g.vals[k].length).map(g => (
+                  <div key={g.name}>
+                    <div className="t tc-dd-group"><span>{tr(g.name, lang)}</span><span>{g.vals[k].length}</span></div>
+                    <div className="tc-dd-grid tc-dd-trucks">{opts(g.vals[k])}</div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         )}
       </div>

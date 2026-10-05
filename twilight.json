@@ -346,13 +346,45 @@
           "value": [],
           "fields": [
             {
+              "type": "boolean",
+              "icon": "sicon-toggle-off",
+              "label": "عرض فيديو بدل الصورة",
+              "description": "رابط ملف MP4 أو رابط يوتيوب، يشتغل تلقائياً بدون صوت",
+              "id": "slides.use_video",
+              "format": "switch",
+              "required": false,
+              "value": false,
+              "selected": false
+            },
+            {
+              "type": "string",
+              "icon": "sicon-video",
+              "label": "رابط الفيديو",
+              "multilanguage": false,
+              "id": "slides.video",
+              "value": null,
+              "required": false,
+              "format": "text",
+              "description": "MP4 أو YouTube",
+              "placeholder": "https://",
+              "minLength": 0,
+              "maxLength": 400,
+              "conditions": [
+                {
+                  "id": "slides.use_video",
+                  "operation": "=",
+                  "value": true
+                }
+              ]
+            },
+            {
               "type": "string",
               "icon": "sicon-image",
               "value": null,
               "label": "صورة الكمبيوتر واللابتوب",
               "id": "slides.image",
               "format": "image",
-              "required": true,
+              "required": false,
               "placeholder": null,
               "description": "* المقاس المقترح 1920×800 بكسل (أو حسب الارتفاع المختار)",
               "settings": {
@@ -374,6 +406,61 @@
                 "width": 800,
                 "height": 1000
               }
+            },
+            {
+              "type": "boolean",
+              "icon": "sicon-toggle-off",
+              "label": "صور مختلفة للغة الإنجليزية",
+              "description": "صور خاصة بالزوار الذين يتصفحون بالإنجليزية. عند تركها فارغة تُعرض الصور العربية.",
+              "id": "slides.en_images",
+              "format": "switch",
+              "required": false,
+              "value": false,
+              "selected": false
+            },
+            {
+              "type": "string",
+              "icon": "sicon-image",
+              "value": null,
+              "label": "صورة الكمبيوتر (إنجليزي)",
+              "id": "slides.image_en",
+              "format": "image",
+              "required": false,
+              "placeholder": null,
+              "description": "1920×800",
+              "settings": {
+                "width": 1920,
+                "height": 800
+              },
+              "conditions": [
+                {
+                  "id": "slides.en_images",
+                  "operation": "=",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "type": "string",
+              "icon": "sicon-image",
+              "value": null,
+              "label": "صورة الجوال (إنجليزي)",
+              "id": "slides.mobile_image_en",
+              "format": "image",
+              "required": false,
+              "placeholder": null,
+              "description": "800×1000",
+              "settings": {
+                "width": 800,
+                "height": 1000
+              },
+              "conditions": [
+                {
+                  "id": "slides.en_images",
+                  "operation": "=",
+                  "value": true
+                }
+              ]
             },
             {
               "type": "items",
@@ -445,6 +532,102 @@
               ]
             },
             {
+              "type": "boolean",
+              "icon": "sicon-toggle-off",
+              "label": "جعل الرابط على الصورة بالكامل",
+              "description": "إذا أطفأتها يصير الرابط على الزر فقط",
+              "id": "slides.whole_link",
+              "format": "switch",
+              "required": false,
+              "value": true,
+              "selected": true
+            },
+            {
+              "id": "slides.focus",
+              "type": "items",
+              "format": "dropdown-list",
+              "label": "اتجاه عرض الصورة (الجزء المهم)",
+              "description": "يحدد أي جزء من الصورة يظهر لما تنقص الأطراف",
+              "labelHTML": null,
+              "icon": "sicon-list",
+              "selected": [
+                {
+                  "label": "من المنتصف",
+                  "value": "center",
+                  "key": "6d7639b2-7911-46e0-bf53-d608bf1a91c3"
+                }
+              ],
+              "options": [
+                {
+                  "label": "من المنتصف",
+                  "value": "center",
+                  "key": "6d7639b2-7911-46e0-bf53-d608bf1a91c3"
+                },
+                {
+                  "label": "من الأعلى",
+                  "value": "top",
+                  "key": "4f515a68-cb98-4d15-9873-74c2843e835f"
+                },
+                {
+                  "label": "من الأسفل",
+                  "value": "bottom",
+                  "key": "56d7970c-a6b6-4c64-8786-8e8b43c34020"
+                },
+                {
+                  "label": "من اليمين",
+                  "value": "right",
+                  "key": "de5741a5-1910-4e9a-b5ea-376b6b0a438e"
+                },
+                {
+                  "label": "من اليسار",
+                  "value": "left",
+                  "key": "17e7c109-9133-4e95-bf0c-43f620a19a7b"
+                }
+              ],
+              "source": "Manual",
+              "required": false
+            },
+            {
+              "id": "slides.pos_x",
+              "type": "items",
+              "format": "dropdown-list",
+              "label": "موقع النصوص في هذه الشريحة",
+              "description": "يمكنك تحديد موقع النصوص على الصورة بناءً على محتوى الصورة لتجنب إخفاء جزء مهم",
+              "labelHTML": null,
+              "icon": "sicon-list",
+              "selected": [
+                {
+                  "label": "حسب إعداد العنصر",
+                  "value": "",
+                  "key": "2290c69d-921c-4b35-8d01-5c03210f57d8"
+                }
+              ],
+              "options": [
+                {
+                  "label": "حسب إعداد العنصر",
+                  "value": "",
+                  "key": "2290c69d-921c-4b35-8d01-5c03210f57d8"
+                },
+                {
+                  "label": "يمين",
+                  "value": "start",
+                  "key": "7ad1d086-455a-4303-8081-ed0622512d0e"
+                },
+                {
+                  "label": "منتصف",
+                  "value": "center",
+                  "key": "5c1795c1-421a-4b09-9ff9-a47255edf688"
+                },
+                {
+                  "label": "يسار",
+                  "value": "end",
+                  "key": "9443242b-fb14-4f5d-a8e7-e747debf809a"
+                }
+              ],
+              "source": "Manual",
+              "required": false
+            },
+            {
               "type": "string",
               "icon": "sicon-format-text-alt",
               "label": "عنوان فوق الصورة (اختياري)",
@@ -481,10 +664,41 @@
               "value": null,
               "required": false,
               "format": "text",
-              "description": null,
+              "description": "لإخفاء الزر اترك الحقل فارغاً",
               "placeholder": "",
               "minLength": 0,
               "maxLength": 30
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-fill",
+              "label": "لون خلفية الزر",
+              "id": "slides.btn_bg",
+              "format": "color",
+              "value": "#ffb71b",
+              "required": false,
+              "description": null
+            },
+            {
+              "type": "string",
+              "icon": "sicon-format-fill",
+              "label": "لون نص الزر",
+              "id": "slides.btn_color",
+              "format": "color",
+              "value": "#221800",
+              "required": false,
+              "description": null
+            },
+            {
+              "type": "boolean",
+              "icon": "sicon-toggle-off",
+              "label": "جعل الزر مفرغ (بدون لون خلفية)",
+              "description": null,
+              "id": "slides.btn_outline",
+              "format": "switch",
+              "required": false,
+              "value": false,
+              "selected": false
             }
           ]
         },
@@ -671,6 +885,116 @@
           "minimum": 2,
           "maximum": 15,
           "description": null,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "number",
+          "icon": "sicon-time",
+          "label": "سرعة تنفيذ الانيميشن بين الصور (ثواني)",
+          "id": "slides_speed",
+          "format": "integer",
+          "required": false,
+          "value": 1,
+          "minimum": 0,
+          "maximum": 3,
+          "description": "القيمة الافتراضية ثانية",
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "slides_effect",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "تأثير الانتقال بين الصور",
+          "description": null,
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "انزلاق (Slide)",
+              "value": "slide",
+              "key": "b9c4e685-761e-4b91-b2ba-46b66fc2a04c"
+            }
+          ],
+          "options": [
+            {
+              "label": "انزلاق (Slide)",
+              "value": "slide",
+              "key": "b9c4e685-761e-4b91-b2ba-46b66fc2a04c"
+            },
+            {
+              "label": "تأثير الاختفاء (Fade)",
+              "value": "fade",
+              "key": "35defb50-8ac3-49f8-8c08-9864757b51a6"
+            }
+          ],
+          "source": "Manual",
+          "required": false,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "تفعيل أسهم التنقل",
+          "description": null,
+          "id": "show_arrows",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "تفعيل ترقيم الصور (النقاط)",
+          "description": null,
+          "id": "show_dots",
+          "format": "switch",
+          "required": false,
+          "value": true,
+          "selected": true,
+          "conditions": [
+            {
+              "id": "image_mode",
+              "operation": "=",
+              "value": true
+            }
+          ]
+        },
+        {
+          "type": "boolean",
+          "icon": "sicon-toggle-off",
+          "label": "إضافة مسافة أعلى العنصر",
+          "description": null,
+          "id": "top_space",
+          "format": "switch",
+          "required": false,
+          "value": false,
+          "selected": false,
           "conditions": [
             {
               "id": "image_mode",

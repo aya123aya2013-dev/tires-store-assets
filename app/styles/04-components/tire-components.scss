@@ -196,3 +196,20 @@
   .tc-banner--shade-light .tc-banner__over { background: linear-gradient(0deg, rgba(14, 15, 16, .55), rgba(14, 15, 16, .05) 70%); }
   .tc-banner--shade-medium .tc-banner__over { background: linear-gradient(0deg, rgba(14, 15, 16, .72), rgba(14, 15, 16, .12) 75%); }
 }
+
+/* ---------- #1 image mode: Selia-level options ---------- */
+.tc-banner { --tc-speed: .6s; }
+.tc-banner__track { transition-duration: var(--tc-speed); }
+.tc-banner--top-space { margin-top: 24px; }
+// fade effect: slides stack, only the active one is visible
+.tc-banner--fx-fade .tc-banner__track { display: grid; transform: none !important; }
+.tc-banner--fx-fade .tc-banner__slide { grid-area: 1 / 1; opacity: 0; transition: opacity var(--tc-speed) ease; pointer-events: none; }
+.tc-banner--fx-fade .tc-banner__slide.is-on { opacity: 1; pointer-events: auto; }
+// per-slide text position overrides the component one
+.tc-banner__over.is-x-start .tc-wrap { align-items: flex-start; text-align: start; }
+.tc-banner__over.is-x-center .tc-wrap { align-items: center; text-align: center; }
+.tc-banner__over.is-x-end .tc-wrap { align-items: flex-end; text-align: end; }
+// video slides fill the frame like images
+.tc-banner__video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; object-fit: cover; }
+.tc-banner:not(.tc-banner--h-auto) .tc-banner__video { height: 100%; aspect-ratio: auto; }
+@media (prefers-reduced-motion: reduce) { .tc-banner--fx-fade .tc-banner__slide { transition: none; } }

@@ -75,32 +75,51 @@ export function TireHero({ data }: TireHeroProps) {
 }
 
 /* ===================== image mode: plain banner / slider ===================== */
-interface Slide { desk: string; mob: string; link: string; title: string; text: string; btn: string }
+interface Slide {
+  desk: string; mob: string; video: string; link: string; wholeLink: boolean; title: string; text: string;
+  btn: string; btnBg: string; btnColor: string; btnOutline: boolean; focus: string; posX: string;
+}
 
 function BannerSlider({ data }: TireHeroProps) {
+  const isEn = typeof document !== 'undefined' && document.documentElement.lang === 'en';
   const slides = useMemo<Slide[]>(() => {
     const rows = Array.isArray(data.slides) ? (data.slides as Row[]) : [];
+    const f = (r: Row, k: string) => r[k] ?? r[`slides.${k}`];
     return rows
       .map(r => {
-        const desk = asImage(r.image ?? r['slides.image'], '');
+        const useEn = isEn && asBool(f(r, 'en_images'), false);
+        const deskAr = asImage(f(r, 'image'), '');
+        const desk = (useEn && asImage(f(r, 'image_en'), '')) || deskAr;
+        const mob = (useEn && asImage(f(r, 'mobile_image_en'), '')) || asImage(f(r, 'mobile_image'), '') || desk;
+        const video = asBool(f(r, 'use_video'), false) ? asText(f(r, 'video'), '') : '';
         return {
-          desk,
-          mob: asImage(r.mobile_image ?? r['slides.mobile_image'], '') || desk,
-          link: asLink(r.link ?? r['slides.link'] ?? r.url, ''),
-          title: asText(r.title ?? r['slides.title'], ''),
-          text: asText(r.text ?? r['slides.text'], ''),
-          btn: asText(r.btn ?? r['slides.btn'], ''),
+          desk, mob, video,
+          link: asLink(f(r, 'link') ?? r.url, ''),
+          wholeLink: asBool(f(r, 'whole_link'), true),
+          title: asText(f(r, 'title'), ''),
+          text: asText(f(r, 'text'), ''),
+          btn: asText(f(r, 'btn'), ''),
+          btnBg: asText(f(r, 'btn_bg'), ''),
+          btnColor: asText(f(r, 'btn_color'), ''),
+          btnOutline: asBool(f(r, 'btn_outline'), false),
+          focus: opt(f(r, 'focus'), 'center'),
+          posX: opt(f(r, 'pos_x'), ''),
         };
       })
-      .filter(s => s.desk);
-  }, [data.slides]);
+      .filter(s => s.desk || s.video);
+  }, [data.slides, isEn]);
 
   const height = opt(data.banner_height, 'auto'); // auto | 21-9 | 16-9 | 3-1 | screen
-  const fit = opt(data.banner_fit, 'cover'); // cover | contain
-  const mobRatio = opt(data.banner_mobile_height, 'auto'); // auto | 1-1 | 4-5 | 9-16
+  const fit = opt(data.banner_fit, 'cover');
+  const mobRatio = opt(data.banner_mobile_height, 'auto');
   const autoplay = asBool(data.slides_autoplay, true);
   const every = Math.max(2, Number(data.slides_interval) || 5) * 1000;
+  const speed = Math.min(3, Math.max(0.2, Number(data.slides_speed) || 0.6));
+  const effect = opt(data.slides_effect, 'slide'); // slide | fade
+  const showArrows = asBool(data.show_arrows, true);
+  const showDots = asBool(data.show_dots, true);
   const boxed = asBool(data.banner_boxed, false);
+  const topSpace = asBool(data.top_space, false);
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
   const many = slides.length > 1;
@@ -119,54 +138,79 @@ function BannerSlider({ data }: TireHeroProps) {
     );
   }
 
-  const posX = opt(data.content_x, 'start'); // start | center | end
-  const posY = opt(data.content_y, 'center'); // top | center | bottom
+  const posX = opt(data.content_x, 'start');
+  const posY = opt(data.content_y, 'center');
   const posYm = opt(data.content_y_mobile, 'bottom');
-  const shade = opt(data.shade, 'light'); // none | light | medium | strong
+  const shade = opt(data.shade, 'light');
   const cls = [
     'tc', 'tc-banner', `tc-banner--h-${height}`, `tc-banner--m-${mobRatio}`, `tc-banner--${fit}`, boxed ? 'tc-banner--boxed' : '',
     `tc-banner--x-${posX}`, `tc-banner--y-${posY}`, `tc-banner--ym-${posYm}`, `tc-banner--shade-${shade}`,
+    `tc-banner--fx-${effect}`, topSpace ? 'tc-banner--top-space' : '',
   ].join(' ');
+  const go = (n: number) => setI((n + slides.length) % slides.length);
+
   return (
-    <div className={cls} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} aria-roledescription={many ? 'carousel' : undefined}>
-      <div className="tc-banner__track" style={{ transform: `translateX(-${i * 100}%)` }}>
+    <div className={cls} style={{ ['--tc-speed' as string]: `${speed}s` }} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} aria-roledescription={many ? 'carousel' : undefined}>
+      <div className="tc-banner__track" style={effect === 'slide' ? { transform: `translateX(-${i * 100}%)` } : undefined}>
         {slides.map((s, n) => {
-          const pic = (
+          const media = s.video ? (
+            /youtu\.?be/.test(s.video) ? (
+              <iframe className="tc-banner__video" src={youTube(s.video)} title={s.title || 'فيديو'} allow="autoplay; encrypted-media" loading="lazy" />
+            ) : (
+              <video className="tc-banner__video" src={s.video} autoPlay muted loop playsInline preload="metadata" />
+            )
+          ) : (
             <picture>
               <source media="(max-width: 767px)" srcSet={s.mob} />
-              <img src={s.desk} alt={s.title || 'بنر'} loading={n ? 'lazy' : 'eager'} fetchPriority={n ? undefined : 'high'} />
+              <img src={s.desk} alt={s.title || 'بنر'} loading={n ? 'lazy' : 'eager'} fetchPriority={n ? undefined : 'high'} style={{ objectPosition: s.focus }} />
             </picture>
           );
+          const btnStyle = s.btnOutline
+            ? { background: 'transparent', color: s.btnColor || '#fff', border: `1.5px solid ${s.btnColor || '#fff'}` }
+            : { background: s.btnBg || undefined, color: s.btnColor || undefined };
+          const btn = s.btn ? (
+            s.link && !s.wholeLink
+              ? <Link to={s.link} className="tc-btn tc-btn--gold" style={btnStyle}>{s.btn} <span aria-hidden="true">←</span></Link>
+              : <span className="tc-btn tc-btn--gold" style={btnStyle}>{s.btn} <span aria-hidden="true">←</span></span>
+          ) : null;
           const overlay = (s.title || s.text || s.btn) ? (
-            <div className="tc-banner__over">
+            <div className={'tc-banner__over' + (s.posX ? ` is-x-${s.posX}` : '')}>
               <div className="tc-wrap">
                 {s.title && <h2>{s.title}</h2>}
                 {s.text && <p>{s.text}</p>}
-                {s.btn && <span className="tc-btn tc-btn--gold">{s.btn} <span aria-hidden="true">←</span></span>}
+                {btn}
               </div>
             </div>
           ) : null;
+          const inner = <>{media}{overlay}</>;
           return (
-            <div className="tc-banner__slide" key={s.desk + n} aria-hidden={n !== i}>
-              {s.link ? <Link to={s.link}>{pic}{overlay}</Link> : <>{pic}{overlay}</>}
+            <div className={'tc-banner__slide' + (n === i ? ' is-on' : '')} key={(s.desk || s.video) + n} aria-hidden={n !== i}>
+              {s.link && s.wholeLink ? <Link to={s.link}>{inner}</Link> : inner}
             </div>
           );
         })}
       </div>
-      {many && (
+      {many && showArrows && (
         <>
-          <button type="button" className="tc-banner__arrow is-prev" aria-label="السابق" onClick={() => setI(n => (n - 1 + slides.length) % slides.length)}>›</button>
-          <button type="button" className="tc-banner__arrow is-next" aria-label="التالي" onClick={() => setI(n => (n + 1) % slides.length)}>‹</button>
-          <div className="tc-banner__dots">
-            {slides.map((_, n) => (
-              <button key={n} type="button" className={n === i ? 'on' : undefined} aria-label={`الشريحة ${n + 1}`} onClick={() => setI(n)} />
-            ))}
-          </div>
+          <button type="button" className="tc-banner__arrow is-prev" aria-label="السابق" onClick={() => go(i - 1)}>›</button>
+          <button type="button" className="tc-banner__arrow is-next" aria-label="التالي" onClick={() => go(i + 1)}>‹</button>
         </>
+      )}
+      {many && showDots && (
+        <div className="tc-banner__dots">
+          {slides.map((_, n) => (
+            <button key={n} type="button" className={n === i ? 'on' : undefined} aria-label={`الشريحة ${n + 1}`} onClick={() => go(n)} />
+          ))}
+        </div>
       )}
     </div>
   );
 }
+
+const youTube = (u: string) => {
+  const id = (u.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/) || [])[1] || '';
+  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&playsinline=1`;
+};
 
 /* ===================== tire mode: our designed hero ===================== */
 function TireDesign({ data }: TireHeroProps) {

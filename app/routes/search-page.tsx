@@ -11,10 +11,13 @@ import type { ProductListLoaderData } from '@salla.sa/twilight-theme-engine/rout
 import { withHead } from '@salla.sa/twilight-theme-engine/tanstack';
 import { ProductListPage } from '../components/product/ProductListPage';
 import { ProductListSkeleton } from '../components/product/ProductListSkeleton';
-import { TireSizeBar } from '../components/tires/TireSizeBar';
+import { useCallback } from 'react';
+import type { Product } from '@salla.sa/twilight-theme-engine/types';
+import { SizeFinder } from '../components/home/SizeFinder';
+import { formatTireSize, parseSizeSources, parseTireSize, productHasTireSize } from '../components/tires/sizes';
 
 export const Route = createFileRoute('/{-$locale}/search')({
-  validateSearch: (search: Record<string, unknown>) => ({ q: (search.q as string) || '' }),
+  validateSearch: (search: Record<string, unknown>) => ({ q: (search.q as string) || '', m: (search.m as string) || '' }),
   loaderDeps: ({ search }) => ({ q: search.q }),
   loader: ({ deps, params }): Promise<ProductListLoaderData> =>
     ProductListing.loader({
@@ -31,14 +34,22 @@ export const Route = createFileRoute('/{-$locale}/search')({
 
 function ListComponent() {
   const data: ProductListLoaderData = Route.useLoaderData();
-  const { q } = Route.useSearch();
+  const { q, m } = Route.useSearch();
+  // A tire-size search shows ONLY that exact size — read from the product name,
+  // its tags or its option values (`m` narrows the sources; all three by default).
+  const size = parseTireSize(q);
+  const keep = useCallback(
+    (p: Product) => (size ? productHasTireSize(p, size, parseSizeSources(m)) : true),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [q, m]
+  );
   return (
     <>
-      <div className="container">
-        {/* Keyed on the query so the selects reset after each size search. */}
-        <TireSizeBar key={q} query={q} />
-      </div>
-      <ProductListPage {...data} />
+      {size && (
+        // same card as the home "size finder" component, keyed so it resets per search
+        <SizeFinder key={q} data={{ match_by: m || 'all' }} initial={size} heading={formatTireSize(size)} />
+      )}
+      <ProductListPage {...data} keep={size ? keep : undefined} />
     </>
   );
 }

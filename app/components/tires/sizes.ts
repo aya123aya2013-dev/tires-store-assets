@@ -45,3 +45,35 @@ export function formatTireSize({ width, ratio, rim }: TireSize): string {
 export function tireSizeQuery({ width, ratio, rim }: TireSize): string {
   return isTruckWidth(width) ? `${width}/${rim}` : `${width}/${ratio}/${rim}`;
 }
+
+/** True when a product name carries exactly this size (any spelling: 205/55/16, 205/55 R16, 205/55R16, 900/16). */
+export function nameHasTireSize(name: string | undefined | null, size: TireSize): boolean {
+  const found = parseTireSize(name);
+  if (!found) return false;
+  return found.width === size.width && found.rim === size.rim && (isTruckWidth(size.width) || found.ratio === size.ratio);
+}
+
+/** Where a product's size is written: its name, its tags ("205-55-16"), or its option values. */
+export type SizeSource = 'name' | 'tags' | 'options';
+export const SIZE_SOURCES: SizeSource[] = ['name', 'tags', 'options'];
+
+interface SizedProduct {
+  name?: string | null;
+  tags?: { name?: string | null }[] | null;
+  options?: { values?: { name?: string | null }[] | null }[] | null;
+}
+
+/** Exact match on any of the chosen sources (tags may use "-" instead of "/"). */
+export function productHasTireSize(product: SizedProduct, size: TireSize, sources: SizeSource[] = SIZE_SOURCES): boolean {
+  const texts: (string | null | undefined)[] = [];
+  if (sources.includes('name')) texts.push(product.name);
+  if (sources.includes('tags')) texts.push(...(product.tags ?? []).map(t => t.name?.replace(/-/g, '/')));
+  if (sources.includes('options')) for (const o of product.options ?? []) texts.push(...(o.values ?? []).map(v => v.name));
+  return texts.some(t => nameHasTireSize(t, size));
+}
+
+/** "name,tags" (from the URL) → valid sources; anything else → all three. */
+export function parseSizeSources(v: unknown): SizeSource[] {
+  const list = String(v ?? '').split(',').filter((s): s is SizeSource => (SIZE_SOURCES as string[]).includes(s));
+  return list.length ? list : SIZE_SOURCES;
+}

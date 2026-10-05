@@ -9,6 +9,7 @@ import type { FormEvent } from 'react';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { useNavigate } from '@salla.sa/twilight-theme-engine/providers';
 import { TIRE_RATIOS, TIRE_RIMS, TIRE_WIDTHS, isTruckWidth } from '../tires/sizes';
+import type { TireSize } from '../tires/sizes';
 import { asBool, asLink, asText, customClass, isRow, opt, useLang } from './fields';
 import type { Lang, Row } from './fields';
 
@@ -34,7 +35,15 @@ const asList = (v: unknown, d: string, all: string[]) => {
 
 type Key = 'w' | 'r' | 'j';
 
-export function SizeFinder({ data }: { data: Row }) {
+interface SizeFinderProps {
+  data: Row;
+  /** search results page: start from the searched size, own heading, no overlap on a hero */
+  initial?: TireSize | null;
+  /** the searched size, e.g. "205/55 R16" → heading «إطارات 205/55 R16» */
+  heading?: string;
+}
+
+export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
   const lang = useLang();
   const isEn = lang === 'en';
   const t = (v: unknown, d: string) => tr(asText(v, d, lang), lang);
@@ -50,9 +59,9 @@ export function SizeFinder({ data }: { data: Row }) {
   };
   const first = (v: unknown, d: string, all: string[]) => (all.includes(String(v ?? '').trim()) ? String(v).trim() : d);
   const [value, setValue] = useState<Record<Key, string>>(() => ({
-    w: first(data.default_width, '205', widths),
-    r: first(data.default_ratio, '55', TIRE_RATIOS),
-    j: first(data.default_rim, '16', TIRE_RIMS),
+    w: first(initial?.width ?? data.default_width, '205', widths),
+    r: first(initial?.ratio || data.default_ratio, '55', TIRE_RATIOS),
+    j: first(initial?.rim ?? data.default_rim, '16', TIRE_RIMS),
   }));
   const [open, setOpen] = useState<Key | null>(null);
   const root = useRef<HTMLFormElement>(null);
@@ -76,10 +85,13 @@ export function SizeFinder({ data }: { data: Row }) {
   };
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    navigate(`/search?q=${encodeURIComponent(query())}`);
+    // where the store writes sizes: product name / tags / options (all three by default)
+    const by = opt(data.match_by, 'all');
+    const m = by === 'all' ? '' : `&m=${by}`;
+    navigate(`/search?q=${encodeURIComponent(query())}${m}`);
   };
 
-  const overlap = asBool(data.overlap_hero, true);
+  const overlap = !heading && asBool(data.overlap_hero, true);
   const kicker = t(data.kicker, 'البداية الصحيحة');
   // an emptied field hides the link (a missing one shows our default)
   const helpCleared = data.help_text === '' || (isRow(data.help_text) && !String(data.help_text[lang] ?? data.help_text.ar ?? '').trim());
@@ -126,13 +138,13 @@ export function SizeFinder({ data }: { data: Row }) {
   };
 
   return (
-    <div className={['tc', 'tc-finder-band', overlap ? 'tc-finder--overlap' : '', customClass(data.custom_class)].join(' ')}>
+    <div className={['tc', 'tc-finder-band', overlap ? 'tc-finder--overlap' : '', heading ? 'tc-finder--page' : '', customClass(data.custom_class)].join(' ')}>
       <section className="tc-wrap tc-finder-wrap" id="size">
         <form className="tc-finder" ref={root} onSubmit={submit}>
           <div className="tc-finder__title">
             <div>
-              {kicker && <span className="eb">{kicker}</span>}
-              <h2>{t(data.title, 'اختر مقاس إطارك')}</h2>
+              {kicker && !heading && <span className="eb">{kicker}</span>}
+              {heading ? <h1>{isEn ? <><bdi>{heading}</bdi> tires</> : <>إطارات <bdi>{heading}</bdi></>}</h1> : <h2>{t(data.title, 'اختر مقاس إطارك')}</h2>}
             </div>
             {helpText && <Link to={helpLink}>{helpText} ↗</Link>}
           </div>

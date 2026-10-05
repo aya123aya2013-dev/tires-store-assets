@@ -2224,6 +2224,46 @@
           "required": false
         },
         {
+          "id": "match_by",
+          "type": "items",
+          "format": "dropdown-list",
+          "label": "وين مكتوب المقاس بمنتجاتك؟",
+          "description": "النتائج بتعرض بس الإطارات اللي مقاسها مطابق بالزبط للمقاس المختار",
+          "labelHTML": null,
+          "icon": "sicon-list",
+          "selected": [
+            {
+              "label": "من الاسم والوسوم والخيارات (أنصح فيه)",
+              "value": "all",
+              "key": "f89a927d-64de-440f-8807-c6dd18ad5ecc"
+            }
+          ],
+          "options": [
+            {
+              "label": "من الاسم والوسوم والخيارات (أنصح فيه)",
+              "value": "all",
+              "key": "f89a927d-64de-440f-8807-c6dd18ad5ecc"
+            },
+            {
+              "label": "من اسم المنتج فقط",
+              "value": "name",
+              "key": "8ba8424e-249c-4194-b1e7-cbd3295fda93"
+            },
+            {
+              "label": "من وسوم المنتج فقط (مثل 205-55-16)",
+              "value": "tags",
+              "key": "d11aeed5-87fc-4ea2-89cc-119c79706d51"
+            },
+            {
+              "label": "من خيارات المنتج فقط",
+              "value": "options",
+              "key": "0ecd6d2c-3076-4446-8817-99abf01fca1b"
+            }
+          ],
+          "source": "Manual",
+          "required": false
+        },
+        {
           "type": "static",
           "format": "description",
           "id": "h-layout",

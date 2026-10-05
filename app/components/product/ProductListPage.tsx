@@ -69,7 +69,8 @@ function usePref<T extends string>(
 }
 
 /** `wideGrid`: full-width lists with no filter column (e.g. offers) render 5 grid columns on desktop. */
-type ProductListPageProps = ProductListLoaderData & { wideGrid?: boolean };
+/** `keep`: optional exact-match filter (e.g. the tire size search) applied to every loaded page. */
+type ProductListPageProps = ProductListLoaderData & { wideGrid?: boolean; keep?: (product: Product) => boolean };
 
 /** `ItemsList`'s `loader` for infinite scroll — the route already loaded the
  * first page, so this fetches subsequent ones from `pagination.next`, a full
@@ -79,7 +80,8 @@ function useCatalogLoader(
   source: ProductListPageProps['source'],
   selectedSort: string,
   next: string | null | undefined,
-  filters: ProductListFilters | null
+  filters: ProductListFilters | null,
+  keep?: (product: Product) => boolean
 ): ItemsLoaderFn<Product> {
   const nextCursorRef = useRef<string | null>(next ?? null);
   useEffect(() => {
@@ -98,8 +100,8 @@ function useCatalogLoader(
       ...(filters && { filterable: true, filters }),
     });
     nextCursorRef.current = result.next;
-    return result;
-  }, [source.type, source.value, selectedSort, filters]);
+    return keep ? { ...result, items: result.items.filter(keep) } : result;
+  }, [source.type, source.value, selectedSort, filters, keep]);
 }
 
 type BrandEntity = { name: string; banner?: string; logo?: string; description?: string };
@@ -392,6 +394,7 @@ export function ProductListPage({
   pagination,
   filters,
   wideGrid = false,
+  keep,
 }: ProductListPageProps) {
   const { t } = useTranslation();
   const store = useStore();
@@ -424,12 +427,13 @@ export function ProductListPage({
   // request fails nothing stale passes for the new selection. Infinite scroll is only live
   // for the loader's own page or a fully loaded filtered one.
   const shownPage = filterStatus === 'ready' ? filteredPage : lastPage;
-  const shownProducts =
+  const loadedProducts =
     filterStatus === 'error'
       ? []
       : filterStatus === 'idle'
         ? products
         : (shownPage?.items ?? products);
+  const shownProducts = keep ? loadedProducts.filter(keep) : loadedProducts;
   const shownNext =
     filterStatus === 'idle'
       ? pagination?.next
@@ -474,7 +478,7 @@ export function ProductListPage({
       source.type === 'categories' && source.value ? { category_id: source.value } : undefined,
     [source.type, source.value]
   );
-  const loader = useCatalogLoader(source, selectedSort, shownNext, appliedFilters);
+  const loader = useCatalogLoader(source, selectedSort, shownNext, appliedFilters, keep);
 
   const listLayoutClass =
     view === 'list' ? 's-products-list-horizontal-cards' : 's-products-list-vertical-cards';

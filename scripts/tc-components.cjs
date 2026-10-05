@@ -265,6 +265,33 @@ const components = [
     F.dd('bg', 'لون الخلفية', [['غامق', 'dark'], ['ذهبي', 'gold']], 'dark'),
     ...F.common('my-ticker'),
   ]),
+
+  // #13 صف الخدمات
+  def('home.services-row', 'صف الخدمات (كل ما تحتاجه)', 'Services Row', 'sicon-store2', [
+    F.cover('صف الخدمات'),
+    F.tip('عمود تعريف و3 بطاقات. كل بطاقة: صورة، أو رسمة شاحنة التوصيل، أو رسمة دليل المقاسات الغامقة.'),
+    F.head('h-intro', 'عمود التعريف'),
+    F.text('kicker', 'السطر الصغير', 'أكثر من مجرد إطار', 40),
+    F.area('title', 'العنوان', 'كل ما تحتاجه\nلإطاراتك.', 60),
+    F.area('text', 'النص', 'من اختيار المقاس إلى التركيب.\nتجربة بسيطة، واهتمام بالتفاصيل.', 160),
+    F.text('link_text', 'نص الرابط', 'تعرّف على خدماتنا', 30),
+    F.link('link', 'الرابط'),
+    F.head('h-cards', 'البطاقات (3)'),
+    F.collection('cards', 'البطاقات', 'بطاقة', [
+      F.dd('art', 'شكل الصورة', [['صورة', 'photo'], ['رسمة شاحنة التوصيل', 'truck'], ['رسمة دليل المقاسات (غامقة)', 'guide']], 'photo'),
+      F.when(F.image('image', 'الصورة', '800×500 بكسل', 800, 500), 'art', 'photo'),
+      F.when(F.text('tag', 'شارة صغيرة على الصورة (اختياري)', 'عناية بالتفاصيل', 30), 'art', 'photo'),
+      F.text('label', 'النص على الرسمة', 'TIRES STORE', 20, { description: 'لرسمة الشاحنة أو دليل المقاسات' }),
+      F.text('title', 'العنوان', 'تركيب احترافي', 30),
+      F.text('text', 'السطر', 'إطاراتك في أيدٍ خبيرة', 50),
+      F.link('link', 'الرابط'),
+    ], [
+      { 'cards.art': 'photo', 'cards.tag': 'عناية بالتفاصيل', 'cards.title': 'تركيب احترافي', 'cards.text': 'إطاراتك في أيدٍ خبيرة' },
+      { 'cards.art': 'truck', 'cards.label': 'TIRES STORE', 'cards.title': 'توصيل إلى بابك', 'cards.text': 'خيارات تناسب وجهتك' },
+      { 'cards.art': 'guide', 'cards.label': '205 / 55 R16', 'cards.title': 'دليل المقاسات', 'cards.text': 'اعرف مقاسك بكل سهولة' },
+    ], 1, 3),
+    ...F.common('my-services'),
+  ]),
 ];
 
 let after = 'home.size-finder';

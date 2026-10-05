@@ -11,6 +11,7 @@ import { DoubleBanner } from '../../app/components/home/DoubleBanner';
 import { TirePicker } from '../../app/components/home/TirePicker';
 import { ServicesBento } from '../../app/components/home/ServicesBento';
 import { Ticker } from '../../app/components/home/Ticker';
+import { ServicesRow } from '../../app/components/home/ServicesRow';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -138,5 +139,14 @@ describe('#12 ticker', () => {
     expect(html).toContain('<span>تركيب مجاني بالرياض</span>');
     expect(html.split('<b>04</b>').length - 1).toBe(2);
     expect(html).toContain('secbar tc-gold');
+  });
+});
+
+describe('#13 services row', () => {
+  it('renders the photo, truck and guide cards', () => {
+    const html = renderToString(<ServicesRow data={{}} />);
+    expect(html).toContain('svc-art truck');
+    expect(html).toContain('svc-art guide');
+    expect(html).toContain('كل ما تحتاجه<br/>لإطاراتك.');
   });
 });

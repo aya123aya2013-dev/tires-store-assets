@@ -30,6 +30,7 @@ import {
   TirePicker,
   ServicesBento,
   Ticker,
+  ServicesRow,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -78,6 +79,7 @@ registerHomeComponents({
   'tire-picker': TirePicker,
   'services-bento': ServicesBento,
   ticker: Ticker,
+  'services-row': ServicesRow,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

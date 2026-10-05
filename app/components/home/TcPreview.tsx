@@ -6,6 +6,7 @@ import { BenefitsStrip } from './BenefitsStrip';
 import { TireSlider } from './TireSlider';
 import { BrandsMarquee } from './BrandsMarquee';
 import { CategoryCards } from './CategoryCards';
+import { ShopByCar } from './ShopByCar';
 
 const IMG = '/assets/images/home';
 
@@ -75,6 +76,7 @@ export function TcPreview() {
         <TireSlider data={{}} />
         <BrandsMarquee data={{ brands_source: 'manual' }} />
         <CategoryCards data={{}} />
+        <ShopByCar data={{}} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>
         <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>

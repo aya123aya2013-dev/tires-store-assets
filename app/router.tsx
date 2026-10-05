@@ -24,6 +24,7 @@ import {
   TireSlider,
   BrandsMarquee,
   CategoryCards,
+  ShopByCar,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -66,6 +67,7 @@ registerHomeComponents({
   'tire-slider': TireSlider,
   'brands-marquee': BrandsMarquee,
   'category-cards': CategoryCards,
+  'shop-by-car': ShopByCar,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

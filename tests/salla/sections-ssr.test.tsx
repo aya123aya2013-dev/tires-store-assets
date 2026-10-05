@@ -5,6 +5,7 @@ import { BenefitsStrip } from '../../app/components/home/BenefitsStrip';
 import { TireSlider } from '../../app/components/home/TireSlider';
 import { BrandsMarquee } from '../../app/components/home/BrandsMarquee';
 import { CategoryCards } from '../../app/components/home/CategoryCards';
+import { ShopByCar } from '../../app/components/home/ShopByCar';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -65,5 +66,20 @@ describe('#6 category cards', () => {
     expect(html).toContain('catg tc-n-4');
     expect(html).toContain('class="cat on"');
     expect(html).toContain('>04<');
+  });
+});
+
+describe('#7 shop by car', () => {
+  it('lists the makes and waits for a choice', () => {
+    const html = renderToString(<ShopByCar data={{}} />);
+    expect(html).toContain('تويوتا');
+    expect(html).toContain('اختر الماركة أول');
+    expect(html).toContain('class="sec cars"');
+  });
+  it('uses the merchant list and ignores rows without a size', () => {
+    const html = renderToString(<ShopByCar data={{ cars: [{ 'cars.make': 'مازda', 'cars.model': '6', 'cars.year_from': 2020, 'cars.size': '225/45/18' }, { 'cars.make': 'بلا', 'cars.model': 'x', 'cars.year_from': 2020 }], gold_bg: false }} />);
+    expect(html).toContain('مازda');
+    expect(html).not.toContain('بلا');
+    expect(html).toContain('tc-plain');
   });
 });

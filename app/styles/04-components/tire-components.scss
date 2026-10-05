@@ -332,3 +332,6 @@
 }
 .tc-s .cats.tc-light { background: #faf8f2; }
 .tc-s .cat .cic img { position: static; width: 70%; height: 70%; max-width: none; object-fit: contain; transform: none; }
+
+/* #7 shop by car: light gold background is the approved look; merchant may turn it off */
+.tc-s .cars.tc-plain { background: transparent !important; }

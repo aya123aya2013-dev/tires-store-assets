@@ -19,6 +19,7 @@ import { InstallCenters } from '../../app/components/home/InstallCenters';
 import { InstallBooking } from '../../app/components/home/InstallBooking';
 import { CallStrip } from '../../app/components/home/CallStrip';
 import { Steps } from '../../app/components/home/Steps';
+import { Lineup } from '../../app/components/home/Lineup';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -253,5 +254,14 @@ describe('#18 steps', () => {
     const html = renderToString(<Steps data={{}} />);
     expect(html).toContain('<em>03</em>');
     expect(renderToString(<Steps data={{ steps: [] }} />)).toBe('');
+  });
+});
+
+describe('#19 lineup', () => {
+  it('four compact cards with type tag, size and price per tire', () => {
+    const html = renderToString(<Lineup data={{ show_type: true }} />);
+    expect(html.split('class="lu"').length - 1).toBe(4);
+    expect(html).toContain('lu-t');
+    expect(renderToString(<Lineup data={{ show_type: false }} />)).not.toContain('lu-t');
   });
 });

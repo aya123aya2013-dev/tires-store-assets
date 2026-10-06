@@ -26,3 +26,4 @@ export { InstallCenters } from './InstallCenters';
 export { InstallBooking } from './InstallBooking';
 export { CallStrip } from './CallStrip';
 export { Steps } from './Steps';
+export { Lineup } from './Lineup';

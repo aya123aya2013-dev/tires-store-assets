@@ -372,3 +372,7 @@
 .tc-finder .tc-dd-combo.is-off { opacity: .5; }
 .tc-sel.open .tc-dd-combo .tc-dd-arrow svg.i { transform: rotate(180deg); color: var(--tc-gold); }
 .tc-dd-none { font-size: 13px; color: var(--tc-muted); padding: 6px 2px; }
+
+/* R1-11: readable panel labels (4.5:1) and the keyboard-highlighted suggestion */
+.tc-dd-panel .t { color: #5c6166; }
+.tc-finder .tc-dd-o.is-active { border-color: var(--tc-ink); box-shadow: 0 0 0 2px var(--tc-gold-soft); }

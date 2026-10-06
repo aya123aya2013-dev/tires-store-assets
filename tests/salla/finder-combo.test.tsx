@@ -7,7 +7,7 @@ vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
 vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => navigate }));
 vi.mock('@salla.sa/twilight-theme-engine/common', () => ({ Link: ({ to, children }: { to: string; children: React.ReactNode }) => <a href={to}>{children}</a> }));
 
-const width = (c: HTMLElement) => c.querySelector('#tc-in-w') as HTMLInputElement;
+const width = (c: HTMLElement) => c.querySelector('[id$="-in-w"]') as HTMLInputElement;
 
 describe('size finder combobox', () => {
   it('suggests sizes while typing and picks one', () => {
@@ -41,11 +41,26 @@ describe('size finder combobox', () => {
     const { container } = render(<SizeFinder data={{ show_buses: true, show_trucks: false }} />);
     fireEvent.click(container.querySelector('.tc-dd-arrow')!);
     fireEvent.click(screen.getByText('12', { selector: '.tc-dd-trucks .tc-dd-o' }));
-    expect((container.querySelector('#tc-in-r') as HTMLInputElement).disabled).toBe(true);
+    expect((container.querySelector('[id$="-in-r"]') as HTMLInputElement).disabled).toBe(true);
     const rimArrow = container.querySelectorAll('.tc-dd-arrow')[2];
     fireEvent.click(rimArrow);
     fireEvent.click(screen.getByText('22.5', { selector: '.tc-dd-trucks .tc-dd-o' }));
     fireEvent.submit(container.querySelector('form')!);
     expect(navigate).toHaveBeenCalledWith('/search?q=12R22.5');
+  });
+
+  it('R1-11/12: arrow keys move through suggestions; ids are unique per finder', () => {
+    const { container } = render(<><SizeFinder data={{}} /><SizeFinder data={{}} /></>);
+    const inp = width(container);
+    fireEvent.change(inp, { target: { value: '2' } });
+    const opts = [...container.querySelectorAll('.tc-dd-suggest [role=option]')].map(b => b.textContent);
+    fireEvent.keyDown(inp, { key: 'ArrowDown' });
+    fireEvent.keyDown(inp, { key: 'ArrowDown' });
+    expect(inp.getAttribute('aria-activedescendant')).toMatch(/-opt-w-1$/);
+    fireEvent.keyDown(inp, { key: 'Enter' });
+    expect(inp.value).toBe(opts[1]);
+    // every control id is unique; only the page anchor #size (target of the hero button) may repeat
+    const ids = [...container.querySelectorAll('[id]')].map(e => e.id).filter(id => id !== 'size');
+    expect(new Set(ids).size).toBe(ids.length);
   });
 });

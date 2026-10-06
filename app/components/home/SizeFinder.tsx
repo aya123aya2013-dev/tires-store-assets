@@ -4,7 +4,7 @@
  * 3 pickers with a "most requested" row + full grid, gold submit button).
  * Styles: styles/04-components/tire-components.scss (scoped under `.tc-finder`).
  */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { useNavigate } from '@salla.sa/twilight-theme-engine/providers';
@@ -83,6 +83,8 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
     j: first(initial?.rim ?? data.default_rim, '16', rims),
   }));
   const [open, setOpen] = useState<Key | null>(null);
+  const uid = 'tc' + useId().replace(/[^a-zA-Z0-9]/g, ''); // unique ids per finder on the page
+  const [active, setActive] = useState(-1); // highlighted suggestion (keyboard)
   const [draft, setDraft] = useState<Record<Key, string | null>>({ w: null, r: null, j: null }); // typed text while editing
   const root = useRef<HTMLFormElement>(null);
 
@@ -134,36 +136,54 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
     };
     const commit = () => {
       if (!typing) return;
-      if (all[k].includes(q)) pickValue(q);
+      if (active >= 0 && suggestions[active]) pickValue(suggestions[active]);
+      else if (all[k].includes(q)) pickValue(q);
       else if (suggestions[0] && q) pickValue(suggestions[0]);
       else setDraft(d => ({ ...d, [k]: null }));
     };
-    const opts = (vals: string[]) =>
-      vals.map(v => (
-        <button type="button" key={v} className={'tc-dd-o' + (v === value[k] ? ' on' : '')} onMouseDown={e => e.preventDefault()} onClick={() => pickValue(v)}>
+    const opts = (vals: string[], suggest = false) =>
+      vals.map((v, i) => (
+        <button
+          type="button"
+          role="option"
+          id={suggest ? `${uid}-opt-${k}-${i}` : undefined}
+          aria-selected={v === value[k]}
+          key={v}
+          className={'tc-dd-o' + (v === value[k] ? ' on' : '') + (suggest && i === active ? ' is-active' : '')}
+          onMouseDown={e => e.preventDefault()}
+          onClick={() => pickValue(v)}
+        >
           {v}
         </button>
       ));
     return (
       <div className={'tc-sel' + (isOpen ? ' open' : '')}>
-        <label htmlFor={`tc-in-${k}`} id={`tc-sel-${k}`}>
+        <label htmlFor={`${uid}-in-${k}`} id={`${uid}-sel-${k}`}>
           {t(label, label)} <span>{en}</span>
         </label>
         <div className={'tc-dd-btn tc-dd-combo' + (disabled ? ' is-off' : '')}>
           <input
-            id={`tc-in-${k}`}
+            id={`${uid}-in-${k}`}
             type="text"
             inputMode="decimal"
             autoComplete="off"
             role="combobox"
             aria-expanded={isOpen}
-            aria-controls={`tc-list-${k}`}
+            aria-controls={`${uid}-list-${k}`}
             disabled={disabled}
             value={disabled ? '—' : typing ? (draft[k] as string) : value[k]}
             onFocus={e => e.currentTarget.select()}
             onClick={e => e.stopPropagation()}
-            onChange={e => { setDraft(d => ({ ...d, [k]: e.target.value.replace(/[^\d.rR]/g, '') })); setOpen(k); }}
-            onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } }}
+            onChange={e => { setDraft(d => ({ ...d, [k]: e.target.value.replace(/[^\d.rR]/g, '') })); setActive(-1); setOpen(k); }}
+            aria-activedescendant={typing && active >= 0 ? `${uid}-opt-${k}-${active}` : undefined}
+            onKeyDown={e => {
+              if (e.key === 'Enter') { e.preventDefault(); commit(); return; }
+              if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+              e.preventDefault();
+              if (!typing) { setDraft(d => ({ ...d, [k]: value[k] })); setOpen(k); setActive(0); return; }
+              const n = suggestions.length;
+              if (n) setActive(a => (a + (e.key === 'ArrowDown' ? 1 : -1) + n) % n);
+            }}
             onBlur={commit}
           />
           <button
@@ -177,11 +197,11 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
           </button>
         </div>
         {isOpen && (
-          <div className="tc-dd-panel" role="listbox" id={`tc-list-${k}`} aria-labelledby={`tc-sel-${k}`}>
+          <div className="tc-dd-panel" role="listbox" id={`${uid}-list-${k}`} aria-labelledby={`${uid}-sel-${k}`}>
             {typing && q ? (
               <>
                 <div className="t"><span>{tr('اقتراحات', lang)}</span><span>{suggestions.length}</span></div>
-                {suggestions.length ? <div className="tc-dd-grid tc-dd-suggest">{opts(suggestions)}</div> : <p className="tc-dd-none">{tr('ما في مقاس بهالرقم', lang)}</p>}
+                {suggestions.length ? <div className="tc-dd-grid tc-dd-suggest">{opts(suggestions, true)}</div> : <p className="tc-dd-none">{tr('ما في مقاس بهالرقم', lang)}</p>}
               </>
             ) : (
               <>
@@ -205,7 +225,7 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
 
   return (
     <div className={['tc', 'tc-finder-band', overlap ? 'tc-finder--overlap' : '', heading ? 'tc-finder--page' : '', customClass(data.custom_class)].join(' ')}>
-      <section className="tc-wrap tc-finder-wrap" id="size">
+      <section className="tc-wrap tc-finder-wrap" id={heading ? undefined : 'size'}>
         <form className="tc-finder" ref={root} onSubmit={submit}>
           <div className="tc-finder__title">
             <div>

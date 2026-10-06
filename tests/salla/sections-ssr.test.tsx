@@ -16,6 +16,7 @@ import { InstallBanner } from '../../app/components/home/InstallBanner';
 import { TireHero } from '../../app/components/home/TireHero';
 import { SizeFinder } from '../../app/components/home/SizeFinder';
 import { InstallCenters } from '../../app/components/home/InstallCenters';
+import { InstallBooking } from '../../app/components/home/InstallBooking';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -220,5 +221,19 @@ describe('#15 install centers', () => {
     expect(html).toContain('href="tel:0551234567"');
     expect(html).not.toContain('مفتوح الآن');
     expect(html).not.toContain('btn-line');
+  });
+});
+
+describe('#16 install booking', () => {
+  it('renders days, 12h slots, steps and the badge', () => {
+    const html = renderToString(<InstallBooking data={{}} />);
+    expect(html).toContain('بعد بكرة');
+    expect(html).toContain('>4:00<');
+    expect(html).toContain('<b>45</b>');
+    expect(html).toContain('fit-steps');
+  });
+  it('WhatsApp booking link with the store number', () => {
+    const html = renderToString(<InstallBooking data={{ whatsapp: '+966 55 123 4567' }} />);
+    expect(html).toContain('https://wa.me/966551234567?text=');
   });
 });

@@ -15,6 +15,7 @@ import { Ticker } from './Ticker';
 import { ServicesRow } from './ServicesRow';
 import { InstallBanner } from './InstallBanner';
 import { InstallCenters } from './InstallCenters';
+import { InstallBooking } from './InstallBooking';
 
 const IMG = '/assets/images/home';
 
@@ -93,6 +94,7 @@ export function TcPreview() {
         <ServicesRow data={{}} />
         <InstallBanner data={{}} />
         <InstallCenters data={{}} />
+        <InstallBooking data={{}} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>
         <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>

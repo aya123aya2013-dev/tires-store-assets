@@ -33,6 +33,7 @@ import {
   ServicesRow,
   InstallBanner,
   InstallCenters,
+  InstallBooking,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -84,6 +85,7 @@ registerHomeComponents({
   'services-row': ServicesRow,
   'install-banner': InstallBanner,
   'install-centers': InstallCenters,
+  'install-booking': InstallBooking,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

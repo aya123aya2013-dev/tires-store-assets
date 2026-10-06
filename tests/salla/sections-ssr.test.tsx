@@ -329,3 +329,25 @@ describe('round 2 fixes', () => {
     expect(makeT('ar', {})({ ar: 'محتوى', en: '' }, 'Default')).toBe('محتوى');
   });
 });
+
+// ---- theme settings: dark mode script ----
+import { darkScript } from '../../app/components/layout/ThemeTokens';
+describe('dark mode script', () => {
+  const run = (mode: 'off' | 'auto' | 'on', toggle: boolean, saved: string | null, sys: boolean) => {
+    const attrs: Record<string, string> = {};
+    const g = globalThis as unknown as Record<string, unknown>;
+    g.localStorage = { getItem: () => saved };
+    g.matchMedia = () => ({ matches: sys });
+    g.document = { documentElement: { setAttribute: (k: string, v: string) => { attrs[k] = v; } } };
+    new Function(darkScript(mode, toggle))();
+    return attrs['data-tc-dark'];
+  };
+  it('follows merchant mode, system and the visitor choice', () => {
+    expect(run('off', true, null, true)).toBe('0');
+    expect(run('auto', true, null, true)).toBe('1');
+    expect(run('on', false, null, false)).toBe('1');
+    expect(run('off', true, '1', false)).toBe('1');
+    expect(run('auto', true, '0', true)).toBe('0');
+    expect(run('off', false, '1', false)).toBe('0'); // no switch → saved choice ignored
+  });
+});

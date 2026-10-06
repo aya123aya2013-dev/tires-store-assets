@@ -27,6 +27,295 @@
   ],
   "settings": [
     {
+      "type": "static",
+      "format": "title",
+      "variant": "h6",
+      "id": "tc-set-general",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الخيارات العامة والألوان</div>"
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-tip-general",
+      "value": "<div>💡 ألوان الهوية تنطبق على كل المتجر: الأزرار والعناوين والشارات. القيم الافتراضية هي ألوان تصميم الإطارات (ذهبي وفحمي).</div>"
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-colors",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">ألوان المتجر</div>"
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "اللون الرئيسي (الأزرار والتمييز)",
+      "id": "tc_color_primary",
+      "format": "color",
+      "value": "#ffb71b",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "لون النص فوق اللون الرئيسي",
+      "id": "tc_color_on_primary",
+      "format": "color",
+      "value": "#221800",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "اللون الداكن (الأقسام الداكنة والعناوين)",
+      "id": "tc_color_dark",
+      "format": "color",
+      "value": "#1d2023",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "خلفية الصفحة",
+      "id": "tc_color_bg",
+      "format": "color",
+      "value": "#ffffff",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "خلفية الأقسام الفاتحة",
+      "id": "tc_color_bg_alt",
+      "format": "color",
+      "value": "#f5f4f0",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "استخدام لون هوية المتجر من لوحة سلة بدل اللون الرئيسي",
+      "description": null,
+      "id": "tc_use_store_color",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-dark",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الوضع الداكن</div>"
+    },
+    {
+      "id": "tc_dark_mode",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "الوضع الداكن",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "مطفأ — المتجر فاتح دائماً",
+          "value": "off",
+          "key": "9b75130a-8c2e-4989-b9fd-e8f71cc34b8a"
+        }
+      ],
+      "options": [
+        {
+          "label": "مطفأ — المتجر فاتح دائماً",
+          "value": "off",
+          "key": "9b75130a-8c2e-4989-b9fd-e8f71cc34b8a"
+        },
+        {
+          "label": "حسب جهاز الزائر (تلقائي)",
+          "value": "auto",
+          "key": "80b5d543-49c8-4d3b-9a2b-1e63a8eb3400"
+        },
+        {
+          "label": "مفعّل — المتجر داكن دائماً",
+          "value": "on",
+          "key": "4a23d853-cec3-48d4-b92e-bebf550de5b3"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "إظهار زر التبديل (فاتح / داكن) للزائر بالهيدر",
+      "description": "الزائر يختار، ويتذكر المتجر اختياره",
+      "id": "tc_dark_toggle",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "خلفية الوضع الداكن",
+      "id": "tc_dark_bg",
+      "format": "color",
+      "value": "#121416",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "خلفية البطاقات بالوضع الداكن",
+      "id": "tc_dark_surface",
+      "format": "color",
+      "value": "#1b1e21",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "لون النص بالوضع الداكن",
+      "id": "tc_dark_text",
+      "format": "color",
+      "value": "#ecebe6",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-fonts",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الخطوط</div>"
+    },
+    {
+      "id": "tc_font_ar",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "الخط العربي",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "IBM Plex Sans Arabic (التصميم)",
+          "value": "ibm",
+          "key": "73f7e428-f8b1-4789-86d0-e9edc11412ce"
+        }
+      ],
+      "options": [
+        {
+          "label": "IBM Plex Sans Arabic (التصميم)",
+          "value": "ibm",
+          "key": "73f7e428-f8b1-4789-86d0-e9edc11412ce"
+        },
+        {
+          "label": "Tajawal",
+          "value": "tajawal",
+          "key": "702e76df-2330-4737-b1ab-0388b5071f22"
+        },
+        {
+          "label": "Cairo",
+          "value": "cairo",
+          "key": "6c54c387-d21f-4b9a-90a4-08acb970d7b9"
+        },
+        {
+          "label": "Almarai",
+          "value": "almarai",
+          "key": "14255715-d12a-438e-966a-871240701eac"
+        },
+        {
+          "label": "خط المتجر من لوحة سلة",
+          "value": "store",
+          "key": "08d08cff-2fdc-4e6e-9aca-42c15fc7b1e5"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_font_en",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "خط الأرقام والإنجليزي",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "Archivo (التصميم)",
+          "value": "archivo",
+          "key": "d36ad92a-fd0a-4906-9d61-2413d3d644fe"
+        }
+      ],
+      "options": [
+        {
+          "label": "Archivo (التصميم)",
+          "value": "archivo",
+          "key": "d36ad92a-fd0a-4906-9d61-2413d3d644fe"
+        },
+        {
+          "label": "Inter",
+          "value": "inter",
+          "key": "302b3513-f8f9-4018-b00b-3edf5f5342fe"
+        },
+        {
+          "label": "نفس الخط العربي",
+          "value": "same",
+          "key": "7eab8336-4fcd-479a-8e2c-8836847a925e"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-shape",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الشكل</div>"
+    },
+    {
+      "id": "tc_radius",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "زوايا البطاقات والأزرار",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "ناعمة (التصميم)",
+          "value": "soft",
+          "key": "6753097b-e7e3-4229-946f-7c310c8b3898"
+        }
+      ],
+      "options": [
+        {
+          "label": "ناعمة (التصميم)",
+          "value": "soft",
+          "key": "6753097b-e7e3-4229-946f-7c310c8b3898"
+        },
+        {
+          "label": "حادة",
+          "value": "sharp",
+          "key": "6b23fa50-78c3-41cc-b9c5-3f0c0d691f7a"
+        },
+        {
+          "label": "دائرية",
+          "value": "round",
+          "key": "b55108f0-45e9-43c2-ad91-d5ed3ca8a30c"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
       "id": "squar_photo_bg_image_size",
       "type": "items",
       "format": "dropdown-list",

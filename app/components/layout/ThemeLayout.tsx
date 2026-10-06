@@ -7,6 +7,7 @@ import { useUser } from '@salla.sa/twilight-theme-engine/hooks/useUser';
 import { TireHeader } from '../tires/TireHeader';
 import { TireFooter } from '../tires/TireFooter';
 import { MobileBottomBar } from './MobileBottomBar';
+import { ThemeTokens } from './ThemeTokens';
 import { MobilePageTitleBar } from './MobilePageTitleBar';
 
 /**
@@ -75,6 +76,7 @@ export function ThemeLayout({ children }: ThemeLayoutProps) {
 
   return (
     <>
+      <ThemeTokens />
       <div
         className={`app-inner flex flex-col min-h-full product-card-img--${imgRatio}`}
         suppressHydrationWarning

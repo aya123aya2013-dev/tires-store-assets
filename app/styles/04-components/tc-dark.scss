@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Dark mode — html[data-tc-dark="1"] (set by ThemeTokens from the theme settings
+   «الوضع الداكن» or the visitor's header switch). Colours come from the settings
+   (--tc-dark-bg / --tc-dark-surface / --tc-dark-text); the gold identity stays.
+   The home sections' generated CSS reads --tc-card / --tc-band-* / --tc-text, so
+   only tokens change here — no section rule is copied.
+   ========================================================================== */
+
+html[data-tc-dark='1'] {
+  color-scheme: dark;
+
+  &,
+  body {
+    background-color: var(--tc-dark-bg);
+    color: var(--tc-dark-text);
+  }
+
+  .tc-s {
+    --bg: var(--tc-dark-bg);
+    --bg-2: var(--tc-dark-surface);
+    --tc-card: var(--tc-dark-surface);
+    --line: color-mix(in srgb, var(--tc-dark-text) 14%, transparent);
+    /* text tokens flip to light… */
+    --ink: var(--tc-dark-text);
+    --tc-text: var(--tc-dark-text);
+    --char: color-mix(in srgb, var(--tc-dark-text) 88%, var(--tc-dark-bg));
+    --slate: color-mix(in srgb, var(--tc-dark-text) 76%, var(--tc-dark-bg));
+    --muted: color-mix(in srgb, var(--tc-dark-text) 62%, var(--tc-dark-bg));
+    /* …while the charcoal bands stay dark, a step apart from the page */
+    --tc-band-ink: #0b0c0d;
+    --tc-band-dark: #0b0c0d;
+    --tc-band-char: #24282b;
+    --gold-soft: color-mix(in srgb, var(--tc-primary) 16%, var(--tc-dark-surface));
+    --gold-3: color-mix(in srgb, var(--tc-primary) 80%, #fff);
+    --tc-gold-ink: color-mix(in srgb, var(--tc-primary) 70%, #fff);
+    color: var(--tc-dark-text);
+    background: var(--bg);
+  }
+
+  /* images drawn for a white page (tires on white) keep a soft light plate */
+  .tc-s img[src*='tire'] {
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.45));
+  }
+}

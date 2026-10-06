@@ -22,6 +22,7 @@ import { Steps } from '../../app/components/home/Steps';
 import { Lineup } from '../../app/components/home/Lineup';
 import { Reviews } from '../../app/components/home/Reviews';
 import { BlogTips } from '../../app/components/home/BlogTips';
+import { Faq } from '../../app/components/home/Faq';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -284,5 +285,15 @@ describe('#21 blog', () => {
     const html = renderToString(<BlogTips data={{ limit: 2 }} />);
     expect(html.split('class="tip"').length - 1).toBe(2);
     expect(html).toContain('كل المقالات');
+  });
+});
+
+describe('#22 faq', () => {
+  it('numbered questions, first open, gold second title line', () => {
+    const html = renderToString(<Faq data={{}} />);
+    expect(html).toContain('<details open="">');
+    expect(html).toContain('>05<');
+    expect(html).toContain('<em>خلّينا نوضّح.</em>');
+    expect(renderToString(<Faq data={{ open_first: false }} />)).not.toContain('open=""');
   });
 });

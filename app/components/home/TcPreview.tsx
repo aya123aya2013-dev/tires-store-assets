@@ -21,6 +21,7 @@ import { Steps } from './Steps';
 import { Lineup } from './Lineup';
 import { Reviews } from './Reviews';
 import { BlogTips } from './BlogTips';
+import { Faq } from './Faq';
 
 const IMG = '/assets/images/home';
 
@@ -104,6 +105,7 @@ export function TcPreview() {
         <Lineup data={{}} />
         <Reviews data={{}} />
         <BlogTips data={{}} />
+        <Faq data={{}} />
         <CallStrip data={{ phone: '0500000000' }} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>

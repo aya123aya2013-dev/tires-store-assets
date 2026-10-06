@@ -11,6 +11,6 @@ module.exports = (F, def) =>
     F.head('h-connect', 'الربط'),
     F.dd('mode', 'طريقة الاشتراك', [['رابط التسجيل بخدمة البريد', 'link'], ['إرسال للبريد الإلكتروني للمتجر', 'email']], 'link'),
     F.when(F.link('signup_link', 'رابط التسجيل', 'رابط نموذج الاشتراك بخدمتك. اكتب {email} مكان البريد بالرابط إذا خدمتك تطلب ذلك'), 'mode', 'link'),
-    F.when(F.plain('store_email', 'بريد المتجر', 'info@example.com', { maxLength: 80 }), 'mode', 'email'),
+    F.when(F.plain('store_email', 'بريد الاستقبال (فاضي = إيميل المتجر)', '', { maxLength: 80, placeholder: 'info@example.com' }), 'mode', 'email'),
     ...F.common('my-newsletter'),
   ]);

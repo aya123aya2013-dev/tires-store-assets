@@ -100,6 +100,15 @@ interface SizedProduct {
   options?: { values?: { name?: string | null }[] | null }[] | null;
 }
 
+/** The texts of the chosen sources, name first (tags may use "-" instead of "/"). */
+export function specTexts(product: SizedProduct, sources: SizeSource[] = SIZE_SOURCES): string[] {
+  const texts: (string | null | undefined)[] = [];
+  if (sources.includes('name')) texts.push(product.name);
+  if (sources.includes('tags')) texts.push(...(product.tags ?? []).map(t => t.name?.replace(/-/g, '/')));
+  if (sources.includes('options')) for (const o of product.options ?? []) texts.push(...(o.values ?? []).map(v => v.name));
+  return texts.filter((t): t is string => !!t);
+}
+
 /** Exact match on any of the chosen sources (tags may use "-" instead of "/"). */
 export function productHasTireSize(product: SizedProduct, size: TireSize, sources: SizeSource[] = SIZE_SOURCES): boolean {
   const texts: (string | null | undefined)[] = [];

@@ -9,13 +9,13 @@ import type { Row } from './fields';
 import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
 import { FitsMine } from '../tires/features/MySize';
-import { useCardSettings } from '../tires/features/cardSettings';
+import { useCardSettings, useSpecSources } from '../tires/features/cardSettings';
 import { SAMPLE_PRODUCTS, filterBrands, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import { useAddToCart } from './tc/useAddToCart';
 import { useCurrency } from './tc/useCurrency';
 import type { TcProduct } from './tc/products';
 
-const EN: Record<string, string> = { 'اطلب السعر': 'Ask for price', 'تركيب مجاني': 'Free fitting',
+const EN: Record<string, string> = { 'اطلب السعر': 'Ask for price', 'للطقم (4 إطارات)': 'per set of 4', 'تركيب مجاني': 'Free fitting',
   'الأكثر طلباً': 'Most requested', 'إطارات هالأسبوع': 'Tires of the week', 'الكل': 'All',
   'عرض': 'Offer', 'للإطار الواحد': 'per tire', 'عرض التفاصيل': 'View details', 'ر.س': 'SAR',
   'أُضيف للسلة': 'Added to cart', 'تعذّر تحميل المنتجات.': 'Could not load the products.', 'حاول مرة ثانية': 'Try again', 'تعذّرت الإضافة — حاول مرة ثانية': 'Could not add — try again', 'اختر المقاس والكمية': 'Choose size & quantity', 'إطار': 'Tire',
@@ -25,12 +25,13 @@ export function TireSlider({ data }: { data: Row }) {
   const lang = useLang();
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
+  const specSources = useSpecSources();
   const limit = Math.min(12, Math.max(4, Number(data.limit) || 8));
   const qtyRaw = Number(opt(data.add_qty, '1')); // dropdown: '4' | {value} | [{value}]
   const qty = [1, 2, 4].includes(qtyRaw) ? qtyRaw : 1;
   const { items, loading, failed, retry } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), limit);
   const list: TcProduct[] = items.length
-    ? items.map(p => toTcProduct(p, t('عرض', 'عرض')))
+    ? items.map(p => toTcProduct(p, t('عرض', 'عرض'), specSources))
     : import.meta.env.DEV && !loading ? SAMPLE_PRODUCTS.slice(0, limit) : [];
 
   const [brand, setBrand] = useState('');
@@ -117,7 +118,7 @@ export function TireSlider({ data }: { data: Row }) {
                             <b>{p.price}</b> <span>{cur(p.currency)}</span>
                             {p.old && <s>{p.old}</s>}
                           </div>
-                          <small>{t('للإطار الواحد', 'للإطار الواحد')}</small>
+                          <small>{card.perSet ? t('للطقم (4 إطارات)', 'للطقم (4 إطارات)') : t('للإطار الواحد', 'للإطار الواحد')}</small>
                         </>
                       )}
                     </div>
@@ -129,7 +130,7 @@ export function TireSlider({ data }: { data: Row }) {
                     type="button"
                     className={'add2' + (cart.stateOf(p.id) === 'done' ? ' done' : '')}
                     disabled={cart.stateOf(p.id) === 'busy'}
-                    onClick={() => cart.add(p, qty)}
+                    onClick={() => cart.add(p, card.perSet ? 1 : qty)}
                   >
                     {cart.stateOf(p.id) === 'done' ? `✓ ${t('أُضيف للسلة', 'أُضيف للسلة')}` : cart.stateOf(p.id) === 'failed' ? t('تعذّرت الإضافة — حاول مرة ثانية', 'تعذّرت الإضافة — حاول مرة ثانية') : p.hasOptions ? t('اختر المقاس والكمية', 'اختر المقاس والكمية') : addLabel}
                   </button>}

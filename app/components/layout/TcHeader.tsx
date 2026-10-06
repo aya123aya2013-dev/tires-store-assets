@@ -129,7 +129,7 @@ export function TcHeader({ navOpen, onNavOpenChange }: Props) {
 
   const searchOn = asBool(s.tc_search_show, true);
   const cta = asBool(s.tc_header_cta, true) ? t(s.tc_header_cta_text, 'اختر مقاسك') : '';
-  const ctaLink = asLink(s.tc_header_cta_link, '/#finder');
+  const ctaLink = asLink(s.tc_header_cta_link, '/#size');
   const nav = asBool(s.tc_header_nav, true) ? items.filter(i => i.title).slice(0, 8) : [];
   const cls = ['', scrolled ? 'scrolled' : '', stickyD ? '' : 'tc-nosticky-d', stickyM ? '' : 'tc-nosticky-m'].filter(Boolean).join(' ');
 

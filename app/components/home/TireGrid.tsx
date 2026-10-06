@@ -13,7 +13,7 @@ import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
 import { FitsMine } from '../tires/features/MySize';
 import { CompareToggle, useCompareWhere } from '../tires/features/Compare';
-import { perInstallment, useCardSettings } from '../tires/features/cardSettings';
+import { perInstallment, useCardSettings, useSpecSources } from '../tires/features/cardSettings';
 import { whereClass } from '../layout/devices';
 import { SAMPLE_PRODUCTS, filterBrands, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import { useAddToCart } from './tc/useAddToCart';
@@ -32,11 +32,12 @@ export function TireGrid({ data }: { data: Row }) {
   const lang = useLang();
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
+  const specSources = useSpecSources();
   const wishlist = useWishlist();
   const limit = Math.min(16, Math.max(4, Number(data.limit) || 8));
   const { items, loading, failed, retry } = useTcProducts(sourceFrom(data, 'products', 'latest'), limit);
   const all: TcProduct[] = items.length
-    ? items.map(p => toTcProduct(p, t('عرض', 'عرض')))
+    ? items.map(p => toTcProduct(p, t('عرض', 'عرض'), specSources))
     : import.meta.env.DEV && !loading ? SAMPLE_PRODUCTS.slice(0, limit) : [];
 
   const [brand, setBrand] = useState('');

@@ -10,7 +10,9 @@ import { asBool, asImage, makeT, opt, useLang, useReducedMotion } from '../home/
 import { Icon } from '../home/tc/Icon';
 import { useCurrency } from '../home/tc/useCurrency';
 import { CompareTray } from '../tires/features/Compare';
+import { useModal } from '../common/useModal';
 import { onThisScreen, where, whereClass } from './devices';
+import { useWhatsappNumber } from './contact';
 
 const EN: Record<string, string> = {
   'السلام عليكم، أبي أستفسر عن مقاس إطار': 'Hello, I have a question about a tire size',
@@ -30,8 +32,8 @@ export function TcExtras() {
   const side = opt(s.tc_float_side, 'left');
 
   // WhatsApp: the setting's number, else the store's WhatsApp / mobile — only a real number
-  const wa = digits(s.tc_wa_number) || digits(store?.contacts?.whatsapp) || digits(store?.contacts?.mobile).replace(/^0/, '966');
-  const waOn = asBool(s.tc_wa_show, true) && wa.length >= 10 && wa.length <= 15;
+  const wa = useWhatsappNumber();
+  const waOn = asBool(s.tc_wa_show, true) && !!wa;
   const waMsg = t(s.tc_wa_message, 'السلام عليكم، أبي أستفسر عن مقاس إطار');
   const call = digits(s.tc_call_number) || digits(store?.contacts?.mobile || store?.contacts?.phone);
   const callOn = asBool(s.tc_call_show, false) && call.length >= 7;
@@ -100,6 +102,7 @@ export function TcExtras() {
 function Popup({ s, t }: { s: Record<string, unknown>; t: (v: unknown, d: string) => string }) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const boxRef = useModal<HTMLDivElement>(open);
   const repeat = opt(s.tc_popup_repeat, 'once');
   const delay = Math.min(120, Math.max(0, Number(s.tc_popup_delay ?? 6) || 0)) * 1000;
   const code = String(s.tc_popup_code ?? '').trim();
@@ -144,8 +147,8 @@ function Popup({ s, t }: { s: Record<string, unknown>; t: (v: unknown, d: string
   };
   return (
     <div className="tc-modal" role="dialog" aria-modal="true" aria-label={title} onClick={e => e.target === e.currentTarget && close()}>
-      <div className={'tc-modal-box tc-popup' + (img ? ' has-img' : '')}>
-        <button type="button" className="ic tc-popup-x" aria-label={t('إغلاق', 'إغلاق')} onClick={close} autoFocus><Icon name="close" /></button>
+      <div ref={boxRef} tabIndex={-1} className={'tc-modal-box tc-popup' + (img ? ' has-img' : '')}>
+        <button type="button" className="ic tc-popup-x" aria-label={t('إغلاق', 'إغلاق')} onClick={close}><Icon name="close" /></button>
         {img && <img className="tc-popup-img" src={img} alt="" />}
         <div className="tc-popup-body">
           <span className="tc-popup-ic"><Icon name="gift" /></span>

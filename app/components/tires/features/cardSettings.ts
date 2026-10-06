@@ -1,35 +1,43 @@
 /**
- * Product-card options from the theme settings — groups «متجر الإطارات» and «بطاقة المنتج».
- * One hook so every card (TireGrid, TireSlider, listing pages) follows the same switches.
+ * Product-card options from the theme settings — groups «أساس متجر الإطارات» and «بطاقة المنتج».
+ * One hook so every card (TireGrid, TireSlider, Lineup, listing pages) follows the same switches.
  */
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { asBool, makeT, opt, useLang } from '../../home/fields';
+import { useWhatsappNumber, waLink } from '../../layout/contact';
+import { parseSizeSources, SIZE_SOURCES } from '../sizes';
+import type { SizeSource } from '../sizes';
 
 const EN: Record<string, string> = { 'تركيب مجاني': 'Free fitting' };
 
 export function useCardSettings() {
-  const { theme, store } = useTwilight();
+  const { theme } = useTwilight();
   const s = (theme?.settings ?? {}) as Record<string, unknown>;
   const lang = useLang();
   const t = makeT(lang, EN);
   const n = Math.round(Number(s.tc_installments));
+  const perSet = opt(s.tc_sale_unit, 'tire') === 'set';
   const qty = Number(opt(s.tc_default_qty, '1'));
   const storeType = opt(s.tc_store_type, 'install'); // install | sale | service
-  const wa = String(store?.contacts?.whatsapp || '').replace(/\D/g, '') || String(store?.contacts?.mobile || '').replace(/\D/g, '').replace(/^0/, '966');
-  const ask = opt(s.tc_card_price, 'show') === 'ask' && wa.length >= 10;
+  const wa = useWhatsappNumber();
+  // «اطلب السعر» needs a number; without one the price stays (never a dead button)
+  const ask = opt(s.tc_card_price, 'show') === 'ask' && !!wa;
   return {
+    /** the product price is for a set of four (not one tire) */
+    perSet,
     year: asBool(s.tc_year_badge, true),
     /** «للأربع» / installments only make sense when the price is per tire */
-    setPrice: asBool(s.tc_set_price, true) && opt(s.tc_sale_unit, 'tire') === 'tire',
+    setPrice: asBool(s.tc_set_price, true) && !perSet,
     installments: Number.isFinite(n) && n >= 2 && n <= 12 ? n : 4,
     fav: asBool(s.tc_card_fav, true),
     brand: asBool(s.tc_card_brand, true),
     rim: asBool(s.tc_card_rim, true),
     add: asBool(s.tc_card_add, true),
-    qty: [1, 2, 4].includes(qty) ? qty : 1,
+    /** a set is one unit — never add 4 sets */
+    qty: perSet ? 1 : [1, 2, 4].includes(qty) ? qty : 1,
     install: storeType !== 'sale' && asBool(s.tc_install_badge, true) ? t(s.tc_install_badge_text, 'تركيب مجاني') : '',
-    /** «اطلب السعر»: WhatsApp link instead of the price (only with a real store number) */
-    askUrl: ask ? (name: string) => `https://wa.me/${wa}?text=${encodeURIComponent((lang === 'en' ? 'Price request: ' : 'أبي سعر: ') + name)}` : null,
+    /** «اطلب السعر»: WhatsApp link instead of the price */
+    askUrl: ask ? (name: string) => waLink(wa, (lang === 'en' ? 'Price request: ' : 'أبي سعر: ') + name) : null,
   };
 }
 
@@ -40,4 +48,11 @@ export const perInstallment = (price: number, n: number) => Math.ceil(((price * 
 export function useSellsFitting() {
   const { theme } = useTwilight();
   return opt((theme?.settings as Record<string, unknown> | undefined)?.tc_store_type, 'install') !== 'sale';
+}
+
+/** «وين تكتب المقاس وسنة الصنع» → the sources cards read size / year from */
+export function useSpecSources(): SizeSource[] {
+  const { theme } = useTwilight();
+  const v = opt((theme?.settings as Record<string, unknown> | undefined)?.tc_spec_source, 'all');
+  return v === 'all' ? SIZE_SOURCES : parseSizeSources(v);
 }

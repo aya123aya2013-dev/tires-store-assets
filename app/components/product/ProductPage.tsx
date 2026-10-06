@@ -16,6 +16,7 @@ import { AddToCartForm } from './AddToCartForm';
 import { BlockHookSlot } from '../common/BlockHookSlot';
 import { ProductsSlider } from '../home/ProductsSlider';
 import { TireProductInfo, TireSizeBadge } from '../tires/TireProductInfo';
+import { WarrantyLine } from '../tires/features/Warranty';
 import { TireQuantityPicker } from '../tires/TireQuantityPicker';
 
 /**
@@ -139,6 +140,7 @@ export function ProductPage({ product: initialProduct, page }: ProductPageProps)
               showTags={theme.settings.show_tags}
             />
             <TireSizeBadge name={product.name} />
+            <WarrantyLine />
             <HookSlot name="product:single.description" />
             <HookSlot name="product:single.description.end" />
             <HookSlot name="product:details.end" />

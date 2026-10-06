@@ -7,6 +7,7 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { asBool, asLink, makeT, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
+import { useSpecSources } from '../tires/features/cardSettings';
 import { SAMPLE_PRODUCTS, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import type { TcProduct } from './tc/products';
 import { useCurrency } from './tc/useCurrency';
@@ -21,10 +22,11 @@ export function Lineup({ data }: { data: Row }) {
   const lang = useLang();
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
+  const specSources = useSpecSources();
   const cur = useCurrency();
   const { items, loading, failed, retry } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), 4);
   const list: TcProduct[] = items.length
-    ? items.map(p => toTcProduct(p, t('عرض', 'عرض')))
+    ? items.map(p => toTcProduct(p, t('عرض', 'عرض'), specSources))
     : import.meta.env.DEV && !loading ? SAMPLE_PRODUCTS.slice(0, 4) : [];
   // a failed request is not an empty source: say so and offer a retry (like TireGrid)
   if (failed && !list.length) {

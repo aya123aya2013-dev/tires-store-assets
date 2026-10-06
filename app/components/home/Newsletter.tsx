@@ -12,6 +12,7 @@ import type { FormEvent } from 'react';
 import { asLink, makeT, opt, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
+import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 
 const EN: Record<string, string> = {
   'خلّيك قريب من جديدنا': 'Stay close to what’s new', 'عروض ونصائح.\nمباشرة لبريدك.': 'Offers and tips.\nStraight to your inbox.',
@@ -45,7 +46,8 @@ export function Newsletter({ data }: { data: Row }) {
   const [done, setDone] = useState<'' | keyof typeof MSG>('');
   const mode = opt(data.mode, 'link');
   const link = asLink(data.signup_link, '');
-  const mail = String(data.store_email ?? '').trim();
+  const { store } = useTwilight();
+  const mail = String(data.store_email ?? '').trim() || String(store?.contacts?.email ?? '').trim();
   const connected = mode === 'link' ? !!link : mode === 'email' ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail) : false;
   const showForm = connected || import.meta.env.DEV; // the local preview shows the design even unconnected
 

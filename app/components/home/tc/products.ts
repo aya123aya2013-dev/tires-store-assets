@@ -7,7 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import { product as productApi } from '@salla.sa/twilight-theme-engine/api/product';
 import type { ProductsListSource } from '@salla.sa/twilight-theme-engine/api/product';
 import type { Product } from '@salla.sa/twilight-theme-engine/types';
-import { formatTireSize, parseTireSize, stripTireSize } from '../../tires/sizes';
+import { formatTireSize, parseTireSize, SIZE_SOURCES, specTexts, stripTireSize } from '../../tires/sizes';
+import type { SizeSource } from '../../tires/sizes';
 import { opt } from '../fields';
 import type { Row } from '../fields';
 
@@ -64,13 +65,17 @@ export function sourceFrom(data: Row, prefix: string, fallback: ProductsListSour
 
 const num = (v: unknown) => (typeof v === 'number' ? v : Number(v) || 0);
 
-export function toTcProduct(p: Product, offerLabel: string): TcProduct {
-  const size = parseTireSize(p.name);
+/** `sources`: where the store writes size / year (setting «وين تكتب المقاس وسنة الصنع») */
+export function toTcProduct(p: Product, offerLabel: string, sources: SizeSource[] = SIZE_SOURCES): TcProduct {
+  const texts = specTexts(p as unknown as Parameters<typeof specTexts>[0], sources);
+  const nameSize = sources.includes('name') ? parseTireSize(p.name) : null;
+  const size = nameSize ?? texts.map(x => parseTireSize(x)).find(Boolean) ?? null;
   const price = p.is_on_sale && p.sale_price ? num(p.sale_price) : num(p.price);
   const old = p.is_on_sale && p.regular_price && num(p.regular_price) > price ? num(p.regular_price) : undefined;
-  const year = p.name.match(/\b(20[2-3]\d)\b/)?.[1];
+  // a 202x–203x year on its own (a tag «2026», «صنع 2026») — never part of a size or a code
+  const year = texts.map(x => x.match(/(?<![\d/.])(20[2-3]\d)(?![\d/.])/)?.[1]).find(Boolean);
   // the card shows the model on its own line and the size in the grey line under it
-  const name = size ? stripTireSize(p.name) : p.name;
+  const name = nameSize ? stripTireSize(p.name) : p.name;
   return {
     id: p.id,
     url: p.url,

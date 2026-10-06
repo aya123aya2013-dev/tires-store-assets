@@ -339,7 +339,7 @@ function CatalogGrid({
               mode={pagination?.next ? 'infinite' : 'static'}
               pageUrl={location.pathname + location.searchStr}
               className="s-products-list flex-1 min-w-0"
-              itemsClassName={`s-products-list-wrapper ${listLayoutClass}${filtersVisible ? ' s-products-list-with-filters' : ''}${wideGridClass}`}
+              itemsClassName={`s-products-list-wrapper ${listLayoutClass}${filtersVisible ? ' s-products-list-with-filters' : ''}${wideGridClass} tc-cols-set`}
               skeleton={<ProductCardSkeleton />}
               skeletonType="item"
               skeletonCount={12}

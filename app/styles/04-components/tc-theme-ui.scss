@@ -78,7 +78,8 @@
 @media (max-width: 767px) { .tc-s .tc-cmp-tray { bottom: 76px; } }
 
 .tc-s .tc-modal {
-  position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 16px;
+  /* above the mobile bottom bar (220) so nothing behind the dialog stays reachable */
+  position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 16px;
   background: rgba(10, 11, 12, .55); backdrop-filter: blur(3px);
 }
 .tc-s .tc-modal-box {
@@ -196,3 +197,26 @@ html[data-tc-dark="1"] .tc-s .tc-cmp-btn.on { background: var(--gold); color: #2
   .tc-nobar .tc-s .tc-float { bottom: 22px; }
   .tc-nobar .tc-s .tc-cmp-tray { bottom: 16px; }
 }
+
+.tc-s .tc-f-sub { margin: 6px 0 0; min-height: 1.2em; font-size: 12.5px; color: #c9ccce; }
+
+/* «اطلب السعر» on the engine product card (category / search pages) */
+.s-product-card-content-footer .tc-ask-engine {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 40px; border-radius: 10px; font-weight: 700; font-size: 13.5px;
+  background: #1f9d55; color: #fff;
+}
+
+/* listing pages (category / search / offers): columns per screen from «بطاقة المنتج» (S3-6);
+   with the filter sidebar the desktop count is one less so cards keep their width */
+.s-products-list-wrapper.s-products-list-vertical-cards.tc-cols-set {
+  grid-template-columns: repeat(var(--tc-cols-m, 2), minmax(0, 1fr));
+  @media (min-width: 768px) { grid-template-columns: repeat(var(--tc-cols-t, 3), minmax(0, 1fr)); }
+  @media (min-width: 1101px) { grid-template-columns: repeat(var(--tc-cols-d, 4), minmax(0, 1fr)); }
+  &.s-products-list-with-filters {
+    @media (min-width: 1101px) { grid-template-columns: repeat(calc(var(--tc-cols-d, 4) - 1), minmax(0, 1fr)); }
+  }
+}
+
+/* product page warranty line (tc_warranty) — sits in the base product page, so its own colours */
+.tc-s.tc-warranty { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--gold-soft, #fff4d8); color: var(--tc-gold-ink, #4d3800); font-size: 13.5px; font-weight: 600; }

@@ -26,7 +26,8 @@ html {
 
 html,
 body {
-  background-color: #fff;
+  /* «خلفية الصفحة» (tc_color_bg) — the whole page, not only the sections (S3-9) */
+  background-color: var(--tc-page-bg, #fff);
 }
 
 /* Product cards: price in brand colour, solid yellow add-to-cart. */

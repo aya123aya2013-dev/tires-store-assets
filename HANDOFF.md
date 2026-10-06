@@ -1,6 +1,6 @@
 # HANDOFF — where we are, whose turn
 
-**Turn:** Owner (decide next: theme settings, or Codex round 3 re-check)
+**Turn:** Owner (push, check the editor; next: inner pages analysis)
 
 **Last done by Claude (2026-10-06):**
 - Components #1–#14 built (see `../design/components-spec.md`), size finder combobox + trucks/buses switches,
@@ -21,3 +21,5 @@ Round 2 scope: components #15–#23 + re-check of round 1 fixes.
 
 **Theme settings done by Claude (2026-10-06):** `scripts/tc-settings.cjs` → twilight.json settings, 4 groups: general/colours/dark/fonts/corners (ThemeTokens.tsx + tc-dark.scss), top bar/header/footer (TcHeader.tsx, TcFooter.tsx — store logo/name/contacts/social/menus from Salla, nothing hard-coded), floating WhatsApp/call/top + discount popup + loader + pattern (TcExtras.tsx), tire features (features/MySize, Compare, cardSettings; presets). Old Raed header/footer settings removed. Commits 55784d5, b765cb5. NOT visually checked yet (no preview without owner's OK).
 **Next:** owner looks at a preview → fixes → inner pages 1:1 with design/store (+ product/category/cart/account settings group) → Codex round 3.
+
+**Settings review S3 fixed by Claude (2026-10-06):** 22 findings marked in REVIEW.md (19 ✅, 2 partly, S3-20 deferred to cleanup). typecheck, build, 72 tests passing.

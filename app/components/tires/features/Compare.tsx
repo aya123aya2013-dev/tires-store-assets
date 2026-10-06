@@ -6,7 +6,9 @@
 import { useEffect, useState } from 'react';
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
-import { asBool, makeT, useLang } from '../../home/fields';
+import { asBool, makeT, opt, useLang } from '../../home/fields';
+import { whereClass } from '../../layout/devices';
+import { useModal } from '../../common/useModal';
 import { Icon } from '../../home/tc/Icon';
 
 export interface CompareItem { id: string | number; name: string; url: string; image?: string; price: number; currency?: string; size?: string; year?: string | number; brand?: string }
@@ -76,10 +78,16 @@ export function CompareToggle({ item, className = '' }: { item: CompareItem; cla
 /** bottom tray + the comparison dialog (mounted once in the layout) */
 export function CompareTray({ currency }: { currency: (code?: string) => React.ReactNode }) {
   const enabled = useCompareEnabled();
+  const { theme } = useTwilight();
+  const ts = (theme?.settings ?? {}) as Record<string, unknown>;
+  const perSet = opt(ts.tc_sale_unit, 'tire') === 'set';
+  // the tray follows «يظهر على» like the «قارن» buttons (S3-12)
+  const trayWhere = whereClass(ts.tc_compare_where, 'wide');
   const items = useCompare();
   const lang = useLang();
   const t = makeT(lang, EN);
   const [open, setOpen] = useState(false);
+  const boxRef = useModal<HTMLDivElement>(open);
   useEffect(() => { if (!items.length) setOpen(false); }, [items.length]);
   useEffect(() => {
     if (!open) return;
@@ -91,15 +99,20 @@ export function CompareTray({ currency }: { currency: (code?: string) => React.R
 
   const rows: [string, (p: CompareItem) => React.ReactNode][] = [
     ['المقاس', p => <b dir="ltr">{p.size || '—'}</b>],
-    ['سعر الحبة', p => <>{p.price} {currency(p.currency)}</>],
-    ['سعر الطقم (4)', p => <b>{p.price * 4} {currency(p.currency)}</b>],
+    // «سعر المنتج عندك»: per tire → tire + set of four; per set → the set price as is
+    ...(perSet
+      ? ([['سعر الطقم (4)', p => <b>{p.price} {currency(p.currency)}</b>]] as [string, (p: CompareItem) => React.ReactNode][])
+      : ([
+          ['سعر الحبة', p => <>{p.price} {currency(p.currency)}</>],
+          ['سعر الطقم (4)', p => <b>{p.price * 4} {currency(p.currency)}</b>],
+        ] as [string, (p: CompareItem) => React.ReactNode][])),
     ['سنة الصنع', p => p.year || '—'],
     ['الماركة', p => p.brand || '—'],
   ];
 
   return (
     <div className="tc-s tc-frame">
-      <div className="tc-cmp-tray" role="region" aria-label={t('مقارنة الإطارات', 'مقارنة الإطارات')}>
+      <div className={'tc-cmp-tray' + trayWhere} role="region" aria-label={t('مقارنة الإطارات', 'مقارنة الإطارات')}>
         <div className="tc-cmp-thumbs">
           {items.map(p => (
             <span key={p.id} className="tc-cmp-thumb">
@@ -116,10 +129,10 @@ export function CompareTray({ currency }: { currency: (code?: string) => React.R
 
       {open && (
         <div className="tc-modal" role="dialog" aria-modal="true" aria-label={t('مقارنة الإطارات', 'مقارنة الإطارات')} onClick={e => e.target === e.currentTarget && setOpen(false)}>
-          <div className="tc-modal-box tc-cmp-box">
+          <div ref={boxRef} tabIndex={-1} className="tc-modal-box tc-cmp-box">
             <div className="tc-modal-head">
               <h2 className="h2" style={{ fontSize: 22 }}>{t('مقارنة الإطارات', 'مقارنة الإطارات')}</h2>
-              <button type="button" className="ic" aria-label={t('إغلاق', 'إغلاق')} onClick={() => setOpen(false)} autoFocus><Icon name="close" /></button>
+              <button type="button" className="ic" aria-label={t('إغلاق', 'إغلاق')} onClick={() => setOpen(false)}><Icon name="close" /></button>
             </div>
             <div className="tc-cmp-scroll">
               <table className="tc-cmp-table">

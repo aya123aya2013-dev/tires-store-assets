@@ -30,9 +30,9 @@ const FONTS_EN: Record<string, { family: string; css?: string }> = {
 /** ready-made palettes (setting tc_preset): [primary, text on primary, dark] */
 const PRESETS: Record<string, [string, string, string]> = {
   gold: ['#ffb71b', '#221800', '#1d2023'],
-  red: ['#e0262b', '#ffffff', '#151515'],
-  blue: ['#1f6feb', '#ffffff', '#14213d'],
-  green: ['#7a9a3a', '#ffffff', '#262b1f'],
+  red: ['#d71f26', '#ffffff', '#151515'],
+  blue: ['#1a63d6', '#ffffff', '#14213d'],
+  green: ['#7a9a3a', '#13180a', '#262b1f'], // dark text: white on this green is only 3.2:1
 };
 const RADIUS: Record<string, [string, string]> = { soft: ['14px', '10px'], sharp: ['4px', '3px'], round: ['24px', '999px'] };
 
@@ -44,7 +44,8 @@ export function useDarkSettings() {
   const { theme } = useTwilight();
   const s = (theme?.settings ?? {}) as Record<string, unknown>;
   const mode = opt(s.tc_dark_mode, 'off') as Mode;
-  return { mode, toggle: mode !== 'on' && asBool(s.tc_dark_toggle, true) };
+  // off = always light, on = always dark; the visitor switch exists only in «تلقائي»
+  return { mode, toggle: mode === 'auto' && asBool(s.tc_dark_toggle, true) };
 }
 
 export function ThemeTokens() {
@@ -82,7 +83,7 @@ export function ThemeTokens() {
 :root{--tires-yellow:${primary};--color-primary:${primary};--color-primary-dark:color-mix(in srgb,${primary} 86%,#000);--color-primary-reverse:${onPrimary};--tires-black:${dark};
 --tc-primary:${primary};--tc-on-primary:${onPrimary};--tc-radius:${r};--tc-radius-btn:${rBtn};
 --font-ar:${ar.family},Tahoma,sans-serif;--font-main:var(--font-ar);--tc-font-en:${en.family},Arial,sans-serif;
---tc-dark-bg:${dBg};--tc-dark-surface:${dSurface};--tc-dark-text:${dText};
+--tc-page-bg:${bg};--tc-dark-bg:${dBg};--tc-dark-surface:${dSurface};--tc-dark-text:${dText};
 --tc-logo-h:${logoH}px;--tc-logo-h-m:${logoHm}px;--tc-cols-d:${cols[0]};--tc-cols-t:${cols[1]};--tc-cols-m:${cols[2]}}
 .tc-s{--gold:${primary};--gold-2:color-mix(in srgb,${primary} 88%,#000);--gold-3:color-mix(in srgb,${primary} 55%,#000);--gold-soft:color-mix(in srgb,${primary} 14%,#fff);
 --ink:${dark};--bg:${bg};--bg-2:${bgAlt};--en:var(--tc-font-en);font-family:var(--font-ar)}

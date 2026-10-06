@@ -4,7 +4,7 @@ import { SizeFinder } from '../../app/components/home/SizeFinder';
 
 const navigate = vi.fn();
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
-vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => navigate }));
+vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => navigate, useTwilight: () => ({}) }));
 vi.mock('@salla.sa/twilight-theme-engine/common', () => ({ Link: ({ to, children }: { to: string; children: React.ReactNode }) => <a href={to}>{children}</a> }));
 
 const width = (c: HTMLElement) => c.querySelector('[id$="-in-w"]') as HTMLInputElement;

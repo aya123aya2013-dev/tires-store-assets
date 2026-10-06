@@ -302,3 +302,640 @@ P1 = breaks for a shopper or merchant · P2 = wrong / missing per spec or design
 **الجاهزية:** غير جاهز ضمن النطاق بسبب المشاكل الوظيفية المثبتة أعلاه. لا يُستنتج رفض رسمي أو نجاح رسمي من فحص محلي. [المراجعة التقنية الرسمية لسلة](https://docs.salla.dev/twilight-engine/technical-review)، جرى التحقق منها بتاريخ الجولة، تطلب متوسط Lighthouse للأداء ≥60 والوصول ≥90 على الرئيسية والمنتج والتصنيف بالمكتبي والجوال. نتيجتا النموذج المحلي ليستا هذا المتوسط، ولا درجة المتجر النهائي. [دليل twilight.json](https://docs.salla.dev/twilight-engine/twilight-json) وأمثلة Raed لا يمثلان مخطط قبول React كاملًا.
 
 **باقي التحقق داخل سلة:** حفظ/إعادة فتح حقول المجموعات والشروط والألوان والروابط والأغلفة بالمحرر؛ بيانات منتجات وخيارات ومفضلة حقيقية في متجر تجريبي؛ hydration وتبديل اللغة؛ قياس صفحات المتجر المطلوبة بعد بناء إنتاجي؛ Safari/Firefox وهاتف فعلي؛ إثبات ترخيص إعادة توزيع الصور. لم تُختبر هذه بسلة الحية ولم تُسجل احتمالات فشلها كملاحظات مؤكدة. تأكد محليًا غياب TcPreview وtc-preview وtc-samples من ملفات JavaScript العميل والخادم، واستقلال المعرفات المصلحة للباحث، وعدم تسرب محددات CSS العامة من مولد الأقسام.
+
+
+## Settings review — round 3
+
+التاريخ: 2026-10-06. مراجعة إعدادات التاجر العامة والمكونات ومستهلكيها في Twilight React. المصدر: `CLAUDE.md`، مهارة المشروع `salla-tires-theme` ومهارة `salla-twilight-review`، `twilight.json`، مولدات الإعدادات والمكونات، وكود الواجهة والأنماط والمحرك المثبت. الملف المرفق استُخدم كقائمة محاور للفحص؛ المرجع الفعلي لكل نتيجة هو الكود. لم أعدّل مصدرًا أو أشغّل شبكة/سيرفر، ولم أُنفّذ شراء أو حفظ إعدادات متجر.
+
+**النتيجة: 4 P1، و16 P2، و2 P3.** كل ملاحظة أدناه مؤكدة بالقراءة أو بمسبار محلي، إلا ما وُسم بأنه يحتاج تحقق. هذه الجولة مستقلة عن إعادة فحص R1/R2؛ ليست شهادة اجتياز Lighthouse أو المحرر الحقيقي. لم يُطلب typecheck/build في هذه الجولة؛ لم أشغلهما. الاختبارات المحلية المعزولة تحققت من دالة darkScript ومن hook إعدادات البطاقة ومن تنظيف رقم واتساب؛ لا تثبت payload سلة الحي.
+
+**حصر الاستخدام:** 108 إعدادات إدخال عامة: 96 مخصصة `tc_*` + 12 موروثة. المرجع الكامل للـIDs ومواقع ذكرها محفوظ في `C:/Users/m52oo/Documents/Codex/2026-10-05/you-are-reviewing-a-salla-e/output/settings-round3-inventory.json`؛ الذكر النصي خطوة أولى، ثم تتبعت الاستدعاء واستخدام CSS لتحديد التأثير الحقيقي. جميع معرفات الشروط الحالية تشير إلى حقول موجودة؛ هذا لا يثبت سلامة سلسلة الإظهار ولا قبولها بالمحرر.
+
+### أهم 10 حسب الأثر
+
+1. وحدة البيع «طقم» لا تصل لحساب المقارنة أو تسمية سعر السلايدر وكمية الإضافة.
+2. إخفاء السعر/المفضلة/الإضافة لا يعمل في التصنيف والبحث رغم وعد «بكل المتجر».
+3. زر المقاس الافتراضي في الهيدر والشريط السفلي يشير لقسم غير موجود.
+4. أرقام واتساب تُعالج بثلاث طرق؛ الرقم المخصص لا يصل للبطاقات/الشريط السفلي.
+5. `tc_warranty` لا يُقرأ إطلاقًا.
+6. إعدادات الأعمدة الثلاثة لا يستخدمها أي grid فعلي.
+7. مصدر المقاس/سنة الصنع لا يصل لبطاقات الإطارات.
+8. «مطفأ — فاتح دائمًا» يسمح بالتبديل وباختيار داكن محفوظ.
+9. الهوية لا تصل لبنر الإطار، والخلفية لا تطبق على الصفحة كلها.
+10. شروط الإظهار تتجاهل القوالب الجاهزة وسلاسل تعطيل بعض العناصر.
+
+### S3-1 [P1] وحدة البيع والكمية لا تطبقان بصورة موحدة
+- Where: scripts/tc-settings.cjs:80–82; app/components/tires/features/cardSettings.ts:17–29; app/components/tires/features/Compare.tsx:114–119; app/components/home/TireSlider.tsx:29–30 و:123; app/components/home/Lineup.tsx:80.
+- What: IDs `tc_sale_unit`, `tc_default_qty`, `tc_set_price`, ومكوّن `home.tire-slider → add_qty`. اختيار `tc_sale_unit=set` يعطل setPrice في hook، لكن المقارنة تسمي السعر «سعر الحبة» وتضربه ×4، والسلايدر يكتب «للإطار الواحد». المسبار المحلي أعاد `qty=4` رغم البيع بالطقم، فتضيف الشبكة 4 وحدات طقم إن اختيرت هذه الكمية. السلايدر يستعمل add_qty المحلي ويفوت الإعداد العام دون بيان الأولوية. مثال طقم سعره 1200 → المقارنة تعرض 4800 للطقم.
+- Fix idea: وحدة بيع واحدة تصل لكل عرض سعر وإضافة ومقارنة؛ الطقم يضاف بوحدات طقم واضحة، ولا يضرب سعره ×4. وضّح أن الكمية المحلية override أو وفر «استخدام إعداد المتجر».
+- Status: ✅ fixed — `perSet` in useCardSettings: no «×4»/installments, qty forced to 1 (grid, slider), compare shows the set price as is, slider says «للطقم».
+
+### S3-2 [P1] إعدادات بطاقة «بكل المتجر» لا تعمل في التصنيف والبحث
+- Where: scripts/tc-settings.cjs:136–144; app/components/product/ProductListPage.tsx:356; app/components/product/ProductCard.tsx:70–72; app/components/home/Lineup.tsx:32.
+- What: IDs `tc_card_price`, `tc_card_add`, `tc_card_fav`, `tc_card_brand`, `tc_card_rim`, `tc_year_badge`, `tc_install_badge`, `tc_set_price`, `tc_installments`, `tc_default_qty`, `tc_compare`. useCardSettings يستدعى فقط في TireGrid/TireSlider؛ صفحات القوائم تستخدم EngineProductCard مع قلب portal دائم، ولا تقرأ إعدادات tc. اختيار «اطلب السعر» أو إطفاء الإضافة لا يمنع عرض الأسعار/زر الإضافة في التصنيف والبحث. Lineup أيضًا يعرض السعر دون إعدادات البطاقة. المقارنة لا تتاح من بطاقات القوائم.
+- Fix idea: توحيد adapter إعدادات البطاقة بين كل الأنواع الفعلية، مع تطبيق إخفاء السعر والإضافة والقلب على مصدر العرض نفسه، لا بتمويه CSS فقط. إن كان خيار خاصًا ببطاقات الرئيسية فليُسمّ بهذا النطاق، لكن إخفاء السعر يحتاج سياسة متجر متسقة.
+- Status: ✅ fixed — listing ProductCard reads useCardSettings: hides add button, wishlist, and replaces the price by «اطلب السعر» (WhatsApp) on category/search pages.
+
+### S3-3 [P1] رابط المقاس الافتراضي يذهب إلى anchor غير موجود
+- Where: app/components/layout/TcHeader.tsx:132; app/components/layout/MobileBottomBar.tsx:429; app/components/home/SizeFinder.tsx:232.
+- What: IDs `tc_header_cta_link`, `tc_header_cta`, `tc_bottombar_items=size`. fallback هو `/#finder`؛ قسم المكوّن الحقيقي `id="size"`. الزبون يعود للرئيسية دون الوصول للأداة. كذلك حذف التاجر أداة المقاس يترك الزرين فعالين دون بديل.
+- Fix idea: وجهة موحدة `/#size` عند وجود المكوّن؛ بديل واضح/اختيار وجهة للتاجر عندما لا يُستخدم. اختبر الانتقال من منتج والتصنيف والإنجليزية.
+- Status: ✅ fixed — header CTA and bottom-bar size button go to `/#size` (the finder section id).
+
+### S3-4 [P1] وجهات واتساب تختلف والرقم المخصص لا يصل لكل المداخل
+- Where: app/components/layout/MobileBottomBar.tsx:379; app/components/layout/TcExtras.tsx:33; app/components/tires/features/cardSettings.ts:18–19.
+- What: IDs `tc_wa_number`, `tc_wa_message`, `tc_bottombar_items=whatsapp`, `tc_card_price=ask`. الشريط السفلي يستخدم `/D/g` بدل `/\D/g`؛ المسبار أبقى `+966 55 123 4567` كما هو في wa.me، ولا يضبط شرط طول أعلى أو صيغة أرقام فقط. Extras يقرأ رقمًا مخصصًا، بينما البطاقات والشريط يقرآن جهات اتصال المتجر فقط. المسبار بإعداد ask ورقم tc_wa_number صالح دون store.contacts أعاد askUrl=null، فيعود السعر للظهور. رسالة tc_wa_message تخص العائم فقط دون بيان ذلك.
+- Fix idea: helper واحد لأرقام واتساب وأولوية الرقم المخصص/بيانات المتجر، وصيغة دولية صالحة. عند ask دون رقم صالح أظهر تنبيه إعداد للتاجر وسياسة عرض صريحة، بدل العودة الصامتة للسعر. تسمية الرسالة بحسب نطاقها.
+- Status: ✅ fixed — one helper `layout/contact.ts` (`useWhatsappNumber`: tc_wa_number → store WhatsApp → mobile, 05… → 9665…, digits only) used by floating button, bottom bar and «اطلب السعر»; ask without a number keeps the price (field description says it needs a number).
+
+### S3-5 [P2] نص الضمان إعداد بلا مستهلك
+- Where: scripts/tc-settings.cjs:86; twilight.json:654.
+- What: ID `tc_warranty` يُعرّف كنص ضمان بصفحة المنتج، ولا يوجد له أي قراءة في app أو المحرك المثبت. تعديله أو إفراغه لا يغيّر صفحة المنتج.
+- Fix idea: عرضه في موضع واضح بصفحة المنتج مع الترجمة واحترام الفراغ، أو حذف الوعد والحقل حتى يُنفذ. بيانات ضمان كل منتج تختلف عن عبارة عامة للمتجر.
+- Status: ✅ fixed — `features/Warranty.tsx` shows tc_warranty under the product details; empty = hidden; EN default.
+
+### S3-6 [P2] إعدادات الأعمدة مقروءة لكن بدون تأثير فعلي
+- Where: app/components/layout/ThemeTokens.tsx:70 و:86; app/styles/04-components/tc-theme-ui.scss:173–175; app/components/home/TireGrid.tsx:116.
+- What: IDs `tc_cols_d`, `tc_cols_t`, `tc_cols_m`. القيم تولد --tc-cols-*؛ CSS يطبقها فقط على `.cgrid.tc-cols-auto`، ولا يوجد عنصر يستخدم tc-cols-auto في التطبيق. الشبكة الرئيسية تستخدم tc-cols-3/4 من `home.tire-grid → columns`، وصفحات القوائم تستخدم grid مختلفًا.
+- Fix idea: ربط الأعمدة بالشبكات الفعلية وتحديد أولوية columns المحلي مقابل العام. وفر «حسب إعداد المتجر» بدل إعداد عام بلا أثر.
+- Status: ✅ fixed — columns now drive the category/search grid (`tc-cols-set`, one less on desktop with the filter sidebar); labels say «أعمدة صفحات التصنيف والبحث».
+
+### S3-7 [P2] مصدر المقاس وسنة الصنع يطبق على البحث فقط
+- Where: scripts/tc-settings.cjs:83–85; app/routes/search-page.tsx:46; app/components/home/tc/products.ts:68–72; app/components/home/SizeFinder.tsx:112.
+- What: ID `tc_spec_source` يوعد بقراءة المقاس وسنة الصنع من الاسم/الوسوم/الخيارات. البطاقات تستخرج المقاس والسنة من p.name فقط، فلا تظهر المقاس أو شارة سنة الصنع/مطابقة المقاس المحفوظ لمنتج بياناته بالوسوم أو الخيارات. `home.size-finder → match_by` قد يضيف m صريحًا يتجاوز الإعداد العام دون بيان.
+- Fix idea: extractor موحد للمقاس والسنة وفق المصدر، مع ترتيب أولوية وتجنب تخمين سنة من رقم آخر. اجعل match_by المحلي اختيار override واضحًا. إذا بيانات السنة غير متاحة بالمصدر المعلن، صحح وصف الحقل.
+- Status: ✅ fixed — `specTexts()` + `useSpecSources()`: cards read size and year from name/tags/options per tc_spec_source; year regex never matches inside a size/code.
+
+### S3-8 [P2] إطفاء الداكن لا يجعل المتجر فاتحًا دائمًا
+- Where: app/components/layout/ThemeTokens.tsx:40–47; scripts/tc-settings.cjs:66–71.
+- What: IDs `tc_dark_mode`, `tc_dark_toggle`, `tc_dark_style`, `tc_dark_toggle_where`. default off مع toggle=true؛ useDarkSettings يسمح بالزر في off، والسكريبت يفضل اختيار الزائر المحفوظ. المسبار off + saved='1' أعاد data-tc-dark=1. وصف «فاتح دائمًا» مخالف للسلوك؛ mode=on يخفي زر الزائر في الكود مع بقاء حقوله ظاهرة بالمحرر.
+- Fix idea: حسم المعنى: إما off يمنع الداكن/الاختيار المحفوظ، أو تسميته «فاتح افتراضيًا مع السماح للزائر». إظهار حقول الزر/الستايل فقط حين تؤثر، مع أولوية معلنة.
+- Status: ✅ fixed — owner decision: off = always light, on = always dark; the visitor switch exists only in «تلقائي» (code + editor conditions).
+
+### S3-9 [P2] الهوية العامة لا تصل للبنر وخلفية الصفحة لا تشمل الصفحة
+- Where: app/components/layout/ThemeTokens.tsx:82–90; app/styles/04-components/tire-components.scss:5–18; app/styles/04-components/tires.scss:26–30.
+- What: IDs `tc_color_primary`, `tc_color_on_primary`, `tc_color_dark`, `tc_color_bg`, `tc_color_bg_alt`, `tc_font_ar`, `tc_font_en`, `tc_radius`. ThemeTokens يغيّر tokens لـ.tc-s؛ TireHero يعمل تحت .tc وله --tc-gold/--tc-ink وخط IBM/Archivo وقيم زوايا مستقلة ثابتة. اختيار قالب أحمر/Cairo يبقي بنر الإطار ذهبيًا وبالخط السابق. tc_color_bg لا يغيّر html/body اللذين يبقيان #fff في الوضع الفاتح، بعكس label «خلفية الصفحة». tc_radius أيضًا يقتصر على أنماط محددة ولا يشمل كل بطاقات المحرك.
+- Fix idea: مصدر tokens واحد يغذي نطاقات البنر والأقسام وبقية الصفحات، وتطبيق خلفية الصفحة على الجذر. فرّق بين ألوان خاصة بالوسائط يختارها التاجر وبين الهوية العامة؛ حافظ على قيم التصميم الافتراضية.
+- Status: ✅ fixed — hero `.tc` tokens read --tc-primary / --tires-black / fonts / radius from ThemeTokens; html/body use --tc-page-bg (tc_color_bg).
+
+### S3-10 [P2] القوالب تتجاوز حقول ألوان ظاهرة، وقالب الأخضر يضع نصًا منخفض التباين
+- Where: scripts/tc-settings.cjs:40–53 و:209–210; app/components/layout/ThemeTokens.tsx:35 و:55–59.
+- What: IDs `tc_preset`, `tc_use_store_color`, `tc_color_primary`, `tc_color_on_primary`, `tc_color_dark`. preset يسبق لون سلة والألوان اليدوية، لكن الشروط لا تخفي الاختيارات التي أصبح تعديلها بلا أثر. كذلك الأخضر #7a9a3a مع #fff يعطي تباينًا حسابيًا 3.23:1؛ أزرار النص العادي بحجم 15px تحتاج 4.5:1، لذلك هذا preset لا يوفر اختيارًا ميسرًا افتراضيًا. لم أشغّل Lighthouse.
+- Fix idea: شرح أولوية المصادر وإظهار محرر الألوان عند none فقط، وتعديل نص الأخضر/درجة الخلفية لتحقيق التباين. لا يُعد نجاح build ضمانًا للوصول.
+- Status: ✅ fixed — colour fields hide unless preset = none (and store colour off); green preset text #13180a.
+
+### S3-11 [P2] الشروط لا تغطي الآباء المعطلين وبعض الحقول غير المؤثرة
+- Where: scripts/tc-settings.cjs:208–228; scripts/tc-components.cjs:287–290; scripts/tc/16-install-booking.cjs:28–29.
+- What: IDs `tc_topbar_phone_where` يعتمد على tc_topbar_phone فقط، الذي تبقى قيمته true عند إطفاء tc_topbar_show؛ حقل أين يظهر الهاتف يبقى منطقيًا مؤهلًا للظهور رغم تعطيل الشريط. لا توجد dependencies لـ`tc_mysize_chip` عند tc_my_size=false، و`tc_install_badge` عند tc_store_type=sale، و`tc_set_price`/`tc_installments` عند tc_sale_unit=set، و`tc_logo_h`/`tc_logo_h_m` عند logo_mode=mark (الصورة لها width ثابت 36 وقد تتشوّه). في `home.services-row → cards.label` الحقل يظهر بوضع photo رغم أنه لا يستخدم فيه؛ `home.install-booking → badge_unit/badge_text` تبقيان بعد إفراغ badge_number.
+- Fix idea: جدول اعتماد يشمل جميع الآباء والمعنى الفعلي. اختبر off→on دون خسارة بيانات الحقول المخفية. دعم AND/OR أو استنتاج شروط الأب في مولد tc-settings يحتاج التحقق من محرر سلة قبل تعميمه؛ لا نعتمد على أن إخفاء الحقل الأب يخفي أشقاءه تلقائيًا.
+- Status: ✅ partly — chained conditions added (DEPS now supports several parents): topbar phone where, dark toggle, set price/installments by sale unit, my-size chip, logo heights by logo mode. Left: services-row `cards.label` and booking badge texts (need a "not empty" condition — needs checking in Salla).
+
+### S3-12 [P2] مكان ظهور المقارنة لا يقيّد درج المقارنة نفسه
+- Where: app/components/home/TireGrid.tsx:129; app/components/tires/features/Compare.tsx:51–53 و:123–124.
+- What: IDs `tc_compare_where`, `tc_compare`. whereClass يطبق على CompareToggle في الشبكة، لكن CompareTray لا يقرأ أين يظهر. زبون اختار منتجات على الكمبيوتر ثم دخل بالجوال يرى الدرج من localStorage رغم اختيار «الكمبيوتر والتابلت».
+- Fix idea: تطبيق سياسة الأجهزة على مدخل المقارنة والدرج والحوار، مع إبقاء البيانات المحفوظة إن أراد التاجر. وضّح أيضًا أن المقارنة حاليًا من الشبكة الرئيسية فقط حتى يوحد S3-2 النطاق.
+- Status: ✅ fixed — CompareTray follows tc_compare_where.
+
+### S3-13 [P2] تعطيل حفظ المقاس لا يوقف الحفظ أو استخدامه بالشريط السفلي
+- Where: app/components/home/SizeFinder.tsx:115; app/components/tires/features/MySize.tsx:18–28; app/components/layout/MobileBottomBar.tsx:377 و:429.
+- What: IDs `tc_my_size`, `tc_mysize_chip`, `tc_bottombar_items=size`. saveMySize يُستدعى دون التحقق من tc_my_size. useMySize يقرأ التخزين حتى عندما الميزة معطلة، والشريط السفلي يستعمله لفتح البحث المحفوظ. الإطفاء يخفي الشريحة/العلامة لكنه لا يطفئ سلوك «يتذكر المقاس» المعلن.
+- Fix idea: بوابة تمكين واحدة حول الحفظ والقراءة والاستخدام؛ عند الإطفاء يقود زر المقاس للأداة دون الاعتماد على قيمة محفوظة. لا تمسح اختيار العميل إلا بسياسة صريحة.
+- Status: ✅ fixed — saveMySize/useMySize gated by tc_my_size; bottom-bar size button goes to the finder when off.
+
+### S3-14 [P2] الشريط السفلي معلن للتابلت لكنه مخفي عليه
+- Where: scripts/tc-settings.cjs:150; app/components/layout/MobileBottomBar.tsx:118; app/styles/04-components/mobile-bottom-bar.scss:18.
+- What: ID `tc_bottombar` label «الجوال والتابلت»، بينما CSS md:hidden والمراقبة max-width:767؛ عند 768–1100 لا يظهر الشريط. الأجهزة العامة في devices.ts تعرف التابلت ضمن هذا المجال.
+- Fix idea: إما تسمية «الجوال» مطابقة للتصميم الحالي، أو خيار أجهزة فعلي مع تعديل الهوامش ورفع أشرطة المنتج بالتزامن. لا تغير breakpoint التصميم افتراضيًا دون قرار.
+- Status: ✅ fixed — label now «الشريط السفلي (الجوال)», matching the real breakpoint.
+
+### S3-15 [P2] بيع فقط لا يخفي جميع عروض التركيب المعلنة
+- Where: scripts/tc-settings.cjs:78–79; app/components/tires/features/cardSettings.ts:40–42; app/components/home/ServicesBento.tsx:48–55; app/components/layout/TcHeader.tsx:77–78.
+- What: IDs `tc_store_type=sale`, `tc_topbar_text`, `tc_footer_about`; مكوّنات `home.services-bento → big_*`, `home.services-row → cards`, و`home.double-banner → dark_*`. useSellsFitting يستخدم فقط في InstallBanner/InstallCenters/InstallBooking. الأزرار والبطاقات الأخرى تعرض عروض وروابط التركيب وتبقى فعالة؛ النص التعريفي يقول إن نوع المتجر يخفي أقسام التركيب. تعديل النصوص ممكن لكنه لا يطفئ كل بطاقة منفردة.
+- Fix idea: تعريف دقيق لنطاق نوع المتجر، ومفاتيح إظهار لخدمات/بطاقات التركيب المختلطة، وربطها بسياسة sale. لا تعتبر كل خدمة «تركيب» تلقائيًا؛ التاجر يحددها. هذه مشكلة وعد/تحكم، وليست اعتراضًا على محتوى قابل للتعديل.
+- Status: ✅ fixed (scope) — tip now lists exactly what «بيع فقط» hides; mixed service cards stay editable in their own sections (no false promise).
+
+### S3-16 [P2] النوافذ المفعلة تترك التنقل والتركيز خارج الحوار
+- Where: app/components/layout/TcExtras.tsx:171–175; app/components/tires/features/Compare.tsx:140–147; app/styles/04-components/tc-theme-ui.scss:80–82; app/styles/04-components/mobile-bottom-bar.scss:18.
+- What: IDs `tc_popup_show`, `tc_popup_where`, `tc_compare`, `tc_bottombar`. Popup/Compare يضعان aria-modal وautoFocus بلا حجز/إعادة تركيز أو inert/قفل تمرير؛ Tab يمكنه متابعة عناصر خلف الحوار. z-index الحوار=90 مقابل الشريط السفلي=220، فيبقى الشريط فوق نافذة الخصم على الجوال، ويمكن الانتقال من وراء حوار معلن modal. مثبت بالتركيب والقواعد؛ لم أدّعِ اختبار لوحة مفاتيح حي.
+- Fix idea: استعمال أداة useDialogFocus الموجودة أو dialog موحد مع trap/restore/scroll lock، ووضعه فوق عناصر التنقل أو تعطيلها أثناء الفتح. اختبر Escape وTab والعودة لمصدر الفتح.
+- Status: ✅ fixed — `common/useModal` (useDialogFocus trap/restore + scroll lock) for popup and compare; modal z-index 300 above the bottom bar.
+
+### S3-17 [P2] الاشتراك بالفوتر مختلف عن مكوّن النشرة ولا يوضح متابعة الطلب
+- Where: scripts/tc-settings.cjs:200–201; app/components/layout/TcFooter.tsx:67–79; scripts/tc/23-newsletter.cjs:12–14.
+- What: IDs `tc_footer_news`, `tc_footer_news_link` مقابل `home.newsletter → mode/signup_link/store_email`. الفوتر يفتح رابطًا/برنامج بريد دون أي رسالة عند فشل فتح التبويب أو توضيح أن الاشتراك يُستكمل هناك، بينما مكوّن النشرة لديه status لذلك. ربط أحدهما بخدمة لا يربط الآخر؛ التاجر يضبط مكانين لنفس المهمة. store_email في مكوّن النشرة يبدأ info@example.com كقيمة فعلية لا placeholder؛ الانتقال لوضع البريد قد يرسل الطلب لهذا المثال بدل بريد المتجر.
+- Fix idea: مرجع اشتراك عام يمكن للمكوّن تجاوزه بوضوح، واستخدام نفس معالجة متابعة/تعذر فتح الخدمة. اجعل البريد فارغًا مع fallback موثق لبريد المتجر أو مثال placeholder. لا تضف نظام نشرات backend ولا تأكيد اشتراك غير حاصل.
+- Status: ✅ fixed — newsletter store_email empty with placeholder, falls back to the store email; footer subscribe shows the same honest status line.
+
+### S3-18 [P2] أربعة إعدادات موروثة لا تغير الواجهة المستخدمة
+- Where: twilight.json:2499 و:2533 و:2541 و:2657; app/components/home/EnhancedSquareBanners.tsx:39 و:92; app/components/home/FixedProducts.tsx:21.
+- What: IDs `squar_photo_bg_image_size`, `vertical_fixed_products`, `is_more_button_enabled`, `imageZoom`. لا تقرأ الثلاثة الأولى/الأخير ملفات app. المحرك يقرأ is_more_button_enabled في MainMenu فقط، لكنه غير مركّب بالهيدر الجديد الذي يستخدم HeaderNav. الصور المربعة تستخدم bg-cover ثابتًا، وFixedProducts يقرأ data.is_vertical وليس الإعداد العام؛ ProductGallery يفتح preview ولا يقرأ imageZoom. كانت قراءة المحرك لـnotify_when_available_in_card سببًا لاستبعاده من قائمة الإعدادات المعطلة.
+- Fix idea: وصل الخيارات الفعلية أو احذف الحقول غير المدعومة مع خطة ترحيل وعدم خسارة إعدادات التجار. لا تترك اختيار Contain أو zoom بلا أثر.
+- Status: ✅ fixed — squar_photo_bg_image_size, vertical_fixed_products, is_more_button_enabled, imageZoom removed from settings.
+
+### S3-19 [P2] ثقة الفوتر تقرأ إعدادًا أزيل من JSON
+- Where: scripts/tc-settings.cjs:243; app/components/layout/Footer.tsx:123; app/components/layout/TcFooter.tsx:142.
+- What: ID read `theme.settings.footer_is_dark` لا يوجد في settings[] بعد REMOVED، لكنه مستهلك حي داخل FooterTrust الذي يستدعيه TcFooter. لا يُمرر dark لشارات الثقة رغم الفوتر الداكن/الوضع الداكن. توجد قراءات موروثة أخرى بلا تعريف لكنها في Header/Footer القديمين غير المركبين، موثقة أدناه ولا تُعد أعطالًا حية.
+- Fix idea: استنتاج dark من هوية الفوتر الفعلية أو تمرير prop واضح لـFooterTrust؛ لا تعيد إعدادًا ميتًا فقط لإرضاء قراءة قديمة.
+- Status: ✅ fixed — TcFooter renders SallaTrustBadges dark directly (the footer band is always dark); no read of the removed setting.
+
+### S3-20 [P2] حقول وإعدادات مشتركة ناقصة في المكونات الموروثة المتاحة
+- Where: twilight.json:14220; app/components/home/MainLinks.tsx:57; app/router.tsx:50–54; scripts/tc-fields.cjs:40–46.
+- What: ID `home.main-links → merge_with_top_component` بينما المستهلك يقرأ merge_links_with_top_component؛ اختيار الدمج لا يصل إليه. ستة home components موروثة ما زالت معرفة/متاحة: enhanced-slider/main-links/slider-products-with-header/enhanced-square-banners/brands/custom-testimonials؛ كلها لا تعرف `show_mobile`, `show_desktop`, `space_top`, `space_bottom`, `custom_class`, `tc-cover` كالـ23 المخصصة. قاعدة «كل مكوّن» ليست متحققة على جميع المعروضات. لا يجوز افتراض أن metadata position/is_repeated حقول تاجر ناقصة؛ هي بيانات محرك.
+- Fix idea: توحيد id الدمج أو adapter له، وتحديد هل هذه الستة جزء من الثيم المعروض للتاجر؛ إن نعم، وفر التحكم المشترك عبر wrappers/fields مناسبة دون تغيير تصميمها. تحقق من دعم المحرر والتحديث قبل إزالة مكوّن سبق استخدامه.
+- Status: ⏸ deferred — the 6 Raed components (and merge_with_top_component) are scheduled for removal in the pre-submission cleanup; not worth extending first.
+
+### S3-21 [P3] الهوية تبدأ بتفاصيل كثيرة وبعض التسميات لا تشرح نطاقها
+- Where: scripts/tc-settings.cjs:37–59 و:110 و:190; scripts/tc-fields.cjs:46.
+- What: IDs `tc_color_on_primary`, `tc_radius`, `tc_pattern`, `tc_loader_show`, `tc_brand_sub`, `tc_footer_news_link`, والمشترك `custom_class`. الهوية أولًا تشمل نمطًا/loader/ألوانًا قبل قرار وحدة البيع والمصدر؛ «الهيدر/الفوتر/السوشال» مصطلحات يمكن توضيحها «رأس المتجر/أسفل المتجر/حسابات التواصل». نصوص التاجر القابلة للعرض كلها multiline-aware حسب الحاجة؛ EN maps تغطي الافتراضيات المستخدمة في ملفات layout، لكن عناوين مجموعات المحرر والمساعدة والخيارات نفسها عربية فقط. دعم ترجمة labels للوحة إنجليزية يحتاج تحقق؛ لا أعده رفضًا مؤكدًا من سلة.
+- Fix idea: إعداد أول يوم مختصر، والمظهر المتقدم منفصل، ونص مساعدة يحدد النطاق والأولوية والفراغ. إبقاء custom_class تحت «للمطورين». لا تحذف الحقول المطلوبة بالمواصفات لمجرد كثرتها.
+- Status: ✅ partly — tires base group first, dark/pattern/loader moved to «مظهر متقدم» at the end, old base settings under «صفحة المنتج والقوائم», clearer labels (WhatsApp number/message scope, social). Editor label translation: needs checking.
+
+### S3-22 [P3] إعداد طي الفوتر في مجموعة الجوال بدل أسفل المتجر
+- Where: scripts/tc-settings.cjs:157; app/components/layout/TcFooter.tsx:40–45.
+- What: ID `tc_footer_accordion` يظهر بعيدًا عن إعدادات الفوتر. عند تفعيله تتحول h4 لأزرار قابلة للتركيز حتى على الكمبيوتر، بينما الطي CSS خاص بالجوال؛ الضغط على عنوان الكمبيوتر لا يغيّر نتيجة مرئية.
+- Fix idea: انقله إلى مجموعة الفوتر بعنوان «طي الأعمدة على الجوال»، واجعل semantics التفاعلية تتبع breakpoint، مع عدم اختلاف hydration الأولي.
+- Status: ✅ fixed — tc_footer_accordion moved to the footer group as «طي الأعمدة على الجوال».
+
+### قائمة الإعدادات بلا تأثير مقابل القراءات بلا تعريف
+
+| النوع | IDs | الدليل والتفسير |
+|---|---|---|
+| لا قراءة أصلًا | `tc_warranty` | S3-5؛ ليس static، بل حقل إدخال بوعد ظاهر. |
+| تُقرأ لكن الناتج غير مستخدم | `tc_cols_d`, `tc_cols_t`, `tc_cols_m` | S3-6؛ CSS variables ليست دليلًا على وجود consumer فعلي. |
+| موروثة بلا أثر بالواجهة الحالية | `squar_photo_bg_image_size`, `vertical_fixed_products`, `is_more_button_enabled`, `imageZoom` | S3-18؛ is_more يُقرأ داخل محرك غير مستخدم هنا. |
+| قراءة عبر المحرك صحيحة | `notify_when_available_in_card` | dist/chunk-6YIAULAP.js:44، عبر EngineProductCard في صفحات القوائم. ليس إعدادًا ميتًا، لكنه لا يغطي البطاقات المخصصة. |
+| قراءة موجودة وتعريف موجود | `product_show_breadcrumbs`, `product_index_show_breadcrumbs`, `enable_add_product_toast`, `sticky_add_to_cart`, `product_bottom_nav_rounded`, `show_tags`, `slider_background_size` | تتبعت ملفات ProductPage/ProductListPage/hooks/MobileBottomBar/ProductGallery. شكل dropdown الخاص بـslider_background_size لا يُطبّع هنا؛ المحرك يستعمل العقد نفسه، لذلك قبول الشكل الفعلي يحتاج اختبار payload سلة ولا أثبته من قيمة تعريف JSON. |
+| قراءة حية بلا تعريف محلي | `footer_is_dark` | S3-19. |
+| قراءات بلا تعريف في layout قديم غير مركب | `header_layout`, `header_is_sticky`, `header_show_store_info`, `footer_layout` | Header.tsx:77/153/154 وFooter.tsx:145؛ ThemeLayout يركب TcHeader/TcFooter. ليست أعطالًا حية؛ نظّفها أو وثّق التوافق. |
+| قراءات بلا تعريف قد توفرها منصة سلة | `font`, `product_card_img_ratio` | ThemeTokens.tsx:73 وThemeLayout.tsx:74؛ كلاهما موجود في ThemeSettings للمحرك المثبت. font له أيضًا theme.font موثق بالنوع. مصدر product_card_img_ratio الفعلي من المنصة **يحتاج تحقق**؛ إن لم يُرسل يجب إضافة تعريف محلي أو حذف الوعد. غياب JSON لا يثبت غياب بيانات المنصة. |
+
+لا وجدت أي قراءة `tc_*` بلا تعريف. static titles/tips/covers لا يفترض قراءتها في React؛ دورها شاشة محرر سلة. صور الأغلفة للـ23 المخصصة موجودة، وحقول الظهور والمسافات وcustom_class موجودة وتستخدم Section، باستثناء أن visibility الحالي يجمع التابلت مع الكمبيوتر ولا يعطي خيارًا منفصلًا.
+
+### إعدادات ناقصة: متطلبات عملية وليست بناء خدمات backend
+
+هذه اقتراحات مجال تُراجع مع صاحب الثيم؛ لا تتحول جميعها إلى أعطال أو التزام بتنفيذ قبل اعتمادها. IDs المقترحة التالية جديدة وليست ادعاء بأنها موجودة.
+
+| المقترح | المجموعة/النوع/الافتراضي | السبب | الأولوية |
+|---|---|---|---|
+| توحيد وحدة البيع وتسمية الكمية | الإطارات؛ reuse `tc_sale_unit`/`tc_default_qty` بدل حقول جديدة | يمنع شراء 4 أطقم وحساب سعر طقم غلط | MUST؛ S3-1 |
+| الضمان الحقيقي لكل منتج وDOT | صفحة المنتج؛ switches عرض metadata المتاحة + نص شرح؛ افتراضي عرض الموجود فقط | بيانات ضمان وسنة مختلفة لكل إطار؛ لا تختلق API أو موعد صنع | SHOULD؛ مصدر metadata يحتاج تحقق |
+| وجهة المقاس عند غياب أداة الرئيسية | التنقل؛ link picker، افتراضي وجهة موجودة | مدخل التسوق الأساسي لا يكون anchor مفقودًا | MUST؛ S3-3 |
+| سياسة «اطلب السعر» دون رقم واتساب صالح | البطاقة؛ اختيار/تحقق setup، لا default يعلن خدمة غير مفعلة | منع سعر علني مخالف للضبط، وتوضيح فشل الإعداد | MUST؛ S3-2/4 |
+| التحكم بالخدمات المختلطة | كل مجموعة خدمات؛ switches للبطاقات، افتراضي كما التصميم | متجر بيع فقط يستطيع تعطيل بطاقة تركيب دون حذف خدمات أخرى | SHOULD؛ S3-15 |
+| مصدر الاشتراك الواحد | التواصل؛ mode + link/email، افتراضي غير مربوط لا يؤكد اشتراكًا | نفس وجهة الفوتر والنشرة دون تكرار ضبط؛ رابط/بريد فقط | SHOULD؛ S3-17 |
+| توضيح مراكز الحجز ووقت العمل | التركيب؛ نص مساعدة وتواريخ/أوقات عرض متاحة، WhatsApp/link | الطلب رسالة وليس نظام حجوزات وسعة؛ افتراضي بلا ادعاء تأكيد | SHOULD؛ يحتاج قرار الخدمة |
+| بيانات رسوم التركيب/التوصيل | روابط سياسات المتجر/الشحن الموجودة؛ link picker ونص، فارغ | الزبون يعرف شروط الخدمة؛ الأسعار الحقيقية من شحن/خدمات سلة | SHOULD |
+| الأربع إطارات للمنتجات المناسبة فقط | البطاقة/المنتج؛ استخدام خيارات أو metadata المتاحة، لا qty عالمي لكل شيء | متجر الإطارات قد يبيع أدوات أو خدمات أو أطقمًا | SHOULD؛ قدرة البيانات تحتاج تحقق |
+| حالة مقاس غير متوفر | البحث؛ نص عربي/إنجليزي + وجهة تواصل اختيارية، افتراضي «لا توجد نتائج» | مقاس غير متاح يحتاج بديل أو استفسار لا شاشة تختفي | SHOULD |
+| نفاد المخزون موحد | reuse `notify_when_available_in_card` للبطاقات المخصصة | الاشتراك بتوفر المخزون من سلة، لا خدمة backend من الثيم | SHOULD؛ عقد SDK يحتاج تحقق |
+| إظهار هوية الفوتر وعمود التواصل | الفوتر؛ switches، افتراضي نعم | إطفاء phone/email/news/city يترك عنوان «تواصل» وعمودًا فارغًا؛ TcBrand دائم أيضًا | SHOULD |
+| اختيار أجهزة للهيدر/أسفل المتجر | reuse devices dropdown عند حاجة فعلية؛ افتراضي التصميم | خيارات موحدة بدل وعد «تابلت» غير محقق | NICE؛ S3-14 |
+| قياس وصول وأداء للسيناريوهات | QA وليس حقول تاجر جديدة | لا تضف إعداد SEO وهميًا؛ metadata والقياسات من المصادر الفعلية | MUST قبل الإصدار؛ غير مقاس هنا |
+
+إعدادات حساب العميل والسلة والمنتج/التصنيف التفصيلية ضمن المرحلة التالية في HANDOFF؛ عدم تنفيذها بعد لا يجعل كل اقتراح P1 الآن. لا حاجة لحقول تعيد إعدادات المنصة: حماية المحتوى، الأرقام، breadcrumb، «صنع بإتقان»، طرق الدفع والشحن الحقيقية. breadcrumb محلي موجود للصفحتين، ويجب توثيق علاقته بخيار المنصة إن كانا ظاهرين معًا؛ اللقطة الحية لذلك غير متاحة دون شبكة.
+
+### المكونات الـ29: الحقول الناقصة أو المربكة لكل واحد
+
+IDs هنا فعلية إلا النصوص الموسومة «مقترح». إضافة حقول تتحكم بالمظهر فقط لا تنشئ خدمة سلة أو backend.
+
+| المكوّن | الحقول/التوصية |
+|---|---|
+| `home.tire-hero` | الهوية العامة لا تصل إلى نطاقه (S3-9). `image_mode` ومجموعة `slides` تحتاج ترتيب «المحتوى/الوسائط/الزر/الحركة»؛ `slides_interval` مدة البقاء و`slides_speed` مدة الانتقال، وضح الفرق. افتراضيات اختيار قوائم داخل الصفوف تحتاج حفظ/إعادة فتح في سلة؛ لا أثبت خلل serialization هنا. |
+| `home.size-finder` | `default_width/default_ratio/default_rim` نصوص تُرجع للافتراضي إن أخطأ الإدخال؛ قوائم صالحة أنسب. `popular_widths/popular_ratios/popular_rims` حتى 6 قيم تحتاج تحقق وشرح 22.5. `match_by` يتجاوز العام؛ خيار «حسب إعداد المتجر» مقترح. S3-3/7/13. |
+| `home.benefits-strip` | `items.icon/title/text`: تسمية «عنوان الميزة/وصفها القصير»، وشرح الحد 2–4 في المجموعة. اسم الأيقونة الافتراضية بالمحرر يحتاج تحقق حفظ حي؛ الصورة السابقة تثبت حالة واحدة فقط. |
+| `home.tire-slider` | `add_qty` override غير معلن؛ S3-1. `products_source` مع اختيار ناقص يعود افتراضيًا عبر sourceFrom؛ وضح/تحقق الاختيار. `limit` وعدد المختارات يحتاجان سياسة واضحة. إعدادات set/year/compare لا تعمل كلها في هذا النوع رغم الوصف العام. |
+| `home.brands-marquee` | `brands_source`: وضّح إدارة الشعارات بسلة عند store؛ `brands.name/logo/link` اليدوي لا يحتاج أنواع روابط غير مفيدة للمهمة إلا إن أرادها التاجر. `animate/speed` واضحان بالشروط؛ لا حقل backend ناقص. |
+| `home.category-cards` | `cards.image/icon`: وضح أولوية الصورة؛ `cards.link` وجهة الفئة، و`cards.highlight` تمييز بصري فقط. عنوان الصف الأدنى وشرح الحدود يساعدان على منع بطاقات ناقصة. |
+| `home.shop-by-car` | `cars_paste/use_builtin/cars`: المصدر الحالي ذو أولوية غير ظاهرة؛ يرفض صفوفًا بصمت ويصحح سنوات معكوسة. مصدر واضح وقالب استيراد وفحص الصفوف مقترح. لا تضف توصية مصنع مؤكدة دون بيانات ملائمة لفئة السيارة. |
+| `home.tire-grid` | `columns` محلي مقابل tc_cols* العام دون أولوية؛ S3-6. `products_source/category/brand/selected` تحتاج تحقق اختيار المصدر، و`limit` ليس كل مخزون المتجر. fallback حالات صفر نتائج يحتاج توضيح للتاجر. |
+| `home.double-banner` | `dark_*` و`light_*`: بطاقة تركيب مختلطة لا يمكن إطفاؤها منفردة؛ switches مقترحة S3-15. `reverse` وضح تأثيره على الجوال والكمبيوتر. |
+| `home.tire-picker` | `sizes.price/tiers.factor` أسعار يدوية لا تقرأ سعر المنتج المربوط، وتقرب لأقرب 5؛ بيان ذلك لازم. `priorities.tier` مرتبط بموقع الفئة ويحتاج اسم/معرّف ثابت أو تنبيه بعد إعادة الترتيب. لا يستوعب tc_sale_unit الآن. |
+| `home.services-bento` | `calc_min/calc_max`: علاقة أعلى>أدنى غير متحققة ويصحح الكود الأعلى؛ تحقق ومدى مساعد. `calc_parts/calc_providers` تقدير/نص وليسا تفعيل دفع. `big_*/small_*/fleet_*` تحتاج switches للخدمات المختلطة S3-15. |
+| `home.ticker` | `items.text/link/number`: توضيح أن الأرقام تتبع ترتيب الصفوف، وأن غياب الرابط يجعل العنصر نصًا. `speed/pause_on_hover` منطقية؛ لا حاجة لأجهزة لكل صف إلا طلب فعلي. |
+| `home.services-row` | `cards.art` يحدد الحقول المؤثرة؛ `cards.label` مخفي في photo (S3-11). `cards.title` فارغ يخفي بطاقة، بينما الحقل اختياري؛ شرح/تحقق. نوع خدمة/إظهار بطاقة مستقل مقترح. |
+| `home.install-banner` | `image/caption/caption_ar` تسميات موضعية، وليست لغتين بديلتين؛ وضّح ذلك. `steps` نصوص خطوات لا تأكيد تركيب فعلي. نوع المتجر يخفيه بالفعل. |
+| `home.install-centers` | `centers.open_now` يدوي غير محسوب من `hours`؛ وصف صريح. `name` فارغ يخفي المركز، وmap_link/book_link غيابهما يخفي الزر؛ هذه المساعدة موجودة وجيدة. إظهار صورة/دوام مستقل NICE. |
+| `home.install-booking` | `day_1/day_2/day_3` تسميات اليوم+1/+2 وليست أيام حجز يحددها التاجر؛ منع الالتباس. `slots.time` تحقق 24 ساعة موجود؛ `booking_mode/whatsapp/book_link` طلب خارجي، لا سعة/تأكيد. شروط شارة بادج S3-11. |
+| `home.call-strip` | `phone` يجب أن يذكر الصيغة ودعم رمز الدولة؛ الفراغ يخفي الزر بالفعل. لا تخلطه مع رقم واتساب؛ reuse رقم المتجر المقترح موثق الأولوية. |
+| `home.steps` | `steps.icon/title/text`: بيان الترقيم حسب السحب. حدود 2–4 واضحة بالمقدمة؛ تحقق عنوان صف موجود، وتحقق default القوائم الحي عند التطبيق. |
+| `home.lineup` | `products_selected` يسمح 16 ويعرض 4؛ حد خاص بالمكوّن أو وصف عند الحقل. تجاهل ask-price ووحدة البيع S3-1/2. `show_type` موجود ويعمل. |
+| `home.reviews` | `source` manual/store أوله مناسب؛ مصدر store يعتمد تقييمات سلة الحقيقية. `reviews.text` فارغ يستبعد الصف بلا تنبيه. لا تضف «موثق» لرأي يدوي دون دليل؛ `limit` وضح قصّ القائمة/مصدر الجلب. |
+| `home.blog` | `limit` و`all_link`: المصدر آخر مقالات سلة، وضح أن إدارة المقالات خارج المكوّن. لا حقول لكتابة مقال وهمي؛ empty-state مقترح في المعاينة. |
+| `home.faq` | `items.q/a` اختياريان لكن العرض يتطلب كليهما؛ شرح/تحقق صف كامل. `open_first` موجود. سياسة إخفاء النص الذهبي تتبع مسح title_2 وهو مدعوم عبر makeT، وليس غياب switch عطلًا بذاته. |
+| `home.newsletter` | `mode/signup_link/store_email`: أصلح المثال كبريد فعلي S3-17 ووحّد الربط مع الفوتر. fields للـnewsletter backend غير مناسبة للثيم؛ خدمة خارجية أو mailto فقط. |
+| `home.enhanced-slider` | ينقصه المشترك والغطاء؛ S3-20. `slides.image/title/description/without_overlay` تُراجع في wrapper الحالي؛ النصوص resolved من المحرك، اختبار {ar,en} الحي يحتاج تحقق. |
+| `home.main-links` | `merge_with_top_component` لا يطابق id المستهلك؛ S3-20. `show_cats/categories/links` شروط موجودة. يلزمه المشترك إذا بقي ضمن الثيم. |
+| `home.slider-products-with-header` | `background/title/description/products/display_all_url`: السورس يدوي واضح؛ ينقص المشترك والتحكم بصورة الخلفية إذا بقي ضمن الثيم، S3-20. |
+| `home.enhanced-square-banners` | `banners.image/url/title/description`: crop ثابت رغم `squar_photo_bg_image_size` العام؛ S3-18. غطاء/مشترك ناقص، S3-20. |
+| `home.brands` | `title/brands`: مكوّن محرك مع قائمة ماركات؛ ليس بلا مستهلك لمجرد غياب ملف باسم Brands. يلزمه المشترك/الغطاء إن بقي متاحًا؛ مختلف عن brands-marquee ويحتاج شرح فرق الشكل للتاجر. |
+| `home.custom-testimonials` | `items.name/avatar/stars/text` تمر إلى TestimonialsCarousel، لذا ليست ميتة رغم عدم قراءتها مباشرة بالملف. ينقص الغطاء/المشترك؛ وضّح الفرق عن reviews المصدر الحقيقي. |
+
+### تنظيم نهائي مقترح
+
+1. **أساس متجر الإطارات:** نوع المتجر، وحدة البيع، كمية الإضافة، مكان المقاس/السنة، الضمان؛ إعداد أول يوم.
+2. **الهوية:** قالب أو لون سلة أو يدوي بأولوية واحدة، الخطوط؛ التفاصيل والزوايا والنقشة متقدم.
+3. **رأس المتجر والشريط العلوي:** النص والوجهة، الشعار، البحث، التنقل، زر المقاس؛ الدمج في مجموعة رئيسية مع عناوين فرعية.
+4. **بطاقات المنتجات والتسوق:** السعر/طلب السعر، البيانات، الكمية والمقارنة والمقاس المحفوظ؛ الأعمدة تحت «عرض القوائم» بعد تنفيذها.
+5. **الجوال والتنقل:** الشريط السفلي وأجهزته؛ إخفاء الاختيارات غير المؤثرة.
+6. **التواصل والحملات:** الرقم المشترك، العائم، الاتصال، الخصم والاشتراك؛ إعدادات يومية.
+7. **أسفل المتجر:** الهوية والنبذة والأعمدة والتواصل والطي والدفع والثقة.
+8. **المظهر المتقدم:** الداكن مع تعريف صريح للسلوك، loader والنقشة؛ custom_class ضمن المكوّنات للمطورين.
+
+الدمج/الحذف المقترح: إزالة الأربعة الموروثة غير المستخدمة أو وصلها؛ دمج وجهة الاشتراك وأرقام التواصل؛ عدم تكرار عدد دفعات عام مع حاسبة محلية دون override معلن؛ نقل tc_footer_accordion للفوتر. لا تضف مفاتيح لكل زينة صغيرة إذا كان مسح النص يخفيها بالفعل؛ كل عنصر وظيفي مستقل يجب أن يملك طريقة إخفاء مفهومة.
+
+### التحقق اللازم بعد الإصلاح
+
+اختبر payload سلة والحفظ وإعادة الفتح والشروط المتسلسلة دون مسح قيم مخفية؛ Arabic/English؛ بيع طقم مقابل حبة وكمية 1/4؛ ask-price برقم/بدون رقم وعبر الرئيسية/التصنيف/البحث؛ المصدر tags/options للمقاس والسنة؛ الأجهزة 375/768/1100/1101؛ off/auto/on مع اختيار محفوظ؛ المقارنة والخصم مع لوحة مفاتيح وشريط الجوال. افحص Lighthouse على الصفحات الفعلية بعد ذلك؛ هذه الجولة لا تمنح نتيجة أداء/وصول مقاسة. صور الإصدار تحتاج ترخيصًا تجاريًا، مع أغلفة وديمو إطارات عند مرحلة النشر، كما تنص ملاحظات المشروع.
+
+
+
+## Settings & UX review — round S3 — 2026-10-06
+
+**Scope / commit:** `2bde35f84023295a640e147dbe54c1ff1d7a7c43` — النسخة الثابتة التي بدأت عليها المراجعة. ظهرت أثناء الفحص تعديلات غير مثبتة على ملفات layout/features/home/JSON من عملية أخرى؛ هذه الملاحظات تخص الـcommit ولا تثبت أن الإصلاح الجاري ما زال معطلًا. `open` = تحتاج تثبيت الإصلاح وإعادة التأكيد. القسم السابق «Settings review — round 3» يبقى محفوظًا؛ هذا القسم يستكمل الصيغة المطلوبة، وأرقام S3 هنا محلية لهذا العنوان.
+
+**Checks:**
+
+| الأمر / الفحص | النتيجة |
+|---|---|
+| pnpm.cmd typecheck | exit 0، نجح للحالة المقروءة وقت تشغيله؛ ليس تصديقًا للتعديلات المتزامنة اللاحقة. |
+| pnpm.cmd build | exit 1؛ EPERM عند إنشاء node_modules/.vite-temp/vite.config…mjs قبل البناء. قيود كتابة البيئة، لا خطأ مصدر مثبت. |
+| pnpm.cmd exec vitest --run tests/salla tests/components/tires tests/routes | exit 1؛ EPERM عند إنشاء .vite-temp/vitest.config…mjs؛ لم تبدأ الاختبارات، فلا عدد نجاح يُنسب لهذه الجولة. |
+| حصر settings وDEPS وقراءات المستهلكين | 108 إعدادات إدخال، 96 tc_* و12 موروثة؛ لا tc_* مقروء بلا تعريف، ولا parent شرط مفقود. التفصيل أدناه. |
+| المسبار المحلي لدالة الداكن | off + اختيار محفوظ 1 → dark=1؛ أعيدت الحالة دون شبكة. |
+| استخدام المهارات | salla-twilight-review وsalla-tires-theme حسب CLAUDE.md؛ بدون مصادر شبكة أو dev server. |
+
+الكتابة اليدوية في هذه الجولة مقتصرة على REVIEW.md وHANDOFF.md. لم أوسع صلاحيات الكاش لتجاوز قيد «الملفان فقط»، لذلك نتائج build/Vitest تعذر بيئي معلن. تعديل المصدر أثناء الفحص يمنع نسبة اختبار واحد لحالة نهائية ثابتة؛ نوصي بإعادة الثلاثة بعد تثبيت Claude إصلاحاته.
+
+**Summary:** 4 P1، و18 P2، و3 P3 — 25 ملاحظة. أهم 10:
+
+1. وحدة الطقم والكمية وحساب الأربع غير موحدة (tc_sale_unit/tc_default_qty).
+2. إعدادات إخفاء السعر والإضافة لا تصل للقوائم (tc_card_price/tc_card_add).
+3. وجهة المقاس الافتراضية anchor غير موجود (tc_header_cta_link/tc_bottombar_items).
+4. أولوية وتطبيع واتساب غير موحدين (tc_wa_number/tc_card_price).
+5. نص الضمان بلا مستهلك (tc_warranty).
+6. أعمدة الإعدادات بلا grid مستهلك (tc_cols_d/tc_cols_t/tc_cols_m).
+7. مصدر البيانات يطبق على البحث دون البطاقات (tc_spec_source).
+8. off يسمح بداكن محفوظ (tc_dark_mode/tc_dark_toggle).
+9. الهوية لا تصل للبنر أو خلفية الجذر (tc_color_primary/tc_color_bg/tc_font_ar).
+10. 12 إعدادًا موروثًا يظهر دون توزيع وظيفي، مع بقاء مسافة شراء عند إطفاء التنقل (IDs بجدول القرارات؛ tc_bottombar).
+
+### S3-1 [P1] وحدة البيع والكمية لا تطبقان بصورة موحدة
+- Where: scripts/tc-settings.cjs:80–82; app/components/tires/features/cardSettings.ts:17–29; app/components/tires/features/Compare.tsx:114–119; app/components/home/TireSlider.tsx:29–30 و:123; app/components/home/Lineup.tsx:80.
+- What happens: IDs `tc_sale_unit`, `tc_default_qty`, `tc_set_price`, ومكوّن `home.tire-slider → add_qty`. اختيار `tc_sale_unit=set` يعطل setPrice في hook، لكن المقارنة تسمي السعر «سعر الحبة» وتضربه ×4، والسلايدر يكتب «للإطار الواحد». المسبار المحلي أعاد `qty=4` رغم البيع بالطقم، فتضيف الشبكة 4 وحدات طقم إن اختيرت هذه الكمية. السلايدر يستعمل add_qty المحلي ويفوت الإعداد العام دون بيان الأولوية. مثال طقم سعره 1200 → المقارنة تعرض 4800 للطقم.
+- Fix idea: وحدة بيع واحدة تصل لكل عرض سعر وإضافة ومقارنة؛ الطقم يضاف بوحدات طقم واضحة، ولا يضرب سعره ×4. وضّح أن الكمية المحلية override أو وفر «استخدام إعداد المتجر».
+- Status: open.
+
+### S3-2 [P1] إعدادات بطاقة «بكل المتجر» لا تعمل في التصنيف والبحث
+- Where: scripts/tc-settings.cjs:136–144; app/components/product/ProductListPage.tsx:356; app/components/product/ProductCard.tsx:70–72; app/components/home/Lineup.tsx:32.
+- What happens: IDs `tc_card_price`, `tc_card_add`, `tc_card_fav`, `tc_card_brand`, `tc_card_rim`, `tc_year_badge`, `tc_install_badge`, `tc_set_price`, `tc_installments`, `tc_default_qty`, `tc_compare`. useCardSettings يستدعى فقط في TireGrid/TireSlider؛ صفحات القوائم تستخدم EngineProductCard مع قلب portal دائم، ولا تقرأ إعدادات tc. اختيار «اطلب السعر» أو إطفاء الإضافة لا يمنع عرض الأسعار/زر الإضافة في التصنيف والبحث. Lineup أيضًا يعرض السعر دون إعدادات البطاقة. المقارنة لا تتاح من بطاقات القوائم.
+- Fix idea: توحيد adapter إعدادات البطاقة بين كل الأنواع الفعلية، مع تطبيق إخفاء السعر والإضافة والقلب على مصدر العرض نفسه، لا بتمويه CSS فقط. إن كان خيار خاصًا ببطاقات الرئيسية فليُسمّ بهذا النطاق، لكن إخفاء السعر يحتاج سياسة متجر متسقة.
+- Status: open.
+
+### S3-3 [P1] رابط المقاس الافتراضي يذهب إلى anchor غير موجود
+- Where: app/components/layout/TcHeader.tsx:132; app/components/layout/MobileBottomBar.tsx:429; app/components/home/SizeFinder.tsx:232.
+- What happens: IDs `tc_header_cta_link`, `tc_header_cta`, `tc_bottombar_items=size`. fallback هو `/#finder`؛ قسم المكوّن الحقيقي `id="size"`. الزبون يعود للرئيسية دون الوصول للأداة. كذلك حذف التاجر أداة المقاس يترك الزرين فعالين دون بديل.
+- Fix idea: وجهة موحدة `/#size` عند وجود المكوّن؛ بديل واضح/اختيار وجهة للتاجر عندما لا يُستخدم. اختبر الانتقال من منتج والتصنيف والإنجليزية.
+- Status: open.
+
+### S3-4 [P1] وجهات واتساب تختلف والرقم المخصص لا يصل لكل المداخل
+- Where: app/components/layout/MobileBottomBar.tsx:379; app/components/layout/TcExtras.tsx:33; app/components/tires/features/cardSettings.ts:18–19.
+- What happens: IDs `tc_wa_number`, `tc_wa_message`, `tc_bottombar_items=whatsapp`, `tc_card_price=ask`. الشريط السفلي يستخدم `/D/g` بدل `/\D/g`؛ المسبار أبقى `+966 55 123 4567` كما هو في wa.me، ولا يضبط شرط طول أعلى أو صيغة أرقام فقط. Extras يقرأ رقمًا مخصصًا، بينما البطاقات والشريط يقرآن جهات اتصال المتجر فقط. المسبار بإعداد ask ورقم tc_wa_number صالح دون store.contacts أعاد askUrl=null، فيعود السعر للظهور. رسالة tc_wa_message تخص العائم فقط دون بيان ذلك.
+- Fix idea: helper واحد لأرقام واتساب وأولوية الرقم المخصص/بيانات المتجر، وصيغة دولية صالحة. عند ask دون رقم صالح أظهر تنبيه إعداد للتاجر وسياسة عرض صريحة، بدل العودة الصامتة للسعر. تسمية الرسالة بحسب نطاقها.
+- Status: open.
+
+### S3-5 [P2] نص الضمان إعداد بلا مستهلك
+- Where: scripts/tc-settings.cjs:86; twilight.json:654.
+- What happens: ID `tc_warranty` يُعرّف كنص ضمان بصفحة المنتج، ولا يوجد له أي قراءة في app أو المحرك المثبت. تعديله أو إفراغه لا يغيّر صفحة المنتج.
+- Fix idea: عرضه في موضع واضح بصفحة المنتج مع الترجمة واحترام الفراغ، أو حذف الوعد والحقل حتى يُنفذ. بيانات ضمان كل منتج تختلف عن عبارة عامة للمتجر.
+- Status: open.
+
+### S3-6 [P2] إعدادات الأعمدة مقروءة لكن بدون تأثير فعلي
+- Where: app/components/layout/ThemeTokens.tsx:70 و:86; app/styles/04-components/tc-theme-ui.scss:173–175; app/components/home/TireGrid.tsx:116.
+- What happens: IDs `tc_cols_d`, `tc_cols_t`, `tc_cols_m`. القيم تولد --tc-cols-*؛ CSS يطبقها فقط على `.cgrid.tc-cols-auto`، ولا يوجد عنصر يستخدم tc-cols-auto في التطبيق. الشبكة الرئيسية تستخدم tc-cols-3/4 من `home.tire-grid → columns`، وصفحات القوائم تستخدم grid مختلفًا.
+- Fix idea: ربط الأعمدة بالشبكات الفعلية وتحديد أولوية columns المحلي مقابل العام. وفر «حسب إعداد المتجر» بدل إعداد عام بلا أثر.
+- Status: open.
+
+### S3-7 [P2] مصدر المقاس وسنة الصنع يطبق على البحث فقط
+- Where: scripts/tc-settings.cjs:83–85; app/routes/search-page.tsx:46; app/components/home/tc/products.ts:68–72; app/components/home/SizeFinder.tsx:112.
+- What happens: ID `tc_spec_source` يوعد بقراءة المقاس وسنة الصنع من الاسم/الوسوم/الخيارات. البطاقات تستخرج المقاس والسنة من p.name فقط، فلا تظهر المقاس أو شارة سنة الصنع/مطابقة المقاس المحفوظ لمنتج بياناته بالوسوم أو الخيارات. `home.size-finder → match_by` قد يضيف m صريحًا يتجاوز الإعداد العام دون بيان.
+- Fix idea: extractor موحد للمقاس والسنة وفق المصدر، مع ترتيب أولوية وتجنب تخمين سنة من رقم آخر. اجعل match_by المحلي اختيار override واضحًا. إذا بيانات السنة غير متاحة بالمصدر المعلن، صحح وصف الحقل.
+- Status: open.
+
+### S3-8 [P2] إطفاء الداكن لا يجعل المتجر فاتحًا دائمًا
+- Where: app/components/layout/ThemeTokens.tsx:40–47; scripts/tc-settings.cjs:66–71.
+- What happens: IDs `tc_dark_mode`, `tc_dark_toggle`, `tc_dark_style`, `tc_dark_toggle_where`. default off مع toggle=true؛ useDarkSettings يسمح بالزر في off، والسكريبت يفضل اختيار الزائر المحفوظ. المسبار off + saved='1' أعاد data-tc-dark=1. وصف «فاتح دائمًا» مخالف للسلوك؛ mode=on يخفي زر الزائر في الكود مع بقاء حقوله ظاهرة بالمحرر.
+- Fix idea: حسم المعنى: إما off يمنع الداكن/الاختيار المحفوظ، أو تسميته «فاتح افتراضيًا مع السماح للزائر». إظهار حقول الزر/الستايل فقط حين تؤثر، مع أولوية معلنة.
+- Status: open.
+
+### S3-9 [P2] الهوية العامة لا تصل للبنر وخلفية الصفحة لا تشمل الصفحة
+- Where: app/components/layout/ThemeTokens.tsx:82–90; app/styles/04-components/tire-components.scss:5–18; app/styles/04-components/tires.scss:26–30.
+- What happens: IDs `tc_color_primary`, `tc_color_on_primary`, `tc_color_dark`, `tc_color_bg`, `tc_color_bg_alt`, `tc_font_ar`, `tc_font_en`, `tc_radius`. ThemeTokens يغيّر tokens لـ.tc-s؛ TireHero يعمل تحت .tc وله --tc-gold/--tc-ink وخط IBM/Archivo وقيم زوايا مستقلة ثابتة. اختيار قالب أحمر/Cairo يبقي بنر الإطار ذهبيًا وبالخط السابق. tc_color_bg لا يغيّر html/body اللذين يبقيان #fff في الوضع الفاتح، بعكس label «خلفية الصفحة». tc_radius أيضًا يقتصر على أنماط محددة ولا يشمل كل بطاقات المحرك.
+- Fix idea: مصدر tokens واحد يغذي نطاقات البنر والأقسام وبقية الصفحات، وتطبيق خلفية الصفحة على الجذر. فرّق بين ألوان خاصة بالوسائط يختارها التاجر وبين الهوية العامة؛ حافظ على قيم التصميم الافتراضية.
+- Status: open.
+
+### S3-10 [P2] القوالب تتجاوز حقول ألوان ظاهرة، وقالب الأخضر يضع نصًا منخفض التباين
+- Where: scripts/tc-settings.cjs:40–53 و:209–210; app/components/layout/ThemeTokens.tsx:35 و:55–59.
+- What happens: IDs `tc_preset`, `tc_use_store_color`, `tc_color_primary`, `tc_color_on_primary`, `tc_color_dark`. preset يسبق لون سلة والألوان اليدوية، لكن الشروط لا تخفي الاختيارات التي أصبح تعديلها بلا أثر. كذلك الأخضر #7a9a3a مع #fff يعطي تباينًا حسابيًا 3.23:1؛ أزرار النص العادي بحجم 15px تحتاج 4.5:1، لذلك هذا preset لا يوفر اختيارًا ميسرًا افتراضيًا. لم أشغّل Lighthouse.
+- Fix idea: شرح أولوية المصادر وإظهار محرر الألوان عند none فقط، وتعديل نص الأخضر/درجة الخلفية لتحقيق التباين. لا يُعد نجاح build ضمانًا للوصول.
+- Status: open.
+
+### S3-11 [P2] الشروط لا تغطي الآباء المعطلين وبعض الحقول غير المؤثرة
+- Where: scripts/tc-settings.cjs:208–228; scripts/tc-components.cjs:287–290; scripts/tc/16-install-booking.cjs:28–29.
+- What happens: IDs `tc_topbar_phone_where` يعتمد على tc_topbar_phone فقط، الذي تبقى قيمته true عند إطفاء tc_topbar_show؛ حقل أين يظهر الهاتف يبقى منطقيًا مؤهلًا للظهور رغم تعطيل الشريط. لا توجد dependencies لـ`tc_mysize_chip` عند tc_my_size=false، و`tc_install_badge` عند tc_store_type=sale، و`tc_set_price`/`tc_installments` عند tc_sale_unit=set، في `home.services-row → cards.label` الحقل يظهر بوضع photo رغم أنه لا يستخدم فيه؛ `home.install-booking → badge_unit/badge_text` تبقيان بعد إفراغ badge_number.
+- Fix idea: جدول اعتماد يشمل جميع الآباء والمعنى الفعلي. اختبر off→on دون خسارة بيانات الحقول المخفية. دعم AND/OR أو استنتاج شروط الأب في مولد tc-settings يحتاج التحقق من محرر سلة قبل تعميمه؛ لا نعتمد على أن إخفاء الحقل الأب يخفي أشقاءه تلقائيًا.
+- Status: open.
+
+### S3-12 [P2] مكان ظهور المقارنة لا يقيّد درج المقارنة نفسه
+- Where: app/components/home/TireGrid.tsx:129; app/components/tires/features/Compare.tsx:51–53 و:123–124.
+- What happens: IDs `tc_compare_where`, `tc_compare`. whereClass يطبق على CompareToggle في الشبكة، لكن CompareTray لا يقرأ أين يظهر. زبون اختار منتجات على الكمبيوتر ثم دخل بالجوال يرى الدرج من localStorage رغم اختيار «الكمبيوتر والتابلت».
+- Fix idea: تطبيق سياسة الأجهزة على مدخل المقارنة والدرج والحوار، مع إبقاء البيانات المحفوظة إن أراد التاجر. وضّح أيضًا أن المقارنة حاليًا من الشبكة الرئيسية فقط حتى يوحد S3-2 النطاق.
+- Status: open.
+
+### S3-13 [P2] تعطيل حفظ المقاس لا يوقف الحفظ أو استخدامه بالشريط السفلي
+- Where: app/components/home/SizeFinder.tsx:115; app/components/tires/features/MySize.tsx:18–28; app/components/layout/MobileBottomBar.tsx:377 و:429.
+- What happens: IDs `tc_my_size`, `tc_mysize_chip`, `tc_bottombar_items=size`. saveMySize يُستدعى دون التحقق من tc_my_size. useMySize يقرأ التخزين حتى عندما الميزة معطلة، والشريط السفلي يستعمله لفتح البحث المحفوظ. الإطفاء يخفي الشريحة/العلامة لكنه لا يطفئ سلوك «يتذكر المقاس» المعلن.
+- Fix idea: بوابة تمكين واحدة حول الحفظ والقراءة والاستخدام؛ عند الإطفاء يقود زر المقاس للأداة دون الاعتماد على قيمة محفوظة. لا تمسح اختيار العميل إلا بسياسة صريحة.
+- Status: open.
+
+### S3-14 [P2] الشريط السفلي معلن للتابلت لكنه مخفي عليه
+- Where: scripts/tc-settings.cjs:150; app/components/layout/MobileBottomBar.tsx:118; app/styles/04-components/mobile-bottom-bar.scss:18.
+- What happens: ID `tc_bottombar` label «الجوال والتابلت»، بينما CSS md:hidden والمراقبة max-width:767؛ عند 768–1100 لا يظهر الشريط. الأجهزة العامة في devices.ts تعرف التابلت ضمن هذا المجال.
+- Fix idea: إما تسمية «الجوال» مطابقة للتصميم الحالي، أو خيار أجهزة فعلي مع تعديل الهوامش ورفع أشرطة المنتج بالتزامن. لا تغير breakpoint التصميم افتراضيًا دون قرار.
+- Status: open.
+
+### S3-15 [P2] بيع فقط لا يخفي جميع عروض التركيب المعلنة
+- Where: scripts/tc-settings.cjs:78–79; app/components/tires/features/cardSettings.ts:40–42; app/components/home/ServicesBento.tsx:48–55; app/components/layout/TcHeader.tsx:77–78.
+- What happens: IDs `tc_store_type=sale`, `tc_topbar_text`, `tc_footer_about`; مكوّنات `home.services-bento → big_*`, `home.services-row → cards`, و`home.double-banner → dark_*`. useSellsFitting يستخدم فقط في InstallBanner/InstallCenters/InstallBooking. الأزرار والبطاقات الأخرى تعرض عروض وروابط التركيب وتبقى فعالة؛ النص التعريفي يقول إن نوع المتجر يخفي أقسام التركيب. تعديل النصوص ممكن لكنه لا يطفئ كل بطاقة منفردة.
+- Fix idea: تعريف دقيق لنطاق نوع المتجر، ومفاتيح إظهار لخدمات/بطاقات التركيب المختلطة، وربطها بسياسة sale. لا تعتبر كل خدمة «تركيب» تلقائيًا؛ التاجر يحددها. هذه مشكلة وعد/تحكم، وليست اعتراضًا على محتوى قابل للتعديل.
+- Status: open.
+
+### S3-16 [P2] النوافذ المفعلة تترك التنقل والتركيز خارج الحوار
+- Where: app/components/layout/TcExtras.tsx:171–175; app/components/tires/features/Compare.tsx:140–147; app/styles/04-components/tc-theme-ui.scss:80–82; app/styles/04-components/mobile-bottom-bar.scss:18.
+- What happens: IDs `tc_popup_show`, `tc_popup_where`, `tc_compare`, `tc_bottombar`. Popup/Compare يضعان aria-modal وautoFocus بلا حجز/إعادة تركيز أو inert/قفل تمرير؛ Tab يمكنه متابعة عناصر خلف الحوار. z-index الحوار=90 مقابل الشريط السفلي=220، فيبقى الشريط فوق نافذة الخصم على الجوال، ويمكن الانتقال من وراء حوار معلن modal. مثبت بالتركيب والقواعد؛ لم أدّعِ اختبار لوحة مفاتيح حي.
+- Fix idea: استعمال أداة useDialogFocus الموجودة أو dialog موحد مع trap/restore/scroll lock، ووضعه فوق عناصر التنقل أو تعطيلها أثناء الفتح. اختبر Escape وTab والعودة لمصدر الفتح.
+- Status: open.
+
+### S3-17 [P2] الاشتراك بالفوتر مختلف عن مكوّن النشرة ولا يوضح متابعة الطلب
+- Where: scripts/tc-settings.cjs:200–201; app/components/layout/TcFooter.tsx:67–79; scripts/tc/23-newsletter.cjs:12–14.
+- What happens: IDs `tc_footer_news`, `tc_footer_news_link` مقابل `home.newsletter → mode/signup_link/store_email`. الفوتر يفتح رابطًا/برنامج بريد دون أي رسالة عند فشل فتح التبويب أو توضيح أن الاشتراك يُستكمل هناك، بينما مكوّن النشرة لديه status لذلك. ربط أحدهما بخدمة لا يربط الآخر؛ التاجر يضبط مكانين لنفس المهمة. store_email في مكوّن النشرة يبدأ info@example.com كقيمة فعلية لا placeholder؛ الانتقال لوضع البريد قد يرسل الطلب لهذا المثال بدل بريد المتجر.
+- Fix idea: مرجع اشتراك عام يمكن للمكوّن تجاوزه بوضوح، واستخدام نفس معالجة متابعة/تعذر فتح الخدمة. اجعل البريد فارغًا مع fallback موثق لبريد المتجر أو مثال placeholder. لا تضف نظام نشرات backend ولا تأكيد اشتراك غير حاصل.
+- Status: open.
+
+### S3-18 [P2] أربعة إعدادات موروثة لا تغير الواجهة المستخدمة
+- Where: twilight.json:2499 و:2533 و:2541 و:2657; app/components/home/EnhancedSquareBanners.tsx:39 و:92; app/components/home/FixedProducts.tsx:21.
+- What happens: IDs `squar_photo_bg_image_size`, `vertical_fixed_products`, `is_more_button_enabled`, `imageZoom`. لا تقرأ الثلاثة الأولى/الأخير ملفات app. المحرك يقرأ is_more_button_enabled في MainMenu فقط، لكنه غير مركّب بالهيدر الجديد الذي يستخدم HeaderNav. الصور المربعة تستخدم bg-cover ثابتًا، وFixedProducts يقرأ data.is_vertical وليس الإعداد العام؛ ProductGallery يفتح preview ولا يقرأ imageZoom. كانت قراءة المحرك لـnotify_when_available_in_card سببًا لاستبعاده من قائمة الإعدادات المعطلة.
+- Fix idea: وصل الخيارات الفعلية أو احذف الحقول غير المدعومة مع خطة ترحيل وعدم خسارة إعدادات التجار. لا تترك اختيار Contain أو zoom بلا أثر.
+- Status: open.
+
+### S3-19 [P2] ثقة الفوتر تقرأ إعدادًا أزيل من JSON
+- Where: scripts/tc-settings.cjs:243; app/components/layout/Footer.tsx:123; app/components/layout/TcFooter.tsx:142.
+- What happens: ID read `theme.settings.footer_is_dark` لا يوجد في settings[] بعد REMOVED، لكنه مستهلك حي داخل FooterTrust الذي يستدعيه TcFooter. لا يُمرر dark لشارات الثقة رغم الفوتر الداكن/الوضع الداكن. توجد قراءات موروثة أخرى بلا تعريف لكنها في Header/Footer القديمين غير المركبين، موثقة أدناه ولا تُعد أعطالًا حية.
+- Fix idea: استنتاج dark من هوية الفوتر الفعلية أو تمرير prop واضح لـFooterTrust؛ لا تعيد إعدادًا ميتًا فقط لإرضاء قراءة قديمة.
+- Status: open.
+
+### S3-20 [P2] حقول وإعدادات مشتركة ناقصة في المكونات الموروثة المتاحة
+- Where: twilight.json:14220; app/components/home/MainLinks.tsx:57; app/router.tsx:50–54; scripts/tc-fields.cjs:40–46.
+- What happens: ID `home.main-links → merge_with_top_component` بينما المستهلك يقرأ merge_links_with_top_component؛ اختيار الدمج لا يصل إليه. ستة home components موروثة ما زالت معرفة/متاحة: enhanced-slider/main-links/slider-products-with-header/enhanced-square-banners/brands/custom-testimonials؛ كلها لا تعرف `show_mobile`, `show_desktop`, `space_top`, `space_bottom`, `custom_class`, `tc-cover` كالـ23 المخصصة. قاعدة «كل مكوّن» ليست متحققة على جميع المعروضات. لا يجوز افتراض أن metadata position/is_repeated حقول تاجر ناقصة؛ هي بيانات محرك.
+- Fix idea: توحيد id الدمج أو adapter له، وتحديد هل هذه الستة جزء من الثيم المعروض للتاجر؛ إن نعم، وفر التحكم المشترك عبر wrappers/fields مناسبة دون تغيير تصميمها. تحقق من دعم المحرر والتحديث قبل إزالة مكوّن سبق استخدامه.
+- Status: open.
+
+### S3-21 [P3] الهوية تبدأ بتفاصيل كثيرة وبعض التسميات لا تشرح نطاقها
+- Where: scripts/tc-settings.cjs:37–59 و:110 و:190; scripts/tc-fields.cjs:46.
+- What happens: IDs `tc_color_on_primary`, `tc_radius`, `tc_pattern`, `tc_loader_show`, `tc_brand_sub`, `tc_footer_news_link`, والمشترك `custom_class`. الهوية أولًا تشمل نمطًا/loader/ألوانًا قبل قرار وحدة البيع والمصدر؛ «الهيدر/الفوتر/السوشال» مصطلحات يمكن توضيحها «رأس المتجر/أسفل المتجر/حسابات التواصل». نصوص التاجر القابلة للعرض كلها multiline-aware حسب الحاجة؛ EN maps تغطي الافتراضيات المستخدمة في ملفات layout، لكن عناوين مجموعات المحرر والمساعدة والخيارات نفسها عربية فقط. دعم ترجمة labels للوحة إنجليزية يحتاج تحقق؛ لا أعده رفضًا مؤكدًا من سلة.
+- Fix idea: إعداد أول يوم مختصر، والمظهر المتقدم منفصل، ونص مساعدة يحدد النطاق والأولوية والفراغ. إبقاء custom_class تحت «للمطورين». لا تحذف الحقول المطلوبة بالمواصفات لمجرد كثرتها.
+- Status: open.
+
+### S3-22 [P3] إعداد طي الفوتر في مجموعة الجوال بدل أسفل المتجر
+- Where: scripts/tc-settings.cjs:157; app/components/layout/TcFooter.tsx:40–45.
+- What happens: ID `tc_footer_accordion` يظهر بعيدًا عن إعدادات الفوتر. عند تفعيله تتحول h4 لأزرار قابلة للتركيز حتى على الكمبيوتر، بينما الطي CSS خاص بالجوال؛ الضغط على عنوان الكمبيوتر لا يغيّر نتيجة مرئية.
+- Fix idea: انقله إلى مجموعة الفوتر بعنوان «طي الأعمدة على الجوال»، واجعل semantics التفاعلية تتبع breakpoint، مع عدم اختلاف hydration الأولي.
+- Status: open.
+
+### S3-23 [P2] الإعدادات القديمة تبدو جزءًا من الفوتر وتحتاج توزيعًا وظيفيًا
+- Where: twilight.json:2473–2657; scripts/tc-settings.cjs:245–246.
+- What happens: IDs `squar_photo_bg_image_size`, `vertical_fixed_products`, `is_more_button_enabled`, `product_show_breadcrumbs`, `product_index_show_breadcrumbs`, `enable_add_product_toast`, `notify_when_available_in_card`, `sticky_add_to_cart`, `product_bottom_nav_rounded`, `show_tags`, `slider_background_size`, `imageZoom` تُضاف بعد «أسفل الفوتر» دون عنوان مجموعة جديد. يوحي الترتيب أن الوسوم وصور المنتج والإضافة إعدادات للفوتر، ويصعب العثور عليها. أربعة منها بلا أثر أصلًا حسب S3-18.
+- Fix idea: حذف غير المستخدم، ونقل المنتج/الصور لمجموعة «صفحة المنتج»، الإشعار للسلة، التنبيه للبطاقة، breadcrumb القوائم للتصنيف والبحث، وشكل التنقل للجوال. قرارات الـ12 بالتفصيل في الجدول أدناه.
+- Status: open.
+
+### S3-24 [P2] إطفاء الشريط السفلي يترك شريط شراء المنتج مرتفعًا
+- Where: app/components/layout/ThemeLayout.tsx:82; app/styles/04-components/mobile-bottom-bar.scss:221–226; app/styles/04-components/tc-theme-ui.scss:193–197.
+- What happens: IDs `tc_bottombar`, `sticky_add_to_cart`. عندما bottombar=false يختفي التنقل وتعود الأزرار العائمة ودرج المقارنة للأسفل بقواعد tc-nobar، لكن شريط شراء المنتج يبقى bottom=76px+safe-area بقاعدة !important، وbody يبقى محجوزًا له 76px إضافية. إخفاء الشريط لا يعيد كامل تخطيط المنتج لحالته. كذلك tc-nobar يتطلب boolean false حرفيًا، بينما MobileBottomBar يقبل string 'false' عبر asBool؛ هذا الفرع اختلاف مؤكد بالكود، وشكل payload سلة يحتاج checking.
+- Fix idea: ربط مساحة الشريط ورفع شريط الشراء بمصدر boolean موحّد أو CSS variable؛ إطفاؤه يعيد شريط الشراء إلى safe-area فقط ويزيل مساحة التنقل مع الحفاظ على مساحة الشراء نفسه.
+- Status: open.
+
+### S3-25 [P3] أهداف ضغط صغيرة في المقاس والتواصل والمقارنة
+- Where: app/styles/04-components/tc-theme-ui.scss:35 و:41 و:77.
+- What happens: IDs `tc_mysize_chip`, `tc_footer_social`, `tc_compare`. زر نسيان المقاس بعرض 30px، روابط التواصل 38×38px، حذف إطار من المقارنة 20×20px. هذه أقل من هدف 44px المطلوب في نطاق المراجعة، ويصعب ضغط الحذف على الجوال. قراءة CSS فقط؛ لا تُحوَّل هذه القيم وحدها إلى ادعاء فشل Lighthouse أو WCAG شامل.
+- Fix idea: مساحة ضغط فعلية لا تقل عن 44×44px مع إبقاء حجم الأيقونة وشكل التصميم المرئي، ومنع تداخل hit areas المجاورة.
+- Status: open.
+
+### قائمة الإعدادات بلا تأثير مقابل القراءات بلا تعريف
+
+| النوع | IDs | الدليل والتفسير |
+|---|---|---|
+| لا قراءة أصلًا | `tc_warranty` | S3-5؛ ليس static، بل حقل إدخال بوعد ظاهر. |
+| تُقرأ لكن الناتج غير مستخدم | `tc_cols_d`, `tc_cols_t`, `tc_cols_m` | S3-6؛ CSS variables ليست دليلًا على وجود consumer فعلي. |
+| موروثة بلا أثر بالواجهة الحالية | `squar_photo_bg_image_size`, `vertical_fixed_products`, `is_more_button_enabled`, `imageZoom` | S3-18؛ is_more يُقرأ داخل محرك غير مستخدم هنا. |
+| قراءة عبر المحرك صحيحة | `notify_when_available_in_card` | dist/chunk-6YIAULAP.js:44، عبر EngineProductCard في صفحات القوائم. ليس إعدادًا ميتًا، لكنه لا يغطي البطاقات المخصصة. |
+| قراءة موجودة وتعريف موجود | `product_show_breadcrumbs`, `product_index_show_breadcrumbs`, `enable_add_product_toast`, `sticky_add_to_cart`, `product_bottom_nav_rounded`, `show_tags`, `slider_background_size` | تتبعت ملفات ProductPage/ProductListPage/hooks/MobileBottomBar/ProductGallery. شكل dropdown الخاص بـslider_background_size لا يُطبّع هنا؛ المحرك يستعمل العقد نفسه، لذلك قبول الشكل الفعلي يحتاج اختبار payload سلة ولا أثبته من قيمة تعريف JSON. |
+| قراءة حية بلا تعريف محلي | `footer_is_dark` | S3-19. |
+| قراءات بلا تعريف في layout قديم غير مركب | `header_layout`, `header_is_sticky`, `header_show_store_info`, `footer_layout` | Header.tsx:77/153/154 وFooter.tsx:145؛ ThemeLayout يركب TcHeader/TcFooter. ليست أعطالًا حية؛ نظّفها أو وثّق التوافق. |
+| قراءات بلا تعريف قد توفرها منصة سلة | `font`, `product_card_img_ratio` | ThemeTokens.tsx:73 وThemeLayout.tsx:74؛ كلاهما موجود في ThemeSettings للمحرك المثبت. font له أيضًا theme.font موثق بالنوع. مصدر product_card_img_ratio الفعلي من المنصة **يحتاج تحقق**؛ إن لم يُرسل يجب إضافة تعريف محلي أو حذف الوعد. غياب JSON لا يثبت غياب بيانات المنصة. |
+
+لا وجدت أي قراءة `tc_*` بلا تعريف. static titles/tips/covers لا يفترض قراءتها في React؛ دورها شاشة محرر سلة. صور الأغلفة للـ23 المخصصة موجودة، وحقول الظهور والمسافات وcustom_class موجودة وتستخدم Section، باستثناء أن visibility الحالي يجمع التابلت مع الكمبيوتر ولا يعطي خيارًا منفصلًا.
+
+### قرار كل إعداد قديم ومكانه الصحيح
+
+| ID | القرار والمجموعة | تسمية مقترحة / السبب |
+|---|---|---|
+| squar_photo_bg_image_size | إزالة حتى التنفيذ | لا يُقرأ؛ صور المكونات المربعة تستخدم cover. S3-18. |
+| vertical_fixed_products | إزالة حتى التنفيذ | ليس مصدر وضع FixedProducts الحالي؛ لا توهم بإعداد عام. |
+| is_more_button_enabled | إزالة | MainMenu الذي يقرأه ليس الهيدر المستخدم. |
+| product_show_breadcrumbs | إبقاء → صفحة المنتج | «إظهار مسار التنقل في صفحة المنتج». لا تكرر تحكم المنصة دون توضيح الأولوية؛ needs checking في محرر حي. |
+| product_index_show_breadcrumbs | إبقاء → التصنيف والبحث | «إظهار مسار التنقل في قوائم المنتجات». |
+| enable_add_product_toast | إبقاء → السلة والإضافة | «إظهار إشعار بعد إضافة المنتج للسلة»؛ المستهلك app/hooks/index.tsx:13. |
+| notify_when_available_in_card | إبقاء → بطاقة المنتج | «إظهار أعلمني عند التوفر للمنتجات النافدة»؛ المحرك يقرأه، لكن عممه على البطاقات المخصصة. |
+| sticky_add_to_cart | إبقاء → صفحة المنتج | «تثبيت زر الشراء على الجوال»؛ ربط المساحة مع الشريط السفلي S3-24. |
+| product_bottom_nav_rounded | إبقاء → الجوال والتنقل | «شريط التنقل بحواف مستديرة في صفحة المنتج»؛ يخفي حقله عند bottombar=false إذا supported. |
+| show_tags | إبقاء → صفحة المنتج | «إظهار وسوم المنتج» بدل «اظهار الوسوم» العامة. |
+| slider_background_size | إبقاء → صفحة المنتج / الصور | «ملء صور المنتج: كاملة / اقتصاص»؛ تحقق payload dropdown. |
+| imageZoom | إزالة حتى التنفيذ | lightbox الحالي لا يقرأه؛ لا تترك مفتاحًا لا يتحكم بالتكبير. |
+
+### تحقق إضافي: الافتراضيات، الأجهزة والتعارضات
+
+- فحص مباشر لـ53 قراءة asBool/opt لإعدادات عامة: لم تظهر مخالفة قيمة افتراضية بينها وبين التعريف. الأرقام المتعلقة بالشعار/الدفعات والـpresets راجعت يدويًا. ليست تغطية لكل قراءة ديناميكية بالمحرك.
+- اختلاف افتراضي مؤكد: `slider_background_size` في twilight.json:2623 اختياره contain، بينما ProductGallery.tsx:39 يرجع إلى cover عند غياب القيمة. وحّد fallback مع الإعداد، بعد التحقق من تحويل شكل dropdown عند سلة. لا يعني ذلك أن القيمة المرسلة contain تُتجاهل.
+- `where()`: all بلا class، desktop يظهر >1100، wide من 768، narrow حتى 1100، mobile أقل من 768. القيم الخمس موجودة ومطابقة للـCSS عند 375/768/1100/1101 وفق فحص المصدر. لم أجِد mapping خاطئًا؛ S3-12/14 تخص تطبيق السياسة على العنصر لا تحويل القيمة.
+- كل parent في DEPS موجود؛ شروط boolean تستخدم boolean، وشروط القوائم تستخدم value موجودًا بخيارات الأب. السلسلة الوحيدة بين إعدادات عامة مشروطة هي topbar_phone_where → topbar_phone → topbar_show؛ الوراثة التلقائية لإخفاء المحرر needs checking. النواقص في S3-11.
+- بيع فقط + تركيب مجاني: شارة بطاقة hook تُخفى، و3 أقسام تركيب تستخدم useSellsFitting. الخدمات المختلطة تبقى؛ S3-15. لا أسجل الجزء السليم كعطل.
+- `tc_wa_show=true` بلا رقم: العائم لا يظهر وفق validation؛ سلوك سليم. `tc_card_price=ask` بلا رقم يرجع للسعر بدون تنبيه؛ S3-4/2.
+- `tc_search_show=false`: form البحث وأيقونة الجوال وSallaSearch كلها مشروطة بنفس searchOn فلا يوجد مستهلك بحث مخفي بالهيدر. طريقة فتح بحث أخرى من إضافة خارجية ليست مثبتة هنا.
+- `tc_bottombar=false`: spacing العائم/الدرج يعالج boolean false، لكن رفع شراء المنتج لا يُعاد؛ S3-24. string false اختلاف adapter، وليس إثبات payload حي.
+- افتراضيات المحتوى العربية مع multilanguage:true تُترجم افتراضياتها في EN maps بالمستهلكين المستخدمين؛ عدم وجود object {ar,en} في JSON وحده ليس خطأ. tc_warranty غير منفذ أصلًا. labels وعناوين مجموعات المحرر عربية؛ دعم ترجمتها needs checking. make/model في cars بيانات مفاتيح ثابتة، وترجمة أسماء مخصصة تحتاج طريقة عرض منفصلة دون تغيير المعرّف.
+- المقارنة البصرية هنا من markup/CSS فقط: final.html:44–47 للشريط، :855–867 للهيدر، وأشكال الأقسام المعتمدة. S3-9/14/24 وقيود ألوان الداكن تؤثر في الاتساق؛ لا توجد لقطة render لكل سيناريو ولا ادعاء مطابقة 100%.
+
+### S3 — Missing settings
+
+هذه اقتراحات مجال تُراجع مع صاحب الثيم؛ لا تتحول جميعها إلى أعطال أو التزام بتنفيذ قبل اعتمادها. IDs المقترحة التالية جديدة وليست ادعاء بأنها موجودة.
+
+| المقترح | المجموعة/النوع/الافتراضي | السبب | الأولوية |
+|---|---|---|---|
+| توحيد وحدة البيع وتسمية الكمية | الإطارات؛ reuse `tc_sale_unit`/`tc_default_qty` بدل حقول جديدة | يمنع شراء 4 أطقم وحساب سعر طقم غلط | MUST؛ S3-1 |
+| الضمان الحقيقي لكل منتج وDOT | صفحة المنتج؛ switches عرض metadata المتاحة + نص شرح؛ افتراضي عرض الموجود فقط | بيانات ضمان وسنة مختلفة لكل إطار؛ لا تختلق API أو موعد صنع | SHOULD؛ مصدر metadata يحتاج تحقق |
+| وجهة المقاس عند غياب أداة الرئيسية | التنقل؛ link picker، افتراضي وجهة موجودة | مدخل التسوق الأساسي لا يكون anchor مفقودًا | MUST؛ S3-3 |
+| سياسة «اطلب السعر» دون رقم واتساب صالح | البطاقة؛ اختيار/تحقق setup، لا default يعلن خدمة غير مفعلة | منع سعر علني مخالف للضبط، وتوضيح فشل الإعداد | MUST؛ S3-2/4 |
+| التحكم بالخدمات المختلطة | كل مجموعة خدمات؛ switches للبطاقات، افتراضي كما التصميم | متجر بيع فقط يستطيع تعطيل بطاقة تركيب دون حذف خدمات أخرى | SHOULD؛ S3-15 |
+| مصدر الاشتراك الواحد | التواصل؛ mode + link/email، افتراضي غير مربوط لا يؤكد اشتراكًا | نفس وجهة الفوتر والنشرة دون تكرار ضبط؛ رابط/بريد فقط | SHOULD؛ S3-17 |
+| توضيح مراكز الحجز ووقت العمل | التركيب؛ نص مساعدة وتواريخ/أوقات عرض متاحة، WhatsApp/link | الطلب رسالة وليس نظام حجوزات وسعة؛ افتراضي بلا ادعاء تأكيد | SHOULD؛ يحتاج قرار الخدمة |
+| بيانات رسوم التركيب/التوصيل | روابط سياسات المتجر/الشحن الموجودة؛ link picker ونص، فارغ | الزبون يعرف شروط الخدمة؛ الأسعار الحقيقية من شحن/خدمات سلة | SHOULD |
+| الأربع إطارات للمنتجات المناسبة فقط | البطاقة/المنتج؛ استخدام خيارات أو metadata المتاحة، لا qty عالمي لكل شيء | متجر الإطارات قد يبيع أدوات أو خدمات أو أطقمًا | SHOULD؛ قدرة البيانات تحتاج تحقق |
+| حالة مقاس غير متوفر | البحث؛ نص عربي/إنجليزي + وجهة تواصل اختيارية، افتراضي «لا توجد نتائج» | مقاس غير متاح يحتاج بديل أو استفسار لا شاشة تختفي | SHOULD |
+| نفاد المخزون موحد | reuse `notify_when_available_in_card` للبطاقات المخصصة | الاشتراك بتوفر المخزون من سلة، لا خدمة backend من الثيم | SHOULD؛ عقد SDK يحتاج تحقق |
+| إظهار هوية الفوتر وعمود التواصل | الفوتر؛ switches، افتراضي نعم | إطفاء phone/email/news/city يترك عنوان «تواصل» وعمودًا فارغًا؛ TcBrand دائم أيضًا | SHOULD |
+| اختيار أجهزة للهيدر/أسفل المتجر | reuse devices dropdown عند حاجة فعلية؛ افتراضي التصميم | خيارات موحدة بدل وعد «تابلت» غير محقق | NICE؛ S3-14 |
+| قياس وصول وأداء للسيناريوهات | QA وليس حقول تاجر جديدة | لا تضف إعداد SEO وهميًا؛ metadata والقياسات من المصادر الفعلية | MUST قبل الإصدار؛ غير مقاس هنا |
+
+إعدادات حساب العميل والسلة والمنتج/التصنيف التفصيلية ضمن المرحلة التالية في HANDOFF؛ عدم تنفيذها بعد لا يجعل كل اقتراح P1 الآن. لا حاجة لحقول تعيد إعدادات المنصة: حماية المحتوى، الأرقام، breadcrumb، «صنع بإتقان»، طرق الدفع والشحن الحقيقية. breadcrumb محلي موجود للصفحتين، ويجب توثيق علاقته بخيار المنصة إن كانا ظاهرين معًا؛ اللقطة الحية لذلك غير متاحة دون شبكة.
+
+### S3 — Per-component gaps
+
+IDs هنا فعلية إلا النصوص الموسومة «مقترح». إضافة حقول تتحكم بالمظهر فقط لا تنشئ خدمة سلة أو backend.
+
+
+#### home.tire-hero
+
+- الهوية العامة لا تصل إلى نطاقه (S3-9). `image_mode` ومجموعة `slides` تحتاج ترتيب «المحتوى/الوسائط/الزر/الحركة»؛ `slides_interval` مدة البقاء و`slides_speed` مدة الانتقال، وضح الفرق. افتراضيات اختيار قوائم داخل الصفوف تحتاج حفظ/إعادة فتح في سلة؛ لا أثبت خلل serialization هنا.
+
+#### home.size-finder
+
+- `default_width/default_ratio/default_rim` نصوص تُرجع للافتراضي إن أخطأ الإدخال؛ قوائم صالحة أنسب. `popular_widths/popular_ratios/popular_rims` حتى 6 قيم تحتاج تحقق وشرح 22.5. `match_by` يتجاوز العام؛ خيار «حسب إعداد المتجر» مقترح. S3-3/7/13.
+
+#### home.benefits-strip
+
+- `items.icon/title/text`: تسمية «عنوان الميزة/وصفها القصير»، وشرح الحد 2–4 في المجموعة. اسم الأيقونة الافتراضية بالمحرر يحتاج تحقق حفظ حي؛ الصورة السابقة تثبت حالة واحدة فقط.
+
+#### home.tire-slider
+
+- `add_qty` override غير معلن؛ S3-1. `products_source` مع اختيار ناقص يعود افتراضيًا عبر sourceFrom؛ وضح/تحقق الاختيار. `limit` وعدد المختارات يحتاجان سياسة واضحة. إعدادات set/year/compare لا تعمل كلها في هذا النوع رغم الوصف العام.
+
+#### home.brands-marquee
+
+- `brands_source`: وضّح إدارة الشعارات بسلة عند store؛ `brands.name/logo/link` اليدوي لا يحتاج أنواع روابط غير مفيدة للمهمة إلا إن أرادها التاجر. `animate/speed` واضحان بالشروط؛ لا حقل backend ناقص.
+
+#### home.category-cards
+
+- `cards.image/icon`: وضح أولوية الصورة؛ `cards.link` وجهة الفئة، و`cards.highlight` تمييز بصري فقط. عنوان الصف الأدنى وشرح الحدود يساعدان على منع بطاقات ناقصة.
+
+#### home.shop-by-car
+
+- `cars_paste/use_builtin/cars`: المصدر الحالي ذو أولوية غير ظاهرة؛ يرفض صفوفًا بصمت ويصحح سنوات معكوسة. مصدر واضح وقالب استيراد وفحص الصفوف مقترح. لا تضف توصية مصنع مؤكدة دون بيانات ملائمة لفئة السيارة.
+
+#### home.tire-grid
+
+- `columns` محلي مقابل tc_cols* العام دون أولوية؛ S3-6. `products_source/category/brand/selected` تحتاج تحقق اختيار المصدر، و`limit` ليس كل مخزون المتجر. fallback حالات صفر نتائج يحتاج توضيح للتاجر.
+
+#### home.double-banner
+
+- `dark_*` و`light_*`: بطاقة تركيب مختلطة لا يمكن إطفاؤها منفردة؛ switches مقترحة S3-15. `reverse` وضح تأثيره على الجوال والكمبيوتر.
+
+#### home.tire-picker
+
+- `sizes.price/tiers.factor` أسعار يدوية لا تقرأ سعر المنتج المربوط، وتقرب لأقرب 5؛ بيان ذلك لازم. `priorities.tier` مرتبط بموقع الفئة ويحتاج اسم/معرّف ثابت أو تنبيه بعد إعادة الترتيب. لا يستوعب tc_sale_unit الآن.
+
+#### home.services-bento
+
+- `calc_min/calc_max`: علاقة أعلى>أدنى غير متحققة ويصحح الكود الأعلى؛ تحقق ومدى مساعد. `calc_parts/calc_providers` تقدير/نص وليسا تفعيل دفع. `big_*/small_*/fleet_*` تحتاج switches للخدمات المختلطة S3-15.
+
+#### home.ticker
+
+- `items.text/link/number`: توضيح أن الأرقام تتبع ترتيب الصفوف، وأن غياب الرابط يجعل العنصر نصًا. `speed/pause_on_hover` منطقية؛ لا حاجة لأجهزة لكل صف إلا طلب فعلي.
+
+#### home.services-row
+
+- `cards.art` يحدد الحقول المؤثرة؛ `cards.label` مخفي في photo (S3-11). `cards.title` فارغ يخفي بطاقة، بينما الحقل اختياري؛ شرح/تحقق. نوع خدمة/إظهار بطاقة مستقل مقترح.
+
+#### home.install-banner
+
+- `image/caption/caption_ar` تسميات موضعية، وليست لغتين بديلتين؛ وضّح ذلك. `steps` نصوص خطوات لا تأكيد تركيب فعلي. نوع المتجر يخفيه بالفعل.
+
+#### home.install-centers
+
+- `centers.open_now` يدوي غير محسوب من `hours`؛ وصف صريح. `name` فارغ يخفي المركز، وmap_link/book_link غيابهما يخفي الزر؛ هذه المساعدة موجودة وجيدة. إظهار صورة/دوام مستقل NICE.
+
+#### home.install-booking
+
+- `day_1/day_2/day_3` تسميات اليوم+1/+2 وليست أيام حجز يحددها التاجر؛ منع الالتباس. `slots.time` تحقق 24 ساعة موجود؛ `booking_mode/whatsapp/book_link` طلب خارجي، لا سعة/تأكيد. شروط شارة بادج S3-11.
+
+#### home.call-strip
+
+- `phone` يجب أن يذكر الصيغة ودعم رمز الدولة؛ الفراغ يخفي الزر بالفعل. لا تخلطه مع رقم واتساب؛ reuse رقم المتجر المقترح موثق الأولوية.
+
+#### home.steps
+
+- `steps.icon/title/text`: بيان الترقيم حسب السحب. حدود 2–4 واضحة بالمقدمة؛ تحقق عنوان صف موجود، وتحقق default القوائم الحي عند التطبيق.
+
+#### home.lineup
+
+- `products_selected` يسمح 16 ويعرض 4؛ حد خاص بالمكوّن أو وصف عند الحقل. تجاهل ask-price ووحدة البيع S3-1/2. `show_type` موجود ويعمل.
+
+#### home.reviews
+
+- `source` manual/store أوله مناسب؛ مصدر store يعتمد تقييمات سلة الحقيقية. `reviews.text` فارغ يستبعد الصف بلا تنبيه. لا تضف «موثق» لرأي يدوي دون دليل؛ `limit` وضح قصّ القائمة/مصدر الجلب.
+
+#### home.blog
+
+- `limit` و`all_link`: المصدر آخر مقالات سلة، وضح أن إدارة المقالات خارج المكوّن. لا حقول لكتابة مقال وهمي؛ empty-state مقترح في المعاينة.
+
+#### home.faq
+
+- `items.q/a` اختياريان لكن العرض يتطلب كليهما؛ شرح/تحقق صف كامل. `open_first` موجود. سياسة إخفاء النص الذهبي تتبع مسح title_2 وهو مدعوم عبر makeT، وليس غياب switch عطلًا بذاته.
+
+#### home.newsletter
+
+- `mode/signup_link/store_email`: أصلح المثال كبريد فعلي S3-17 ووحّد الربط مع الفوتر. fields للـnewsletter backend غير مناسبة للثيم؛ خدمة خارجية أو mailto فقط.
+
+#### home.enhanced-slider
+
+- ينقصه المشترك والغطاء؛ S3-20. `slides.image/title/description/without_overlay` تُراجع في wrapper الحالي؛ النصوص resolved من المحرك، اختبار {ar,en} الحي يحتاج تحقق.
+
+#### home.main-links
+
+- `merge_with_top_component` لا يطابق id المستهلك؛ S3-20. `show_cats/categories/links` شروط موجودة. يلزمه المشترك إذا بقي ضمن الثيم.
+
+#### home.slider-products-with-header
+
+- `background/title/description/products/display_all_url`: السورس يدوي واضح؛ ينقص المشترك والتحكم بصورة الخلفية إذا بقي ضمن الثيم، S3-20.
+
+#### home.enhanced-square-banners
+
+- `banners.image/url/title/description`: crop ثابت رغم `squar_photo_bg_image_size` العام؛ S3-18. غطاء/مشترك ناقص، S3-20.
+
+#### home.brands
+
+- `title/brands`: مكوّن محرك مع قائمة ماركات؛ ليس بلا مستهلك لمجرد غياب ملف باسم Brands. يلزمه المشترك/الغطاء إن بقي متاحًا؛ مختلف عن brands-marquee ويحتاج شرح فرق الشكل للتاجر.
+
+#### home.custom-testimonials
+
+- `items.name/avatar/stars/text` تمر إلى TestimonialsCarousel، لذا ليست ميتة رغم عدم قراءتها مباشرة بالملف. ينقص الغطاء/المشترك؛ وضّح الفرق عن reviews المصدر الحقيقي.
+
+### S3 — Proposed final group order
+
+1. **أساس متجر الإطارات:** نوع المتجر، وحدة البيع، كمية الإضافة، مكان المقاس/السنة، الضمان؛ إعداد أول يوم.
+2. **الهوية:** قالب أو لون سلة أو يدوي بأولوية واحدة، الخطوط؛ التفاصيل والزوايا والنقشة متقدم.
+3. **رأس المتجر والشريط العلوي:** النص والوجهة، الشعار، البحث، التنقل، زر المقاس؛ الدمج في مجموعة رئيسية مع عناوين فرعية.
+4. **بطاقات المنتجات والتسوق:** السعر/طلب السعر، البيانات، الكمية والمقارنة والمقاس المحفوظ؛ الأعمدة تحت «عرض القوائم» بعد تنفيذها.
+5. **الجوال والتنقل:** الشريط السفلي وأجهزته؛ إخفاء الاختيارات غير المؤثرة.
+6. **التواصل والحملات:** الرقم المشترك، العائم، الاتصال، الخصم والاشتراك؛ إعدادات يومية.
+7. **أسفل المتجر:** الهوية والنبذة والأعمدة والتواصل والطي والدفع والثقة.
+8. **المظهر المتقدم:** الداكن مع تعريف صريح للسلوك، loader والنقشة؛ custom_class ضمن المكوّنات للمطورين.
+
+### S3 — Remove or merge
+
+الدمج/الحذف المقترح: إزالة الأربعة الموروثة غير المستخدمة أو وصلها؛ دمج وجهة الاشتراك وأرقام التواصل؛ عدم تكرار عدد دفعات عام مع حاسبة محلية دون override معلن؛ نقل tc_footer_accordion للفوتر. لا تضف مفاتيح لكل زينة صغيرة إذا كان مسح النص يخفيها بالفعل؛ كل عنصر وظيفي مستقل يجب أن يملك طريقة إخفاء مفهومة.
+
+### S3 — Suggestions
+
+اختبر payload سلة والحفظ وإعادة الفتح والشروط المتسلسلة دون مسح قيم مخفية؛ Arabic/English؛ بيع طقم مقابل حبة وكمية 1/4؛ ask-price برقم/بدون رقم وعبر الرئيسية/التصنيف/البحث؛ المصدر tags/options للمقاس والسنة؛ الأجهزة 375/768/1100/1101؛ off/auto/on مع اختيار محفوظ؛ المقارنة والخصم مع لوحة مفاتيح وشريط الجوال. افحص Lighthouse على الصفحات الفعلية بعد ذلك؛ هذه الجولة لا تمنح نتيجة أداء/وصول مقاسة. صور الإصدار تحتاج ترخيصًا تجاريًا، مع أغلفة وديمو إطارات عند مرحلة النشر، كما تنص ملاحظات المشروع.
+
+

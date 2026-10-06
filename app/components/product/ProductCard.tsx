@@ -4,6 +4,8 @@ import { ProductCard as EngineProductCard } from '@salla.sa/twilight-theme-engin
 import { SallaButton } from '@salla.sa/twilight-components-react/button';
 import { useWishlist } from '@salla.sa/twilight-theme-engine/hooks/useWishlist';
 import { useTranslation } from '@salla.sa/twilight-theme-engine/i18n';
+import { useCardSettings } from '../tires/features/cardSettings';
+import { useLang } from '../home/fields';
 
 type ProductCardProps = ComponentProps<typeof EngineProductCard>;
 
@@ -29,6 +31,11 @@ type ProductCardProps = ComponentProps<typeof EngineProductCard>;
  */
 export function ProductCard(props: ProductCardProps) {
   const ref = useRef<HTMLDivElement>(null);
+  // theme settings «بطاقة المنتج» apply here too (category / search / offers pages)
+  const card = useCardSettings();
+  const askUrl = card.askUrl ? card.askUrl(props.product.name) : null;
+  const hideAdd = !card.add || !!askUrl;
+  const askLabel = useLang() === 'en' ? 'Ask for price' : 'اطلب السعر';
   const [footerEl, setFooterEl] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -37,6 +44,7 @@ export function ProductCard(props: ProductCardProps) {
 
     const sync = () => {
       root.querySelectorAll<HTMLElement>('salla-add-product-button').forEach((el) => {
+        el.style.display = hideAdd ? 'none' : '';
         // engine ships the card button fill="outline"; make it solid + centre its spinner
         el.setAttribute('fill', 'solid');
         el.setAttribute('loader-position', 'center');
@@ -52,6 +60,11 @@ export function ProductCard(props: ProductCardProps) {
       );
       if (originalWishlistBtn) originalWishlistBtn.style.display = 'none';
 
+      // «اطلب السعر»: the price is replaced by a WhatsApp link (portalled below)
+      vertical.querySelectorAll<HTMLElement>('.s-product-card-price, .s-product-card-sale-price, .s-product-card-starting-price').forEach((el) => {
+        el.style.display = askUrl ? 'none' : '';
+      });
+
       setFooterEl(vertical.querySelector<HTMLElement>('.s-product-card-content-footer'));
     };
 
@@ -59,12 +72,13 @@ export function ProductCard(props: ProductCardProps) {
     const observer = new MutationObserver(sync);
     observer.observe(root, { childList: true, subtree: true });
     return () => observer.disconnect();
-  }, []);
+  }, [hideAdd, askUrl]);
 
   return (
     <div ref={ref} style={{ display: 'contents' }}>
       <EngineProductCard {...props} />
-      {footerEl && createPortal(<FooterWishlistButton productId={props.product.id} />, footerEl)}
+      {footerEl && card.fav && createPortal(<FooterWishlistButton productId={props.product.id} />, footerEl)}
+      {footerEl && askUrl && createPortal(<a className="tc-ask-engine" href={askUrl} target="_blank" rel="noopener noreferrer">{askLabel}</a>, footerEl)}
     </div>
   );
 }

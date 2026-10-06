@@ -2,20 +2,22 @@
 // Source of truth for the look: design/final.html (approved home).
 // Every block is scoped under `.tc` so it never leaks into engine/theme styles.
 
+// identity from the theme settings (ThemeTokens: --tc-primary / --tires-black …) with the design's
+// values as fallback, so «هوية المتجر» reaches the hero too (S3-9)
 .tc {
-  --tc-gold: #ffb71b;
-  --tc-gold-2: #e9a000;
-  --tc-gold-3: #9a6a00;
-  --tc-gold-soft: #fff4d8;
-  --tc-ink: #1d2023;
+  --tc-gold: var(--tc-primary, #ffb71b);
+  --tc-gold-2: color-mix(in srgb, var(--tc-gold) 88%, #000);
+  --tc-gold-3: color-mix(in srgb, var(--tc-gold) 55%, #000);
+  --tc-gold-soft: color-mix(in srgb, var(--tc-gold) 14%, #fff);
+  --tc-ink: var(--tires-black, #1d2023);
   --tc-slate: #4a4f54;
   --tc-muted: #767b80;
   --tc-line: #e8e7e3;
   --tc-bg-2: #f5f4f0;
-  --tc-r: 14px;
-  --tc-en: 'Archivo', Arial, sans-serif;
+  --tc-r: var(--tc-radius, 14px);
+  --tc-en: var(--tc-font-en, 'Archivo', Arial, sans-serif);
   color: var(--tc-ink);
-  font-family: 'IBM Plex Sans Arabic', Tahoma, sans-serif;
+  font-family: var(--font-ar, 'IBM Plex Sans Arabic', Tahoma, sans-serif);
   line-height: 1.7;
 
   *,

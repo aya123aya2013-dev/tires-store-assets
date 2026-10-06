@@ -20,8 +20,9 @@ export function useMySizeEnabled() {
   return asBool((theme?.settings as Record<string, unknown> | undefined)?.tc_my_size, true);
 }
 
-/** remember a searched size ("205/55/16", "205/55 R16", "11R22.5"…) */
-export function saveMySize(query: string) {
+/** remember a searched size ("205/55/16", "205/55 R16", "11R22.5"…) — only when «مقاسي المحفوظ» is on */
+export function saveMySize(query: string, enabled = true) {
+  if (!enabled) return;
   try {
     if (query.trim()) localStorage.setItem(KEY, query.trim());
     window.dispatchEvent(new Event(EVT));
@@ -33,14 +34,16 @@ export function clearMySize() {
 
 /** the saved size (null on the server and before hydration, so SSR markup never differs) */
 export function useMySize(): string | null {
+  const enabled = useMySizeEnabled();
   const [v, setV] = useState<string | null>(null);
   useEffect(() => {
+    if (!enabled) { setV(null); return; }
     const read = () => { try { setV(localStorage.getItem(KEY)); } catch { setV(null); } };
     read();
     window.addEventListener(EVT, read);
     window.addEventListener('storage', read);
     return () => { window.removeEventListener(EVT, read); window.removeEventListener('storage', read); };
-  }, []);
+  }, [enabled]);
   return v;
 }
 

@@ -56,25 +56,25 @@ const G_IDENTITY = [
   ], 'ibm'),
   F.dd('tc_font_en', 'خط الأرقام والإنجليزي', [['Archivo (التصميم)', 'archivo'], ['Inter', 'inter'], ['نفس الخط العربي', 'same']], 'archivo'),
   F.dd('tc_radius', 'زوايا البطاقات والأزرار', [['ناعمة (التصميم)', 'soft'], ['حادة', 'sharp'], ['دائرية', 'round']], 'soft'),
-  F.dd('tc_pattern', 'نقشة خلفية خفيفة', [['بدون', 'none'], ['آثار إطار', 'tread'], ['نقاط', 'dots']], 'none'),
-  F.sw('tc_loader_show', 'شاشة تحميل (إطار يدور) عند فتح المتجر', false, 'تختفي أول ما تجهز الصفحة'),
 ];
 
-// 2 — dark mode
+// last — advanced look: dark mode, pattern, loader
 const G_DARK = [
-  title('tc-set-dark', 'الوضع الداكن'),
+  title('tc-set-dark', 'مظهر متقدم: الوضع الداكن والخلفية'),
   F.dd('tc_dark_mode', 'الوضع الداكن', [
-    ['مطفأ — المتجر فاتح دائماً', 'off'], ['حسب جهاز الزائر (تلقائي)', 'auto'], ['مفعّل — المتجر داكن دائماً', 'on'],
+    ['مطفأ — المتجر فاتح', 'off'], ['مفعّل — المتجر داكن', 'on'], ['تلقائي — حسب جهاز الزائر، مع زر تبديل', 'auto'],
   ], 'off'),
   F.dd('tc_dark_style', 'لون الداكن', [['فحمي (يناسب الهوية)', 'charcoal'], ['أسود', 'black']], 'charcoal'),
   F.sw('tc_dark_toggle', 'زر التبديل (فاتح / داكن) للزائر بالهيدر', true, 'الزائر يختار، ويتذكر المتجر اختياره'),
   where('tc_dark_toggle_where'),
+  F.dd('tc_pattern', 'نقشة خلفية خفيفة', [['بدون', 'none'], ['آثار إطار', 'tread'], ['نقاط', 'dots']], 'none'),
+  F.sw('tc_loader_show', 'شاشة تحميل (إطار يدور) عند فتح المتجر', false, 'تختفي أول ما تجهز الصفحة'),
 ];
 
 // 3 — tire store
 const G_TIRES = [
-  title('tc-set-tires', 'متجر الإطارات'),
-  tip('tc-set-tip-tires', 'المقاس وسنة الصنع يُقرآن من المكان اللي تكتبهم فيه بمنتجاتك. نوع المتجر يخفي أقسام التركيب لو متجرك بيع فقط.'),
+  title('tc-set-tires', 'أساس متجر الإطارات (ابدأ من هنا)'),
+  tip('tc-set-tip-tires', 'إعدادات اليوم الأول. «بيع فقط» يخفي: حجز التركيب، مراكز التركيب، بنر التركيب، وشارة «تركيب مجاني». بطاقات الخدمات بالأقسام الثانية تعدّلها من القسم نفسه.'),
   F.dd('tc_store_type', 'نوع المتجر', [['بيع وتركيب', 'install'], ['بيع فقط (توصيل)', 'sale'], ['بيع وتركيب وصيانة', 'service']], 'install'),
   F.dd('tc_sale_unit', 'سعر المنتج عندك', [['للحبة الواحدة', 'tire'], ['للطقم (4 حبات)', 'set']], 'tire'),
   F.dd('tc_default_qty', 'الكمية عند الضغط على «أضف»', [['1', '1'], ['2', '2'], ['4', '4']], '1', { description: 'الأغلب يشتري 4 حبات' }),
@@ -87,7 +87,7 @@ const G_TIRES = [
   sub('tc-set-h-tirefeat', 'مميزات للزبون'),
   F.sw('tc_my_size', '«مقاسي المحفوظ» — يتذكر مقاس الزبون ويعلّم المناسب له', true),
   F.sw('tc_year_badge', 'سنة الصنع على البطاقة', true),
-  F.sw('tc_set_price', 'سعر الطقم والتقسيط على البطاقة', true),
+  F.sw('tc_set_price', 'سعر الطقم (×4) والتقسيط على البطاقة', true, 'يظهر لما يكون سعر المنتج للحبة'),
   F.num('tc_installments', 'عدد دفعات التقسيط (تابي / تمارا)', 4, 2, 12),
   F.sw('tc_compare', 'مقارنة الإطارات (حتى 3)', true),
   where('tc_compare_where', 'wide'),
@@ -137,23 +137,22 @@ const G_CARD = [
   F.sw('tc_card_fav', 'زر المفضلة (القلب)', true),
   F.sw('tc_card_brand', 'اسم الماركة', true),
   F.sw('tc_card_rim', 'رقم الجنط الكبير خلف الصورة', true),
-  F.dd('tc_card_price', 'السعر', [['يظهر السعر', 'show'], ['«اطلب السعر» عبر واتساب بدل السعر', 'ask']], 'show'),
+  F.dd('tc_card_price', 'السعر', [['يظهر السعر', 'show'], ['«اطلب السعر» عبر واتساب بدل السعر', 'ask']], 'show', { description: 'يحتاج رقم واتساب (من مجموعة الأزرار العائمة أو بيانات المتجر)' }),
   F.sw('tc_card_add', 'زر «أضف للسلة»', true),
-  F.dd('tc_cols_d', 'عدد الأعمدة — الكمبيوتر', [['3', '3'], ['4', '4'], ['5', '5']], '4'),
-  F.dd('tc_cols_t', 'عدد الأعمدة — التابلت', [['2', '2'], ['3', '3']], '3'),
-  F.dd('tc_cols_m', 'عدد الأعمدة — الجوال', [['1', '1'], ['2', '2']], '2'),
+  F.dd('tc_cols_d', 'أعمدة صفحات التصنيف والبحث — الكمبيوتر', [['3', '3'], ['4', '4'], ['5', '5']], '4'),
+  F.dd('tc_cols_t', 'أعمدة صفحات التصنيف والبحث — التابلت', [['2', '2'], ['3', '3']], '3'),
+  F.dd('tc_cols_m', 'أعمدة صفحات التصنيف والبحث — الجوال', [['1', '1'], ['2', '2']], '2'),
 ];
 
 // 7 — mobile
 const G_MOBILE = [
   title('tc-set-mobile', 'الجوال'),
-  F.sw('tc_bottombar', 'الشريط السفلي (الجوال والتابلت)', true),
+  F.sw('tc_bottombar', 'الشريط السفلي (الجوال)', true),
   F.dd('tc_bottombar_items', 'أزرار الشريط السفلي', [
     ['الرئيسية · الأقسام · مقاسي · السلة · حسابي', 'size'],
     ['الرئيسية · الأقسام · واتساب · السلة · حسابي', 'whatsapp'],
     ['الرئيسية · الأقسام · السلة · حسابي', 'basic'],
   ], 'size'),
-  F.sw('tc_footer_accordion', 'أعمدة الفوتر تنطوي بالجوال', true),
 ];
 
 // 8 — floating buttons & popup
@@ -163,8 +162,8 @@ const G_FLOAT = [
   sub('tc-set-h-wa', 'واتساب'),
   F.sw('tc_wa_show', 'زر واتساب العائم', true),
   where('tc_wa_where'),
-  F.plain('tc_wa_number', 'الرقم مع رمز الدولة (فاضي = رقم المتجر)', '', { maxLength: 20, placeholder: '9665xxxxxxxx' }),
-  F.text('tc_wa_message', 'الرسالة الجاهزة', 'السلام عليكم، أبي أستفسر عن مقاس إطار', 160),
+  F.plain('tc_wa_number', 'رقم واتساب المتجر (لكل أزرار واتساب — فاضي = رقم المتجر)', '', { maxLength: 20, placeholder: '9665xxxxxxxx' }),
+  F.text('tc_wa_message', 'الرسالة الجاهزة (للزر العائم)', 'السلام عليكم، أبي أستفسر عن مقاس إطار', 160),
   sub('tc-set-h-call', 'اتصال'),
   F.sw('tc_call_show', 'زر الاتصال العائم', false),
   where('tc_call_where', 'mobile'),
@@ -188,7 +187,8 @@ const G_FOOTER = [
   title('tc-set-footer', 'الفوتر'),
   tip('tc-set-tip-footer', 'عمود «تسوّق» من قائمة الهيدر، وعمود «المساعدة» من قائمة الفوتر بلوحة سلة. الجوال والإيميل والسوشال من «بيانات المتجر».'),
   F.area('tc_footer_about', 'نبذة عن المتجر (فاضي = بدون)', 'إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.', 220),
-  F.sw('tc_footer_social', 'أيقونات السوشال', true),
+  F.sw('tc_footer_social', 'أيقونات حسابات التواصل', true),
+  F.sw('tc_footer_accordion', 'طي الأعمدة على الجوال', true),
   F.sw('tc_footer_shop', 'عمود «تسوّق»', true),
   F.text('tc_footer_shop_title', 'عنوان العمود', 'تسوّق', 30),
   F.sw('tc_footer_help', 'عمود «المساعدة»', true),
@@ -206,14 +206,19 @@ const G_FOOTER = [
 
 // A switched-off element hides its own fields (child → [parent, value]).
 const DEPS = {
-  tc_color_primary: ['tc_use_store_color', false], tc_color_on_primary: ['tc_use_store_color', false],
-  tc_dark_toggle_where: ['tc_dark_toggle', true],
+  tc_use_store_color: ['tc_preset', 'none'],
+  tc_color_primary: [['tc_preset', 'none'], ['tc_use_store_color', false]], tc_color_on_primary: [['tc_preset', 'none'], ['tc_use_store_color', false]],
+  tc_color_dark: ['tc_preset', 'none'],
+  tc_dark_toggle: ['tc_dark_mode', 'auto'], tc_dark_toggle_where: [['tc_dark_mode', 'auto'], ['tc_dark_toggle', true]],
+  tc_set_price: ['tc_sale_unit', 'tire'],
+  tc_mysize_chip: ['tc_my_size', true],
+  tc_logo_h: ['tc_logo_mode', 'store'], tc_logo_h_m: ['tc_logo_mode', 'store'],
   tc_install_badge_text: ['tc_install_badge', true],
-  tc_installments: ['tc_set_price', true],
+  tc_installments: [['tc_sale_unit', 'tire'], ['tc_set_price', true]],
   tc_compare_where: ['tc_compare', true],
   tc_topbar_where: ['tc_topbar_show', true], tc_topbar_text: ['tc_topbar_show', true], tc_topbar_highlight: ['tc_topbar_show', true],
   tc_topbar_highlight_where: ['tc_topbar_show', true], tc_topbar_marquee: ['tc_topbar_show', true], tc_topbar_link: ['tc_topbar_show', true],
-  tc_topbar_phone: ['tc_topbar_show', true], tc_topbar_phone_where: ['tc_topbar_phone', true],
+  tc_topbar_phone: ['tc_topbar_show', true], tc_topbar_phone_where: [['tc_topbar_show', true], ['tc_topbar_phone', true]],
   tc_brand_sub: ['tc_logo_mode', 'mark'],
   tc_search_placeholder: ['tc_search_show', true],
   tc_header_cta_where: ['tc_header_cta', true], tc_header_cta_text: ['tc_header_cta', true], tc_header_cta_link: ['tc_header_cta', true],
@@ -228,16 +233,17 @@ const DEPS = {
   tc_footer_news_link: ['tc_footer_news', true],
 };
 
-const ALL = [...G_IDENTITY, ...G_DARK, ...G_TIRES, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER]
-  .map(f => (DEPS[f.id] ? F.when(f, ...DEPS[f.id]) : f));
+// DEPS values: [parent, value] or a list of them (all must hold)
+const ALL = [...G_TIRES, ...G_IDENTITY, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER, ...G_DARK, title('tc-set-pages', 'صفحة المنتج والقوائم')]
+  .map(f => (DEPS[f.id] ? (Array.isArray(DEPS[f.id][0]) ? DEPS[f.id] : [DEPS[f.id]]).reduce((g, d) => F.when(g, ...d), f) : f));
 
 const ids = ALL.map(s => s.id);
 const dup = ids.filter((x, i) => ids.indexOf(x) !== i);
 if (dup.length) throw new Error('duplicate setting ids: ' + dup.join(', '));
-for (const k of Object.keys(DEPS)) if (!ids.includes(k) || !ids.includes(DEPS[k][0])) throw new Error('bad DEPS entry ' + k);
+for (const k of Object.keys(DEPS)) for (const d of Array.isArray(DEPS[k][0]) ? DEPS[k] : [DEPS[k]]) if (!ids.includes(k) || !ids.includes(d[0])) throw new Error('bad DEPS entry ' + k);
 
 // base-theme settings replaced by the groups above
-const REMOVED = ['header_is_sticky', 'topnav_is_dark', 'important_links', 'enable_more_menu', 'header_show_store_info', 'footer_is_dark',
+const REMOVED = ['squar_photo_bg_image_size', 'vertical_fixed_products', 'is_more_button_enabled', 'imageZoom', 'header_is_sticky', 'topnav_is_dark', 'important_links', 'enable_more_menu', 'header_show_store_info', 'footer_is_dark',
   'static-line1', 'static-label2', 'static-line3', 'static-label4', 'static-line5', 'static-label6'];
 // ours always lead, in this order; old tires ids no longer in the list are dropped; base settings kept after
 const others = (json.settings || []).filter(x => !REMOVED.includes(x.id) && !/^tc[_-]/.test(x.id));

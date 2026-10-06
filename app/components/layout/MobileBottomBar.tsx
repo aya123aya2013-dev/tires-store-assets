@@ -8,7 +8,8 @@ import { useUser } from '@salla.sa/twilight-theme-engine/hooks/useUser';
 import { DashboardSquare01Icon, HomeIcon, ShoppingBagIcon, UserIcon } from '../icons';
 import { asBool, opt, useLang } from '../home/fields';
 import { Icon } from '../home/tc/Icon';
-import { useMySize } from '../tires/features/MySize';
+import { useMySize, useMySizeEnabled } from '../tires/features/MySize';
+import { useWhatsappNumber, waLink } from './contact';
 
 interface MobileBottomBarProps {
   /** Whether the shared nav drawer (opened from the header) is currently open. */
@@ -374,9 +375,9 @@ export function MobileBottomBar({ navOpen, onOpenNav, onCloseNav }: MobileBottom
   const ts = (theme?.settings ?? {}) as Record<string, unknown>;
   const barOn = asBool(ts.tc_bottombar, true);
   const middle = opt(ts.tc_bottombar_items, 'size'); // size | whatsapp | basic
+  const sizeOn = useMySizeEnabled();
   const mySize = useMySize();
-  const { store } = useTwilight();
-  const waDigits = String(store?.contacts?.whatsapp || '').replace(/D/g, '') || String(store?.contacts?.mobile || '').replace(/D/g, '').replace(/^0/, '966');
+  const waDigits = useWhatsappNumber();
   const isEn = useLang() === 'en';
 
   const labels = {
@@ -426,7 +427,7 @@ export function MobileBottomBar({ navOpen, onOpenNav, onCloseNav }: MobileBottom
           {middle === 'size' && (
             // «مقاسي»: straight to the saved size's tires, or to the size finder
             <Link
-              to={mySize ? `/search?q=${encodeURIComponent(mySize)}` : '/#finder'}
+              to={sizeOn && mySize ? `/search?q=${encodeURIComponent(mySize)}` : '/#size'}
               className="mobile-bottom-bar__item"
               data-testid="mobile-bottom-bar-size"
               onClick={() => openTab('home')}
@@ -435,8 +436,8 @@ export function MobileBottomBar({ navOpen, onOpenNav, onCloseNav }: MobileBottom
               <span className="mobile-bottom-bar__label">{isEn ? 'My size' : 'مقاسي'}</span>
             </Link>
           )}
-          {middle === 'whatsapp' && waDigits.length >= 10 && (
-            <a className="mobile-bottom-bar__item" href={`https://wa.me/${waDigits}`} target="_blank" rel="noopener noreferrer" data-testid="mobile-bottom-bar-wa">
+          {middle === 'whatsapp' && !!waDigits && (
+            <a className="mobile-bottom-bar__item" href={waLink(waDigits)} target="_blank" rel="noopener noreferrer" data-testid="mobile-bottom-bar-wa">
               <span className="mobile-bottom-bar__icon"><Icon name="whatsapp" /></span>
               <span className="mobile-bottom-bar__label">{isEn ? 'WhatsApp' : 'واتساب'}</span>
             </a>

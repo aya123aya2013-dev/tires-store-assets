@@ -17,13 +17,13 @@ import { menu } from '@salla.sa/twilight-theme-engine/api/menu';
 import { asBool, asLink, makeT, useLang } from '../home/fields';
 import { Icon } from '../home/tc/Icon';
 import { signupUrl } from '../home/Newsletter';
-import { FooterTrust } from './Footer';
+import { SallaTrustBadges } from '@salla.sa/twilight-components-react/trust-badges';
 import { TcBrand } from './TcHeader';
 
 const EN: Record<string, string> = {
   'إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.': 'Genuine tires for every car, free fitting in Riyadh and delivery across the Kingdom.',
   'تسوّق': 'Shop', 'المساعدة': 'Help', 'تواصل': 'Contact', 'الرياض': 'Riyadh', 'بريدك للعروض': 'Your email for offers',
-  'اشترك': 'Subscribe', 'جميع الحقوق محفوظة': 'All rights reserved', 'السجل التجاري': 'CR', 'الرقم الضريبي': 'VAT',
+  'اشترك': 'Subscribe', 'أكمل اشتراكك بالنافذة الجديدة': 'Finish signing up in the new tab', 'أرسل رسالة البريد لإكمال الاشتراك': 'Send the email to finish signing up', 'المتصفح منع فتح النافذة — حاول مرة ثانية': 'Your browser blocked the tab — try again', 'جميع الحقوق محفوظة': 'All rights reserved', 'السجل التجاري': 'CR', 'الرقم الضريبي': 'VAT',
 };
 const SOCIAL: [keyof Social, string, string][] = [
   ['instagram', 'instagram', 'Instagram'], ['twitter', 'x', 'X'], ['snapchat', 'snapchat', 'Snapchat'], ['tiktok', 'tiktok', 'TikTok'],
@@ -48,6 +48,7 @@ function Col({ title, acc, className = '', children }: { title: string; acc: boo
 }
 
 export function TcFooter() {
+  const [sub, setSub] = useState<'' | 'link' | 'email' | 'blocked'>('');
   const { store, theme } = useTwilight();
   const s = (theme?.settings ?? {}) as Record<string, unknown>;
   const t = makeT(useLang(), EN);
@@ -70,8 +71,8 @@ export function TcFooter() {
     e.preventDefault();
     const mail = String(new FormData(e.currentTarget).get('email') ?? '').trim();
     if (!mail) return;
-    if (newsLink) window.open(signupUrl(newsLink, mail), '_blank');
-    else if (storeEmail) window.location.href = `mailto:${storeEmail}?subject=Newsletter&body=${encodeURIComponent(mail)}`;
+    if (newsLink) setSub(window.open(signupUrl(newsLink, mail), '_blank') ? 'link' : 'blocked');
+    else if (storeEmail) setSub('email'), window.location.href = `mailto:${storeEmail}?subject=Newsletter&body=${encodeURIComponent(mail)}`;
   };
 
   return (
@@ -113,6 +114,11 @@ export function TcFooter() {
                   <button type="submit">{t('اشترك', 'اشترك')}</button>
                 </form>
               )}
+              {showNews && (
+                <p className="tc-f-sub" role="status">
+                  {sub === 'link' ? t('أكمل اشتراكك بالنافذة الجديدة', 'أكمل اشتراكك بالنافذة الجديدة') : sub === 'email' ? t('أرسل رسالة البريد لإكمال الاشتراك', 'أرسل رسالة البريد لإكمال الاشتراك') : sub === 'blocked' ? t('المتصفح منع فتح النافذة — حاول مرة ثانية', 'المتصفح منع فتح النافذة — حاول مرة ثانية') : ''}
+                </p>
+              )}
             </div>
           </div>
           <div className="fbot">
@@ -125,7 +131,7 @@ export function TcFooter() {
               <div className="pay tc-pay"><SallaPayments suppressHydrationWarning /></div>
             )}
           </div>
-          {legal && <div className="tc-f-trust"><FooterTrust /></div>}
+          {legal && <div className="tc-f-trust"><SallaTrustBadges dark /></div>}
         </div>
         <HookSlot name="footer:end" />
       </footer>

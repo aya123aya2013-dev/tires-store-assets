@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { SizeFinder } from '../../app/components/home/SizeFinder';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
-vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => () => {} }));
+vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => () => {}, useTwilight: () => ({}) }));
 vi.mock('@salla.sa/twilight-theme-engine/common', () => ({ Link: ({ to, children }: { to: string; children: React.ReactNode }) => <a href={to}>{children}</a> }));
 
 describe('size finder', () => {

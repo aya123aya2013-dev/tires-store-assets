@@ -308,7 +308,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/tire-hero.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/tire-hero.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -2035,7 +2035,7 @@
         }
       ],
       "is_default": true,
-      "image": "/assets/covers/tire-hero.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/tire-hero.webp"
     },
     {
       "key": "d73259fe-3160-41c2-b792-91eb581fabba",
@@ -2051,7 +2051,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/size-finder.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/size-finder.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -2523,7 +2523,7 @@
           "maxLength": 60
         }
       ],
-      "image": "/assets/covers/size-finder.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/size-finder.webp"
     },
     {
       "title": {
@@ -2538,7 +2538,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/benefits-strip.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/benefits-strip.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -2596,89 +2596,89 @@
                 {
                   "label": "درع (أصلي / ضمان)",
                   "value": "shield",
-                  "key": "22e338db-0498-4b4d-af68-2d3281778f52"
+                  "key": "c081b812-c21e-4b32-9343-1ff555d20f23"
                 }
               ],
               "options": [
                 {
                   "label": "درع (أصلي / ضمان)",
                   "value": "shield",
-                  "key": "22e338db-0498-4b4d-af68-2d3281778f52"
+                  "key": "c081b812-c21e-4b32-9343-1ff555d20f23"
                 },
                 {
                   "label": "مفتاح (تركيب)",
                   "value": "wrench",
-                  "key": "01da30da-7354-438c-baa0-a26ca9b375f4"
+                  "key": "810de361-0ffb-409c-bcec-c4e080a88dcd"
                 },
                 {
                   "label": "بطاقة (دفع)",
                   "value": "card",
-                  "key": "95359c6a-8a49-40e7-b60d-83650adc9534"
+                  "key": "090d9b28-1769-4700-95e3-54ba45747b71"
                 },
                 {
                   "label": "شاحنة (توصيل)",
                   "value": "truck",
-                  "key": "3ba76499-9850-465c-86b0-25373da70d9b"
+                  "key": "e6d4aa94-de53-4206-af84-c32795b17530"
                 },
                 {
                   "label": "إطار",
                   "value": "tire",
-                  "key": "b2b3892d-752e-42c6-9770-91e6fc96ab64"
+                  "key": "a85f9b2e-0df2-457f-bd65-65deda54a2c2"
                 },
                 {
                   "label": "تقويم",
                   "value": "cal",
-                  "key": "a8fbb80e-60d7-4a62-984c-8ba75e100791"
+                  "key": "44cf6bc7-99d2-4f5c-bb74-1475798f81ca"
                 },
                 {
                   "label": "موقع",
                   "value": "pin",
-                  "key": "30faf001-b9f2-4d55-a832-39e488e02d03"
+                  "key": "1b19a554-297d-45f3-90ff-3887b821acb9"
                 },
                 {
                   "label": "جوال",
                   "value": "phone",
-                  "key": "76eeae18-44ad-4fc3-b500-fb49d9cdd3fa"
+                  "key": "84ddf393-6162-4a2c-8a10-01aa45322a42"
                 },
                 {
                   "label": "بحث",
                   "value": "search",
-                  "key": "cdf11081-2baf-4481-ba2e-57bc35d508db"
+                  "key": "871323ca-436e-4962-95c3-9bb2a5b24222"
                 },
                 {
                   "label": "قلب",
                   "value": "heart",
-                  "key": "81e32a1c-3335-4369-ba1f-e641e6dd6b08"
+                  "key": "4336528c-ddf4-46a1-8a65-1a962bdca808"
                 },
                 {
                   "label": "شبكة",
                   "value": "grid",
-                  "key": "18ff6c18-c366-4e4d-84e7-29abfc4f464e"
+                  "key": "41d116f9-2e44-4e1e-85ba-a25a1de85097"
                 },
                 {
                   "label": "بيت",
                   "value": "home",
-                  "key": "16352a74-ea65-4a39-8163-1fd34cd2e930"
+                  "key": "d12385f7-9fd3-46d4-8440-e472667d03ae"
                 },
                 {
                   "label": "كل الإطارات",
                   "value": "cat-all",
-                  "key": "c327d519-3880-4fef-9ec9-60ad2ecc1cfd"
+                  "key": "6fc0aef2-825d-4c3b-ab2e-5b6e8cac8c5e"
                 },
                 {
                   "label": "سيدان",
                   "value": "cat-sedan",
-                  "key": "f02b46b6-e85c-4027-8c54-7de2cbf10b0c"
+                  "key": "ae0f067d-6c87-49b6-8956-4defa4f5a760"
                 },
                 {
                   "label": "دفع رباعي",
                   "value": "cat-suv",
-                  "key": "19369746-e057-4db8-a925-4330c5526c93"
+                  "key": "f5ced5c6-1b4e-4352-94f8-0ddfde5ed84a"
                 },
                 {
                   "label": "نقل وبيك أب",
                   "value": "cat-truck",
-                  "key": "fd6f92b6-76f1-4a6a-bbbb-b5d571041939"
+                  "key": "3119ae39-b2c2-4b50-8583-af3109e225ef"
                 }
               ],
               "source": "Manual",
@@ -2754,29 +2754,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "aae30b04-0349-450c-bce7-09727a59c9aa"
+              "key": "39212501-104a-4b52-9af3-a360239af864"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "aae30b04-0349-450c-bce7-09727a59c9aa"
+              "key": "39212501-104a-4b52-9af3-a360239af864"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "c4b3defe-3350-40e6-84ef-6e3927bd810d"
+              "key": "0925270b-22da-4da0-b510-fab150c09278"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "4704402d-1d26-42ea-bce9-56fc6c4c3a01"
+              "key": "7326bb69-a5a9-4e71-b1a3-2b44dd8a8602"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "7147bd44-157e-48e3-8381-d2f67c553137"
+              "key": "fec4ad35-e70e-4ed0-9cce-13669e215de0"
             }
           ],
           "source": "Manual",
@@ -2794,29 +2794,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "17acb42a-f95f-4b69-addc-3adf85d2cf98"
+              "key": "1cec651f-ba2c-4876-b7c7-7255948e3589"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "17acb42a-f95f-4b69-addc-3adf85d2cf98"
+              "key": "1cec651f-ba2c-4876-b7c7-7255948e3589"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "442fecc6-c43c-4bf1-823d-d7df0631281e"
+              "key": "69b3b1ed-7045-42a7-9630-a2eb6f275b74"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "0a4d581a-6164-4294-9442-6ebaba7f8da0"
+              "key": "2ffedc33-2453-49df-9bd6-01d48bc4a9f5"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "0d6db721-8aae-4c46-80fc-f064cfd4cc1e"
+              "key": "ed763ed5-f416-4c2b-bf78-ed2a00b213cf"
             }
           ],
           "source": "Manual",
@@ -2838,7 +2838,7 @@
         }
       ],
       "key": "2b41a6d5-69da-4165-9d98-61e70291fb85",
-      "image": "/assets/covers/benefits-strip.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/benefits-strip.webp"
     },
     {
       "title": {
@@ -2853,7 +2853,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/tire-slider.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/tire-slider.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -2913,44 +2913,44 @@
             {
               "label": "الأكثر مبيعاً",
               "value": "best_selling",
-              "key": "172cc204-8499-40d3-91ac-c6c30902d0d4"
+              "key": "dbcea3e1-fd8d-49bd-8cc0-c1a4bf1f196c"
             }
           ],
           "options": [
             {
               "label": "الأكثر مبيعاً",
               "value": "best_selling",
-              "key": "172cc204-8499-40d3-91ac-c6c30902d0d4"
+              "key": "dbcea3e1-fd8d-49bd-8cc0-c1a4bf1f196c"
             },
             {
               "label": "الأحدث",
               "value": "latest",
-              "key": "2724a9f3-8160-4467-85a1-018f6d245d01"
+              "key": "dd1aabd4-f79c-4914-b9f2-2aa400bc75a7"
             },
             {
               "label": "العروض والتخفيضات",
               "value": "offers",
-              "key": "d8ff398f-3395-4486-8831-0385289b2845"
+              "key": "38dc70d5-db95-47a3-83c0-51e5d234a643"
             },
             {
               "label": "الأعلى تقييماً",
               "value": "top-rated",
-              "key": "02b508c1-824a-43b1-a44e-c4901e1c37e0"
+              "key": "37a27eb8-7c07-4769-b6ab-49c91cf61fe2"
             },
             {
               "label": "من تصنيف",
               "value": "categories",
-              "key": "a71eb2fa-aaa4-4596-9d2a-95c50b9078b9"
+              "key": "e105d227-7104-4b4f-b9b8-244a1c58b4af"
             },
             {
               "label": "من ماركة",
               "value": "brands",
-              "key": "cc60b5f4-7021-4d9b-b0d1-7dec77a29ca3"
+              "key": "16ea5ba8-0925-4751-9943-6eff462ff8dc"
             },
             {
               "label": "منتجات أختارها",
               "value": "selected",
-              "key": "05e5375c-6d2e-419d-83b7-91ebaf024c5c"
+              "key": "103e9768-f7c4-4c85-8421-82f692f67306"
             }
           ],
           "source": "Manual",
@@ -3047,24 +3047,24 @@
             {
               "label": "إطار واحد",
               "value": "1",
-              "key": "c454662c-7e64-4ea2-9ffb-6fd79fc8468f"
+              "key": "89eb2ac1-75c6-467b-84eb-ab10970dd268"
             }
           ],
           "options": [
             {
               "label": "إطار واحد",
               "value": "1",
-              "key": "c454662c-7e64-4ea2-9ffb-6fd79fc8468f"
+              "key": "89eb2ac1-75c6-467b-84eb-ab10970dd268"
             },
             {
               "label": "إطارين",
               "value": "2",
-              "key": "65b64f39-4564-4252-9f33-be47bcf8a683"
+              "key": "29358d6e-8081-40ec-a7bc-7c15c5aca7ed"
             },
             {
               "label": "4 إطارات",
               "value": "4",
-              "key": "469f1dfb-ed97-48fd-b054-06dd80332ff5"
+              "key": "5494489c-c350-4bda-b29c-cc308dd41d0d"
             }
           ],
           "source": "Manual",
@@ -3171,29 +3171,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "2c3c91b2-96ee-4792-bfc4-f0099ed7eeff"
+              "key": "c75646b6-ca7a-4427-8217-c6102b66ad00"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "2c3c91b2-96ee-4792-bfc4-f0099ed7eeff"
+              "key": "c75646b6-ca7a-4427-8217-c6102b66ad00"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "a861f252-30bd-4027-9a43-852f22fc9cfa"
+              "key": "5e5b54b4-c266-4428-bb1f-d39103086b62"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "bdd72445-bb55-4bf6-bf27-2a88c42dd4bd"
+              "key": "f26d1ae0-1666-4631-b54c-7268776793ad"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "0b1a5cdd-bf03-493d-8b91-5db2b4b150ce"
+              "key": "425aaa3b-d3a5-4d6d-8b78-3c9a6d89c38a"
             }
           ],
           "source": "Manual",
@@ -3211,29 +3211,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ada019b4-5c7e-485f-b780-b37b6e1548d8"
+              "key": "36a929ed-20e1-4b94-ad24-3bbf6a42ad1c"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ada019b4-5c7e-485f-b780-b37b6e1548d8"
+              "key": "36a929ed-20e1-4b94-ad24-3bbf6a42ad1c"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "0f3eef4c-8adb-4361-b53e-24f3c0f95539"
+              "key": "f8857036-52f0-46d8-b578-a473e3e98560"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "4b60f912-90e7-4683-b121-aefbabee06c5"
+              "key": "224ed135-6833-4759-831c-f1ed4080d20f"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "00877064-81d3-4267-8c12-84c946a57f09"
+              "key": "afd0f446-bb6e-4ed8-997f-f61413690310"
             }
           ],
           "source": "Manual",
@@ -3255,7 +3255,7 @@
         }
       ],
       "key": "a9911614-9454-4f8b-8046-6f8f3cfd82f3",
-      "image": "/assets/covers/tire-slider.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/tire-slider.webp"
     },
     {
       "title": {
@@ -3270,7 +3270,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/brands-marquee.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/brands-marquee.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -3330,19 +3330,19 @@
             {
               "label": "ماركات متجري تلقائياً",
               "value": "store",
-              "key": "02001615-702b-4c53-9d12-eef839a58367"
+              "key": "f1af30cb-c4e6-4c40-b930-d1ebc6a63690"
             }
           ],
           "options": [
             {
               "label": "ماركات متجري تلقائياً",
               "value": "store",
-              "key": "02001615-702b-4c53-9d12-eef839a58367"
+              "key": "f1af30cb-c4e6-4c40-b930-d1ebc6a63690"
             },
             {
               "label": "أضيفها بنفسي",
               "value": "manual",
-              "key": "b4639856-9e97-41de-a858-99c85d20082f"
+              "key": "27892eb4-428c-48ff-a8fa-5ecb6f9f0620"
             }
           ],
           "source": "Manual",
@@ -3495,24 +3495,24 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "8fa731b1-5fa4-4ba5-ad3e-7385910a45f4"
+              "key": "d87432a0-7ff8-4540-b0d0-e4b474583f7e"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "8fa731b1-5fa4-4ba5-ad3e-7385910a45f4"
+              "key": "d87432a0-7ff8-4540-b0d0-e4b474583f7e"
             },
             {
               "label": "بطيئة",
               "value": "slow",
-              "key": "6f7cc1ff-0926-4ade-b747-275a2f991d21"
+              "key": "71865225-47e8-438e-91b1-3ed0e39a8863"
             },
             {
               "label": "سريعة",
               "value": "fast",
-              "key": "87b612fd-697f-4676-aa0c-2694664236a6"
+              "key": "25488797-501b-495d-a41c-b98b8ca17b35"
             }
           ],
           "source": "Manual",
@@ -3576,29 +3576,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "d2a5a822-a110-4642-ba72-8bfdde8c87a2"
+              "key": "a94b38ff-eab1-473c-8974-edbc21865e43"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "d2a5a822-a110-4642-ba72-8bfdde8c87a2"
+              "key": "a94b38ff-eab1-473c-8974-edbc21865e43"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "c726392d-970d-40ab-8143-f82c6942900e"
+              "key": "13a7df04-fc03-4c27-8eb9-6ee1a9e7bad8"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "6794bcfd-97cf-4ed8-bbf0-e8ac971acd7e"
+              "key": "7d4de001-3f4e-4785-97c3-7f17e8641e89"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "0ed25884-dcb7-4707-8fa3-5e3084bb9199"
+              "key": "9953e538-faae-4be1-9e1b-55a2c566fbde"
             }
           ],
           "source": "Manual",
@@ -3616,29 +3616,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "42d3f4a5-25b1-41ed-a4bf-69c4962f4d48"
+              "key": "be569fab-7513-4428-8ffa-ba6ab8f87971"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "42d3f4a5-25b1-41ed-a4bf-69c4962f4d48"
+              "key": "be569fab-7513-4428-8ffa-ba6ab8f87971"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "1a40f7bd-8045-4d09-9cc8-e9f273c640b5"
+              "key": "f7860042-8544-4e64-9580-f785addfc82c"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "9d8c7905-4604-47aa-b13c-7b3ab3ad53b7"
+              "key": "9a309bb6-66eb-4003-bbb1-2b51a17a9c38"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "2501e38c-f45f-4e04-994b-ce37254f7ec5"
+              "key": "829b69ea-9020-4dbc-a790-cae6e1655774"
             }
           ],
           "source": "Manual",
@@ -3660,7 +3660,7 @@
         }
       ],
       "key": "058666b7-9f90-49b9-9d6d-adc34e224d54",
-      "image": "/assets/covers/brands-marquee.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/brands-marquee.webp"
     },
     {
       "title": {
@@ -3675,7 +3675,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/category-cards.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/category-cards.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -3785,89 +3785,89 @@
                 {
                   "label": "كل الإطارات",
                   "value": "cat-all",
-                  "key": "5550a746-2858-483d-aaa0-49d0bc7eacae"
+                  "key": "509eed9f-35d2-44a5-9c11-e9d0044c50e0"
                 }
               ],
               "options": [
                 {
                   "label": "درع (أصلي / ضمان)",
                   "value": "shield",
-                  "key": "e8bbbe28-42a0-4fff-b9df-939516eb2a2d"
+                  "key": "a58be1d2-66cd-4553-a71b-4b3e26d826b9"
                 },
                 {
                   "label": "مفتاح (تركيب)",
                   "value": "wrench",
-                  "key": "ecc183cd-2a1c-4825-ac8c-41db12ff8526"
+                  "key": "7a97979c-7951-452b-ab47-93618e0d5511"
                 },
                 {
                   "label": "بطاقة (دفع)",
                   "value": "card",
-                  "key": "b81ead58-e7ef-4c7e-afc7-c7afcfaba858"
+                  "key": "6b99ec39-7249-4118-8950-f19bd192a89f"
                 },
                 {
                   "label": "شاحنة (توصيل)",
                   "value": "truck",
-                  "key": "6239791f-a388-4ed8-bfd4-fd3560dea7f4"
+                  "key": "c55733ed-793c-41f1-bf5e-75f8c5e2f4ef"
                 },
                 {
                   "label": "إطار",
                   "value": "tire",
-                  "key": "65043a75-b9c1-487a-9934-66494e071ded"
+                  "key": "76f8f911-6432-4008-bde3-7ad717c1b04e"
                 },
                 {
                   "label": "تقويم",
                   "value": "cal",
-                  "key": "a7215f40-a5e8-40cd-a65c-8c8e8060bb93"
+                  "key": "aad1ad22-fe4e-462f-98dc-9f2f1cff12e9"
                 },
                 {
                   "label": "موقع",
                   "value": "pin",
-                  "key": "3cae1891-f3da-4a1e-abc5-446a00ed1354"
+                  "key": "7496db8a-6d7f-4fc5-bdcf-77059b60c46e"
                 },
                 {
                   "label": "جوال",
                   "value": "phone",
-                  "key": "be6b88fb-305b-4949-94a6-bf4bc181d0a8"
+                  "key": "497946f5-f6a6-4e6a-920c-92922ccbda89"
                 },
                 {
                   "label": "بحث",
                   "value": "search",
-                  "key": "f040520d-c99b-48c5-99d4-23049d808e36"
+                  "key": "4901a05b-3507-4f84-8d81-32690541a655"
                 },
                 {
                   "label": "قلب",
                   "value": "heart",
-                  "key": "48c27c9a-0780-43b5-bcef-7e4ca9267778"
+                  "key": "fdecd4b2-945a-40eb-b078-be7bd0bdc9dd"
                 },
                 {
                   "label": "شبكة",
                   "value": "grid",
-                  "key": "9cfd3950-7218-469a-aa91-19852fd3032e"
+                  "key": "e5227e60-d4df-4ca6-917f-4649e2665351"
                 },
                 {
                   "label": "بيت",
                   "value": "home",
-                  "key": "1b34187b-f44b-4bd6-ba1f-f052699faecd"
+                  "key": "b035ac21-9382-4309-bd61-97517bc6fa46"
                 },
                 {
                   "label": "كل الإطارات",
                   "value": "cat-all",
-                  "key": "5550a746-2858-483d-aaa0-49d0bc7eacae"
+                  "key": "509eed9f-35d2-44a5-9c11-e9d0044c50e0"
                 },
                 {
                   "label": "سيدان",
                   "value": "cat-sedan",
-                  "key": "0b097aa4-88d7-42c4-b9e4-ccbdc5478e57"
+                  "key": "273a6771-c252-4bbd-8afd-0a9d443793ac"
                 },
                 {
                   "label": "دفع رباعي",
                   "value": "cat-suv",
-                  "key": "531a6655-9154-4d15-8f5a-87095ef060c1"
+                  "key": "b268c9f4-0087-4f0c-aafe-531a8c3f96e0"
                 },
                 {
                   "label": "نقل وبيك أب",
                   "value": "cat-truck",
-                  "key": "dea092e6-dc7f-47a8-b0e3-ae24b13562b1"
+                  "key": "187e5641-91d1-4d16-93d8-25089458cd3d"
                 }
               ],
               "source": "Manual",
@@ -4055,29 +4055,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "c9a81dae-2ca3-43f6-ab8a-92b0ede745b6"
+              "key": "d08ed6b8-d1ad-4d5e-ae5c-b6a846d80eb6"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "c9a81dae-2ca3-43f6-ab8a-92b0ede745b6"
+              "key": "d08ed6b8-d1ad-4d5e-ae5c-b6a846d80eb6"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "691beec0-866c-4c8b-9924-a78ff3816810"
+              "key": "0d4202bb-dffe-4e28-8dd1-e21b6b27c6b5"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "87f735a0-869d-41eb-a3c8-2824aa12c36e"
+              "key": "556f997a-fd3d-4213-8e51-3f4241204d7a"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "5d80754a-3024-4728-be57-187a512ee376"
+              "key": "9ac566ef-f31e-4672-8921-144caccd859c"
             }
           ],
           "source": "Manual",
@@ -4095,29 +4095,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "41cc226c-399c-4e4e-9553-573033e8b5d8"
+              "key": "567a9ffd-d003-4dde-ae7d-41c2c3c651f9"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "41cc226c-399c-4e4e-9553-573033e8b5d8"
+              "key": "567a9ffd-d003-4dde-ae7d-41c2c3c651f9"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "a6164a55-8b37-48e3-90cd-d97497a21c20"
+              "key": "b563503d-7fdf-4073-981a-45105efee430"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "f5c18699-3ff1-43fb-9bb6-56654953b821"
+              "key": "5deb8716-7a0e-4ae4-bc74-e864a0fa2d86"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "ebde9a2c-7c76-4f9c-881c-223cab5ef667"
+              "key": "5464cd27-0b1d-4602-885c-75b393b54bb0"
             }
           ],
           "source": "Manual",
@@ -4139,7 +4139,7 @@
         }
       ],
       "key": "ef08fbba-a643-476c-8909-46610e2a8e61",
-      "image": "/assets/covers/category-cards.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/category-cards.webp"
     },
     {
       "title": {
@@ -4154,7 +4154,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/shop-by-car.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/shop-by-car.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -4432,29 +4432,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "f42d8978-769b-4723-aec7-0d13ad072040"
+              "key": "c09c4ac5-6339-4839-bbd2-605bf5489920"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "f42d8978-769b-4723-aec7-0d13ad072040"
+              "key": "c09c4ac5-6339-4839-bbd2-605bf5489920"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "7ec23a02-797f-43e5-8cfe-fb7ac9c23fff"
+              "key": "7a079af6-83db-4db8-83f4-4201d737aaed"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "b9872391-db57-47d0-9619-de7b3db5582e"
+              "key": "94f2a88e-7c96-4c09-ae80-d8a1ea78fe72"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "146ff506-6207-4313-a644-9b395c593df2"
+              "key": "20f6f95c-30d6-4b8c-a1d4-0407e054a0ff"
             }
           ],
           "source": "Manual",
@@ -4472,29 +4472,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "46cb06b5-1326-4e90-9176-8cb000403b9a"
+              "key": "564a0f1f-5579-40eb-bd4c-723e65d6e3ab"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "46cb06b5-1326-4e90-9176-8cb000403b9a"
+              "key": "564a0f1f-5579-40eb-bd4c-723e65d6e3ab"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "22704ca7-0275-49d8-b523-05c3b8cedab6"
+              "key": "f30f2118-2926-4072-831e-7d2100f8bc84"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "8d5f33bc-6bcc-42bc-a468-497df9dcc001"
+              "key": "f8f38ed6-5cde-46d5-8b6a-b3db31d9f73e"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "d82b4e85-1daf-4661-8cbc-da48d95e3521"
+              "key": "684a795d-874d-4781-8253-9139becbd992"
             }
           ],
           "source": "Manual",
@@ -4516,7 +4516,7 @@
         }
       ],
       "key": "1be5ad44-e7ec-41a3-ac74-2f9d5f5e66b2",
-      "image": "/assets/covers/shop-by-car.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/shop-by-car.webp"
     },
     {
       "title": {
@@ -4531,7 +4531,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/tire-grid.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/tire-grid.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -4699,44 +4699,44 @@
             {
               "label": "الأحدث",
               "value": "latest",
-              "key": "8467c6d3-dd6f-4c0a-b269-39f9ebf05d5b"
+              "key": "467299c1-ee02-4765-8f52-4df119b96131"
             }
           ],
           "options": [
             {
               "label": "الأكثر مبيعاً",
               "value": "best_selling",
-              "key": "dcf17f0f-0720-4fab-9a0a-9d7a1fcd3f1a"
+              "key": "01cec337-563f-4116-b120-eaf0e3bffa82"
             },
             {
               "label": "الأحدث",
               "value": "latest",
-              "key": "8467c6d3-dd6f-4c0a-b269-39f9ebf05d5b"
+              "key": "467299c1-ee02-4765-8f52-4df119b96131"
             },
             {
               "label": "العروض والتخفيضات",
               "value": "offers",
-              "key": "5c07e513-4749-4690-a3d6-cadc69bce51e"
+              "key": "01377a6b-3d7b-414e-be75-48e4286b136e"
             },
             {
               "label": "الأعلى تقييماً",
               "value": "top-rated",
-              "key": "2540cabd-c4cb-4af9-897a-ba274008992c"
+              "key": "19cfc54a-85ec-455c-8112-d0413d33da1b"
             },
             {
               "label": "من تصنيف",
               "value": "categories",
-              "key": "0a2042c4-10e6-4c8c-80ca-18e2054dfa4f"
+              "key": "8a96fe6d-bd17-4ed6-956e-f077675edec5"
             },
             {
               "label": "من ماركة",
               "value": "brands",
-              "key": "5c675b3b-1392-4319-b484-c10b4e7e6511"
+              "key": "23dae1f0-b4fe-4459-aa31-ea546214e9d5"
             },
             {
               "label": "منتجات أختارها",
               "value": "selected",
-              "key": "ec6e996e-1093-4698-be70-fffc4fb42071"
+              "key": "82bc1fcf-dfde-4b1a-981b-36b3a2eda846"
             }
           ],
           "source": "Manual",
@@ -4839,19 +4839,19 @@
             {
               "label": "4 أعمدة",
               "value": "4",
-              "key": "4383d5de-1595-4c8c-9834-e649995e83ab"
+              "key": "f58cb9a6-c860-418f-84be-817fe6c6c5d6"
             }
           ],
           "options": [
             {
               "label": "4 أعمدة",
               "value": "4",
-              "key": "4383d5de-1595-4c8c-9834-e649995e83ab"
+              "key": "f58cb9a6-c860-418f-84be-817fe6c6c5d6"
             },
             {
               "label": "3 أعمدة",
               "value": "3",
-              "key": "0aecfedc-d767-48e4-9687-bc1873f63fe3"
+              "key": "3fa7c0a7-dca4-46f8-83ed-bf714203df43"
             }
           ],
           "source": "Manual",
@@ -4952,29 +4952,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "7f1c37bb-a7d1-4f5a-924b-98269bdab1dc"
+              "key": "4fb68b62-b3e8-4ebb-b5c3-f5d3c94b8426"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "7f1c37bb-a7d1-4f5a-924b-98269bdab1dc"
+              "key": "4fb68b62-b3e8-4ebb-b5c3-f5d3c94b8426"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "189ff2fa-afed-4faf-bf35-c89a010f5b6d"
+              "key": "761eed15-fc66-4052-ae9b-b9de559b39d7"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "f0c81d59-5325-4839-a94b-26575b6dec33"
+              "key": "05cfebf9-09c5-49db-aa82-9bd498a87028"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "355f13f9-e191-4109-84ea-f274e8f275dd"
+              "key": "109a7a33-69ce-478d-b658-0eb796bdbe23"
             }
           ],
           "source": "Manual",
@@ -4992,29 +4992,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "32462f6b-4cdd-487d-9524-7b36944a3eee"
+              "key": "598a3434-20e4-4a9f-ad11-8ee56a1b6230"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "32462f6b-4cdd-487d-9524-7b36944a3eee"
+              "key": "598a3434-20e4-4a9f-ad11-8ee56a1b6230"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "84c9ab63-c534-4573-a063-fa89fbc6c51d"
+              "key": "453d9f0a-58a8-4e43-bf19-080577ff8cb7"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "844f4d9d-f711-44ba-86eb-3fcf4471574b"
+              "key": "0c3eed10-b113-4533-a1a1-71f66b15c139"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "9af3b562-ab3b-4ffe-80cd-f99223b37d06"
+              "key": "37282783-55a9-4ad7-b28d-badae9703cbb"
             }
           ],
           "source": "Manual",
@@ -5036,7 +5036,7 @@
         }
       ],
       "key": "0a5918bc-6181-4b79-bafc-1a49870f5eb1",
-      "image": "/assets/covers/tire-grid.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/tire-grid.webp"
     },
     {
       "title": {
@@ -5051,7 +5051,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/double-banner.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/double-banner.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -5417,29 +5417,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ce60bd6d-5ac2-4ef9-b088-3d1b937cdf42"
+              "key": "973ff5bc-3780-461c-bc08-872fc754dd54"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ce60bd6d-5ac2-4ef9-b088-3d1b937cdf42"
+              "key": "973ff5bc-3780-461c-bc08-872fc754dd54"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "de02635d-6b7f-4a09-98ec-872d58765c3b"
+              "key": "669eb629-088a-4461-86ad-4943b56269d6"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "a13befff-48d2-4e57-a014-dfcb9baf6d15"
+              "key": "493a0dc1-68b0-4e6f-a61c-ff039c2b1c85"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "e2625d74-92f7-43e6-a67f-bdaffe913781"
+              "key": "06b21b65-f018-469f-8e6a-431d1a7faa40"
             }
           ],
           "source": "Manual",
@@ -5457,29 +5457,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "6ee2bd74-33e0-43f4-b4f5-3dffef12e48e"
+              "key": "785f671d-cbcc-4142-9f52-6333f0e80789"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "6ee2bd74-33e0-43f4-b4f5-3dffef12e48e"
+              "key": "785f671d-cbcc-4142-9f52-6333f0e80789"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "a89deadb-22f9-4ef1-a9d1-e040fc4cab8c"
+              "key": "675f4a24-64c9-440c-93f9-8c290b2461f8"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "60fa8977-198b-4f2b-a0da-32c26226a91d"
+              "key": "f2ceaf99-2759-470b-b8cf-64d69946bfa8"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "eb1f84cc-3428-4d61-8a34-45ea20d8136d"
+              "key": "37caaada-2175-49b6-be41-806a61ae54b4"
             }
           ],
           "source": "Manual",
@@ -5501,7 +5501,7 @@
         }
       ],
       "key": "f124fdcf-a27a-4f33-a3cb-0821294346cb",
-      "image": "/assets/covers/double-banner.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/double-banner.webp"
     },
     {
       "title": {
@@ -5516,7 +5516,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/tire-picker.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/tire-picker.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -5915,24 +5915,24 @@
                 {
                   "label": "الفئة الثانية",
                   "value": "2",
-                  "key": "dfa2b251-6027-4e8a-8c0c-ad8095e0f8e5"
+                  "key": "0d3ad5a1-b688-41f8-8dd6-6c7511515ccf"
                 }
               ],
               "options": [
                 {
                   "label": "الفئة الأولى",
                   "value": "1",
-                  "key": "6c54689a-851d-4c13-8861-1f6dd915134e"
+                  "key": "56f613a1-de8b-4d4c-b0d2-6b2c60761976"
                 },
                 {
                   "label": "الفئة الثانية",
                   "value": "2",
-                  "key": "dfa2b251-6027-4e8a-8c0c-ad8095e0f8e5"
+                  "key": "0d3ad5a1-b688-41f8-8dd6-6c7511515ccf"
                 },
                 {
                   "label": "الفئة الثالثة",
                   "value": "3",
-                  "key": "cc99e2a8-2014-4cfc-96ed-a542e30c0ba9"
+                  "key": "5cfd9462-b3d3-41d2-a220-945395955f29"
                 }
               ],
               "source": "Manual",
@@ -5994,29 +5994,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "b3f2f55d-24e9-4dca-913e-c1e5a47d87e3"
+              "key": "37b86e8e-3e34-48ac-97db-8f9cf0f7dd23"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "b3f2f55d-24e9-4dca-913e-c1e5a47d87e3"
+              "key": "37b86e8e-3e34-48ac-97db-8f9cf0f7dd23"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "c3c0e908-da71-46f5-8b63-2f7b59e3e23b"
+              "key": "ca5710dd-b772-45a7-9699-f4125cd5f94b"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "f5835b3e-2db5-44ab-9ba5-15e9a6f91013"
+              "key": "c08a146a-2dce-4db6-9679-24c1fcdb84de"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "7d0b7a84-59dd-4ede-bdac-d52babf32b7b"
+              "key": "cdc24d83-6bd8-4425-9fe7-e169f20c5b57"
             }
           ],
           "source": "Manual",
@@ -6034,29 +6034,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ca0e97fe-ba17-43b3-8294-e26c419473dd"
+              "key": "7c3c4963-a481-4e7f-be32-3a2a96028ddf"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ca0e97fe-ba17-43b3-8294-e26c419473dd"
+              "key": "7c3c4963-a481-4e7f-be32-3a2a96028ddf"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "d470bea9-a6cd-4c30-a7da-796423b8d3ca"
+              "key": "243a16f0-6913-41eb-87c9-d1193c21abed"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "7481d733-97b7-4bdf-b667-aa27b28fa124"
+              "key": "534c1514-6426-4945-9dfb-4747b7c61c8b"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "5c04c8c4-b1b6-4bfe-ae10-261f0dd1f5c9"
+              "key": "1cd8074b-b75a-470a-84e4-627498113ce6"
             }
           ],
           "source": "Manual",
@@ -6078,7 +6078,7 @@
         }
       ],
       "key": "c5efcf3b-a7b3-41de-840d-2b99c25aa46a",
-      "image": "/assets/covers/tire-picker.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/tire-picker.webp"
     },
     {
       "title": {
@@ -6093,7 +6093,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/services-bento.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/services-bento.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -6787,29 +6787,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "e4842b46-472d-4e0e-89af-e4df323daea6"
+              "key": "f6621fc5-69cf-4a0b-b9ab-9a35ecb54832"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "e4842b46-472d-4e0e-89af-e4df323daea6"
+              "key": "f6621fc5-69cf-4a0b-b9ab-9a35ecb54832"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "fcb44f8a-2080-4495-8b7e-90c53fd2be67"
+              "key": "1b05215f-e73f-42d3-b402-b0793063edee"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "a381f2cf-da88-4cc1-aa7a-a5fb72bd6ad8"
+              "key": "04b4b00a-0809-4a1f-a80b-6efef91dc870"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "bac14582-7967-4645-99df-19a198882025"
+              "key": "efdbb9d1-a14c-4a65-bdc6-5c4e7abd7de6"
             }
           ],
           "source": "Manual",
@@ -6827,29 +6827,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ab22a029-d82d-438c-87fd-c92583142443"
+              "key": "ee9393bd-f027-41d3-9858-45f62bfe7b89"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ab22a029-d82d-438c-87fd-c92583142443"
+              "key": "ee9393bd-f027-41d3-9858-45f62bfe7b89"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "0cafa542-474a-46e6-8717-d9af38ea1433"
+              "key": "143c6c0a-375d-4a50-9584-9d1b6c6e5432"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "c7aad3f6-0ec2-4d34-83bd-1898069e76c3"
+              "key": "d898ac5a-4cc5-4dd0-a356-9d2b0d60bca7"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "f93693b9-f760-4b6d-9f3f-13d834281601"
+              "key": "af66ffe3-cf9a-4516-83bd-ed709518076f"
             }
           ],
           "source": "Manual",
@@ -6871,7 +6871,7 @@
         }
       ],
       "key": "3e7d0969-53a7-4087-b309-559b09554f57",
-      "image": "/assets/covers/services-bento.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/services-bento.webp"
     },
     {
       "title": {
@@ -6886,7 +6886,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/ticker.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/ticker.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -7054,24 +7054,24 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "9fafc6a5-b2b6-45db-a815-ab51e467f7df"
+              "key": "32350047-158f-4ccb-8ee2-bbed607c68e2"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "9fafc6a5-b2b6-45db-a815-ab51e467f7df"
+              "key": "32350047-158f-4ccb-8ee2-bbed607c68e2"
             },
             {
               "label": "بطيئة",
               "value": "slow",
-              "key": "0022d495-0aa3-4158-8845-3574a0016241"
+              "key": "96520752-8aee-49dc-9027-b701c67479f4"
             },
             {
               "label": "سريعة",
               "value": "fast",
-              "key": "e3fd3c97-2bef-43d3-ac6b-4af1e38a5a25"
+              "key": "6acc74d5-8e64-4756-af76-4438620a971c"
             }
           ],
           "source": "Manual",
@@ -7100,19 +7100,19 @@
             {
               "label": "غامق",
               "value": "dark",
-              "key": "91e65ffc-e800-467c-80d6-531c9394e98c"
+              "key": "00d96783-9e59-4efd-8de5-cd93e4a3688d"
             }
           ],
           "options": [
             {
               "label": "غامق",
               "value": "dark",
-              "key": "91e65ffc-e800-467c-80d6-531c9394e98c"
+              "key": "00d96783-9e59-4efd-8de5-cd93e4a3688d"
             },
             {
               "label": "ذهبي",
               "value": "gold",
-              "key": "a3183066-5e84-4a4a-b727-b0097e1e66e1"
+              "key": "66660b67-93b7-4ab4-b14c-c98702a20975"
             }
           ],
           "source": "Manual",
@@ -7158,29 +7158,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "b1bdaac1-12b0-437f-9f2f-60974373e3b3"
+              "key": "c2504162-bc1f-4f53-b5d0-03614854ff7f"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "b1bdaac1-12b0-437f-9f2f-60974373e3b3"
+              "key": "c2504162-bc1f-4f53-b5d0-03614854ff7f"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "1bbd677a-0889-49dd-8733-860cc82310a0"
+              "key": "ff32b441-94a9-4af1-a430-bb1cb4b19ba3"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "ab190742-e6d1-491f-aebb-5ea0d998c769"
+              "key": "95009697-c62d-40fd-a621-2d0ee30d5392"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "4f56e2cc-64e5-42f4-a79a-9dc83275b1d1"
+              "key": "7525673e-bdb3-4537-a424-cefe00f176f8"
             }
           ],
           "source": "Manual",
@@ -7198,29 +7198,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "2c621445-d7b2-4fd1-88a0-562d0cc07c4f"
+              "key": "baacdbd7-d5f1-45c5-a1ed-ecc0777fb398"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "2c621445-d7b2-4fd1-88a0-562d0cc07c4f"
+              "key": "baacdbd7-d5f1-45c5-a1ed-ecc0777fb398"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "49285db4-7523-4fa3-ade2-40b376c62ac9"
+              "key": "d6b50b96-c53f-4e76-b25b-e9b9b5fdbeb9"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "13d7cb3f-3e8f-4e3e-a69e-a3720f1f17ef"
+              "key": "204d6f0d-5b4f-4b68-8535-af9688602528"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "828a7a05-753b-4da6-965e-2cf08443f797"
+              "key": "fecdc494-ae38-49f4-85a1-f738a4dd97e8"
             }
           ],
           "source": "Manual",
@@ -7242,7 +7242,7 @@
         }
       ],
       "key": "031644d2-cc8a-4cf0-ba88-940bbe577446",
-      "image": "/assets/covers/ticker.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/ticker.webp"
     },
     {
       "title": {
@@ -7257,7 +7257,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/services-row.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/services-row.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -7444,24 +7444,24 @@
                 {
                   "label": "صورة",
                   "value": "photo",
-                  "key": "97f7b5cf-f7ab-42ae-a9ee-568758be2a36"
+                  "key": "227e965b-0f07-45d5-9a2c-af55ffebe0db"
                 }
               ],
               "options": [
                 {
                   "label": "صورة",
                   "value": "photo",
-                  "key": "97f7b5cf-f7ab-42ae-a9ee-568758be2a36"
+                  "key": "227e965b-0f07-45d5-9a2c-af55ffebe0db"
                 },
                 {
                   "label": "رسمة شاحنة التوصيل",
                   "value": "truck",
-                  "key": "c614c111-350d-4d77-8882-a86be6576f06"
+                  "key": "4b71d029-b58e-4469-89e2-b0de5de40262"
                 },
                 {
                   "label": "رسمة دليل المقاسات (غامقة)",
                   "value": "guide",
-                  "key": "bb4de980-b175-4f6f-96d9-cfef8da8dbdf"
+                  "key": "c4560514-bb0f-4252-a85a-a5c7121d9854"
                 }
               ],
               "source": "Manual",
@@ -7663,29 +7663,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "3269e8a6-418e-465c-b2e7-e9e449d22e4e"
+              "key": "e2b2567e-95b1-4839-8be3-09e2e6fad324"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "3269e8a6-418e-465c-b2e7-e9e449d22e4e"
+              "key": "e2b2567e-95b1-4839-8be3-09e2e6fad324"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "2408bc93-dac1-4c96-b60d-6d706c2ee1b8"
+              "key": "8ee0e01b-0bcf-4da2-8b17-a4ba5beea273"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "58a4f771-9909-4f04-9cd4-8b2c605c9700"
+              "key": "7d98b5c5-1bbb-4b9a-acb8-c9e5febf59c5"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "fe7ba11e-9caa-4763-9a8c-9f2920cbf204"
+              "key": "8964dd3e-bdb9-4200-a96c-fdb301797427"
             }
           ],
           "source": "Manual",
@@ -7703,29 +7703,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "57c356bd-8be3-4fcb-b837-fb7542bf2146"
+              "key": "50c5b377-c3ec-491b-bb97-51c98a06aae7"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "57c356bd-8be3-4fcb-b837-fb7542bf2146"
+              "key": "50c5b377-c3ec-491b-bb97-51c98a06aae7"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "4c62bea1-db10-447c-a479-9ae3e0ef479d"
+              "key": "dbef34a0-131c-4b59-a380-a836fee696ea"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "342c4e08-bdb0-477b-8f0c-442242278b82"
+              "key": "fa682433-82b8-41fd-a687-1807e545197b"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "5d3d0348-a9b1-40cc-ba41-00222b83eaa4"
+              "key": "4c9d8a70-87b5-4589-a2a5-06af5e9599ce"
             }
           ],
           "source": "Manual",
@@ -7747,7 +7747,7 @@
         }
       ],
       "key": "ced1208b-fd64-4768-9a43-d937f5fb8594",
-      "image": "/assets/covers/services-row.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/services-row.webp"
     },
     {
       "title": {
@@ -7762,7 +7762,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/install-banner.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/install-banner.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -7831,19 +7831,19 @@
             {
               "label": "يسار",
               "value": "left",
-              "key": "bdba2d1d-72fd-4bf0-beb4-cae4e2ad09e1"
+              "key": "e459beaf-c70b-4c12-9b54-0d579ce53df6"
             }
           ],
           "options": [
             {
               "label": "يسار",
               "value": "left",
-              "key": "bdba2d1d-72fd-4bf0-beb4-cae4e2ad09e1"
+              "key": "e459beaf-c70b-4c12-9b54-0d579ce53df6"
             },
             {
               "label": "يمين",
               "value": "right",
-              "key": "0201d3e4-e496-4405-ada0-4654813c6dee"
+              "key": "1d344834-95df-41a1-9190-0975262bbd8a"
             }
           ],
           "source": "Manual",
@@ -8097,29 +8097,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "5f8a6e3e-47ac-4f40-bfbe-e1756087395c"
+              "key": "8eb0b2b4-2c7e-4aba-a311-023218206c66"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "5f8a6e3e-47ac-4f40-bfbe-e1756087395c"
+              "key": "8eb0b2b4-2c7e-4aba-a311-023218206c66"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "9caeac33-255c-4803-9781-f4dda8c02cd1"
+              "key": "fd53e9eb-4cf1-4c37-b1b0-59c58f7667a3"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "411213cb-b5cd-4807-bc54-c8956fbf05e0"
+              "key": "ef8d2030-f98f-4e32-928f-68c389939263"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "c5a67cc9-4222-4f1d-b9c3-4a2388de2e11"
+              "key": "5c16fafe-03c4-4510-aa12-2218538fa095"
             }
           ],
           "source": "Manual",
@@ -8137,29 +8137,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "bd037672-7681-4dc4-9024-f90a87aea3b3"
+              "key": "2a628204-06e7-4396-a802-ed7eba2938fc"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "bd037672-7681-4dc4-9024-f90a87aea3b3"
+              "key": "2a628204-06e7-4396-a802-ed7eba2938fc"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "6840bfc9-8f36-439d-8e6e-3cb084f11c91"
+              "key": "86f6f582-ea5f-48c7-9e86-4a2b2cc2eb05"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "375eb50a-9a33-4916-b181-53e04ef3f69f"
+              "key": "504fb30e-f82a-4896-bc1a-e709a40d81fa"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "0142f24c-ff94-4ba4-8181-4fc3856b5f8a"
+              "key": "473b9517-5f82-4603-97ea-105e3e7b03a6"
             }
           ],
           "source": "Manual",
@@ -8181,7 +8181,7 @@
         }
       ],
       "key": "02995e8c-a38f-4ec5-90a8-870140cb5b4f",
-      "image": "/assets/covers/install-banner.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/install-banner.webp"
     },
     {
       "title": {
@@ -8196,7 +8196,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/install-centers.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/install-centers.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -8560,29 +8560,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "dc66228e-fbf8-49b2-87f1-7017323509f9"
+              "key": "b9f27d05-1f92-48b4-9e25-81e881bb35ae"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "dc66228e-fbf8-49b2-87f1-7017323509f9"
+              "key": "b9f27d05-1f92-48b4-9e25-81e881bb35ae"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "9672b310-d9c6-495c-b9c7-a76f9e68774e"
+              "key": "fb8839ca-cae8-4ab0-8e03-d8a3bcc74dc1"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "a9fa557c-153f-4421-baf0-d4f717584366"
+              "key": "f9704559-12c5-438d-935b-fde79cf4a719"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "9984e9e2-81b9-4cbf-a065-1eae3ae8a39d"
+              "key": "91721320-2feb-4d46-b307-319427b28e76"
             }
           ],
           "source": "Manual",
@@ -8600,29 +8600,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "7c099271-c6b5-44b0-ad31-dc1b791b70fb"
+              "key": "bdd8c68f-5bbe-4c17-b9b0-b5d5c8a09f6a"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "7c099271-c6b5-44b0-ad31-dc1b791b70fb"
+              "key": "bdd8c68f-5bbe-4c17-b9b0-b5d5c8a09f6a"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "62214664-a76c-4679-bd34-242728416499"
+              "key": "a90dd1dc-9a4c-49bd-be4e-490bcd22223d"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "1f688e5a-aa6d-4204-9125-550949cf3a71"
+              "key": "e0107533-8025-433f-b3b0-abb229e4f688"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "a182dbf3-6d4a-457a-863e-8b5f6275dcc0"
+              "key": "ab4e1d02-0caf-475f-b5cf-fd79491382b6"
             }
           ],
           "source": "Manual",
@@ -8644,7 +8644,7 @@
         }
       ],
       "key": "3734dd06-be06-4a1f-9f7e-689449168150",
-      "image": "/assets/covers/install-centers.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/install-centers.webp"
     },
     {
       "title": {
@@ -8659,7 +8659,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/install-booking.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/install-booking.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -8847,19 +8847,19 @@
             {
               "label": "رسالة واتساب بالموعد",
               "value": "whatsapp",
-              "key": "4d89a271-e0e5-4776-a0ae-0c861f61a197"
+              "key": "7efca257-ea15-46ff-a093-d65289b293b1"
             }
           ],
           "options": [
             {
               "label": "رسالة واتساب بالموعد",
               "value": "whatsapp",
-              "key": "4d89a271-e0e5-4776-a0ae-0c861f61a197"
+              "key": "7efca257-ea15-46ff-a093-d65289b293b1"
             },
             {
               "label": "رابط حجز أختاره",
               "value": "link",
-              "key": "ca8091b1-57ed-47b8-8b3a-43776583d4b7"
+              "key": "edf9b68e-b466-4f03-bf1c-35646ba28d64"
             }
           ],
           "source": "Manual",
@@ -9233,29 +9233,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "98ab07c8-de22-4a3c-8395-78601730c044"
+              "key": "77cbd9b6-b292-4f4d-9c27-3c2d5009346e"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "98ab07c8-de22-4a3c-8395-78601730c044"
+              "key": "77cbd9b6-b292-4f4d-9c27-3c2d5009346e"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "ed9a5e35-496d-4d8c-937a-5976efdd6146"
+              "key": "6058892f-fb1c-4b82-b631-f30284a8efc8"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "3ec3ff16-15bb-406f-b947-d12eb189f67f"
+              "key": "6bd66c81-1fff-4e50-8a79-7a6004516afe"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "22052588-2237-4fd1-a1fe-50f2f3f367af"
+              "key": "0bbba34a-a94b-4345-b262-0aed3c8d6bb0"
             }
           ],
           "source": "Manual",
@@ -9273,29 +9273,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "dcd83994-bc7d-47b7-9da3-c5fd2b7cd66e"
+              "key": "084bf167-6e89-4f89-adbb-dd456ad0faad"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "dcd83994-bc7d-47b7-9da3-c5fd2b7cd66e"
+              "key": "084bf167-6e89-4f89-adbb-dd456ad0faad"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "160159be-9327-4978-9f64-ca85e74d6371"
+              "key": "e4c3b484-012d-463c-88e0-5114019733d7"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "bfdf2185-0a68-4fa3-b2b0-dff01432f19e"
+              "key": "948d8a92-f167-4a4e-8887-37921d40ba9d"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "7f8745da-78e2-4285-90b7-bef6a0a6951d"
+              "key": "701a8ccc-66cc-4275-a126-eea15e6c8ed3"
             }
           ],
           "source": "Manual",
@@ -9317,7 +9317,7 @@
         }
       ],
       "key": "a2a5cb57-c977-474a-8e40-6fb2fd902e68",
-      "image": "/assets/covers/install-booking.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/install-booking.webp"
     },
     {
       "title": {
@@ -9332,7 +9332,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/call-strip.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/call-strip.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -9479,29 +9479,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "fdd33462-6451-4164-960e-542677de0ee3"
+              "key": "14e30b25-1c71-4773-92ab-80c4d72f5e4a"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "fdd33462-6451-4164-960e-542677de0ee3"
+              "key": "14e30b25-1c71-4773-92ab-80c4d72f5e4a"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "a221807a-1734-44cb-a0c5-5009ab435992"
+              "key": "c1d13ec9-65e0-4d76-8504-248ec3e8d6a1"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "811b76a7-7c66-4fac-8dbe-ec6821bb7aeb"
+              "key": "1688be6e-ef50-496f-b429-2793952a5a15"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "759ff80b-5303-4ce7-ad3d-75d6a9003be9"
+              "key": "a480f3b3-b377-49e4-af76-03d2e6db7203"
             }
           ],
           "source": "Manual",
@@ -9519,29 +9519,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ac5110c5-23c0-41be-9079-8721f7796c9e"
+              "key": "63be5d32-4fe6-42a8-92e6-4f46307f481e"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "ac5110c5-23c0-41be-9079-8721f7796c9e"
+              "key": "63be5d32-4fe6-42a8-92e6-4f46307f481e"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "643e84fe-6902-4271-be21-04b463547af6"
+              "key": "c6e229d6-1fe4-4171-af94-3f963187a8f1"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "d73acdb1-856c-4d36-bcb6-10108db15acf"
+              "key": "56230f84-ffa7-4326-a096-92cc2be8b2fa"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "9a329d97-5bd6-4a9d-b553-5ebfb7e68766"
+              "key": "a5ffd79f-1701-48b0-8a61-13b2e6a4cbf8"
             }
           ],
           "source": "Manual",
@@ -9563,7 +9563,7 @@
         }
       ],
       "key": "db981ef7-716b-4209-b60b-3f54c78ea517",
-      "image": "/assets/covers/call-strip.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/call-strip.webp"
     },
     {
       "title": {
@@ -9578,7 +9578,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/steps.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/steps.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -9679,89 +9679,89 @@
                 {
                   "label": "بحث",
                   "value": "search",
-                  "key": "a97ca296-5986-41a6-9d6e-c7b36e9e6a36"
+                  "key": "ad805d08-11bd-46ef-9e15-59a1559fe0a8"
                 }
               ],
               "options": [
                 {
                   "label": "درع (أصلي / ضمان)",
                   "value": "shield",
-                  "key": "5fb6804b-df08-420e-a775-433f49b1379c"
+                  "key": "cc170a66-2750-4cd1-aa57-3baa0273cfdf"
                 },
                 {
                   "label": "مفتاح (تركيب)",
                   "value": "wrench",
-                  "key": "478ea5b8-01bd-4e3f-a7ec-2d41bfd9b674"
+                  "key": "4a5c9153-a893-441c-94d5-2ad1c2332ae8"
                 },
                 {
                   "label": "بطاقة (دفع)",
                   "value": "card",
-                  "key": "8eb05812-da3d-4f5f-98d8-23feb68e2170"
+                  "key": "4e814c7f-54e4-4706-8022-37dc5abc07c8"
                 },
                 {
                   "label": "شاحنة (توصيل)",
                   "value": "truck",
-                  "key": "8fc78fab-7999-4093-a8f6-c6362c8c32fc"
+                  "key": "169a1388-8af9-4406-9208-ed79c7b693a4"
                 },
                 {
                   "label": "إطار",
                   "value": "tire",
-                  "key": "c2a111be-2fb9-4c39-ab76-e07fb935746b"
+                  "key": "d41aa9cf-91fb-4521-b765-ba6e4f69f8f7"
                 },
                 {
                   "label": "تقويم",
                   "value": "cal",
-                  "key": "dd979eb5-e371-4864-bc04-7503ea1ccf7c"
+                  "key": "84e9f63a-0307-4d76-ba16-97a24de769d3"
                 },
                 {
                   "label": "موقع",
                   "value": "pin",
-                  "key": "320344cd-51dd-4021-acd8-f040e0d7f7b9"
+                  "key": "43614b9e-aeed-4a97-8ce7-963ef67d4707"
                 },
                 {
                   "label": "جوال",
                   "value": "phone",
-                  "key": "6d235879-f741-4560-9abd-a6a4f7d61b1d"
+                  "key": "206471ef-de03-41a1-a15a-c13fd5f7476f"
                 },
                 {
                   "label": "بحث",
                   "value": "search",
-                  "key": "a97ca296-5986-41a6-9d6e-c7b36e9e6a36"
+                  "key": "ad805d08-11bd-46ef-9e15-59a1559fe0a8"
                 },
                 {
                   "label": "قلب",
                   "value": "heart",
-                  "key": "b0fc823f-adee-4db6-a9fb-126845f958d3"
+                  "key": "23686410-07f9-48dd-910e-f0a54c23a64b"
                 },
                 {
                   "label": "شبكة",
                   "value": "grid",
-                  "key": "4a413591-af1c-499d-ae21-ec34330318e7"
+                  "key": "62f9f654-f7d7-45d7-9cf1-842b38617ffc"
                 },
                 {
                   "label": "بيت",
                   "value": "home",
-                  "key": "d9e83c82-4a46-4e57-abb8-862c3f1d6181"
+                  "key": "7c0eae2d-7cd3-4b5d-81ab-a3128b47937f"
                 },
                 {
                   "label": "كل الإطارات",
                   "value": "cat-all",
-                  "key": "93999520-2b16-4f31-8e5f-ad5a600afafc"
+                  "key": "41b0c336-3e43-4214-b6d5-844b95af8e9f"
                 },
                 {
                   "label": "سيدان",
                   "value": "cat-sedan",
-                  "key": "1909aa68-e49b-4356-914e-0eb809e41302"
+                  "key": "44437a0f-4497-46aa-bbea-3dbeda630fd7"
                 },
                 {
                   "label": "دفع رباعي",
                   "value": "cat-suv",
-                  "key": "70f598d3-efa9-4c72-b39d-bfa5f7df55ac"
+                  "key": "5d125f1b-f4a2-4424-8a40-4c730d98c4d6"
                 },
                 {
                   "label": "نقل وبيك أب",
                   "value": "cat-truck",
-                  "key": "6758c4f8-48e3-4a00-ab23-405d34f2b3db"
+                  "key": "862e4b9f-baf4-4639-afa1-0c0f37b69bb9"
                 }
               ],
               "source": "Manual",
@@ -9837,29 +9837,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "0c9e3e93-ca8a-4131-b796-954b1986c887"
+              "key": "4138f83a-5704-4103-9d92-452412fc3336"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "0c9e3e93-ca8a-4131-b796-954b1986c887"
+              "key": "4138f83a-5704-4103-9d92-452412fc3336"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "6230f485-4a4c-4efa-929a-8aa77ae4e143"
+              "key": "f0b1170e-1265-464c-ba1b-9c7c3667e8e9"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "bdd77d55-d068-4929-920b-db8bf13a1c0f"
+              "key": "25222306-7449-4fd6-a571-f40d6f02afb5"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "2afbe180-7bbb-4219-b5de-1f55212c9653"
+              "key": "b5aee388-445e-4459-b862-fc8d1cac633f"
             }
           ],
           "source": "Manual",
@@ -9877,29 +9877,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "6069720a-3d04-43d9-8f9e-6956241aeb35"
+              "key": "478d596d-fe5f-4662-94ec-2bc5eea2f88b"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "6069720a-3d04-43d9-8f9e-6956241aeb35"
+              "key": "478d596d-fe5f-4662-94ec-2bc5eea2f88b"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "c7370c8f-7be2-42a9-96f5-32c239032ca7"
+              "key": "f6f52595-3fb1-49a2-b33c-9f048e8ec1f3"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "aaed10e5-d7a4-42b4-8f75-5e514dd3ebc1"
+              "key": "1bc660b1-549f-4e9c-81a0-425536d654b3"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "8b20f6f3-486e-4eec-a20d-76d288ff0e34"
+              "key": "aa28e2c8-4e3c-4abc-b39d-a4cea52fae83"
             }
           ],
           "source": "Manual",
@@ -9921,7 +9921,7 @@
         }
       ],
       "key": "8fb20b1c-1084-4d95-bc1d-90b110984c1c",
-      "image": "/assets/covers/steps.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/steps.webp"
     },
     {
       "title": {
@@ -9936,7 +9936,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/lineup.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/lineup.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -10093,44 +10093,44 @@
             {
               "label": "الأكثر مبيعاً",
               "value": "best_selling",
-              "key": "c882bf5a-c0b3-4560-9d6b-df1e93c54083"
+              "key": "c14d89ff-3a89-4a74-b236-e15732d08571"
             }
           ],
           "options": [
             {
               "label": "الأكثر مبيعاً",
               "value": "best_selling",
-              "key": "c882bf5a-c0b3-4560-9d6b-df1e93c54083"
+              "key": "c14d89ff-3a89-4a74-b236-e15732d08571"
             },
             {
               "label": "الأحدث",
               "value": "latest",
-              "key": "a3538223-5f4a-44f1-9ed7-a4417dc10f74"
+              "key": "773473b7-3706-4faf-a297-c89957ce25cf"
             },
             {
               "label": "العروض والتخفيضات",
               "value": "offers",
-              "key": "f3d2daea-0e29-4d4f-b460-8d4a8a0ec34c"
+              "key": "a4c76222-0ae3-472e-98e2-39733b2b62e8"
             },
             {
               "label": "الأعلى تقييماً",
               "value": "top-rated",
-              "key": "d0304f2e-f40a-4e9e-818e-706d01ceaa49"
+              "key": "608d9a9f-04e3-4e1c-b9bb-0ec2e91f023d"
             },
             {
               "label": "من تصنيف",
               "value": "categories",
-              "key": "1f96a3fb-1532-4cc8-bcec-9d5c4161fc8b"
+              "key": "2a1c37a0-03e2-46d9-ba54-e5e36c710821"
             },
             {
               "label": "من ماركة",
               "value": "brands",
-              "key": "761dae39-614d-420b-acdf-9218e979c620"
+              "key": "4d507851-fdb7-4068-8746-8f678654da07"
             },
             {
               "label": "منتجات أختارها",
               "value": "selected",
-              "key": "da0096b1-9644-40ae-8a7a-83de7988374e"
+              "key": "4ba63fad-d01b-4419-9fc0-9d39fbd83fc7"
             }
           ],
           "source": "Manual",
@@ -10254,29 +10254,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "d0454015-4ad7-492f-a36b-bbbd1081f387"
+              "key": "c9745cfe-5b45-43db-b587-b9c1802e7d0c"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "d0454015-4ad7-492f-a36b-bbbd1081f387"
+              "key": "c9745cfe-5b45-43db-b587-b9c1802e7d0c"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "ed292be8-6c35-49cf-8156-7135ec56d777"
+              "key": "be97855d-0022-45bf-a902-246c2a89694c"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "8136c5f6-aeb1-4677-a93b-d3ac4f89b488"
+              "key": "3817edb9-87a4-4910-8fcc-6591839d6108"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "59b5d4e8-5bc5-4186-a3ac-d258635dd8cf"
+              "key": "1d17c5c9-ceb3-43f4-8fb6-89135d6bd653"
             }
           ],
           "source": "Manual",
@@ -10294,29 +10294,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "16ece285-c2cc-48d6-b2a7-96094b48a6bf"
+              "key": "b3892e3c-076e-4f0c-bb78-21ea8844cf58"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "16ece285-c2cc-48d6-b2a7-96094b48a6bf"
+              "key": "b3892e3c-076e-4f0c-bb78-21ea8844cf58"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "3eb71c7d-cedc-4096-85f2-8fe937bca8de"
+              "key": "9af6318b-14ca-4a7d-b67c-a8a579ef0654"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "5a151aa7-62ac-45aa-b3de-614c709b45e1"
+              "key": "4bbbd2c7-3bad-45ff-8d07-71238f5d1151"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "556da12f-6b53-4470-8a50-d519e58ec636"
+              "key": "4ea74048-525f-414c-9267-29001ed7ed8d"
             }
           ],
           "source": "Manual",
@@ -10338,7 +10338,7 @@
         }
       ],
       "key": "3afb22e3-ee0b-41da-ba89-685f6a0e569e",
-      "image": "/assets/covers/lineup.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/lineup.webp"
     },
     {
       "title": {
@@ -10353,7 +10353,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/reviews.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/reviews.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -10427,19 +10427,19 @@
             {
               "label": "أكتبها بنفسي",
               "value": "manual",
-              "key": "720f8882-663b-4dbf-8e01-787946c67a3c"
+              "key": "660607cb-fd33-43f7-aec8-80a1901d7bde"
             }
           ],
           "options": [
             {
               "label": "أكتبها بنفسي",
               "value": "manual",
-              "key": "720f8882-663b-4dbf-8e01-787946c67a3c"
+              "key": "660607cb-fd33-43f7-aec8-80a1901d7bde"
             },
             {
               "label": "تقييمات متجري من سلة",
               "value": "store",
-              "key": "54ef64dd-bd10-4d81-9ec4-7c551a49d9a0"
+              "key": "967ba82a-2b62-4eb5-ba95-0f1794e2d606"
             }
           ],
           "source": "Manual",
@@ -10609,29 +10609,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "421b57ad-9196-4543-a777-68f7e033cbaf"
+              "key": "1a6714d6-f18d-423f-8a87-da603efa25b6"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "421b57ad-9196-4543-a777-68f7e033cbaf"
+              "key": "1a6714d6-f18d-423f-8a87-da603efa25b6"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "66270d16-b418-4736-9bf9-90c76a76e6f7"
+              "key": "7b087ea4-ca5e-476e-87b1-793fe3eaf341"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "9ef9e447-5f9b-40bd-b551-f9c08d0cc818"
+              "key": "16ae48d5-1e20-4b5f-a50a-596aa0606850"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "c0d48e06-c9c0-496b-a6bf-bf840a3ed3d5"
+              "key": "6c38c52d-9e60-423a-ae35-33502f52d0f5"
             }
           ],
           "source": "Manual",
@@ -10649,29 +10649,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "dbcb089a-0736-491c-90fe-c6bd5d042933"
+              "key": "8425f787-1ec6-4168-b1df-45fa9589b0a4"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "dbcb089a-0736-491c-90fe-c6bd5d042933"
+              "key": "8425f787-1ec6-4168-b1df-45fa9589b0a4"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "c41939ee-8bd9-496c-8a95-1bd5a1062ff4"
+              "key": "5b54617a-39bc-4144-8892-3712a711c827"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "5493b33f-0b0c-4c4c-8a9a-683e85a7e60e"
+              "key": "66b0d938-bcc6-4e89-b221-e1ce35f5919a"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "dee794c2-013e-4b79-9853-70afb90e6a19"
+              "key": "576a1e3f-93de-42e2-9026-876cc93c8998"
             }
           ],
           "source": "Manual",
@@ -10693,7 +10693,7 @@
         }
       ],
       "key": "f8c39cd7-8643-4a8b-855b-d346f8e09444",
-      "image": "/assets/covers/reviews.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/reviews.webp"
     },
     {
       "title": {
@@ -10708,7 +10708,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/blog.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/blog.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -10891,29 +10891,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "32462ebf-d91f-4652-813b-e1318fea8134"
+              "key": "86eead68-9da3-4fa2-86ad-12f358190ae4"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "32462ebf-d91f-4652-813b-e1318fea8134"
+              "key": "86eead68-9da3-4fa2-86ad-12f358190ae4"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "fee77ace-8c6b-4d87-909c-2ea60f63c7a0"
+              "key": "003258f5-9710-44f7-8dbd-373c75a74e8c"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "7206c222-4137-428b-b7f3-a562aad14017"
+              "key": "6dad4fd6-1958-41ab-96a1-745c6df869fb"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "85372e35-f0c7-4e44-99c1-dd36d460c5e3"
+              "key": "46a2fc48-8c5f-459e-b77d-4b2c6d25b29b"
             }
           ],
           "source": "Manual",
@@ -10931,29 +10931,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "a891b8d6-e890-49ac-ae25-402c28e7b2df"
+              "key": "5d115024-95d5-411f-a7c3-2cb05e116cbd"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "a891b8d6-e890-49ac-ae25-402c28e7b2df"
+              "key": "5d115024-95d5-411f-a7c3-2cb05e116cbd"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "c6bad741-d774-48a7-8c3f-b55027bf46c8"
+              "key": "36c3470b-234c-4da6-8047-83502204bc0b"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "79ac76c5-85b6-41b4-92a2-469a90df96d8"
+              "key": "aa43bc4d-a029-4129-af90-8b6214872429"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "36c3f54d-e88a-43a9-9c08-c2f06749f05e"
+              "key": "8d959ada-70ea-43ea-a7f4-1cf947f0f3be"
             }
           ],
           "source": "Manual",
@@ -10975,7 +10975,7 @@
         }
       ],
       "key": "8362a95c-66ec-4e49-8a59-91d6d024e252",
-      "image": "/assets/covers/blog.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/blog.webp"
     },
     {
       "title": {
@@ -10990,7 +10990,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/faq.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/faq.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -11262,29 +11262,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "3e7f74be-3e5f-4d30-a881-552e2ffa026d"
+              "key": "deae39e3-1b49-4512-8fb8-c412b0c7dca3"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "3e7f74be-3e5f-4d30-a881-552e2ffa026d"
+              "key": "deae39e3-1b49-4512-8fb8-c412b0c7dca3"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "4c40aeac-6fc6-4354-bdc5-d78a868989dc"
+              "key": "c8d135dc-cb95-4872-b303-45f83a818dc2"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "d809e816-d721-4e4d-8919-d6da19773939"
+              "key": "b914f488-02ec-4e02-a0e0-5fac03222227"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "a99fdea5-8b4e-4da1-9db1-a07529dd00bc"
+              "key": "1ec700d1-d981-4a73-835f-6aeec1f97820"
             }
           ],
           "source": "Manual",
@@ -11302,29 +11302,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "165fbf59-7aeb-45cc-9391-9908224b1c5e"
+              "key": "14466922-a3c0-4354-9095-5bde86297efe"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "165fbf59-7aeb-45cc-9391-9908224b1c5e"
+              "key": "14466922-a3c0-4354-9095-5bde86297efe"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "e1b2421a-ff3f-403e-bc1d-3a112b978789"
+              "key": "df9448a1-c72b-49f5-b379-5452a58cdbd5"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "edc94693-3859-40db-9694-c3dc8c9f76a9"
+              "key": "b137f6e6-4eb5-487f-8beb-e137b4ac81b8"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "5986a9d5-9c4b-4e9a-a454-ea336d2af5e2"
+              "key": "da96a6e2-28e2-444c-8c56-7aed1b0769fa"
             }
           ],
           "source": "Manual",
@@ -11346,7 +11346,7 @@
         }
       ],
       "key": "9cba0765-84c6-41ef-9a09-9b16e04d5e7c",
-      "image": "/assets/covers/faq.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/faq.webp"
     },
     {
       "title": {
@@ -11361,7 +11361,7 @@
           "type": "static",
           "format": "description",
           "id": "tc-cover",
-          "value": "<div><img class='w-full' src='/assets/covers/newsletter.webp' alt=''></div>"
+          "value": "<div><img class='w-full' src='https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/newsletter.webp' alt=''></div>"
         },
         {
           "type": "static",
@@ -11449,19 +11449,19 @@
             {
               "label": "رابط التسجيل بخدمة البريد",
               "value": "link",
-              "key": "8b66f5cd-4660-48cc-b644-06c990677354"
+              "key": "02efe1f2-f657-451b-a9c6-c3c110166e9a"
             }
           ],
           "options": [
             {
               "label": "رابط التسجيل بخدمة البريد",
               "value": "link",
-              "key": "8b66f5cd-4660-48cc-b644-06c990677354"
+              "key": "02efe1f2-f657-451b-a9c6-c3c110166e9a"
             },
             {
               "label": "إرسال للبريد الإلكتروني للمتجر",
               "value": "email",
-              "key": "845ed936-a8ab-443b-8433-48953424e423"
+              "key": "c604b6a5-30ac-4163-9c73-261f14ec9dab"
             }
           ],
           "source": "Manual",
@@ -11604,29 +11604,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "027458a0-cdec-4b2b-bb90-12217fa0498b"
+              "key": "3dc175a7-9dac-4187-a97c-db85145eb1f1"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "027458a0-cdec-4b2b-bb90-12217fa0498b"
+              "key": "3dc175a7-9dac-4187-a97c-db85145eb1f1"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "55458462-f1ed-4b82-b92b-58aad5f3443e"
+              "key": "dea1cf49-e6b7-4709-a2ed-291cc510f68c"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "f6a66aca-64b6-4a87-b227-9b1220190b76"
+              "key": "641013bd-06a8-44eb-8ae7-52bc492c44b6"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "f90879ee-460c-4338-8d94-87e3bf6564dc"
+              "key": "81c79627-ce11-4e10-9bf9-1b57a2380ce0"
             }
           ],
           "source": "Manual",
@@ -11644,29 +11644,29 @@
             {
               "label": "عادية",
               "value": "normal",
-              "key": "006f1ee7-8949-4482-9667-24d3549e3e60"
+              "key": "b89e9d18-8567-4105-b879-f7567c932c23"
             }
           ],
           "options": [
             {
               "label": "عادية",
               "value": "normal",
-              "key": "006f1ee7-8949-4482-9667-24d3549e3e60"
+              "key": "b89e9d18-8567-4105-b879-f7567c932c23"
             },
             {
               "label": "صغيرة",
               "value": "small",
-              "key": "f2516403-e62b-4921-bc82-69dfbbd10962"
+              "key": "fa28065c-19b2-4a60-9e3c-b893b2f8f4f6"
             },
             {
               "label": "كبيرة",
               "value": "large",
-              "key": "7c0ba10c-4c50-408d-b604-82bb2a44db03"
+              "key": "28d5c77b-1686-42a0-9843-1aaf88562fab"
             },
             {
               "label": "بدون",
               "value": "none",
-              "key": "4074c1c0-c8ef-4a20-9c51-e95a57152305"
+              "key": "da0baccd-2c6b-4cd7-9580-96cf1f0c5e55"
             }
           ],
           "source": "Manual",
@@ -11688,7 +11688,7 @@
         }
       ],
       "key": "3c7f7fb9-1b80-4f14-b284-cdfe456dec7f",
-      "image": "/assets/covers/newsletter.webp"
+      "image": "https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/newsletter.webp"
     },
     {
       "key": "186b3f4f-25cf-4d3c-abca-cef7eed6f0ab",

@@ -308,7 +308,8 @@ if (fs.existsSync(dir)) {
 let after = 'home.size-finder';
 for (const c of components) { F.upsert(json, c, after); after = c.path; }
 // editor cover images (shot from the approved design), shipped inside the theme
-const COVERS = '/assets/covers/'; // theme public folder (public/assets/covers)
+// public CDN copy of public/assets/covers (repo aya123aya2013-dev/tires-store-assets) — the editor can't read theme-relative URLs
+const COVERS = 'https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/';
 const coversDir = path.join(__dirname, '../public/assets/covers');
 for (const c of json.components) {
   const key = c.path.replace(/^home\./, '');

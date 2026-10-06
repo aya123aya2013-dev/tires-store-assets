@@ -10,7 +10,7 @@ import { parseTireSize, tireSizeQuery, formatTireSize } from '../tires/sizes';
 import { asBool, asText, makeT, rows, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
-import { BUILTIN_CARS } from './tc/cars';
+import { BUILTIN_CARS, CAR_NAMES_EN } from './tc/cars';
 import type { CarRow } from './tc/cars';
 
 const EN: Record<string, string> = {
@@ -73,6 +73,7 @@ export function ShopByCar({ data }: { data: Row }) {
   const car = year ? gens.find(g => year >= g.from && year <= g.to) : undefined;
   const parsed = car ? parseTireSize(car.size) : null;
   const pick = (f: () => void) => () => { f(); };
+  const show = (s: string) => (isEn ? CAR_NAMES_EN[s] ?? s : s); // English names for the ready-made list
 
   const btn = (label: string, on: boolean, onClick: () => void, cls?: string) => (
     <button type="button" key={label} className={[cls, on ? 'on' : ''].filter(Boolean).join(' ') || undefined} onClick={onClick}>{label}</button>
@@ -92,12 +93,12 @@ export function ShopByCar({ data }: { data: Row }) {
           <div className="car-ui">
             <div className="car-col">
               <span className="cstep">1 · {isEn ? 'Make' : 'الماركة'}</span>
-              <div className="makes">{makes.map(m => btn(m, m === make, pick(() => { setMake(m); setModel(''); setYear(0); })))}</div>
+              <div className="makes">{makes.map(m => btn(show(m), m === make, pick(() => { setMake(m); setModel(''); setYear(0); })))}</div>
             </div>
             <div className="car-col">
               <span className="cstep">2 · {isEn ? 'Model' : 'الموديل'}</span>
               <div className="list">
-                {make ? models.map(m => btn(m, m === model, pick(() => { setModel(m); setYear(0); }), 'ar')) : <p className="hint">{isEn ? 'Pick the make first' : 'اختر الماركة أول'}</p>}
+                {make ? models.map(m => btn(show(m), m === model, pick(() => { setModel(m); setYear(0); }), 'ar')) : <p className="hint">{isEn ? 'Pick the make first' : 'اختر الماركة أول'}</p>}
               </div>
             </div>
             <div className="car-col">
@@ -109,7 +110,7 @@ export function ShopByCar({ data }: { data: Row }) {
             <div className="car-out">
               {car && parsed ? (
                 <>
-                  <span className="cstep" style={{ color: '#9a9ea2' }}>{`${make} ${model} ${year}`}</span>
+                  <span className="cstep" style={{ color: '#9a9ea2' }}>{`${show(make)} ${show(model)} ${year}`}</span>
                   <div className="cres">{car.size}</div>
                   <p>{t(data.result_text, 'المقاس الأصلي من المصنع. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.')}</p>
                   <Link className="btn btn-gold" to={`/search?q=${encodeURIComponent(tireSizeQuery(parsed))}`}>{t(data.btn_text, 'اعرض الإطارات')}</Link>

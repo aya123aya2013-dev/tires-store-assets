@@ -8,7 +8,7 @@ import type { Row } from './fields';
 import { Section } from './tc/Section';
 
 const EN: Record<string, string> = {
-  'المقاس': 'Size', 'الإطارات': 'Tires', 'التركيب': 'Fitting', 'الدليل': 'Guide',
+  'أقسام المتجر': 'Store sections', 'المقاس': 'Size', 'الإطارات': 'Tires', 'التركيب': 'Fitting', 'الدليل': 'Guide',
   'إطارات أصلية بضمان الوكيل': 'Genuine tires with dealer warranty', 'تركيب مجاني بالرياض': 'Free fitting in Riyadh', 'قسّطها مع تابي وتمارا': 'Split it with Tabby & Tamara',
 };
 const DEFAULTS = [

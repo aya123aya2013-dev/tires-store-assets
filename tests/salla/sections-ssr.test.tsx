@@ -199,3 +199,12 @@ describe('R1-14 / R1-16 shared settings', () => {
     expect(finder).not.toContain('tc-s ');
   });
 });
+
+describe('R1-15 / R1-17 / R1-18', () => {
+  it('filter pills follow the brands the merchant picked, in order', async () => {
+    const { filterBrands } = await import('../../app/components/home/tc/products');
+    const ps = [{ brand: 'Hankook', brandId: 1 }, { brand: 'Toyo', brandId: 2 }, { brand: 'Pirelli', brandId: 3 }] as never[];
+    expect(filterBrands(ps, [3, 1])).toEqual(['Pirelli', 'Hankook']);
+    expect(filterBrands(ps, [])).toEqual(['Hankook', 'Toyo', 'Pirelli']);
+  });
+});

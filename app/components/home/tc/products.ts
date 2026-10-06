@@ -15,6 +15,7 @@ export interface TcProduct {
   id: number;
   url: string;
   brand: string;
+  brandId?: number;
   name: string;
   size: string; // "205/55 R16" or ''
   rim: string; // "R16" or ''
@@ -32,7 +33,7 @@ export interface TcProduct {
 }
 
 /** ids picked in a `dropdown-list` (source: products / categories / brands): [1,2] | [{value:1}] | "1,2" */
-const ids = (v: unknown): number[] => {
+export const pickedIds = (v: unknown): number[] => {
   const list = Array.isArray(v) ? v : typeof v === 'string' ? v.split(',') : v == null ? [] : [v];
   return list
     .map(x => (x && typeof x === 'object' ? (x as Row).value ?? (x as Row).id : x))
@@ -40,13 +41,23 @@ const ids = (v: unknown): number[] => {
     .filter(n => Number.isFinite(n) && n > 0);
 };
 
+/** brand filter pills: the brands the merchant picked (in that order), else the brands of the shown products */
+export function filterBrands(products: TcProduct[], picked: unknown, max = 6): string[] {
+  const ids = pickedIds(picked);
+  if (ids.length) {
+    const byId = new Map(products.filter(p => p.brandId && p.brand).map(p => [p.brandId as number, p.brand]));
+    return ids.map(id => byId.get(id)).filter((b): b is string => !!b);
+  }
+  return [...new Set(products.map(p => p.brand).filter(Boolean))].slice(0, max);
+}
+
 /** source + its ids from the component fields (`<prefix>_source`, `_category`, `_brand`, `_selected`) */
 export function sourceFrom(data: Row, prefix: string, fallback: ProductsListSource) {
   const source = opt(data[`${prefix}_source`], fallback) as ProductsListSource;
   const value =
-    source === 'categories' ? ids(data[`${prefix}_category`]) :
-    source === 'brands' ? ids(data[`${prefix}_brand`]) :
-    source === 'selected' ? ids(data[`${prefix}_selected`]) : undefined;
+    source === 'categories' ? pickedIds(data[`${prefix}_category`]) :
+    source === 'brands' ? pickedIds(data[`${prefix}_brand`]) :
+    source === 'selected' ? pickedIds(data[`${prefix}_selected`]) : undefined;
   // a source that needs ids but has none → fall back so the section is never empty by mistake
   return value && !value.length ? { source: fallback, value: undefined } : { source, value };
 }
@@ -64,6 +75,7 @@ export function toTcProduct(p: Product, offerLabel: string): TcProduct {
     id: p.id,
     url: p.url,
     brand: p.brand?.name ?? '',
+    brandId: p.brand?.id,
     name,
     size: size ? formatTireSize(size) : '',
     rim: size ? `R${size.rim}` : '',
@@ -82,8 +94,9 @@ export function toTcProduct(p: Product, offerLabel: string): TcProduct {
 export function useTcProducts(src: { source: ProductsListSource; value?: number[] }, limit: number) {
   const q = useQuery(productApi.queries.list({ source: src.source, sourceValue: src.value, perPage: limit }));
   // DEV only: `?tc-samples` shows the design's sample tires (used to shoot the editor cover images)
-  if (import.meta.env.DEV && typeof window !== 'undefined' && window.location.search.includes('tc-samples')) return { items: [], loading: false };
-  return { items: (q.data?.items ?? []).slice(0, limit), loading: q.isLoading };
+  if (import.meta.env.DEV && typeof window !== 'undefined' && window.location.search.includes('tc-samples')) return { items: [], loading: false, failed: false, retry: () => {} };
+  // loading / failed / empty are told apart: a failed request offers a retry instead of vanishing
+  return { items: (q.data?.items ?? []).slice(0, limit), loading: q.isLoading, failed: !!q.isError, retry: () => void q.refetch?.() };
 }
 
 /**

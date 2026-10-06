@@ -88,3 +88,19 @@ export const BUILTIN_CARS: CarRow[] = RAW.trim().split('\n').map(line => {
   const [make, model, from, to, size] = line.split('|');
   return { make, model, from: Number(from), to: Number(to), size };
 });
+
+/** English names for the ready-made list (display only — the list itself stays keyed in Arabic) */
+export const CAR_NAMES_EN: Record<string, string> = {
+  'تويوتا': 'Toyota', 'هيونداي': 'Hyundai', 'كيا': 'Kia', 'نيسان': 'Nissan', 'شفروليه': 'Chevrolet', 'جي إم سي': 'GMC',
+  'فورد': 'Ford', 'لكزس': 'Lexus', 'مازدا': 'Mazda', 'ميتسوبيشي': 'Mitsubishi', 'هوندا': 'Honda', 'دودج': 'Dodge', 'جيب': 'Jeep', 'إم جي': 'MG',
+  'كامري': 'Camry', 'كورولا': 'Corolla', 'يارس': 'Yaris', 'لاند كروزر': 'Land Cruiser', 'برادو': 'Prado', 'هايلكس': 'Hilux',
+  'فورتشنر': 'Fortuner', 'راف فور': 'RAV4', 'أفالون': 'Avalon', 'إف جي كروزر': 'FJ Cruiser', 'النترا': 'Elantra', 'أكسنت': 'Accent',
+  'سوناتا': 'Sonata', 'توسان': 'Tucson', 'سنتافي': 'Santa Fe', 'أزيرا': 'Azera', 'كريتا': 'Creta', 'باليسيد': 'Palisade',
+  'سبورتاج': 'Sportage', 'سيراتو': 'Cerato', 'بيجاس': 'Pegas', 'سورينتو': 'Sorento', 'تيلورايد': 'Telluride', 'كرنفال': 'Carnival',
+  'سيلتوس': 'Seltos', 'باترول': 'Patrol', 'ألتيما': 'Altima', 'صني': 'Sunny', 'سنترا': 'Sentra', 'إكس تريل': 'X-Trail',
+  'باثفايندر': 'Pathfinder', 'نافارا': 'Navara', 'كيكس': 'Kicks', 'تاهو': 'Tahoe', 'سوبربان': 'Suburban', 'ماليبو': 'Malibu',
+  'سلفرادو': 'Silverado', 'ترافيرس': 'Traverse', 'يوكن': 'Yukon', 'سييرا': 'Sierra', 'تيرين': 'Terrain', 'أكاديا': 'Acadia',
+  'إكسبلورر': 'Explorer', 'إكسبيديشن': 'Expedition', 'إيدج': 'Edge', 'مازدا 3': 'Mazda 3', 'مازدا 6': 'Mazda 6', 'لانسر': 'Lancer',
+  'أتراج': 'Attrage', 'باجيرو': 'Pajero', 'أوتلاندر': 'Outlander', 'أكورد': 'Accord', 'سيفيك': 'Civic', 'بايلوت': 'Pilot',
+  'رام': 'Ram', 'جراند شيروكي': 'Grand Cherokee', 'رانجلر': 'Wrangler',
+};

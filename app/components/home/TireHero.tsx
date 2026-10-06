@@ -394,9 +394,9 @@ function TireDesign({ data }: TireHeroProps) {
         <div className="tc-hero__stage">
           {giant.show && <div className="tc-hero__giant" aria-hidden="true">{giant.text}</div>}
           <div className={'tc-hero__tire' + (float ? ' is-floating' : '')}>
-            <img src={image} alt="إطار" width={700} height={700} fetchPriority="high" />
+            <img src={image} alt={lang === 'en' ? 'Tire' : 'إطار'} width={700} height={700} fetchPriority="high" />
             {showParts && (
-              <svg viewBox="0 0 1000 1000" className="tc-hero__sw" aria-label="أرقام المقاس على جانب الإطار">
+              <svg viewBox="0 0 1000 1000" className="tc-hero__sw" aria-label={lang === 'en' ? 'Size code on the tire sidewall' : 'أرقام المقاس على جانب الإطار'}>
                 <defs>
                   <path id={arcId} d="M 165 500 A 335 335 0 0 1 835 500" />
                 </defs>

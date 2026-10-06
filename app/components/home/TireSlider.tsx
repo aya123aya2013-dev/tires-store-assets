@@ -8,7 +8,7 @@ import { asBool, makeT, opt, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
-import { SAMPLE_PRODUCTS, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
+import { SAMPLE_PRODUCTS, filterBrands, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import { useAddToCart } from './tc/useAddToCart';
 import { useCurrency } from './tc/useCurrency';
 import type { TcProduct } from './tc/products';
@@ -16,7 +16,7 @@ import type { TcProduct } from './tc/products';
 const EN: Record<string, string> = {
   'الأكثر طلباً': 'Most requested', 'إطارات هالأسبوع': 'Tires of the week', 'الكل': 'All',
   'عرض': 'Offer', 'للإطار الواحد': 'per tire', 'عرض التفاصيل': 'View details', 'ر.س': 'SAR',
-  'أُضيف للسلة': 'Added to cart', 'تعذّرت الإضافة — حاول مرة ثانية': 'Could not add — try again', 'اختر المقاس والكمية': 'Choose size & quantity', 'إطار': 'Tire',
+  'أُضيف للسلة': 'Added to cart', 'تعذّر تحميل المنتجات.': 'Could not load the products.', 'حاول مرة ثانية': 'Try again', 'تعذّرت الإضافة — حاول مرة ثانية': 'Could not add — try again', 'اختر المقاس والكمية': 'Choose size & quantity', 'إطار': 'Tire',
 };
 
 export function TireSlider({ data }: { data: Row }) {
@@ -26,7 +26,7 @@ export function TireSlider({ data }: { data: Row }) {
   const limit = Math.min(12, Math.max(4, Number(data.limit) || 8));
   const qtyRaw = Number(opt(data.add_qty, '1')); // dropdown: '4' | {value} | [{value}]
   const qty = [1, 2, 4].includes(qtyRaw) ? qtyRaw : 1;
-  const { items, loading } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), limit);
+  const { items, loading, failed, retry } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), limit);
   const list: TcProduct[] = items.length
     ? items.map(p => toTcProduct(p, t('عرض', 'عرض')))
     : import.meta.env.DEV && !loading ? SAMPLE_PRODUCTS.slice(0, limit) : [];
@@ -35,9 +35,29 @@ export function TireSlider({ data }: { data: Row }) {
   const cart = useAddToCart();
   const cur = useCurrency();
   const slider = useRef<HTMLDivElement>(null);
+  if (loading || failed) {
+    return (
+      <Section data={data}>
+        <section className="sec" style={{ paddingBlock: 40 }}>
+          <div className="wrap">
+            <span className="kicker">{t(data.kicker, 'الأكثر طلباً')}</span>
+            <h2 className="h2">{t(data.title, 'إطارات هالأسبوع')}</h2>
+            {loading ? (
+              <div className="tc-skel-row" aria-busy="true">{[0, 1, 2, 3].map(i => <span key={i} className="tc-skel" />)}</div>
+            ) : (
+              <p className="tc-load-fail">
+                {t('تعذّر تحميل المنتجات.', 'تعذّر تحميل المنتجات.')}{' '}
+                <button type="button" className="link" onClick={retry}>{t('حاول مرة ثانية', 'حاول مرة ثانية')}</button>
+              </p>
+            )}
+          </div>
+        </section>
+      </Section>
+    );
+  }
   if (!list.length) return null;
 
-  const brands = asBool(data.show_filters, true) ? [...new Set(list.map(p => p.brand).filter(Boolean))].slice(0, 6) : [];
+  const brands = asBool(data.show_filters, true) ? filterBrands(list, data.filter_brands) : [];
   const shown = brand ? list.filter(p => p.brand === brand) : list;
   // RTL: "next" moves left; LTR: right
   const move = (dir: 1 | -1) => slider.current?.scrollBy({ left: (isEn ? 1 : -1) * dir * slider.current.clientWidth * 0.75, behavior: 'smooth' });

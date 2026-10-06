@@ -379,3 +379,14 @@
 /* R1-11: readable panel labels (4.5:1) and the keyboard-highlighted suggestion */
 .tc-dd-panel .t { color: #5c6166; }
 .tc-finder .tc-dd-o.is-active { border-color: var(--tc-ink); box-shadow: 0 0 0 2px var(--tc-gold-soft); }
+
+/* R1-18: product sections while loading / after a failed request */
+.tc-s .tc-skel-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 24px; }
+.tc-s .tc-skel { height: 420px; border-radius: var(--r); background: linear-gradient(90deg, var(--bg-2), #fbfaf7, var(--bg-2)); background-size: 200% 100%; animation: tc-skel 1.4s ease-in-out infinite; }
+@keyframes tc-skel { to { background-position: -200% 0; } }
+@media (max-width: 1100px) { .tc-s .tc-skel-row { grid-template-columns: repeat(2, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .tc-s .tc-skel { animation: none; } }
+.tc-s .tc-load-fail { margin-top: 18px; color: var(--muted); }
+
+/* product names: Latin model names stay in Archivo, Arabic names fall to the site Arabic font (not Arial) */
+.tc-s .pbody h3, .tc-s .cbody h3, .tc-s .pbrand, .tc-s .cbrand { font-family: Archivo, "IBM Plex Sans Arabic", Tahoma, sans-serif; }

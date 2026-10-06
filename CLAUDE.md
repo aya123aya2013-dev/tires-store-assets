@@ -9,6 +9,7 @@ Start every session here, then load the `salla-tires-theme` skill (full workflow
   + `scripts/tc/NN-key.cjs` → `node scripts/tc-components.cjs` → `node scripts/tc-register.cjs <Name> <key>`
   + test in `tests/salla/sections-ssr.test.tsx` → commit.
 - **Checks:** `pnpm.cmd typecheck` · `pnpm.cmd build` · `pnpm.cmd exec vitest --run tests/salla tests/components/tires tests/routes`
+- **Analysis first:** every setting / page / feature starts from a short analysis of how a tire store is really used (owner + customer), not from copying a competitor. Every visible element must be switchable. Present the analysis, get approval, then build.
 - **Owner rules:** reply in Arabic (Levantine); no dev server / preview / network without permission; «ضيف» = add, never replace;
   no AI-looking design; commit locally — push only to `aya123aya2013-dev/tires-store-theme` when asked; after big milestones
   ask the owner to run a Codex review (Prompt 3 in `CODEX-PROMPTS.md`).

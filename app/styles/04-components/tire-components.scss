@@ -390,3 +390,6 @@
 
 /* product names: Latin model names stay in Archivo, Arabic names fall to the site Arabic font (not Arial) */
 .tc-s .pbody h3, .tc-s .cbody h3, .tc-s .pbrand, .tc-s .cbrand { font-family: Archivo, "IBM Plex Sans Arabic", Tahoma, sans-serif; }
+
+/* #15 centres: 1 centre spans the row, 3+ wrap */
+@media (min-width: 1101px) { .tc-s .centers.tc-n-1 { grid-template-columns: 1fr; } }

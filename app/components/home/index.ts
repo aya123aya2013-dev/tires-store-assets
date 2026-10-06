@@ -22,3 +22,4 @@ export { ServicesBento } from './ServicesBento';
 export { Ticker } from './Ticker';
 export { ServicesRow } from './ServicesRow';
 export { InstallBanner } from './InstallBanner';
+export { InstallCenters } from './InstallCenters';

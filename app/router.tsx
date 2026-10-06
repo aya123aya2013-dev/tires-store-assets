@@ -32,6 +32,7 @@ import {
   Ticker,
   ServicesRow,
   InstallBanner,
+  InstallCenters,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -82,6 +83,7 @@ registerHomeComponents({
   ticker: Ticker,
   'services-row': ServicesRow,
   'install-banner': InstallBanner,
+  'install-centers': InstallCenters,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

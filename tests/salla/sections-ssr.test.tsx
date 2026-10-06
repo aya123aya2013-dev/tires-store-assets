@@ -15,6 +15,7 @@ import { ServicesRow } from '../../app/components/home/ServicesRow';
 import { InstallBanner } from '../../app/components/home/InstallBanner';
 import { TireHero } from '../../app/components/home/TireHero';
 import { SizeFinder } from '../../app/components/home/SizeFinder';
+import { InstallCenters } from '../../app/components/home/InstallCenters';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -206,5 +207,18 @@ describe('R1-15 / R1-17 / R1-18', () => {
     const ps = [{ brand: 'Hankook', brandId: 1 }, { brand: 'Toyo', brandId: 2 }, { brand: 'Pirelli', brandId: 3 }] as never[];
     expect(filterBrands(ps, [3, 1])).toEqual(['Pirelli', 'Hankook']);
     expect(filterBrands(ps, [])).toEqual(['Hankook', 'Toyo', 'Pirelli']);
+  });
+});
+
+describe('#15 install centers', () => {
+  it('renders the two design centres; a saved empty list hides the section', () => {
+    expect(renderToString(<InstallCenters data={{}} />)).toContain('مركز السويدي');
+    expect(renderToString(<InstallCenters data={{ centers: [] }} />)).toBe('');
+  });
+  it('merchant centre: phone link, no book button when the link is empty', () => {
+    const html = renderToString(<InstallCenters data={{ centers: [{ 'centers.name': 'مركز جدة', 'centers.phone': '055 123 4567', 'centers.open_now': false }] }} />);
+    expect(html).toContain('href="tel:0551234567"');
+    expect(html).not.toContain('مفتوح الآن');
+    expect(html).not.toContain('btn-line');
   });
 });

@@ -8,6 +8,7 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { asBool, asImage, asLink, makeT, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
+import { useCurrency } from './tc/useCurrency';
 import { Icon } from './tc/Icon';
 
 const EN: Record<string, string> = {
@@ -28,6 +29,7 @@ export function ServicesBento({ data }: { data: Row }) {
   const max = Math.max(min + 40, Number(data.calc_max) || 4000);
   const parts = Math.min(12, Math.max(2, Number(data.calc_parts) || 4));
   const [total, setTotal] = useState(() => Math.min(max, Math.max(min, 1160)));
+  const cur = useCurrency();
   const arrow = <Icon name="arrow" style={{ width: 16, height: 16, ...(isEn ? { transform: 'scaleX(-1)' } : {}) }} />;
 
   return (
@@ -61,11 +63,11 @@ export function ServicesBento({ data }: { data: Row }) {
                 <div>
                   <div className="calc-n">
                     <span>{Math.round(total / parts)}</span>
-                    <small>{isEn ? 'SAR / month' : 'ر.س / شهرياً'}</small>
+                    <small>{cur()} {isEn ? '/ month' : '/ شهرياً'}</small>
                   </div>
                   <input type="range" min={min} max={max} step={40} value={total} onChange={e => setTotal(Number(e.target.value))} aria-label={isEn ? 'Total price' : 'إجمالي السعر'} />
                   <div className="fine">
-                    {isEn ? 'Total' : 'الإجمالي'} <span>{total}</span> {isEn ? 'SAR' : 'ر.س'} · {t(data.calc_providers, 'تابي أو تمارا')}
+                    {isEn ? 'Total' : 'الإجمالي'} <span>{total}</span> {cur()} · {t(data.calc_providers, 'تابي أو تمارا')}
                   </div>
                 </div>
               </div>

@@ -74,11 +74,16 @@ export const rows = (v: unknown, prefix: string): Row[] =>
     return out;
   });
 
+/** the merchant saved the field empty on purpose ("" or { ar: "", en: "" }) — show nothing, not our default */
+export const isCleared = (v: unknown): boolean =>
+  v === '' || (isRow(v) && Object.keys(v).length > 0 && Object.values(v).every(x => typeof x === 'string' && !x.trim()));
+
 /**
  * Text in the storefront language. `en` maps our Arabic defaults to English, so the
  * English storefront never shows an untouched Arabic default.
  */
 export const makeT = (lang: Lang, en: Record<string, string>) => (v: unknown, d: string) => {
+  if (isCleared(v)) return '';
   const s = asText(v, d, lang);
   return lang === 'en' ? en[s.trim()] ?? s : s;
 };

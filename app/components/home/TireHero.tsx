@@ -6,7 +6,7 @@
  */
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
-import { asBool, asImage, asLink, asText, customClass, isRow, opt, pick, useLang, useReducedMotion } from './fields';
+import { asBool, asImage, asLink, asText, customClass, isCleared, isRow, opt, pick, useLang, useReducedMotion } from './fields';
 import type { Lang, Row } from './fields';
 
 const DEFAULT_STATS = [
@@ -261,7 +261,7 @@ const youTubeEmbed = (id: string) => `https://www.youtube.com/embed/${id}?autopl
 function TireDesign({ data }: TireHeroProps) {
   const lang = useLang();
   const reduced = useReducedMotion();
-  const text_ = (v: unknown, d: string) => tr(asText(v, d, lang), lang);
+  const text_ = (v: unknown, d: string) => (isCleared(v) ? '' : tr(asText(v, d, lang), lang));
   const kicker = text_(data.kicker, 'إطارات أصلية · تركيب بنفس اليوم بالرياض');
   const title1 = text_(data.title_1, 'مقاسك مكتوب');
   const title2 = text_(data.title_2, 'على إطارك.');
@@ -280,7 +280,7 @@ function TireDesign({ data }: TireHeroProps) {
     const list = rows
       .map(r => ({ value: text_(pick(r, 'value', 'stats'), ''), label: text_(pick(r, 'label', 'stats'), '') }))
       .filter(r => r.value);
-    return list.length ? list : DEFAULT_STATS.map(r => ({ value: tr(r.value, lang), label: tr(r.label, lang) }));
+    return Array.isArray(data.stats) ? list : DEFAULT_STATS.map(r => ({ value: tr(r.value, lang), label: tr(r.label, lang) }));
   }, [data.stats, lang]);
   const parts = useMemo(() => {
     const rows = Array.isArray(data.parts) ? data.parts.filter(isRow) : [];
@@ -291,7 +291,7 @@ function TireDesign({ data }: TireHeroProps) {
         text: text_(pick(r, 'text', 'parts'), ''),
       }))
       .filter(r => r.code);
-    return list.length ? list : DEFAULT_PARTS.map(r => ({ ...r, name: tr(r.name, lang), text: tr(r.text, lang) }));
+    return Array.isArray(data.parts) && list.length ? list : DEFAULT_PARTS.map(r => ({ ...r, name: tr(r.name, lang), text: tr(r.text, lang) }));
   }, [data.parts, lang]);
 
   // ----- sidewall size code + popup -----
@@ -366,7 +366,7 @@ function TireDesign({ data }: TireHeroProps) {
               </Link>
             )}
           </div>
-          {showStats && (
+          {showStats && stats.length > 0 && (
             <div className="tc-hero__proof">
               {stats.map(s => (
                 <span key={s.value + s.label}>

@@ -30,9 +30,11 @@ export function CategoryCards({ data }: { data: Row }) {
     .map(r => ({ icon: opt(r.icon, 'cat-all'), image: asImage(r.image, ''), title: t(r.title, ''), text: t(r.text, ''), link: asLink(r.link, '/latest-products'), on: asBool(r.highlight, false) }))
     .filter(c => c.title)
     .slice(0, 6);
-  const cards = list.length ? list : DEFAULTS.map(d => ({ ...d, image: '', link: '/latest-products', title: t(d.title, d.title), text: t(d.text, d.text) }));
+  // a saved list (even empty) is the merchant's choice — defaults only when the field was never saved
+  const cards = Array.isArray(data.cards) ? list : DEFAULTS.map(d => ({ ...d, image: '', link: '/latest-products', title: t(d.title, d.title), text: t(d.text, d.text) }));
   const lead = t(data.text, 'اختر فئة سيارتك، واكتشف الخيارات المناسبة.');
 
+  if (!cards.length) return null;
   return (
     <Section data={data}>
       <section className={'sec cats' + (asBool(data.light_bg, false) ? ' tc-light' : '')} id="cats">

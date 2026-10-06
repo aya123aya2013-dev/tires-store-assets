@@ -10,6 +10,7 @@ import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
 import { SAMPLE_PRODUCTS, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import { useAddToCart } from './tc/useAddToCart';
+import { useCurrency } from './tc/useCurrency';
 import type { TcProduct } from './tc/products';
 
 const EN: Record<string, string> = {
@@ -32,6 +33,7 @@ export function TireSlider({ data }: { data: Row }) {
 
   const [brand, setBrand] = useState('');
   const cart = useAddToCart();
+  const cur = useCurrency();
   const slider = useRef<HTMLDivElement>(null);
   if (!list.length) return null;
 
@@ -84,7 +86,7 @@ export function TireSlider({ data }: { data: Row }) {
                   <div className="pfoot2">
                     <div className="pprice2">
                       <div>
-                        <b>{p.price}</b> <span>{t('ر.س', 'ر.س')}</span>
+                        <b>{p.price}</b> <span>{cur(p.currency)}</span>
                         {p.old && <s>{p.old}</s>}
                       </div>
                       <small>{t('للإطار الواحد', 'للإطار الواحد')}</small>

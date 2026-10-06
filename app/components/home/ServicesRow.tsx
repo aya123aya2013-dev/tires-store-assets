@@ -50,7 +50,8 @@ export function ServicesRow({ data }: { data: Row }) {
     })
     .filter(c => c.title)
     .slice(0, 3);
-  const cards = list.length ? list : DEFAULTS.map(d => ({ ...d, tag: d.tag && t(d.tag, d.tag), title: t(d.title, d.title), text: t(d.text, d.text) }));
+  // a saved list (even empty) is the merchant's choice — defaults only when the field was never saved
+  const cards = Array.isArray(data.cards) ? list : DEFAULTS.map(d => ({ ...d, tag: d.tag && t(d.tag, d.tag), title: t(d.title, d.title), text: t(d.text, d.text) }));
 
   return (
     <Section data={data}>

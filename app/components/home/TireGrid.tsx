@@ -13,6 +13,7 @@ import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
 import { SAMPLE_PRODUCTS, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import { useAddToCart } from './tc/useAddToCart';
+import { useCurrency } from './tc/useCurrency';
 import type { TcProduct } from './tc/products';
 
 const EN: Record<string, string> = {
@@ -37,6 +38,7 @@ export function TireGrid({ data }: { data: Row }) {
   const [brand, setBrand] = useState('');
   const [sort, setSort] = useState<Sort>('feat');
   const cart = useAddToCart();
+  const cur = useCurrency();
   if (!all.length) return null;
 
   const featFirst = asBool(data.feature_first, true);
@@ -112,7 +114,7 @@ export function TireGrid({ data }: { data: Row }) {
                     </span>
                     <div className="pfoot">
                       <div className="pprice">
-                        <b>{p.price}</b> {t('ر.س', 'ر.س')}
+                        <b>{p.price}</b> {cur(p.currency)}
                         {p.old && <s>{p.old}</s>}
                         <small>{isEn ? `per tire · ${p.price * 4} for four` : `للحبة · ${p.price * 4} للأربع`}</small>
                       </div>

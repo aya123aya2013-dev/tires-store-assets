@@ -27,6 +27,8 @@ export interface TcProduct {
   sold?: number;
   /** has options the shopper must pick (size, quantity…) → add from the product page, not from a card */
   hasOptions?: boolean;
+  /** the product's currency code (shown with the store's symbol) */
+  currency?: string;
 }
 
 /** ids picked in a `dropdown-list` (source: products / categories / brands): [1,2] | [{value:1}] | "1,2" */
@@ -72,6 +74,7 @@ export function toTcProduct(p: Product, offerLabel: string): TcProduct {
     image: p.image?.url ?? '',
     year,
     sold: p.sold_quantity ?? 0,
+    currency: p.currency,
     hasOptions: !!(p.has_options || p.options?.some(o => o.required)),
   };
 }

@@ -4,7 +4,7 @@ import { addToCart } from '../../app/components/home/tc/products';
 import { useAddToCart } from '../../app/components/home/tc/useAddToCart';
 
 const navigate = vi.fn();
-vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => navigate }));
+vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => navigate, useTwilight: () => ({}) }));
 vi.mock('@salla.sa/twilight-theme-engine/api/product', () => ({ product: { queries: { list: () => ({}) } } }));
 vi.mock('@tanstack/react-query', () => ({ useQuery: () => ({}) }));
 

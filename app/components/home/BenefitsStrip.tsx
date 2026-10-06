@@ -26,7 +26,9 @@ export function BenefitsStrip({ data }: { data: Row }) {
     .map(r => ({ icon: opt(r.icon, 'shield'), title: t(r.title, ''), text: t(r.text, '') }))
     .filter(r => r.title || r.text)
     .slice(0, 4);
-  const items = list.length ? list : DEFAULTS.map(d => ({ ...d, title: t(d.title, d.title), text: t(d.text, d.text) }));
+  // a saved list (even empty) is the merchant's choice — defaults only when the field was never saved
+  const items = Array.isArray(data.items) ? list : DEFAULTS.map(d => ({ ...d, title: t(d.title, d.title), text: t(d.text, d.text) }));
+  if (!items.length) return null;
   return (
     <Section data={data}>
       <section className={`wrap bstrip tc-n-${items.length}`}>

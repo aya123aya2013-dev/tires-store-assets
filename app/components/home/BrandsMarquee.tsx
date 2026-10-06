@@ -20,15 +20,28 @@ interface Mark { name: string; logo: string; url: string }
 export function BrandsMarquee({ data }: { data: Row }) {
   const t = makeT(useLang(), EN);
   const fromStore = opt(data.brands_source, 'store') === 'store';
-  const q = useQuery({ ...brandApi.queries.list(1), enabled: fromStore });
+  // every page of the store brands (the API is paginated), capped so a huge catalogue can't stall the page
+  const q = useQuery({
+    queryKey: ['tc-brands-all'],
+    enabled: fromStore,
+    queryFn: async () => {
+      const all: { name: string; logo: string; url: string }[] = [];
+      for (let page = 1; page <= 10; page++) {
+        const res = await brandApi.list(page);
+        all.push(...res.items.map(b => ({ name: b.name, logo: b.logo, url: b.url })));
+        if (!res.next) break;
+      }
+      return all;
+    },
+  });
 
   const manual: Mark[] = rows(data.brands, 'brands')
     .map(r => ({ name: t(r.name, ''), logo: asImage(r.logo, ''), url: asLink(r.link, '') }))
     .filter(b => b.name || b.logo);
-  const store: Mark[] = (q.data?.items ?? []).map(b => ({ name: b.name, logo: b.logo, url: b.url }));
-  const list = (fromStore ? store : manual).length
-    ? (fromStore ? store : manual)
-    : DESIGN.map(name => ({ name, logo: '', url: '/brands' }));
+  const store: Mark[] = Array.isArray(q.data) ? q.data : [];
+  const chosen = fromStore ? store : manual;
+  // the design's brand names are a preview aid only — a live store never shows brands it doesn't have
+  const list = chosen.length ? chosen : import.meta.env.DEV ? DESIGN.map(name => ({ name, logo: '', url: '/brands' })) : [];
 
   const moving = asBool(data.animate, true);
   const grey = asBool(data.grayscale, true);
@@ -43,6 +56,7 @@ export function BrandsMarquee({ data }: { data: Row }) {
       );
     });
 
+  if (!list.length) return null;
   return (
     <Section data={data}>
       <section className={'wrap brands' + (grey ? ' tc-grey' : '') + (moving ? '' : ' tc-still')}>

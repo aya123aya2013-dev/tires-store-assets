@@ -8,6 +8,7 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { asLink, asText, makeT, opt, rows, useLang } from './fields';
 import type { Lang, Row } from './fields';
 import { Section } from './tc/Section';
+import { useCurrency } from './tc/useCurrency';
 
 const EN: Record<string, string> = {
   'قارن قبل ما تختار': 'Compare before you choose', 'وش أهم شيء عندك؟': 'What matters most to you?', 'المقاس': 'Size',
@@ -50,6 +51,7 @@ export function TirePicker({ data }: { data: Row }) {
   const prioRows = rows(data.priorities, 'priorities').map(r => ({ label: t(r.label, ''), tier: Number(opt(r.tier, '1')), why: t(r.reason, '') })).filter(p => p.label).slice(0, 4);
   const prios = prioRows.length ? prioRows : D_PRIO.map(p => ({ ...p, label: t(p.label, p.label), why: t(p.why, p.why) }));
 
+  const cur = useCurrency();
   const [prio, setPrio] = useState(0);
   const [size, setSize] = useState(sizes[0][0]);
   const base = (sizes.find(s => s[0] === size) ?? sizes[0])[1];
@@ -91,12 +93,12 @@ export function TirePicker({ data }: { data: Row }) {
                   <span className="t-tier">{x.tier}</span>
                   <h3>{x.name}</h3>
                   <div className="t-price">
-                    <b>{pr}</b> {isEn ? 'SAR' : 'ر.س'}{' '}
+                    <b>{pr}</b> {cur()}{' '}
                     <small>{isEn ? `per tire · ${fmt(pr * 4, lang)} for four` : `للإطار · ${fmt(pr * 4, lang)} للأربع`}</small>
                   </div>
                   <dl>
                     {x.life > 0 && <div><dt>{isEn ? 'Expected life' : 'العمر المتوقع'}</dt><dd>{fmt(x.life, lang)} {isEn ? 'km' : 'كم'}</dd></div>}
-                    {x.life > 0 && <div><dt>{isEn ? 'Per 1000 km' : 'كل 1000 كم'}</dt><dd>{((pr * 4) / x.life * 1000).toFixed(1)} {isEn ? 'SAR' : 'ر.س'}</dd></div>}
+                    {x.life > 0 && <div><dt>{isEn ? 'Per 1000 km' : 'كل 1000 كم'}</dt><dd>{((pr * 4) / x.life * 1000).toFixed(1)} {cur()}</dd></div>}
                     {x.quiet && <div><dt>{isEn ? 'Comfort' : 'الهدوء'}</dt><dd>{x.quiet}</dd></div>}
                     {x.wy && <div><dt>{isEn ? 'Warranty' : 'الضمان'}</dt><dd>{x.wy}</dd></div>}
                     {x.origin && <div><dt>{isEn ? 'Origin' : 'المنشأ'}</dt><dd>{x.origin}</dd></div>}

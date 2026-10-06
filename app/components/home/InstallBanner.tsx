@@ -26,7 +26,8 @@ const STEPS = ['اختر المقاس والإطار', 'راجع طريقة ال
 export function InstallBanner({ data }: { data: Row }) {
   const t = makeT(useLang(), EN);
   const steps = rows(data.steps, 'steps').map(r => t(r.text, '')).filter(Boolean).slice(0, 4);
-  const list = steps.length ? steps : STEPS.map(s => t(s, s));
+  // a saved list (even empty) is the merchant's choice — defaults only when the field was never saved
+  const list = Array.isArray(data.steps) ? steps : STEPS.map(s => t(s, s));
   const fine = t(data.fine, 'نطاق الخدمة وما يشمله التركيب يُحدّدان وفق شروط المركز.');
   const imageRight = opt(data.image_side, 'left') === 'right';
   return (
@@ -47,14 +48,14 @@ export function InstallBanner({ data }: { data: Row }) {
             <em>{t(data.title_2, 'وركّبها عندنا.')}</em>
           </h2>
           <p>{t(data.text, 'مراكز تركيب في الرياض، وتجربة أوضح من أول اختيار حتى الاستلام. راجع الموقع والخدمات المشمولة قبل إكمال طلبك.')}</p>
-          <ol>
+          {list.length > 0 && <ol>
             {list.map((s, i) => (
               <li key={i}>
                 <span>{String(i + 1).padStart(2, '0')}</span>
                 {s}
               </li>
             ))}
-          </ol>
+          </ol>}
           <Link className="btn btn-gold" to={asLink(data.btn_link, '/help#install')}>
             {t(data.btn_text, 'الموقع وشروط التركيب')} <span aria-hidden="true">↗</span>
           </Link>

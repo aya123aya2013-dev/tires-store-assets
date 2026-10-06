@@ -21,7 +21,8 @@ const SPEED: Record<string, string> = { slow: '50s', normal: '34s', fast: '20s' 
 export function Ticker({ data }: { data: Row }) {
   const t = makeT(useLang(), EN);
   const list = rows(data.items, 'items').map(r => ({ text: t(r.text, ''), link: asLink(r.link, ''), num: asBool(r.number, false) })).filter(i => i.text).slice(0, 10);
-  const items = list.length ? list : DEFAULTS.map(d => ({ ...d, text: t(d.text, d.text) }));
+  // a saved list (even empty) is the merchant's choice — defaults only when the field was never saved
+  const items = Array.isArray(data.items) ? list : DEFAULTS.map(d => ({ ...d, text: t(d.text, d.text) }));
 
   let counter = 0;
   const render = () =>
@@ -35,6 +36,7 @@ export function Ticker({ data }: { data: Row }) {
   const copy = render();
 
   const cls = ['secbar', opt(data.bg, 'dark') === 'gold' ? 'tc-gold' : '', asBool(data.pause_on_hover, true) ? '' : 'tc-nopause'].filter(Boolean).join(' ');
+  if (!items.length) return null;
   return (
     <Section data={data}>
       <nav className={cls} aria-label={t(data.label, 'أقسام المتجر')}>

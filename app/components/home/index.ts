@@ -30,3 +30,4 @@ export { Lineup } from './Lineup';
 export { Reviews } from './Reviews';
 export { BlogTips } from './BlogTips';
 export { Faq } from './Faq';
+export { Newsletter } from './Newsletter';

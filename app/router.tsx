@@ -40,6 +40,7 @@ import {
   Reviews,
   BlogTips,
   Faq,
+  Newsletter,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -98,6 +99,7 @@ registerHomeComponents({
   reviews: Reviews,
   blog: BlogTips,
   faq: Faq,
+  newsletter: Newsletter,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

@@ -23,6 +23,7 @@ import { Lineup } from '../../app/components/home/Lineup';
 import { Reviews } from '../../app/components/home/Reviews';
 import { BlogTips } from '../../app/components/home/BlogTips';
 import { Faq } from '../../app/components/home/Faq';
+import { Newsletter } from '../../app/components/home/Newsletter';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -295,5 +296,13 @@ describe('#22 faq', () => {
     expect(html).toContain('>05<');
     expect(html).toContain('<em>خلّينا نوضّح.</em>');
     expect(renderToString(<Faq data={{ open_first: false }} />)).not.toContain('open=""');
+  });
+});
+
+describe('#23 newsletter', () => {
+  it('two-line title; the form shows in the dev preview', () => {
+    const html = renderToString(<Newsletter data={{}} />);
+    expect(html).toContain('عروض ونصائح.<br/>مباشرة لبريدك.');
+    expect(html).toContain('type="email"');
   });
 });

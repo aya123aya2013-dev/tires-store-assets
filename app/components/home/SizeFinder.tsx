@@ -12,6 +12,7 @@ import { HEAVY_INCH_WIDTHS, HEAVY_METRIC_WIDTHS, HEAVY_RIMS, PASSENGER_WIDTHS, T
 import type { TireSize } from '../tires/sizes';
 import { asBool, asLink, asText, isRow, opt, useLang } from './fields';
 import { Section } from './tc/Section';
+import { saveMySize } from '../tires/features/MySize';
 import type { Lang, Row } from './fields';
 
 const EN: Record<string, string> = {
@@ -111,6 +112,7 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
     // where the store writes sizes: product name / tags / options (all three by default)
     const by = opt(data.match_by, 'all');
     const m = by === 'all' ? '' : `&m=${by}`;
+    saveMySize(query()); // «مقاسي المحفوظ»
     navigate(`/search?q=${encodeURIComponent(query())}${m}`);
   };
 

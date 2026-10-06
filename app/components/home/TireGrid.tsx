@@ -11,6 +11,9 @@ import { asBool, asLink, makeT, opt, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
+import { FitsMine } from '../tires/features/MySize';
+import { CompareToggle } from '../tires/features/Compare';
+import { perInstallment, useCardSettings } from '../tires/features/cardSettings';
 import { SAMPLE_PRODUCTS, filterBrands, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import { useAddToCart } from './tc/useAddToCart';
 import { useCurrency } from './tc/useCurrency';
@@ -39,6 +42,7 @@ export function TireGrid({ data }: { data: Row }) {
   const [sort, setSort] = useState<Sort>('feat');
   const cart = useAddToCart();
   const cur = useCurrency();
+  const card = useCardSettings();
   if (loading || failed) {
     return (
       <Section data={data}>
@@ -118,8 +122,10 @@ export function TireGrid({ data }: { data: Row }) {
                       <Icon name="heart" />
                     </button>
                     {p.brand && <span className="cbrand">{p.brand}</span>}
+                    <CompareToggle item={{ id: p.id, name: p.name, url: p.url, image: p.image, price: p.price, currency: p.currency, size: p.size, year: p.year, brand: p.brand }} />
                   </div>
                   <div className="ctagrow">
+                    <FitsMine size={p.size} />
                     {feat ? <span className="ctag g">{t('اختيار مميز', 'اختيار مميز')}</span> : p.tag ? <span className="ctag">{p.tag}</span> : null}
                   </div>
                   <Link className="cimg" to={p.url}>
@@ -130,13 +136,18 @@ export function TireGrid({ data }: { data: Row }) {
                     <h3><Link to={p.url}>{p.name}</Link></h3>
                     <span className="csub">
                       {p.size && <b dir="ltr">{p.size}</b>}
-                      {[p.type, p.year && `${t('صنع', 'صنع')} ${p.year}`].filter(Boolean).map(x => ` · ${x}`)}
+                      {[p.type, card.year && p.year && `${t('صنع', 'صنع')} ${p.year}`].filter(Boolean).map(x => ` · ${x}`)}
                     </span>
                     <div className="pfoot">
                       <div className="pprice">
                         <b>{p.price}</b> {cur(p.currency)}
                         {p.old && <s>{p.old}</s>}
-                        <small>{isEn ? `per tire · ${p.price * 4} for four` : `للحبة · ${p.price * 4} للأربع`}</small>
+                        {card.setPrice && (
+                          <small>
+                            {isEn ? `per tire · ${p.price * 4} for four` : `للحبة · ${p.price * 4} للأربع`}
+                            <span className="tc-inst">{isEn ? `or ${card.installments} × ${perInstallment(p.price, card.installments)}` : `أو ${card.installments} دفعات × ${perInstallment(p.price, card.installments)}`}</span>
+                          </small>
+                        )}
                       </div>
                       <button
                         type="button"

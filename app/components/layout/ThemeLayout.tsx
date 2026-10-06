@@ -4,8 +4,9 @@ import { useRouterState } from '@tanstack/react-router';
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { useTranslation } from '@salla.sa/twilight-theme-engine/i18n';
 import { useUser } from '@salla.sa/twilight-theme-engine/hooks/useUser';
-import { TireHeader } from '../tires/TireHeader';
-import { TireFooter } from '../tires/TireFooter';
+import { TcHeader } from './TcHeader';
+import { TcFooter } from './TcFooter';
+import { TcExtras } from './TcExtras';
 import { MobileBottomBar } from './MobileBottomBar';
 import { ThemeTokens } from './ThemeTokens';
 import { MobilePageTitleBar } from './MobilePageTitleBar';
@@ -81,12 +82,13 @@ export function ThemeLayout({ children }: ThemeLayoutProps) {
         className={`app-inner flex flex-col min-h-full product-card-img--${imgRatio}`}
         suppressHydrationWarning
       >
-        <TireHeader navOpen={navOpen} onNavOpenChange={setNavOpen} />
+        <TcHeader navOpen={navOpen} onNavOpenChange={setNavOpen} />
         <MobilePageTitleBar />
         <main id="main-content" className="flex-1">
           {children}
         </main>
-        <TireFooter />
+        <TcFooter />
+        <TcExtras />
         <MobileBottomBar
           navOpen={navOpen}
           onOpenNav={() => setNavOpen(true)}

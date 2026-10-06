@@ -351,3 +351,19 @@ describe('dark mode script', () => {
     expect(run('off', false, '1', false)).toBe('0'); // no switch → saved choice ignored
   });
 });
+
+// ---- tire features ----
+import { sameSize } from '../../app/components/tires/features/MySize';
+import { perInstallment } from '../../app/components/tires/features/cardSettings';
+describe('tire features', () => {
+  it('saved size matches whatever way the size is written', () => {
+    expect(sameSize('205/55/16', 'كفر 205/55 R16 ميشلان')).toBe(true);
+    expect(sameSize('205/55R16', '205/60 R16')).toBe(false);
+    expect(sameSize(null, '205/55 R16')).toBe(false);
+  });
+  it('splits a set of four into installments, rounded up', () => {
+    expect(perInstallment(250, 4)).toBe(250);
+    expect(perInstallment(333, 3)).toBe(444);
+    expect(perInstallment(99.99, 4)).toBe(99.99);
+  });
+});

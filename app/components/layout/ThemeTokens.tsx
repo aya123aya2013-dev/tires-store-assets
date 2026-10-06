@@ -27,6 +27,13 @@ const FONTS_EN: Record<string, { family: string; css?: string }> = {
   archivo: { family: "'Archivo'" }, // already loaded in __root.tsx
   inter: { family: "'Inter'", css: 'Inter:wght@500;600;700;800' },
 };
+/** ready-made palettes (setting tc_preset): [primary, text on primary, dark] */
+const PRESETS: Record<string, [string, string, string]> = {
+  gold: ['#ffb71b', '#221800', '#1d2023'],
+  red: ['#e0262b', '#ffffff', '#151515'],
+  blue: ['#1f6feb', '#ffffff', '#14213d'],
+  green: ['#7a9a3a', '#ffffff', '#262b1f'],
+};
 const RADIUS: Record<string, [string, string]> = { soft: ['14px', '10px'], sharp: ['4px', '3px'], round: ['24px', '999px'] };
 
 /** saved visitor choice → system → merchant mode */
@@ -45,10 +52,11 @@ export function ThemeTokens() {
   const s = (theme?.settings ?? {}) as Record<string, unknown>;
   const { mode, toggle } = useDarkSettings();
 
-  const storePrimary = asBool(s.tc_use_store_color, false) ? col(theme?.color?.primary, '') : '';
-  const primary = storePrimary || col(s.tc_color_primary, '#ffb71b');
-  const onPrimary = storePrimary ? col(theme?.color?.reverse_primary, '#221800') : col(s.tc_color_on_primary, '#221800');
-  const dark = col(s.tc_color_dark, '#1d2023');
+  const preset = PRESETS[opt(s.tc_preset, 'none')];
+  const storePrimary = !preset && asBool(s.tc_use_store_color, false) ? col(theme?.color?.primary, '') : '';
+  const primary = preset?.[0] || storePrimary || col(s.tc_color_primary, '#ffb71b');
+  const onPrimary = preset?.[1] || (storePrimary ? col(theme?.color?.reverse_primary, '#221800') : col(s.tc_color_on_primary, '#221800'));
+  const dark = preset?.[2] || col(s.tc_color_dark, '#1d2023');
   const bg = col(s.tc_color_bg, '#ffffff');
   const bgAlt = col(s.tc_color_bg_alt, '#f5f4f0');
   const dBg = col(s.tc_dark_bg, '#121416');

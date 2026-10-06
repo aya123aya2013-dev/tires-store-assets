@@ -411,3 +411,6 @@
 // R2-13 contrast: the step / question numbers are decorative (aria-hidden in the markup);
 // the review product line carries meaning, so it's a touch darker than the design's muted grey.
 .tc-s .rp3 small { color: #5f6469; }
+
+// R2-13: the FAQ title's gold 2nd line — same gold family, just deep enough for large-text contrast (≥3:1 on white)
+.tc-s .faq2 .h2 em { color: #b07800; }

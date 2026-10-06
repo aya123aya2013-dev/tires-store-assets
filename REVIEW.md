@@ -261,7 +261,7 @@ P1 = breaks for a shopper or merchant · P2 = wrong / missing per spec or design
 - Where: app/components/home/fields.ts:78; app/components/home/fields.ts:86
 - What happens: makeT('en', …) لقيمة {ar:'محتوى', en:''} أعاد «Default» بدل فراغ اللغة المختارة. isCleared يتطلب فراغ كل اللغات؛ حذف النص الإنجليزي وحده لا يُحترم. حالة '' وحالة حذف كل اللغات من R1-9 سليمتان.
 - Fix idea: التفريق بين مفتاح لغة غائب ومفتاح موجود فارغ عمدًا، واحترام المسح في اللغة الحالية دون اشتراط مسح اللغة الأخرى.
-- Status: ✅ fixed (76a5630) — PARTLY: numbers aria-hidden; review product line #5f6469. FAQ gold title line kept as approved design (owner decision)
+- Status: ✅ fixed (76a5630) — PARTLY: numbers aria-hidden; review product line #5f6469. FAQ gold line deepened to #b07800 (3.4:1, large text) — owner chose
 
 ### R2-13 [P2] تباين ضعيف في نصوص أقسام الحجز والخطوات والآراء والأسئلة
 - Where: app/components/home/InstallBooking.tsx:87; app/components/home/Steps.tsx:46; app/components/home/Reviews.tsx:57; app/components/home/Faq.tsx:43; scripts/build-tc-sections-css.cjs:14

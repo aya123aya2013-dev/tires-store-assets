@@ -9,6 +9,7 @@ import { TcFooter } from './TcFooter';
 import { TcExtras } from './TcExtras';
 import { MobileBottomBar } from './MobileBottomBar';
 import { ThemeTokens } from './ThemeTokens';
+import { asBool } from '../home/fields';
 import { MobilePageTitleBar } from './MobilePageTitleBar';
 
 /**
@@ -71,6 +72,11 @@ export function ThemeLayout({ children }: ThemeLayoutProps) {
     setNavOpen(false);
   }, [pathname]);
 
+  // «الشريط السفلي» off: one source (asBool) for the page room, floating buttons and the product buy bar (S3b-6)
+  const barOff = !asBool((theme?.settings as Record<string, unknown> | undefined)?.tc_bottombar, true);
+  useEffect(() => {
+    document.body.classList.toggle('tc-nobar', barOff);
+  }, [barOff]);
   const imgRatio = productImageRatio(theme?.settings?.product_card_img_ratio);
   const showLocalization =
     !!store?.settings?.is_multilingual || !!store?.settings?.currencies_enabled;
@@ -79,7 +85,7 @@ export function ThemeLayout({ children }: ThemeLayoutProps) {
     <>
       <ThemeTokens />
       <div
-        className={`app-inner flex flex-col min-h-full product-card-img--${imgRatio}${(theme?.settings as Record<string, unknown> | undefined)?.tc_bottombar === false ? ' tc-nobar' : ''}`}
+        className={`app-inner flex flex-col min-h-full product-card-img--${imgRatio}${barOff ? ' tc-nobar' : ''}`}
         suppressHydrationWarning
       >
         <TcHeader navOpen={navOpen} onNavOpenChange={setNavOpen} />

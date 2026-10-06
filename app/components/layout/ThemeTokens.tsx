@@ -83,7 +83,7 @@ export function ThemeTokens() {
 :root{--tires-yellow:${primary};--color-primary:${primary};--color-primary-dark:color-mix(in srgb,${primary} 86%,#000);--color-primary-reverse:${onPrimary};--tires-black:${dark};
 --tc-primary:${primary};--tc-on-primary:${onPrimary};--tc-radius:${r};--tc-radius-btn:${rBtn};
 --font-ar:${ar.family},Tahoma,sans-serif;--font-main:var(--font-ar);--tc-font-en:${en.family},Arial,sans-serif;
---tc-page-bg:${bg};--tc-dark-bg:${dBg};--tc-dark-surface:${dSurface};--tc-dark-text:${dText};
+--tc-bg-alt:${bgAlt};--tc-page-bg:${bg};--tc-dark-bg:${dBg};--tc-dark-surface:${dSurface};--tc-dark-text:${dText};
 --tc-logo-h:${logoH}px;--tc-logo-h-m:${logoHm}px;--tc-cols-d:${cols[0]};--tc-cols-t:${cols[1]};--tc-cols-m:${cols[2]}}
 .tc-s{--gold:${primary};--gold-2:color-mix(in srgb,${primary} 88%,#000);--gold-3:color-mix(in srgb,${primary} 55%,#000);--gold-soft:color-mix(in srgb,${primary} 14%,#fff);
 --ink:${dark};--bg:${bg};--bg-2:${bgAlt};--en:var(--tc-font-en);font-family:var(--font-ar)}

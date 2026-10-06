@@ -7,7 +7,7 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { asBool, asLink, makeT, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
-import { useSpecSources } from '../tires/features/cardSettings';
+import { useCardSettings, useSpecSources } from '../tires/features/cardSettings';
 import { SAMPLE_PRODUCTS, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import type { TcProduct } from './tc/products';
 import { useCurrency } from './tc/useCurrency';
@@ -15,7 +15,7 @@ import { useCurrency } from './tc/useCurrency';
 const EN: Record<string, string> = {
   'تشكيلتنا': 'Our range', 'إطار لكل طريق': 'A tire for every road',
   'من السيدان اليومية لين الدفع الرباعي والنقل — اختر الفئة واكتشف الأنسب.': 'From everyday sedans to SUVs and trucks — pick the class and find the best fit.',
-  'كل الإطارات': 'All tires', 'تعذّر تحميل المنتجات.': 'Could not load the products.', 'حاول مرة ثانية': 'Try again', 'حبة': 'tire', 'عرض': 'Offer',
+  'كل الإطارات': 'All tires', 'تعذّر تحميل المنتجات.': 'Could not load the products.', 'حاول مرة ثانية': 'Try again', 'حبة': 'tire', 'طقم': 'set', 'اطلب السعر': 'Ask for price', 'عرض': 'Offer',
 };
 
 export function Lineup({ data }: { data: Row }) {
@@ -24,6 +24,7 @@ export function Lineup({ data }: { data: Row }) {
   const t = makeT(lang, EN);
   const specSources = useSpecSources();
   const cur = useCurrency();
+  const card = useCardSettings();
   const { items, loading, failed, retry } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), 4);
   const list: TcProduct[] = items.length
     ? items.map(p => toTcProduct(p, t('عرض', 'عرض'), specSources))
@@ -68,7 +69,11 @@ export function Lineup({ data }: { data: Row }) {
                 <b>{p.name}</b>
                 {p.size && <small dir="ltr">{p.size}</small>}
                 <div className="lu-f">
-                  <span><b>{p.price}</b> {cur(p.currency)} / {t('حبة', 'حبة')}</span>
+                  {card.askUrl ? (
+                    <span className="tc-ask">{t('اطلب السعر', 'اطلب السعر')}</span>
+                  ) : (
+                    <span><b>{p.price}</b> {cur(p.currency)} / {card.perSet ? t('طقم', 'طقم') : t('حبة', 'حبة')}</span>
+                  )}
                   <i aria-hidden="true">{isEn ? '→' : '←'}</i>
                 </div>
               </Link>

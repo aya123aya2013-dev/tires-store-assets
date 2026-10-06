@@ -23,3 +23,5 @@ Round 2 scope: components #15–#23 + re-check of round 1 fixes.
 **Next:** owner looks at a preview → fixes → inner pages 1:1 with design/store (+ product/category/cart/account settings group) → Codex round 3.
 
 **Settings review S3 fixed by Claude (2026-10-06):** 22 findings marked in REVIEW.md (19 ✅, 2 partly, S3-20 deferred to cleanup). typecheck, build, 72 tests passing.
+
+**Settings review S3 second pass fixed by Claude (2026-10-06):** 16 + 3 findings marked; 6 Raed components removed from twilight.json. typecheck, build, 72 tests passing.

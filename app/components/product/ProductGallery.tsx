@@ -36,7 +36,8 @@ export function ProductGallery({ product }: ProductGalleryProps) {
   const { t } = useTranslation();
   const { theme } = useTwilight();
   const sliderId = `details-slider-${product.id}`;
-  const objectFit = theme.settings.slider_background_size ?? 'cover';
+  // same default as the setting (contain) when the store sends nothing (S3b-16)
+  const objectFit = theme.settings.slider_background_size ?? 'contain';
   const hydrated = useHydrated();
   const isMobile = useMobileViewport();
   // `onAfterInit` fires once Swiper actually finishes laying the slider out —

@@ -37,6 +37,7 @@ export function ProductCard(props: ProductCardProps) {
   const hideAdd = !card.add || !!askUrl;
   const askLabel = useLang() === 'en' ? 'Ask for price' : 'اطلب السعر';
   const [footerEl, setFooterEl] = useState<HTMLElement | null>(null);
+  const isVertical = !!footerEl?.closest('.s-product-card-vertical');
 
   useEffect(() => {
     const root = ref.current;
@@ -50,8 +51,23 @@ export function ProductCard(props: ProductCardProps) {
         el.setAttribute('loader-position', 'center');
       });
 
+      // «اطلب السعر» / wishlist policy applies to every layout (grid AND list view — S3b-2)
+      const anyCard = root.querySelector<HTMLElement>('.s-product-card-vertical, .s-product-card-horizontal, .s-product-card-full-image, .s-product-card-minimal');
+      if (anyCard) {
+        anyCard.querySelectorAll<HTMLElement>('.s-product-card-price, .s-product-card-sale-price, .s-product-card-starting-price').forEach((el) => {
+          el.style.display = askUrl ? 'none' : '';
+        });
+        if (!card.fav) {
+          anyCard.querySelectorAll<HTMLElement>('.s-product-card-wishlist-btn').forEach((el) => { el.style.display = 'none'; });
+        }
+      }
+
       const vertical = root.querySelector<HTMLElement>('.s-product-card-vertical');
-      if (!vertical) return;
+      // other layouts: the ask link goes in their content footer (the engine keeps its own wishlist)
+      if (!vertical) {
+        setFooterEl(anyCard?.querySelector<HTMLElement>('.s-product-card-content-footer, .s-product-card-content-sub') ?? null);
+        return;
+      }
 
       vertical.classList.add('is-theme-card');
 
@@ -60,11 +76,6 @@ export function ProductCard(props: ProductCardProps) {
       );
       if (originalWishlistBtn) originalWishlistBtn.style.display = 'none';
 
-      // «اطلب السعر»: the price is replaced by a WhatsApp link (portalled below)
-      vertical.querySelectorAll<HTMLElement>('.s-product-card-price, .s-product-card-sale-price, .s-product-card-starting-price').forEach((el) => {
-        el.style.display = askUrl ? 'none' : '';
-      });
-
       setFooterEl(vertical.querySelector<HTMLElement>('.s-product-card-content-footer'));
     };
 
@@ -72,12 +83,12 @@ export function ProductCard(props: ProductCardProps) {
     const observer = new MutationObserver(sync);
     observer.observe(root, { childList: true, subtree: true });
     return () => observer.disconnect();
-  }, [hideAdd, askUrl]);
+  }, [hideAdd, askUrl, card.fav]);
 
   return (
     <div ref={ref} style={{ display: 'contents' }}>
       <EngineProductCard {...props} />
-      {footerEl && card.fav && createPortal(<FooterWishlistButton productId={props.product.id} />, footerEl)}
+      {footerEl && card.fav && isVertical && createPortal(<FooterWishlistButton productId={props.product.id} />, footerEl)}
       {footerEl && askUrl && createPortal(<a className="tc-ask-engine" href={askUrl} target="_blank" rel="noopener noreferrer">{askLabel}</a>, footerEl)}
     </div>
   );

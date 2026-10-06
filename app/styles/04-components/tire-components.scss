@@ -13,7 +13,7 @@
   --tc-slate: #4a4f54;
   --tc-muted: #767b80;
   --tc-line: #e8e7e3;
-  --tc-bg-2: #f5f4f0;
+  --tc-bg-2: var(--tc-bg-alt, #f5f4f0);
   --tc-r: var(--tc-radius, 14px);
   --tc-en: var(--tc-font-en, 'Archivo', Arial, sans-serif);
   color: var(--tc-ink);
@@ -37,7 +37,8 @@
   font-weight: 600; font-size: 15px; white-space: nowrap;
   transition: background .2s, transform .2s, border-color .2s;
   &:hover { transform: translateY(-1px); }
-  &--gold { background: var(--tc-gold); color: #221800; &:hover { background: #ffc23f; } }
+  // text and hover follow «لون النص فوق اللون الرئيسي» and the primary colour (S3b-9)
+  &--gold { background: var(--tc-gold); color: var(--tc-on-primary, #221800); &:hover { background: color-mix(in srgb, var(--tc-gold) 88%, #fff); } }
   &--line { background: transparent; border: 1.5px solid #d9d7cf; color: var(--tc-ink); &:hover { border-color: var(--tc-ink); } }
 }
 
@@ -280,7 +281,7 @@
 }
 .tc-finder .tc-dd-pop .tc-dd-o { padding: 0 12px; background: var(--tc-gold-soft); border-color: transparent; &.on { background: var(--tc-gold); } }
 .tc-finder .tc-finder__go {
-  margin-top: 20px; height: 50px; border-radius: 12px; background: var(--tc-gold); color: #221800; font-weight: 600;
+  margin-top: 20px; height: 50px; border-radius: 12px; background: var(--tc-gold); color: var(--tc-on-primary, #221800); font-weight: 600;
   display: flex; align-items: center; justify-content: center; gap: 20px;
 }
 @media (max-width: 1100px) {

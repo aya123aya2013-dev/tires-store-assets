@@ -38,6 +38,7 @@ export function TireSlider({ data }: { data: Row }) {
   const cart = useAddToCart();
   const cur = useCurrency();
   const slider = useRef<HTMLDivElement>(null);
+  const card = useCardSettings(); // every hook before the loading / empty returns (S3b-1)
   if (loading || failed) {
     return (
       <Section data={data}>
@@ -64,8 +65,7 @@ export function TireSlider({ data }: { data: Row }) {
   const shown = brand ? list.filter(p => p.brand === brand) : list;
   // RTL: "next" moves left; LTR: right
   const move = (dir: 1 | -1) => slider.current?.scrollBy({ left: (isEn ? 1 : -1) * dir * slider.current.clientWidth * 0.75, behavior: 'smooth' });
-  const card = useCardSettings();
-  const addLabel = qty === 1 ? (isEn ? '+ Add a tire to cart' : '+ أضف إطارًا للسلة') : isEn ? `+ Add ${qty} tires to cart` : `+ أضف ${qty} إطارات للسلة`;
+  const addLabel = card.perSet ? (isEn ? '+ Add the set to cart' : '+ أضف الطقم للسلة') : qty === 1 ? (isEn ? '+ Add a tire to cart' : '+ أضف إطارًا للسلة') : isEn ? `+ Add ${qty} tires to cart` : `+ أضف ${qty} إطارات للسلة`;
 
   return (
     <Section data={data}>

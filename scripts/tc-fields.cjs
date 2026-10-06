@@ -56,9 +56,9 @@ const icon = (id, label, sel) => dd(id, label, ICONS, sel);
 /** where the products come from: best sellers / latest / offers / category / brand / hand-picked */
 const productSource = (prefix, sel = 'best_selling') => [
   dd(`${prefix}_source`, 'مصدر المنتجات', [['الأكثر مبيعاً', 'best_selling'], ['الأحدث', 'latest'], ['العروض والتخفيضات', 'offers'], ['الأعلى تقييماً', 'top-rated'], ['من تصنيف', 'categories'], ['من ماركة', 'brands'], ['منتجات أختارها', 'selected']], sel),
-  when(pickFrom(`${prefix}_category`, 'التصنيف', 'categories', true), `${prefix}_source`, 'categories'),
-  when(pickFrom(`${prefix}_brand`, 'الماركة', 'brands', true), `${prefix}_source`, 'brands'),
-  when(pickFrom(`${prefix}_selected`, 'المنتجات', 'products', true, { maxLength: 16 }), `${prefix}_source`, 'selected'),
+  when(pickFrom(`${prefix}_category`, 'التصنيف', 'categories', true, { description: 'إذا ما اخترت تصنيف، يعرض القسم «الأكثر مبيعاً»' }), `${prefix}_source`, 'categories'),
+  when(pickFrom(`${prefix}_brand`, 'الماركة', 'brands', true, { description: 'إذا ما اخترت ماركة، يعرض القسم «الأكثر مبيعاً»' }), `${prefix}_source`, 'brands'),
+  when(pickFrom(`${prefix}_selected`, 'المنتجات', 'products', true, { maxLength: 16, description: 'إذا ما اخترت منتجات، يعرض القسم «الأكثر مبيعاً». بعض الأقسام تعرض أول 4 فقط' }), `${prefix}_source`, 'selected'),
 ];
 
 /** add or replace a component (matched by path) in twilight.json, keeping its key */

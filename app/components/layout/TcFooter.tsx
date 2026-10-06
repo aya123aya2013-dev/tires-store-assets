@@ -8,7 +8,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { SallaPayments } from '@salla.sa/twilight-components-react/payments';
 import { SallaMenu } from '@salla.sa/twilight-components-react/menu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { HookSlot } from '@salla.sa/twilight-theme-engine/hooks';
@@ -38,13 +38,27 @@ const socialUrl = (k: keyof Social, v: string) => {
 /** a footer column; on mobile it folds under its title when «أعمدة الفوتر تنطوي» is on */
 function Col({ title, acc, className = '', children }: { title: string; acc: boolean; className?: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
-  if (!acc) return <div className={className || undefined}><h4>{title}</h4>{children}</div>;
+  const mobile = useIsMobile();
+  if (!acc || !mobile) return <div className={className || undefined}><h4>{title}</h4>{children}</div>;
   return (
     <div className={`${className} tc-acc${open ? ' open' : ''}`.trim()}>
       <h4 role="button" tabIndex={0} aria-expanded={open} onClick={() => setOpen(!open)} onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setOpen(!open))}>{title}</h4>
       {children}
     </div>
   );
+}
+
+/** < 768px, known only after hydration (SSR renders the desktop markup — no mismatch) */
+function useIsMobile() {
+  const [m, setM] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const on = () => setM(mq.matches);
+    on();
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  return m;
 }
 
 export function TcFooter() {
@@ -81,8 +95,8 @@ export function TcFooter() {
         <HookSlot name="footer:start" />
         <div className="wrap">
           <div className="fgrid">
-            <div>
-              <TcBrand footer />
+            {(asBool(s.tc_footer_brand, true) || about || (asBool(s.tc_footer_social, true) && SOCIAL.some(([k]) => social[k]))) && <div>
+              {asBool(s.tc_footer_brand, true) && <TcBrand footer />}
               {about && <p style={{ marginTop: 16, fontSize: 13.5, color: '#9a9ea2', maxWidth: 300 }}>{about}</p>}
               {asBool(s.tc_footer_social, true) && SOCIAL.some(([k]) => social[k]) && (
                 <div className="tc-soc">
@@ -91,7 +105,7 @@ export function TcFooter() {
                   ))}
                 </div>
               )}
-            </div>
+            </div>}
             {asBool(s.tc_footer_shop, true) && shop.length > 0 && (
               <Col title={t(s.tc_footer_shop_title, 'تسوّق')} acc={acc}>
                 {shop.filter(i => i.title).slice(0, 6).map(i => <Link key={i.id} to={i.url}>{i.title}</Link>)}
@@ -103,7 +117,7 @@ export function TcFooter() {
                 <SallaMenu source="footer" useReactLink suppressHydrationWarning />
               </Col>
             )}
-            <div className="contact">
+            {(phone || email || city || showNews) && <div className="contact">
               <h4>{t('تواصل', 'تواصل')}</h4>
               {phone && <a href={`tel:${phone.replace(/[^\d+]/g, '')}`}><Icon name="phone" style={{ width: 16, height: 16 }} /><span dir="ltr">{phone}</span></a>}
               {email && <a href={`mailto:${email}`}><Icon name="mail" style={{ width: 16, height: 16 }} /><span dir="ltr">{email}</span></a>}
@@ -119,7 +133,7 @@ export function TcFooter() {
                   {sub === 'link' ? t('أكمل اشتراكك بالنافذة الجديدة', 'أكمل اشتراكك بالنافذة الجديدة') : sub === 'email' ? t('أرسل رسالة البريد لإكمال الاشتراك', 'أرسل رسالة البريد لإكمال الاشتراك') : sub === 'blocked' ? t('المتصفح منع فتح النافذة — حاول مرة ثانية', 'المتصفح منع فتح النافذة — حاول مرة ثانية') : ''}
                 </p>
               )}
-            </div>
+            </div>}
           </div>
           <div className="fbot">
             <span>

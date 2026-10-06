@@ -19,8 +19,8 @@ module.exports = (F, def) =>
       F.text('book_text', 'نص زر الحجز', 'احجز موعد', 30),
       F.link('book_link', 'رابط زر الحجز', 'اتركه فارغاً لإخفاء الزر'),
     ], [
-      { 'centers.name': 'مركز الملقا', 'centers.address': 'طريق أنس بن مالك، حي الملقا', 'centers.hours': 'السبت–الخميس · 9 ص – 11 م', 'centers.open_now': true, 'centers.book_text': 'احجز موعد' },
-      { 'centers.name': 'مركز السويدي', 'centers.address': 'طريق ديراب، حي السويدي', 'centers.hours': 'السبت–الخميس · 9 ص – 11 م', 'centers.open_now': true, 'centers.book_text': 'احجز موعد' },
+      { 'centers.image': 'https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/images/inspect.webp', 'centers.name': 'مركز الملقا', 'centers.address': 'طريق أنس بن مالك، حي الملقا', 'centers.hours': 'السبت–الخميس · 9 ص – 11 م', 'centers.open_now': true, 'centers.book_text': 'احجز موعد' },
+      { 'centers.image': 'https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/images/mechanic-tyre.webp', 'centers.name': 'مركز السويدي', 'centers.address': 'طريق ديراب، حي السويدي', 'centers.hours': 'السبت–الخميس · 9 ص – 11 م', 'centers.open_now': true, 'centers.book_text': 'احجز موعد' },
     ], 1, 12),
     ...F.common('my-centers'),
   ]);

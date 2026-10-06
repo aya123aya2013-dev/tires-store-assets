@@ -494,20 +494,24 @@ export function ProductListPage({
 
   // Exact-match mode: if the first page has no match but more pages exist, read on
   // before showing anything — never "no products" while matching ones exist.
-  const [found, setFound] = useState<{ key: string; items: Product[]; next: string | null } | null>(null);
+  // the result belongs to one search: list, sort, filters and the match rule (`keep`) itself
+  const [found, setFound] = useState<{ key: string; keep: (product: Product) => boolean; items: Product[]; next: string | null } | null>(null);
   const firstEmpty = !!keep && filterStatus !== 'loading' && shownProducts.length === 0 && !!shownNext;
-  const searchKey = `${listKey}-${selectedSort}`;
+  const searchKey = `${listKey}-${selectedSort}-${JSON.stringify(appliedFilters ?? null)}`;
+  const isCurrent = (f: typeof found): f is NonNullable<typeof found> => !!f && f.key === searchKey && f.keep === keep;
   useEffect(() => {
-    if (!firstEmpty || found?.key === searchKey) return;
+    if (!firstEmpty || !keep || isCurrent(found)) return;
+    const rule = keep;
     let live = true;
     loader()
-      .then(r => { if (live) setFound({ key: searchKey, items: r.items, next: r.next ?? null }); })
-      .catch(() => { if (live) setFound({ key: searchKey, items: [], next: null }); });
+      .then(r => { if (live) setFound({ key: searchKey, keep: rule, items: r.items, next: r.next ?? null }); })
+      .catch(() => { if (live) setFound({ key: searchKey, keep: rule, items: [], next: null }); });
     return () => { live = false; };
-  }, [firstEmpty, found?.key, searchKey, loader]);
-  const useFound = firstEmpty && found?.key === searchKey;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstEmpty, found, searchKey, keep, loader]);
+  const useFound = firstEmpty && isCurrent(found);
   const searching = firstEmpty && !useFound;
-  const listProducts = useFound ? found.items : shownProducts;
+  const listProducts = useFound && keep ? found.items.filter(keep) : shownProducts;
   const listNext = useFound ? found.next : shownNext;
 
   const listLayoutClass =

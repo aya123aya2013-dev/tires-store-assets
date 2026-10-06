@@ -13,11 +13,17 @@ import { Section } from './tc/Section';
 const EN: Record<string, string> = {
   'ثقة تصنعها التجربة': 'Trust built by experience', 'القرار أسهل مع تجاربهم.': 'Their experience makes it easier.',
   'تقييمات موثّقة من عملاء المتجر.': 'Verified reviews from store customers.',
+  // the default reviews (names stay as written; city, text and product get English)
+  'الرياض': 'Riyadh', 'جدة': 'Jeddah', 'الدمام': 'Dammam', 'عبدالعزيز': 'Abdulaziz', 'خالد': 'Khalid', 'يزيد': 'Yazeed',
+  'اخترت المقاس من الموقع وركبتها بنفس اليوم في مركزهم. شغل مرتب وما انتظرت.': 'I picked the size on the site and had them fitted the same day at their centre. Tidy work, no waiting.',
+  'الأسعار واضحة لكل حبة وقسّطت مع تابي. الكفرات وصلت أصلية وتاريخها حديث.': 'Clear per-tire prices and I paid in instalments with Tabby. Genuine tires with a recent date.',
+  'صوّرت الكفر وأرسلته واتساب، وردّوا علي بالمقاس والسعر خلال دقائق.': 'I sent a photo of my tire on WhatsApp and they replied with the size and price within minutes.',
+  'هانكوك 265/65 R17': 'Hankook 265/65 R17', 'بريجستون 215/60 R17': 'Bridgestone 215/60 R17', 'تاش 275/65 R18': 'Tash 275/65 R18',
 };
 const DEFAULTS = [
-  { name: 'عبدالعزيز · الرياض', text: 'اخترت المقاس من الموقع وركبتها بنفس اليوم في مركزهم. شغل مرتب وما انتظرت.', product: 'هانكوك 265/65 R17' },
-  { name: 'خالد · جدة', text: 'الأسعار واضحة لكل حبة وقسّطت مع تابي. الكفرات وصلت أصلية وتاريخها حديث.', product: 'بريجستون 215/60 R17' },
-  { name: 'يزيد · الدمام', text: 'صوّرت الكفر وأرسلته واتساب، وردّوا علي بالمقاس والسعر خلال دقائق.', product: 'تاش 275/65 R18' },
+  { name: 'عبدالعزيز', city: 'الرياض', text: 'اخترت المقاس من الموقع وركبتها بنفس اليوم في مركزهم. شغل مرتب وما انتظرت.', product: 'هانكوك 265/65 R17' },
+  { name: 'خالد', city: 'جدة', text: 'الأسعار واضحة لكل حبة وقسّطت مع تابي. الكفرات وصلت أصلية وتاريخها حديث.', product: 'بريجستون 215/60 R17' },
+  { name: 'يزيد', city: 'الدمام', text: 'صوّرت الكفر وأرسلته واتساب، وردّوا علي بالمقاس والسعر خلال دقائق.', product: 'تاش 275/65 R18' },
 ];
 
 export function Reviews({ data }: { data: Row }) {
@@ -31,7 +37,7 @@ export function Reviews({ data }: { data: Row }) {
     })
     .filter(r => r.text);
   // a saved list (even empty) is the merchant's choice — defaults only when the field was never saved
-  const reviews = (Array.isArray(data.reviews) ? list : DEFAULTS).slice(0, limit);
+  const reviews = (Array.isArray(data.reviews) ? list : DEFAULTS.map(d => ({ name: [t(d.name, d.name), t(d.city, d.city)].join(' · '), text: t(d.text, d.text), product: t(d.product, d.product) }))).slice(0, limit);
   if (!fromStore && !reviews.length) return null;
   const lead = t(data.text, 'تقييمات موثّقة من عملاء المتجر.');
 

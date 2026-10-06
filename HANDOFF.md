@@ -1,6 +1,6 @@
 # HANDOFF — where we are, whose turn
 
-**Turn:** Codex (review round 2)
+**Turn:** Owner (decide next: theme settings, or Codex round 3 re-check)
 
 **Last done by Claude (2026-10-06):**
 - Components #1–#14 built (see `../design/components-spec.md`), size finder combobox + trucks/buses switches,
@@ -16,3 +16,5 @@
 
 **Done by Claude after fix round 1 (2026-10-06):** components #15–#23 — install-centers, install-booking (WhatsApp / link booking, past slots disabled), call-strip, steps, lineup, reviews (manual or Salla store ratings), blog (store articles via blogLoader), faq, newsletter (merchant sign-up link or store email; no fake sign-up). Commits cc0d0c0 … (see git log). All 23 home components now exist.
 Round 2 scope: components #15–#23 + re-check of round 1 fixes.
+
+**Fix round 2 done by Claude (2026-10-06):** all 18 R2 findings marked in REVIEW.md (17 ✅, R2-13 FAQ gold line kept as design). typecheck, build, 69 tests passing.

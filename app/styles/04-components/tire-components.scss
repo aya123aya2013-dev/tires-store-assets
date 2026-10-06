@@ -404,3 +404,10 @@
 /* #20 reviews: no panel background option; 1–2 cards fill the row */
 .tc-s .rpanel.tc-plain { background: transparent; border-color: transparent; padding-inline: 0; }
 @media (min-width: 1101px) { .tc-s .rp3.tc-n-1 { grid-template-columns: 1fr; } .tc-s .rp3.tc-n-2 { grid-template-columns: repeat(2, 1fr); } }
+
+// #23 newsletter — honest status line under the field (empty until the visitor submits)
+.tc-s .news2-f .tc-nl-msg { margin: 10px 0 0; min-height: 1.4em; font-size: 13px; color: rgba(255, 255, 255, .78); }
+
+// R2-13 contrast: the step / question numbers are decorative (aria-hidden in the markup);
+// the review product line carries meaning, so it's a touch darker than the design's muted grey.
+.tc-s .rp3 small { color: #5f6469; }

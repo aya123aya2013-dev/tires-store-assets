@@ -14,7 +14,7 @@ import { useCurrency } from './tc/useCurrency';
 const EN: Record<string, string> = {
   'تشكيلتنا': 'Our range', 'إطار لكل طريق': 'A tire for every road',
   'من السيدان اليومية لين الدفع الرباعي والنقل — اختر الفئة واكتشف الأنسب.': 'From everyday sedans to SUVs and trucks — pick the class and find the best fit.',
-  'كل الإطارات': 'All tires', 'حبة': 'tire', 'عرض': 'Offer',
+  'كل الإطارات': 'All tires', 'تعذّر تحميل المنتجات.': 'Could not load the products.', 'حاول مرة ثانية': 'Try again', 'حبة': 'tire', 'عرض': 'Offer',
 };
 
 export function Lineup({ data }: { data: Row }) {
@@ -22,10 +22,27 @@ export function Lineup({ data }: { data: Row }) {
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
   const cur = useCurrency();
-  const { items, loading } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), 4);
+  const { items, loading, failed, retry } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), 4);
   const list: TcProduct[] = items.length
     ? items.map(p => toTcProduct(p, t('عرض', 'عرض')))
     : import.meta.env.DEV && !loading ? SAMPLE_PRODUCTS.slice(0, 4) : [];
+  // a failed request is not an empty source: say so and offer a retry (like TireGrid)
+  if (failed && !list.length) {
+    return (
+      <Section data={data}>
+        <section className="sec" id="lineup">
+          <div className="wrap">
+            <span className="kicker">{t(data.kicker, 'تشكيلتنا')}</span>
+            <h2 className="h2">{t(data.title, 'إطار لكل طريق')}</h2>
+            <p className="tc-load-fail">
+              {t('تعذّر تحميل المنتجات.', 'تعذّر تحميل المنتجات.')}{' '}
+              <button type="button" className="link" onClick={retry}>{t('حاول مرة ثانية', 'حاول مرة ثانية')}</button>
+            </p>
+          </div>
+        </section>
+      </Section>
+    );
+  }
   if (!list.length) return null;
   const showType = asBool(data.show_type, true);
   const lead = t(data.text, 'من السيدان اليومية لين الدفع الرباعي والنقل — اختر الفئة واكتشف الأنسب.');

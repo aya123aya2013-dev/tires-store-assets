@@ -16,7 +16,8 @@ const EN: Record<string, string> = {
 export function CallStrip({ data }: { data: Row }) {
   const t = makeT(useLang(), EN);
   const phone = String(data.phone ?? '').trim();
-  const tel = phone.replace(/[^\d+]/g, '');
+  // a real number only — an example like 05xxxxxxxx never becomes a call button
+  const tel = /^\+?[\d\s()-]+$/.test(phone) && phone.replace(/\D/g, '').length >= 7 ? phone.replace(/[^\d+]/g, '') : '';
   const sub = t(data.text, 'نرد عليك من 9 الصبح لين 11 بالليل، طوال الأسبوع.');
   return (
     <Section data={data}>

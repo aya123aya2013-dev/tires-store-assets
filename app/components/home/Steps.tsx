@@ -43,7 +43,7 @@ export function Steps({ data }: { data: Row }) {
               <div key={i}>
                 <span className="s3i"><Icon name={s.icon} /></span>
                 <p><b>{s.title}</b>{s.text}</p>
-                <em>{String(i + 1).padStart(2, '0')}</em>
+                <em aria-hidden="true">{String(i + 1).padStart(2, '0')}</em>
               </div>
             ))}
           </div>

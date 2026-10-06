@@ -84,6 +84,8 @@ export const isCleared = (v: unknown): boolean =>
  */
 export const makeT = (lang: Lang, en: Record<string, string>) => (v: unknown, d: string) => {
   if (isCleared(v)) return '';
+  // only this language emptied on purpose ({ ar: 'نص', en: '' }) — respect it too
+  if (isRow(v) && typeof v[lang] === 'string' && !(v[lang] as string).trim()) return '';
   const s = asText(v, d, lang);
   return lang === 'en' ? en[s.trim()] ?? s : s;
 };

@@ -8,7 +8,7 @@ module.exports = (F, def) =>
     F.text('title', 'العنوان', 'اتصل واحجز موعد التركيب.', 60),
     F.text('text', 'النص', 'نرد عليك من 9 الصبح لين 11 بالليل، طوال الأسبوع.', 120),
     F.head('h-phone', 'الاتصال'),
-    F.plain('phone', 'رقم الجوال', '05xxxxxxxx', { maxLength: 20 }),
+    F.plain('phone', 'رقم الجوال', '', { maxLength: 20, placeholder: '05xxxxxxxx' }),
     F.text('btn_text', 'نص الزر', 'اتصل الآن', 20),
     F.head('h-look', 'الشكل'),
     F.sw('gold_piece', 'إظهار القطعة الذهبية', true),

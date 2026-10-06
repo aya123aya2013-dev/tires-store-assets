@@ -85,8 +85,11 @@ function BannerSlider({ data }: TireHeroProps) {
         const deskAr = asImage(f(r, 'image'), '');
         const mobAr = asImage(f(r, 'mobile_image'), '');
         // either image stands in for the other
-        const desk = (useEn && asImage(f(r, 'image_en'), '')) || deskAr || mobAr;
-        const mob = (useEn && asImage(f(r, 'mobile_image_en'), '')) || mobAr || desk;
+        const deskEn = useEn ? asImage(f(r, 'image_en'), '') : '';
+        const mobEn = useEn ? asImage(f(r, 'mobile_image_en'), '') : '';
+        // this language's images first, then either size stands in for the other
+        const desk = deskEn || mobEn || deskAr || mobAr;
+        const mob = mobEn || deskEn || mobAr || deskAr;
         const video = asBool(f(r, 'use_video'), false) ? videoSrc(t(f(r, 'video'))) : null;
         return {
           desk, mob, video,
@@ -125,8 +128,9 @@ function BannerSlider({ data }: TireHeroProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   // the pause button also pauses / resumes the slide videos (MP4)
   useEffect(() => {
-    rootRef.current?.querySelectorAll('video').forEach(v => (stopped ? v.pause() : void v.play().catch(() => {})));
-  }, [stopped, i]);
+    // reduced motion: never start a video on its own (the visitor uses its controls)
+    rootRef.current?.querySelectorAll('video').forEach(v => (stopped || reduced ? v.pause() : void v.play().catch(() => {})));
+  }, [stopped, reduced, i]);
   const many = slides.length > 1;
   const running = many && autoplay && !paused && !stopped && !reduced;
 

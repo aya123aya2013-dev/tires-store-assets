@@ -1,4 +1,7 @@
 // @vitest-environment node
+import { signupUrl } from '../../app/components/home/Newsletter';
+import { normTime, show12 } from '../../app/components/home/InstallBooking';
+import { makeT } from '../../app/components/home/fields';
 import { describe, expect, it, vi } from 'vitest';
 import { renderToString } from 'react-dom/server';
 import { BenefitsStrip } from '../../app/components/home/BenefitsStrip';
@@ -237,7 +240,7 @@ describe('#16 install booking', () => {
   it('renders days, 12h slots, steps and the badge', () => {
     const html = renderToString(<InstallBooking data={{}} />);
     expect(html).toContain('بعد بكرة');
-    expect(html).toContain('>4:00<');
+    expect(html).toContain('>4:00 م<');
     expect(html).toContain('<b>45</b>');
     expect(html).toContain('fit-steps');
   });
@@ -258,7 +261,7 @@ describe('#17 call strip', () => {
 describe('#18 steps', () => {
   it('numbers the steps and hides when emptied', () => {
     const html = renderToString(<Steps data={{}} />);
-    expect(html).toContain('<em>03</em>');
+    expect(html).toContain('<em aria-hidden="true">03</em>');
     expect(renderToString(<Steps data={{ steps: [] }} />)).toBe('');
   });
 });
@@ -304,5 +307,25 @@ describe('#23 newsletter', () => {
     const html = renderToString(<Newsletter data={{}} />);
     expect(html).toContain('عروض ونصائح.<br/>مباشرة لبريدك.');
     expect(html).toContain('type="email"');
+  });
+});
+
+// ---- round 2 fixes ----
+describe('round 2 fixes', () => {
+  it('R2-2: keeps the email as a query param before the #hash', () => {
+    expect(signupUrl('https://example.com/signup#form', 'qa@example.com')).toBe('https://example.com/signup?email=qa%40example.com#form');
+    expect(signupUrl('https://e.com/s?list=1', 'a@b.co')).toBe('https://e.com/s?list=1&email=a%40b.co');
+    expect(signupUrl('https://e.com/s?e={email}', 'a@b.co')).toBe('https://e.com/s?e=a%40b.co');
+  });
+  it('R2-4/R2-8: real 24h times only, morning and evening kept apart', () => {
+    expect(normTime('25:99')).toBeNull();
+    expect(normTime('9:05')).toBe('09:05');
+    expect(show12('10:00', true)).toBe('10:00 AM');
+    expect(show12('22:00', true)).toBe('10:00 PM');
+    expect(show12('22:00', false)).toBe('10:00 م');
+  });
+  it('R2-12: clearing one language is respected', () => {
+    expect(makeT('en', {})({ ar: 'محتوى', en: '' }, 'Default')).toBe('');
+    expect(makeT('ar', {})({ ar: 'محتوى', en: '' }, 'Default')).toBe('محتوى');
   });
 });

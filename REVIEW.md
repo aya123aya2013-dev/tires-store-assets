@@ -13,7 +13,7 @@ Finding format:
 - Where: path/to/file.tsx:line
 - What happens: <concrete input / state → wrong result>
 - Fix idea: <one line>
-- Status: open
+- Status: ✅ fixed (76a5630) — no success claim: status says finish signing up in the new tab / send the email, or browser blocked the tab — try again
 ```
 
 P1 = breaks for a shopper or merchant · P2 = wrong / missing per spec or design · P3 = polish.
@@ -195,103 +195,103 @@ P1 = breaks for a shopper or merchant · P2 = wrong / missing per spec or design
 - Where: app/components/home/Newsletter.tsx:43
 - What happens: بعد window.open أو فتح mailto تُضبط done=true وتظهر «شكراً، وصلنا اشتراكك ✓» دون رد خدمة. في المسبار أعاد window.open قيمة null لمحاكاة نافذة لم تُفتح، ومع ذلك ظهرت رسالة النجاح؛ فتح برنامج البريد لا يثبت إرسال الرسالة أيضًا. يخالف وعد التسليم «no fake sign-up» وربط الاشتراك الفعلي في المواصفة #23.
 - Fix idea: وصف الانتقال/فتح نموذج التسجيل بصدق، وعدم إعلان نجاح الاشتراك إلا بعد تأكيد من خدمة تدعم ذلك؛ معالجة منع النافذة وإتاحة المحاولة مجددًا.
-- Status: open
+- Status: ✅ fixed (76a5630) — signupUrl() uses URL/searchParams, keeps #hash after the query; {email} template kept; tests added
 
 ### R2-2 [P1] رابط التسجيل ذو المرساة يفقد البريد كمعامل طلب
 - Where: app/components/home/Newsletter.tsx:38
 - What happens: `https://example.com/signup#form` أصبح `https://example.com/signup#form?email=qa%40example.com`. البريد داخل fragment؛ لا يصل كمعامل query إلى خدمة التسجيل التي تتوقع email، رغم إدخاله بالنموذج.
 - Fix idea: بناء الرابط بـ URL وsearchParams مع حفظ المرساة، ودعم قالب {email} بشكل صريح واختباره مع الروابط ذات query/hash.
-- Status: open
+- Status: ✅ fixed (76a5630) — link mode adds date=YYYY-MM-DD and time=HH:MM to the booking link
 
 ### R2-3 [P1] وضع رابط الحجز لا ينقل اليوم والساعة المختارين
 - Where: app/components/home/InstallBooking.tsx:50
 - What happens: اختيار «بكرة، 22:00» مع booking_mode=link وbook_link=/booking يبقي href=/booking دون تاريخ/وقت؛ النص يوحي بأن الموعد اختير لكن الوجهة لا تستلمه. لا يوجد مسار حفظ الاختيار بملاحظة الطلب المطلوب في components-spec.md، #16؛ واتساب وحده ينقل نص الموعد.
 - Fix idea: تعريف عقد تمرير تاريخ/وقت لرابط تطبيق الحجز، أو إخفاء اختيار المواعيد عندما الوجهة لا تستقبله؛ توثيق مسار الطلب عند الحاجة دون اختراع حجز مؤكد.
-- Status: open
+- Status: ✅ fixed (76a5630) — slots show ص/م (AM/PM); WhatsApp text has date + 24h time
 
 ### R2-4 [P1] ساعة الحجز تفقد الفرق بين الصباح والمساء
 - Where: app/components/home/InstallBooking.tsx:26; app/components/home/InstallBooking.tsx:49
 - What happens: صفان صحيحان 10:00 و22:00 عُرضا كلاهما «10:00». اختيار الثاني أنتج رسالة واتساب «بكرة · 10:00» دون PM أو تاريخ، فلا يستطيع المركز التمييز بين الموعدين. تغيير أسماء الأيام لا يضيف تاريخًا فعليًا.
 - Fix idea: نقل تاريخ صريح ووقت 24 ساعة إلى الوجهة، وعرض AM/PM أو صيغة واضحة عند وجود ساعات ملتبسة، مع مراعاة اللغة.
-- Status: open
+- Status: ✅ fixed (76a5630) — cache keyed by list+sort+filters and the keep function; cached items re-filtered by current keep
 
 ### R2-5 [P1] كاش البحث بالمقاس يعيد منتجات لا تطابق معايير البحث الجديدة
 - Where: app/components/product/ProductListPage.tsx:499; app/components/product/ProductListPage.tsx:511
 - What happens: searchKey يعتمد على عبارة البحث والترتيب فقط. إذا وجد القسم منتجات في صفحة لاحقة ثم تغير m من tags إلى name، أو تغير فلتر الكتالوج، وبقيت الصفحة الأولى دون تطابق مع next، يطابق found المفتاح القديم ويُستخدم found.items دون تطبيق keep الجديد. تنفيذ مقطع الاختيار الأصلي بمسبار حالة أعاد المنتج id=91 الذي يرفضه keep، مع loaderCalls=0. هذا تحقق لمنطق الكاش، وليس طلب API حيًا.
 - Fix idea: تضمين مصادر المطابقة والفلاتر في هوية البحث، وإبطال النتائج عند تغير المعايير، وتصفية البيانات المخزنة وفق keep الحالي.
-- Status: open
+- Status: ✅ fixed (76a5630) — MP4 effect pauses when reduced motion is on and re-runs when it changes
 
 ### R2-6 [P2] التشغيل الإجباري لـ MP4 يتجاوز تقليل الحركة — إعادة فتح R1-13
 - Where: app/components/home/TireHero.tsx:128
 - What happens: effect يشغّل video.play() عندما stopped=false، دون فحص reduced ودون إعادة التنفيذ عند تغيره. مع prefers-reduced-motion=reduce سجل المسبار استدعاء play، ولم يسجل pause رغم أن autoPlay أصبح false وcontrols ظهر. إصلاح YouTube صحيح، لكن التنفيذ الإجباري يناقض إعداد MP4.
 - Fix idea: توحيد قرار تشغيل الوسائط بناء على reduced/stopped والشريحة النشطة، وعدم فرض التشغيل قبل معرفة التفضيل، وإيقاف الوسيط عند تغيره.
-- Status: open
+- Status: ✅ fixed (76a5630) — now taken in Asia/Riyadh, refreshed every minute and on tab return; a past chosen time is cleared
 
 ### R2-7 [P2] تعطيل المواعيد مبني على ساعة قديمة ومنطقة الزبون
 - Where: app/components/home/InstallBooking.tsx:42
 - What happens: nowMin يُحسب مرة واحدة من getHours/getMinutes المحليين. عند تقديم ساعة المسبار من 15:00 إلى 22:30 ظل موعد اليوم 22:00 بقيمة disabled=false، أي قابلًا للاختيار بعد مرور الموعد. عند وجود الزبون بمنطقة مختلفة عن المركز يستخدم الحكم ساعة الزبون، دون منطقة زمنية للمتجر.
 - Fix idea: حساب الوقت والتاريخ بمنطقة المركز/المتجر، وتحديثهما عند مرور الوقت والعودة للتبويب، وإبطال الاختيار الذي أصبح ماضيًا.
-- Status: open
+- Status: ✅ fixed (76a5630) — normTime() accepts 00–23:00–59 only, dedupes and sorts
 
 ### R2-8 [P2] حقل الساعة يقبل قيمًا غير صالحة
 - Where: app/components/home/InstallBooking.tsx:33
 - What happens: 25:99 يمر من regex الحالي ومن حقل نص بطول 5، ثم يُعرض «2:39» ويمكن اختياره. التحقق يفحص شكل الأرقام فقط ولا حدود الساعة والدقيقة.
 - Fix idea: قبول HH:mm ضمن 00–23 و00–59 فقط، وإزالة التكرار، مع إرشاد واضح وعدم إنتاج موعد ملفّق من الإدخال الخاطئ.
-- Status: open
+- Status: ✅ fixed (76a5630) — phone/WhatsApp defaults empty (example → placeholder); numbers validated before tel:/wa.me
 
 ### R2-9 [P2] قيم الهاتف المثال تتحول إلى أزرار اتصال فعلية خاطئة
 - Where: app/components/home/CallStrip.tsx:19; app/components/home/InstallBooking.tsx:47; scripts/tc/17-call-strip.cjs:11; scripts/tc/16-install-booking.cjs:19
 - What happens: بيانات twilight.json الافتراضية phone=05xxxxxxxx وwhatsapp=9665xxxxxxxx تحولت في المسبار إلى tel:05 وwa.me/9665. تنظيف الحروف يجعل المثال يبدو رقمًا متصلًا بدل إبقاء العنصر غير مهيأ. المشكلة في السلوك والتحقق، لا في محتوى مثال التاجر.
 - Fix idea: افتراضيات اتصال فارغة والتحقق من رقم فعلي بالشكل المطلوب قبل إظهار زر الاتصال/الحجز؛ عدم تحويل placeholder إلى مستلم.
-- Status: open
+- Status: ✅ fixed (76a5630) — English for all default FAQ items and reviews
 
 ### R2-10 [P2] الأسئلة والآراء الافتراضية لا تملك عرضًا إنجليزيًا
 - Where: app/components/home/Faq.tsx:26; app/components/home/Reviews.tsx:34; scripts/tc/22-faq.cjs:16; scripts/tc/20-reviews.cjs:16
 - What happens: مع locale=en تُترجم العناوين، لكن أسئلة/أجوبة FAQ والآراء الافتراضية تظل عربية. قوائم DEFAULTS لا تمر بترجمة كاملة، وقيم المجموعات في JSON عربية فقط وقواميس EN لا تحتوي نصوصها. المسبار سجل الواجهة المختلطة؛ لا يُطلب ترجمة محتوى التاجر الحر آليًا.
 - Fix idea: توفير defaults ثنائية اللغة للمجموعات والبدائل المدمجة، والتحقق من الإنجليزية ببيانات الإعداد الافتراضي الفعلية.
-- Status: open
+- Status: ✅ fixed (76a5630) — English images first, then each size stands in for the other
 
 ### R2-11 [P2] صورة الجوال الإنجليزية وحدها لا تحفظ الشريحة
 - Where: app/components/home/TireHero.tsx:88; app/components/home/TireHero.tsx:105
 - What happens: مع locale=en وen_images=true وmobile_image_en فقط، يحصل mob على الصورة لكن desk يبقى فارغًا، فتُحذف الشريحة. المسبار سجل صفر صور؛ في المقابل mobile_image العربية وحدها سجلت صورة واحدة. هذه حالة مختلفة عن R1-6 المسحوبة، وجميع حقول الصورة اختيارية في JSON.
 - Fix idea: اختيار مصادر الصور المحلية أولًا، ثم تعويض كل من desktop/mobile بالآخر قبل الفلترة.
-- Status: open
+- Status: ✅ fixed (76a5630) — makeT returns empty when the current language key is empty; test added
 
 ### R2-12 [P2] مسح النص بلغة واحدة يعيد النص الافتراضي
 - Where: app/components/home/fields.ts:78; app/components/home/fields.ts:86
 - What happens: makeT('en', …) لقيمة {ar:'محتوى', en:''} أعاد «Default» بدل فراغ اللغة المختارة. isCleared يتطلب فراغ كل اللغات؛ حذف النص الإنجليزي وحده لا يُحترم. حالة '' وحالة حذف كل اللغات من R1-9 سليمتان.
 - Fix idea: التفريق بين مفتاح لغة غائب ومفتاح موجود فارغ عمدًا، واحترام المسح في اللغة الحالية دون اشتراط مسح اللغة الأخرى.
-- Status: open
+- Status: ✅ fixed (76a5630) — PARTLY: numbers aria-hidden; review product line #5f6469. FAQ gold title line kept as approved design (owner decision)
 
 ### R2-13 [P2] تباين ضعيف في نصوص أقسام الحجز والخطوات والآراء والأسئلة
 - Where: app/components/home/InstallBooking.tsx:87; app/components/home/Steps.tsx:46; app/components/home/Reviews.tsx:57; app/components/home/Faq.tsx:43; scripts/build-tc-sections-css.cjs:14
 - What happens: axe على 375px أبلغ color-contrast بدرجة serious لأرقام خطوات الحجز، أرقام الخطوات الكبيرة، بعض أسطر المنتج بالآراء، السطر الذهبي بعنوان FAQ وأرقام الأسئلة. قواعد التصميم المقارنة هي final.html:555،826،834،838،844. نسخ التصميم بأمانة لا يجعل النصوص اجتيازًا تلقائيًا للوصول.
 - Fix idea: اعتماد معالجة وصول محدودة بالقواعد اليدوية؛ الأرقام الزخرفية يمكن إخفاؤها عن قارئ الشاشة إذا كانت مكررة فعلًا، أما النصوص ذات المعنى فتحتاج تباينًا مناسبًا. لا تعدّل الملف المولد يدويًا.
-- Status: open
+- Status: ✅ fixed (76a5630) — useId per instance
 
 ### R2-14 [P2] تكرار النشرة يكرر معرف حقل البريد
 - Where: app/components/home/Newsletter.tsx:57
 - What happens: نسختان من المكون أعطتا input id=tc-nl مرتين، وكلا label يشير إليه؛ تسمية النسخة الثانية قد ترتبط بالأولى. المسبار سجل [tc-nl, tc-nl].
 - Fix idea: استخدام useId لكل نسخة وربط label والحقل بالمعرف نفسه.
-- Status: open
+- Status: ✅ fixed (76a5630) — JSON defaults include the two centre images (jsDelivr tires-store-assets/images)
 
 ### R2-15 [P2] إعداد مراكز التركيب الافتراضي يختلف بصريًا عن المعاينة
 - Where: app/components/home/InstallCenters.tsx:29; scripts/tc/15-install-centers.cjs:23
 - What happens: data={} يستعمل DEFAULTS بصور المركزين، لكن قيمة centers الافتراضية التي يرسلها JSON لا تتضمن centers.image؛ لأن وجود المصفوفة يمنع DEFAULTS، ظهر صفر img عند تمرير قيم JSON الفعلية. التصميم final.html:1182–1183 والمعاينة يحتويان صورتين، فيختلف ارتفاع وبناء الكروت في الإعداد الافتراضي الحقيقي.
 - Fix idea: توحيد قيم الصور الافتراضية بين JSON والمعاينة من الأصول المعتمدة، أو معالجة حالة الصورة الناقصة بمساحة متسقة متفق عليها؛ إبقاء حذف التاجر المتعمد محترمًا.
-- Status: open
+- Status: ✅ fixed (76a5630) — Lineup shows could-not-load + retry like TireGrid
 
 ### R2-16 [P2] قسم التشكيلة الجديد يعيد إخفاء خطأ تحميل المنتجات
 - Where: app/components/home/Lineup.tsx:25
 - What happens: useTcProducts يعيد failed/retry، لكن Lineup يأخذ items/loading فقط؛ رفض الاستعلام في وضع إنتاج المسبار أعطى محتوى فارغًا دون خطأ/إعادة محاولة. نفس السيناريو في TireGrid أظهر رسالة وإعادة محاولة، مما يؤكد إصلاح R1-18 هناك فقط.
 - Fix idea: إعادة استخدام معالجة التحميل والفشل في أقسام المنتجات الحالية، مع التمييز بين فشل الطلب وفراغ المصدر المشروع.
-- Status: open
+- Status: ✅ fixed (76a5630) — button group with aria-pressed instead of tab roles
 
 ### R2-17 [P3] أزرار الأيام معلنة كتبوِيبات دون سلوك لوحة مفاتيح التبويبات
 - Where: app/components/home/InstallBooking.tsx:68
 - What happens: role=tab/role=tablist موجودان، لكن جميع الأزرار في مسار Tab العادي ولا يوجد تنقل بالأسهم أو ربط tabpanel. ضغط ArrowRight على زر اليوم لم يغير التركيز أو الاختيار في المسبار. Tab وSpace يتيحان استخدام الأزرار، لذلك الخطورة منخفضة.
 - Fix idea: استكمال نمط التبويبات، أو استخدام أزرار اختيار بـ aria-pressed إذا كانت الوظيفة مجموعة اختيارات فقط.
-- Status: open
+- Status: ✅ fixed (76a5630) — re-encoded with sharp to real WebP (104 KB / 42 KB), signature checked after build
 
 ### R2-18 [P2] صور JPEG ضخمة بامتداد WebP تدخل حزمة البناء
 - Where: app/styles/04-components/tires-madar.scss:53; app/styles/04-components/tires-madar.scss:307

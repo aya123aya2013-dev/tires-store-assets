@@ -8,3 +8,4 @@ stats.html
 coverage/
 tsconfig.tsbuildinfo
 .tanstack/
+output/playwright/

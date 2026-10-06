@@ -400,3 +400,7 @@
 
 /* #18 steps: 2 or 4 columns on desktop (approved: 3) */
 @media (min-width: 1101px) { .tc-s .s3.tc-n-2 { grid-template-columns: repeat(2, 1fr); } .tc-s .s3.tc-n-4 { grid-template-columns: repeat(4, 1fr); } }
+
+/* #20 reviews: no panel background option; 1–2 cards fill the row */
+.tc-s .rpanel.tc-plain { background: transparent; border-color: transparent; padding-inline: 0; }
+@media (min-width: 1101px) { .tc-s .rp3.tc-n-1 { grid-template-columns: 1fr; } .tc-s .rp3.tc-n-2 { grid-template-columns: repeat(2, 1fr); } }

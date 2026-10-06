@@ -20,11 +20,13 @@ import { InstallBooking } from '../../app/components/home/InstallBooking';
 import { CallStrip } from '../../app/components/home/CallStrip';
 import { Steps } from '../../app/components/home/Steps';
 import { Lineup } from '../../app/components/home/Lineup';
+import { Reviews } from '../../app/components/home/Reviews';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
 vi.mock('@salla.sa/twilight-theme-engine/hooks/useWishlist', () => ({ useWishlist: () => ({ has: () => false, toggle: () => {} }) }));
 vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => () => {}, useTwilight: () => ({}) }));
+vi.mock('@salla.sa/twilight-components-react/reviews', () => ({ SallaReviews: () => <div className="salla-reviews-mock" /> }));
 vi.mock('@tanstack/react-query', () => ({ useQuery: () => ({ data: { items: [] }, isLoading: false }) }));
 vi.mock('@salla.sa/twilight-theme-engine/api/brands', () => ({ brand: { queries: { list: () => ({ queryKey: ['b'] }) } } }));
 vi.mock('@salla.sa/twilight-theme-engine/api/product', () => ({ product: { queries: { list: () => ({}) } } }));
@@ -263,5 +265,14 @@ describe('#19 lineup', () => {
     expect(html.split('class="lu"').length - 1).toBe(4);
     expect(html).toContain('lu-t');
     expect(renderToString(<Lineup data={{ show_type: false }} />)).not.toContain('lu-t');
+  });
+});
+
+describe('#20 reviews', () => {
+  it('manual reviews in the design; store mode uses Salla reviews', () => {
+    const html = renderToString(<Reviews data={{}} />);
+    expect(html).toContain('عبدالعزيز · الرياض');
+    expect(renderToString(<Reviews data={{ source: 'store' }} />)).toContain('salla-reviews-mock');
+    expect(renderToString(<Reviews data={{ reviews: [] }} />)).toBe('');
   });
 });

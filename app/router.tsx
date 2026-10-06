@@ -37,6 +37,7 @@ import {
   CallStrip,
   Steps,
   Lineup,
+  Reviews,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -92,6 +93,7 @@ registerHomeComponents({
   'call-strip': CallStrip,
   steps: Steps,
   lineup: Lineup,
+  reviews: Reviews,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

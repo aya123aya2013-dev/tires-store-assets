@@ -29,7 +29,7 @@ export function DoubleBanner({ data }: { data: Row }) {
   const slab = asText(data.slab_color, '', lang);
 
   const dark = (
-    <Link className="dcard dark" to={asLink(data.dark_link, '/search')} key="dark">
+    <Link className="dcard dark" to={asLink(data.dark_link, '/latest-products')} key="dark">
       <div className="dtxt">
         <span className="kicker" style={{ color: 'var(--gold)' }}>{t(data.dark_kicker, 'للرحلة، من أولها')}</span>
         <h3>{lines(t(data.dark_title, 'أربع إطارات.\nاختيار واحد مدروس.'))}</h3>

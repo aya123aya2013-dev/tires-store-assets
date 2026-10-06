@@ -11,14 +11,15 @@ import { asBool, asLink, makeT, opt, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
-import { SAMPLE_PRODUCTS, addToCart, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
+import { SAMPLE_PRODUCTS, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
+import { useAddToCart } from './tc/useAddToCart';
 import type { TcProduct } from './tc/products';
 
 const EN: Record<string, string> = {
   'اختياراتنا لك': 'Our picks for you', 'إطارات لكل رحلة.': 'Tires for every trip.', 'عرض جميع الإطارات': 'View all tires',
   'عرض': 'Offer', 'اختيار مميز': 'Featured pick', 'منتجات': 'products', 'الترتيب': 'Sort',
   'المميزة أولاً': 'Featured first', 'الأكثر مبيعاً': 'Best selling', 'السعر: الأقل أولاً': 'Price: low to high', 'السعر: الأعلى أولاً': 'Price: high to low',
-  'جميع الماركات': 'All brands', 'ر.س': 'SAR', 'أضف': 'Add', 'بالسلة': 'In cart', 'صنع': 'made',
+  'جميع الماركات': 'All brands', 'ر.س': 'SAR', 'أضف': 'Add', 'بالسلة': 'In cart', 'أعد المحاولة': 'Retry', 'اختر': 'Choose', 'تعذّرت الإضافة': 'Could not add', 'صنع': 'made',
 };
 type Sort = 'feat' | 'pop' | 'low' | 'high';
 
@@ -35,7 +36,7 @@ export function TireGrid({ data }: { data: Row }) {
 
   const [brand, setBrand] = useState('');
   const [sort, setSort] = useState<Sort>('feat');
-  const [added, setAdded] = useState<Record<number, boolean>>({});
+  const cart = useAddToCart();
   if (!all.length) return null;
 
   const featFirst = asBool(data.feature_first, true);
@@ -45,7 +46,7 @@ export function TireGrid({ data }: { data: Row }) {
   else if (sort === 'high') list = [...list].sort((a, b) => b.price - a.price);
   else if (sort === 'pop') list = [...list].sort((a, b) => (b.sold ?? 0) - (a.sold ?? 0));
   const cols = opt(data.columns, '4') === '3' ? 3 : 4;
-  const viewAll = asLink(data.view_all_link, '/search');
+  const viewAll = asLink(data.view_all_link, '/latest-products');
 
   return (
     <Section data={data}>
@@ -117,10 +118,12 @@ export function TireGrid({ data }: { data: Row }) {
                       </div>
                       <button
                         type="button"
-                        className={'add' + (added[p.id] ? ' done' : '')}
-                        onClick={() => addToCart(p.id, 1)?.then(() => setAdded(a => ({ ...a, [p.id]: true })))}
+                        className={'add' + (cart.stateOf(p.id) === 'done' ? ' done' : '')}
+                        disabled={cart.stateOf(p.id) === 'busy'}
+                        title={cart.stateOf(p.id) === 'failed' ? t('تعذّرت الإضافة', 'تعذّرت الإضافة') : undefined}
+                        onClick={() => cart.add(p, 1)}
                       >
-                        <Icon name="plus" /> {added[p.id] ? t('بالسلة', 'بالسلة') : t('أضف', 'أضف')}
+                        <Icon name="plus" /> {cart.stateOf(p.id) === 'done' ? t('بالسلة', 'بالسلة') : cart.stateOf(p.id) === 'failed' ? t('أعد المحاولة', 'أعد المحاولة') : p.hasOptions ? t('اختر', 'اختر') : t('أضف', 'أضف')}
                       </button>
                     </div>
                   </div>

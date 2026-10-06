@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatTireSize, parseSizeSources, parseTireSize, productHasTireSize, tireSizeQuery } from '../../app/components/tires/sizes';
+import { stripTireSize, formatTireSize, parseSizeSources, parseTireSize, productHasTireSize, tireSizeQuery } from '../../app/components/tires/sizes';
 
 const size = { width: '205', ratio: '55', rim: '14' };
 
@@ -44,5 +44,20 @@ describe('heavy truck & bus sizes', () => {
   });
   it('still reads passenger sizes', () => {
     expect(parseTireSize('205/55 R16')).toEqual({ width: '205', ratio: '55', rim: '16' });
+  });
+});
+
+describe('R1-4: anchored parsing, ZR, one strip for all', () => {
+  it('does not read a size inside a longer number', () => {
+    expect(parseTireSize('1205/55 R16')).toBeNull();
+  });
+  it('reads ZR speed-rated sizes', () => {
+    expect(parseTireSize('Pirelli 225/45ZR18')).toEqual({ width: '225', ratio: '45', rim: '18' });
+    expect(parseTireSize('205/55 ZR16')).toEqual({ width: '205', ratio: '55', rim: '16' });
+  });
+  it('removes the whole size from a name (22.5 rims too)', () => {
+    expect(stripTireSize('Truck 315/80 R22.5')).toBe('Truck');
+    expect(stripTireSize('كفر هانكوك 205/55/16')).toBe('كفر هانكوك');
+    expect(stripTireSize('كفر تاش 900/16 نقشة شاهين')).toBe('كفر تاش نقشة شاهين');
   });
 });

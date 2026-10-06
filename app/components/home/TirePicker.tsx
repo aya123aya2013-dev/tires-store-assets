@@ -43,10 +43,10 @@ export function TirePicker({ data }: { data: Row }) {
   const sizeRows = rows(data.sizes, 'sizes').map(r => [asText(r.size, '', lang).trim(), n(r.price, 0)] as [string, number]).filter(([s, p]) => s && p);
   const sizes = sizeRows.length ? sizeRows : D_SIZES;
   const tierRows = rows(data.tiers, 'tiers')
-    .map(r => ({ tier: t(r.tier, ''), name: t(r.name, ''), life: n(r.life, 0), quiet: t(r.quiet, ''), wy: t(r.warranty, ''), origin: t(r.origin, ''), fit: t(r.fit, ''), mult: n(r.factor, 100), link: asLink(r.link, '/search') }))
+    .map(r => ({ tier: t(r.tier, ''), name: t(r.name, ''), life: n(r.life, 0), quiet: t(r.quiet, ''), wy: t(r.warranty, ''), origin: t(r.origin, ''), fit: t(r.fit, ''), mult: n(r.factor, 100), link: asLink(r.link, '/latest-products') }))
     .filter(x => x.name)
     .slice(0, 3);
-  const tiers = tierRows.length ? tierRows : D_TIERS.map(x => ({ ...x, tier: t(x.tier, x.tier), name: t(x.name, x.name), quiet: t(x.quiet, x.quiet), wy: t(x.wy, x.wy), origin: t(x.origin, x.origin), fit: t(x.fit, x.fit), link: '/search' }));
+  const tiers = tierRows.length ? tierRows : D_TIERS.map(x => ({ ...x, tier: t(x.tier, x.tier), name: t(x.name, x.name), quiet: t(x.quiet, x.quiet), wy: t(x.wy, x.wy), origin: t(x.origin, x.origin), fit: t(x.fit, x.fit), link: '/latest-products' }));
   const prioRows = rows(data.priorities, 'priorities').map(r => ({ label: t(r.label, ''), tier: Number(opt(r.tier, '1')), why: t(r.reason, '') })).filter(p => p.label).slice(0, 4);
   const prios = prioRows.length ? prioRows : D_PRIO.map(p => ({ ...p, label: t(p.label, p.label), why: t(p.why, p.why) }));
 

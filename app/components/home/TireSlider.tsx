@@ -4,17 +4,18 @@
  */
 import { useRef, useState } from 'react';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
-import { asBool, makeT, useLang } from './fields';
+import { asBool, makeT, opt, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
-import { SAMPLE_PRODUCTS, addToCart, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
+import { SAMPLE_PRODUCTS, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
+import { useAddToCart } from './tc/useAddToCart';
 import type { TcProduct } from './tc/products';
 
 const EN: Record<string, string> = {
   'الأكثر طلباً': 'Most requested', 'إطارات هالأسبوع': 'Tires of the week', 'الكل': 'All',
   'عرض': 'Offer', 'للإطار الواحد': 'per tire', 'عرض التفاصيل': 'View details', 'ر.س': 'SAR',
-  'أُضيف للسلة': 'Added to cart', 'إطار': 'Tire',
+  'أُضيف للسلة': 'Added to cart', 'تعذّرت الإضافة — حاول مرة ثانية': 'Could not add — try again', 'اختر المقاس والكمية': 'Choose size & quantity', 'إطار': 'Tire',
 };
 
 export function TireSlider({ data }: { data: Row }) {
@@ -22,14 +23,15 @@ export function TireSlider({ data }: { data: Row }) {
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
   const limit = Math.min(12, Math.max(4, Number(data.limit) || 8));
-  const qty = [1, 2, 4].includes(Number(data.add_qty)) ? Number(data.add_qty) : 1;
+  const qtyRaw = Number(opt(data.add_qty, '1')); // dropdown: '4' | {value} | [{value}]
+  const qty = [1, 2, 4].includes(qtyRaw) ? qtyRaw : 1;
   const { items, loading } = useTcProducts(sourceFrom(data, 'products', 'best_selling'), limit);
   const list: TcProduct[] = items.length
     ? items.map(p => toTcProduct(p, t('عرض', 'عرض')))
     : import.meta.env.DEV && !loading ? SAMPLE_PRODUCTS.slice(0, limit) : [];
 
   const [brand, setBrand] = useState('');
-  const [added, setAdded] = useState<Record<number, boolean>>({});
+  const cart = useAddToCart();
   const slider = useRef<HTMLDivElement>(null);
   if (!list.length) return null;
 
@@ -93,10 +95,11 @@ export function TireSlider({ data }: { data: Row }) {
                   </div>
                   <button
                     type="button"
-                    className={'add2' + (added[p.id] ? ' done' : '')}
-                    onClick={() => addToCart(p.id, qty)?.then(() => setAdded(a => ({ ...a, [p.id]: true })))}
+                    className={'add2' + (cart.stateOf(p.id) === 'done' ? ' done' : '')}
+                    disabled={cart.stateOf(p.id) === 'busy'}
+                    onClick={() => cart.add(p, qty)}
                   >
-                    {added[p.id] ? `✓ ${t('أُضيف للسلة', 'أُضيف للسلة')}` : addLabel}
+                    {cart.stateOf(p.id) === 'done' ? `✓ ${t('أُضيف للسلة', 'أُضيف للسلة')}` : cart.stateOf(p.id) === 'failed' ? t('تعذّرت الإضافة — حاول مرة ثانية', 'تعذّرت الإضافة — حاول مرة ثانية') : p.hasOptions ? t('اختر المقاس والكمية', 'اختر المقاس والكمية') : addLabel}
                   </button>
                 </div>
               </article>

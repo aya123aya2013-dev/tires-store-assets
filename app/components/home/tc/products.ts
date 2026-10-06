@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { product as productApi } from '@salla.sa/twilight-theme-engine/api/product';
 import type { ProductsListSource } from '@salla.sa/twilight-theme-engine/api/product';
 import type { Product } from '@salla.sa/twilight-theme-engine/types';
-import { formatTireSize, parseTireSize } from '../../tires/sizes';
+import { formatTireSize, parseTireSize, stripTireSize } from '../../tires/sizes';
 import { opt } from '../fields';
 import type { Row } from '../fields';
 
@@ -25,6 +25,8 @@ export interface TcProduct {
   image: string;
   year?: string;
   sold?: number;
+  /** has options the shopper must pick (size, quantity…) → add from the product page, not from a card */
+  hasOptions?: boolean;
 }
 
 /** ids picked in a `dropdown-list` (source: products / categories / brands): [1,2] | [{value:1}] | "1,2" */
@@ -55,7 +57,7 @@ export function toTcProduct(p: Product, offerLabel: string): TcProduct {
   const old = p.is_on_sale && p.regular_price && num(p.regular_price) > price ? num(p.regular_price) : undefined;
   const year = p.name.match(/\b(20[2-3]\d)\b/)?.[1];
   // the card shows the model on its own line and the size in the grey line under it
-  const name = size ? p.name.replace(/\s*\d{3}\s*\/\s*\d{2}(\s*\/\s*|\s*R\s*|\s+)\d{2}\b/i, '').trim() || p.name : p.name;
+  const name = size ? stripTireSize(p.name) : p.name;
   return {
     id: p.id,
     url: p.url,
@@ -70,6 +72,7 @@ export function toTcProduct(p: Product, offerLabel: string): TcProduct {
     image: p.image?.url ?? '',
     year,
     sold: p.sold_quantity ?? 0,
+    hasOptions: !!(p.has_options || p.options?.some(o => o.required)),
   };
 }
 
@@ -80,10 +83,14 @@ export function useTcProducts(src: { source: ProductsListSource; value?: number[
   return { items: (q.data?.items ?? []).slice(0, limit), loading: q.isLoading };
 }
 
-/** Salla storefront SDK — the same call the product page's add-to-cart uses */
-export async function addToCart(id: number, quantity: number) {
+/**
+ * Adds to the cart through the Salla storefront SDK (the same call the product page uses).
+ * Rejects when the SDK isn't ready or Salla refuses, so the card only confirms a real addition.
+ */
+export async function addToCart(id: number, quantity: number): Promise<void> {
   const salla = (window as unknown as { salla?: { cart?: { addItem?: (p: { id: number; quantity: number }) => Promise<unknown> } } }).salla;
-  return salla?.cart?.addItem?.({ id, quantity });
+  if (!salla?.cart?.addItem) throw new Error('cart-unavailable');
+  await salla.cart.addItem({ id, quantity });
 }
 
 /** design samples — only for the local preview (no store API there) */

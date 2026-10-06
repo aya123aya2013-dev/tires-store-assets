@@ -17,12 +17,16 @@ import { SizeFinder } from '../components/home/SizeFinder';
 import { formatTireSize, parseSizeSources, parseTireSize, productHasTireSize } from '../components/tires/sizes';
 
 export const Route = createFileRoute('/{-$locale}/search')({
-  validateSearch: (search: Record<string, unknown>) => ({ q: (search.q as string) || '', m: (search.m as string) || '' }),
-  loaderDeps: ({ search }) => ({ q: search.q }),
+  validateSearch: (search: Record<string, unknown>) => {
+    const page = Number(search.page) || 1;
+    const sort = (search.sort as string) || undefined;
+    return { q: (search.q as string) || '', m: (search.m as string) || '', ...(page > 1 ? { page } : {}), ...(sort ? { sort } : {}) };
+  },
+  loaderDeps: ({ search }) => ({ q: search.q, page: search.page, sort: search.sort }),
   loader: ({ deps, params }): Promise<ProductListLoaderData> =>
     ProductListing.loader({
       params: { source: 'search' },
-      search: { q: deps.q },
+      search: { q: deps.q, page: deps.page, sort: deps.sort },
       locale: params.locale,
     }),
   head: withHead(ProductListing),

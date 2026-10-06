@@ -12,7 +12,7 @@ const EN: Record<string, string> = {
   'إطارات أصلية بضمان الوكيل': 'Genuine tires with dealer warranty', 'تركيب مجاني بالرياض': 'Free fitting in Riyadh', 'قسّطها مع تابي وتمارا': 'Split it with Tabby & Tamara',
 };
 const DEFAULTS = [
-  { text: 'المقاس', link: '#size', num: true }, { text: 'الإطارات', link: '/search', num: true },
+  { text: 'المقاس', link: '#size', num: true }, { text: 'الإطارات', link: '/latest-products', num: true },
   { text: 'التركيب', link: '/help#install', num: true }, { text: 'الدليل', link: '/help', num: true },
   { text: 'إطارات أصلية بضمان الوكيل', link: '', num: false }, { text: 'تركيب مجاني بالرياض', link: '', num: false }, { text: 'قسّطها مع تابي وتمارا', link: '', num: false },
 ];

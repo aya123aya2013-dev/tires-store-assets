@@ -39,16 +39,36 @@ export const DEFAULT_TIRE_SIZE: TireSize = { width: '205', ratio: '55', rim: '16
  * Reads a size out of free text; null when absent. Accepts the store's own
  * spelling ("كفر تاش 275/65/18") as well as "205/55 R16", "205/55R16", "205 55 16".
  */
-export function parseTireSize(text: string | undefined | null): TireSize | null {
-  // 205/55/16 · 205/55 R16 · 315/80 R22.5 (rims may be 17.5 / 19.5 / 22.5)
-  const match = text?.match(/(\d{3})\s*[/\s]\s*(\d{2})\s*[/\sRr]*\s*(\d{2}(?:\.5)?)(?![\d.])/);
-  if (match) return { width: match[1], ratio: match[2], rim: match[3] };
+// One set of patterns for reading AND removing a size, so both always agree.
+// Each is anchored so it never matches inside a longer number ("1205/55 R16" is not 205/55 R16).
+const SIZE_PATTERNS: { re: RegExp; size: (m: RegExpMatchArray) => TireSize | null }[] = [
+  // 205/55/16 · 205/55 R16 · 205/55R16 · 225/45ZR18 · 315/80 R22.5 (rims may be 17.5 / 19.5 / 22.5)
+  { re: /(?<![\d.])(\d{3})\s*[/\s]\s*(\d{2})\s*(?:\/|\s|Z?R)*\s*(\d{2}(?:\.5)?)(?![\d.])/i, size: m => ({ width: m[1], ratio: m[2], rim: m[3] }) },
   // Heavy truck / bus, inch width: "11R22.5", "12 R 22.5"
-  const inch = text?.match(/(?<!\d)(1[1-3])\s*R\s*(\d{2}\.5)(?![\d.])/i);
-  if (inch) return { width: inch[1], ratio: '', rim: inch[2] };
+  { re: /(?<![\d.])(1[1-3])\s*R\s*(\d{2}\.5)(?![\d.])/i, size: m => ({ width: m[1], ratio: '', rim: m[2] }) },
   // Light truck: "كفر تاش نقشة شاهين 900/16".
-  const truck = text?.match(/(\d{3})\s*\/\s*(\d{2})(?![\d/.])/);
-  return truck && isTruckWidth(truck[1]) ? { width: truck[1], ratio: '', rim: truck[2] } : null;
+  { re: /(?<![\d.])(\d{3})\s*\/\s*(\d{2})(?![\d/.])/, size: m => (isTruckWidth(m[1]) ? { width: m[1], ratio: '', rim: m[2] } : null) },
+];
+
+function findTireSize(text: string | undefined | null): { size: TireSize; match: string } | null {
+  if (!text) return null;
+  for (const { re, size } of SIZE_PATTERNS) {
+    const m = text.match(re);
+    const s = m && size(m);
+    if (s) return { size: s, match: m[0] };
+  }
+  return null;
+}
+
+export function parseTireSize(text: string | undefined | null): TireSize | null {
+  return findTireSize(text)?.size ?? null;
+}
+
+/** The name without its size: "كفر هانكوك 205/55/16" → "كفر هانكوك" (falls back to the full name). */
+export function stripTireSize(name: string): string {
+  const found = findTireSize(name);
+  if (!found) return name;
+  return name.replace(found.match, ' ').replace(/\s{2,}/g, ' ').trim() || name;
 }
 
 /** "205/55 R16" · "900/16" · "11R22.5" — the way to show a size to shoppers. */

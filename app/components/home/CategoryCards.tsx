@@ -27,10 +27,10 @@ export function CategoryCards({ data }: { data: Row }) {
   const lang = useLang();
   const t = makeT(lang, EN);
   const list = rows(data.cards, 'cards')
-    .map(r => ({ icon: opt(r.icon, 'cat-all'), image: asImage(r.image, ''), title: t(r.title, ''), text: t(r.text, ''), link: asLink(r.link, '/search'), on: asBool(r.highlight, false) }))
+    .map(r => ({ icon: opt(r.icon, 'cat-all'), image: asImage(r.image, ''), title: t(r.title, ''), text: t(r.text, ''), link: asLink(r.link, '/latest-products'), on: asBool(r.highlight, false) }))
     .filter(c => c.title)
     .slice(0, 6);
-  const cards = list.length ? list : DEFAULTS.map(d => ({ ...d, image: '', link: '/search', title: t(d.title, d.title), text: t(d.text, d.text) }));
+  const cards = list.length ? list : DEFAULTS.map(d => ({ ...d, image: '', link: '/latest-products', title: t(d.title, d.title), text: t(d.text, d.text) }));
   const lead = t(data.text, 'اختر فئة سيارتك، واكتشف الخيارات المناسبة.');
 
   return (

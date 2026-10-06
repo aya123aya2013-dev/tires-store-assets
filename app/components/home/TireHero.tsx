@@ -266,7 +266,7 @@ function TireDesign({ data }: TireHeroProps) {
   const title1 = text_(data.title_1, 'مقاسك مكتوب');
   const title2 = text_(data.title_2, 'على إطارك.');
   const text = text_(data.text, 'اقرأ الأرقام على جانب إطارك الحالي، واختر الإطار المناسب بسعر واضح لكل حبة — والتركيب علينا.');
-  const btn1 = { text: text_(data.btn1_text, 'تسوّق حسب المقاس'), link: asLink(data.btn1_link, '/search') };
+  const btn1 = { text: text_(data.btn1_text, 'تسوّق حسب المقاس'), link: asLink(data.btn1_link, '#size') }; // the size finder right under the hero
   const btn2 = { show: asBool(data.btn2_show, true), text: text_(data.btn2_text, 'اكتشف خدمة التركيب'), link: asLink(data.btn2_link, '/help#install') };
   const image = asImage(data.tire_image, '/assets/images/home/tire-hero.webp');
   const giant = { show: asBool(data.giant_show, true), text: text_(data.giant_text, 'R16') };

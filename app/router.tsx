@@ -38,6 +38,7 @@ import {
   Steps,
   Lineup,
   Reviews,
+  BlogTips,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -94,6 +95,7 @@ registerHomeComponents({
   steps: Steps,
   lineup: Lineup,
   reviews: Reviews,
+  blog: BlogTips,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

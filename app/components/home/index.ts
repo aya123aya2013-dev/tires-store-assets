@@ -28,3 +28,4 @@ export { CallStrip } from './CallStrip';
 export { Steps } from './Steps';
 export { Lineup } from './Lineup';
 export { Reviews } from './Reviews';
+export { BlogTips } from './BlogTips';

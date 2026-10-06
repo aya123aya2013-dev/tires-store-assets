@@ -20,6 +20,7 @@ import { CallStrip } from './CallStrip';
 import { Steps } from './Steps';
 import { Lineup } from './Lineup';
 import { Reviews } from './Reviews';
+import { BlogTips } from './BlogTips';
 
 const IMG = '/assets/images/home';
 
@@ -102,6 +103,7 @@ export function TcPreview() {
         <Steps data={{}} />
         <Lineup data={{}} />
         <Reviews data={{}} />
+        <BlogTips data={{}} />
         <CallStrip data={{ phone: '0500000000' }} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>

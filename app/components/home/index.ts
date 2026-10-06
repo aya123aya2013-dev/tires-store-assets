@@ -24,3 +24,4 @@ export { ServicesRow } from './ServicesRow';
 export { InstallBanner } from './InstallBanner';
 export { InstallCenters } from './InstallCenters';
 export { InstallBooking } from './InstallBooking';
+export { CallStrip } from './CallStrip';

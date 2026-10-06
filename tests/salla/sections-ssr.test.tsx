@@ -17,6 +17,7 @@ import { TireHero } from '../../app/components/home/TireHero';
 import { SizeFinder } from '../../app/components/home/SizeFinder';
 import { InstallCenters } from '../../app/components/home/InstallCenters';
 import { InstallBooking } from '../../app/components/home/InstallBooking';
+import { CallStrip } from '../../app/components/home/CallStrip';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -235,5 +236,13 @@ describe('#16 install booking', () => {
   it('WhatsApp booking link with the store number', () => {
     const html = renderToString(<InstallBooking data={{ whatsapp: '+966 55 123 4567' }} />);
     expect(html).toContain('https://wa.me/966551234567?text=');
+  });
+});
+
+describe('#17 call strip', () => {
+  it('no phone → no number or button; with phone → tel links', () => {
+    expect(renderToString(<CallStrip data={{}} />)).not.toContain('tel:');
+    const html = renderToString(<CallStrip data={{ phone: '055 123 4567' }} />);
+    expect(html.split('href="tel:0551234567"').length - 1).toBe(2);
   });
 });

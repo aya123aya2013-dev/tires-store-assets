@@ -117,6 +117,11 @@ function BannerSlider({ data }: TireHeroProps) {
   const [paused, setPaused] = useState(false);
   const [stopped, setStopped] = useState(false);
   const touchX = useRef<number | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  // the pause button also pauses / resumes the slide videos (MP4)
+  useEffect(() => {
+    rootRef.current?.querySelectorAll('video').forEach(v => (stopped ? v.pause() : void v.play().catch(() => {})));
+  }, [stopped, i]);
   const many = slides.length > 1;
   const running = many && autoplay && !paused && !stopped && !reduced;
 
@@ -154,6 +159,7 @@ function BannerSlider({ data }: TireHeroProps) {
 
   return (
     <div
+      ref={rootRef}
       className={cls}
       dir={isEn ? 'ltr' : 'rtl'}
       style={{ ['--tc-speed' as string]: `${speed}s` }}
@@ -175,7 +181,7 @@ function BannerSlider({ data }: TireHeroProps) {
             !on ? (
               <div className="tc-banner__video" aria-hidden="true" />
             ) : s.video.kind === 'youtube' ? (
-              <iframe className="tc-banner__video" src={youTubeEmbed(s.video.id)} title={s.title || (isEn ? 'Video' : 'فيديو')} allow="autoplay; encrypted-media" />
+              <iframe className="tc-banner__video" src={youTubeEmbed(s.video.id, reduced)} title={s.title || (isEn ? 'Video' : 'فيديو')} allow="autoplay; encrypted-media" />
             ) : (
               <video className="tc-banner__video" src={s.video.src} autoPlay={!reduced} controls={reduced} muted loop playsInline preload="metadata" />
             )
@@ -224,7 +230,7 @@ function BannerSlider({ data }: TireHeroProps) {
           <button type="button" className="tc-banner__arrow is-next" aria-label={isEn ? 'Next' : 'التالي'} onClick={() => go(i + 1)}>{isEn ? '›' : '‹'}</button>
         </>
       )}
-      {many && autoplay && !reduced && (
+      {((many && autoplay && !reduced) || (slides[i]?.video?.kind === 'file' && !reduced)) && (
         <button type="button" className="tc-banner__pause" aria-pressed={stopped} aria-label={stopped ? (isEn ? 'Play' : 'تشغيل') : (isEn ? 'Pause' : 'إيقاف')} onClick={() => setStopped(v => !v)}>
           {stopped ? '▶' : '❚❚'}
         </button>
@@ -255,7 +261,9 @@ const videoSrc = (u: string): Video | null => {
   }
   return /^(https?:|\/)/.test(u) ? { kind: 'file', src: u } : null;
 };
-const youTubeEmbed = (id: string) => `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&playsinline=1`;
+// YouTube keeps its own controls (the shopper can always pause it); no autoplay when reduced motion is asked for
+const youTubeEmbed = (id: string, reduced: boolean) =>
+  `https://www.youtube.com/embed/${id}?autoplay=${reduced ? 0 : 1}&mute=1&loop=1&playlist=${id}&controls=1&playsinline=1`;
 
 /* ===================== tire mode: our designed hero ===================== */
 function TireDesign({ data }: TireHeroProps) {
@@ -402,6 +410,11 @@ function TireDesign({ data }: TireHeroProps) {
                           onFocus={() => { setHover(true); setActive(n); }}
                           onBlur={() => setHover(false)}
                           onClick={() => setActive(n)}
+                          onKeyDown={e => {
+                            // a button answers Enter / Space; arrows step through the size parts
+                            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(n); }
+                            else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); setActive(a => (a + (e.key === 'ArrowLeft' ? 1 : -1) + parts.length) % parts.length); }
+                          }}
                         >
                           {p.code}
                         </tspan>

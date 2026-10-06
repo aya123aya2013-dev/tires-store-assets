@@ -18,3 +18,6 @@
 Round 2 scope: components #15–#23 + re-check of round 1 fixes.
 
 **Fix round 2 done by Claude (2026-10-06):** all 18 R2 findings marked in REVIEW.md (17 ✅, R2-13 FAQ gold line kept as design). typecheck, build, 69 tests passing.
+
+**Theme settings done by Claude (2026-10-06):** `scripts/tc-settings.cjs` → twilight.json settings, 4 groups: general/colours/dark/fonts/corners (ThemeTokens.tsx + tc-dark.scss), top bar/header/footer (TcHeader.tsx, TcFooter.tsx — store logo/name/contacts/social/menus from Salla, nothing hard-coded), floating WhatsApp/call/top + discount popup + loader + pattern (TcExtras.tsx), tire features (features/MySize, Compare, cardSettings; presets). Old Raed header/footer settings removed. Commits 55784d5, b765cb5. NOT visually checked yet (no preview without owner's OK).
+**Next:** owner looks at a preview → fixes → inner pages 1:1 with design/store (+ product/category/cart/account settings group) → Codex round 3.

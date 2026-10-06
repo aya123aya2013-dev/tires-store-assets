@@ -28,7 +28,7 @@ vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
 vi.mock('@salla.sa/twilight-theme-engine/hooks/useWishlist', () => ({ useWishlist: () => ({ has: () => false, toggle: () => {} }) }));
 vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => () => {}, useTwilight: () => ({}) }));
 vi.mock('@salla.sa/twilight-components-react/reviews', () => ({ SallaReviews: () => <div className="salla-reviews-mock" /> }));
-vi.mock('@salla.sa/twilight-theme-engine/api/blog', () => ({ blog: { queries: { articles: () => ({}) } } }));
+vi.mock('@salla.sa/twilight-theme-engine/routes/blog', () => ({ blogLoader: async () => ({ articles: [] }) }));
 vi.mock('@tanstack/react-query', () => ({ useQuery: () => ({ data: { items: [] }, isLoading: false }) }));
 vi.mock('@salla.sa/twilight-theme-engine/api/brands', () => ({ brand: { queries: { list: () => ({ queryKey: ['b'] }) } } }));
 vi.mock('@salla.sa/twilight-theme-engine/api/product', () => ({ product: { queries: { list: () => ({}) } } }));

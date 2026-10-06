@@ -6,7 +6,8 @@
  */
 import { useQuery } from '@tanstack/react-query';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
-import { blog } from '@salla.sa/twilight-theme-engine/api/blog';
+import { blogLoader } from '@salla.sa/twilight-theme-engine/routes/blog';
+import type { ArticleSummary } from '@salla.sa/twilight-theme-engine/routes/blog';
 import { asLink, makeT, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
@@ -24,13 +25,15 @@ export function BlogTips({ data }: { data: Row }) {
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
   const limit = Math.min(6, Math.max(1, Number(data.limit) || 3));
-  const q = useQuery(blog.queries.articles());
+  // the same loader the blog page uses (the engine exposes no separate articles API to themes)
+  const q = useQuery({ queryKey: ['tc-blog-latest'], queryFn: () => blogLoader() });
   const day = (d: unknown) => {
     const date = d ? new Date(String((d as { date?: string })?.date ?? d)) : null;
     return date && !isNaN(+date) ? date.toLocaleDateString(isEn ? 'en' : 'ar', { day: 'numeric', month: 'long' }) : '';
   };
-  const articles = (q.data?.data ?? []).slice(0, limit).map(a => ({ url: a.url, image: a.image ?? '', label: a.tags?.[0]?.name ?? day(a.created_at), title: a.name }));
-  const list = articles.length ? articles : import.meta.env.DEV && !q.isLoading ? SAMPLES.slice(0, limit) : [];
+  type Card = { url: string; image: string; label: string; title: string };
+  const articles: Card[] = ((q.data?.articles ?? []) as ArticleSummary[]).slice(0, limit).map(a => ({ url: a.url, image: a.image ?? '', label: a.tags?.[0]?.name ?? day(a.created_at), title: a.name }));
+  const list: Card[] = articles.length ? articles : import.meta.env.DEV && !q.isLoading ? SAMPLES.slice(0, limit) : [];
   if (!list.length) return null;
   const allText = t(data.all_text, 'كل المقالات');
 

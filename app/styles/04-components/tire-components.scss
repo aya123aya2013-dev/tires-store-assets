@@ -397,3 +397,6 @@
 /* #17 call strip without the gold piece */
 .tc-s .callbar.tc-plain::after { display: none; }
 .tc-s .callbar.tc-plain .cb-phone { color: #fff; }
+
+/* #18 steps: 2 or 4 columns on desktop (approved: 3) */
+@media (min-width: 1101px) { .tc-s .s3.tc-n-2 { grid-template-columns: repeat(2, 1fr); } .tc-s .s3.tc-n-4 { grid-template-columns: repeat(4, 1fr); } }

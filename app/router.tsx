@@ -35,6 +35,7 @@ import {
   InstallCenters,
   InstallBooking,
   CallStrip,
+  Steps,
 } from './components/home';
 import { registerThemeHooks } from './hooks';
 
@@ -88,6 +89,7 @@ registerHomeComponents({
   'install-centers': InstallCenters,
   'install-booking': InstallBooking,
   'call-strip': CallStrip,
+  steps: Steps,
 });
 
 // Wrapper `<section>` classes for `featured-products` — the engine only styles

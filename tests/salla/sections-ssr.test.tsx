@@ -18,6 +18,7 @@ import { SizeFinder } from '../../app/components/home/SizeFinder';
 import { InstallCenters } from '../../app/components/home/InstallCenters';
 import { InstallBooking } from '../../app/components/home/InstallBooking';
 import { CallStrip } from '../../app/components/home/CallStrip';
+import { Steps } from '../../app/components/home/Steps';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -244,5 +245,13 @@ describe('#17 call strip', () => {
     expect(renderToString(<CallStrip data={{}} />)).not.toContain('tel:');
     const html = renderToString(<CallStrip data={{ phone: '055 123 4567' }} />);
     expect(html.split('href="tel:0551234567"').length - 1).toBe(2);
+  });
+});
+
+describe('#18 steps', () => {
+  it('numbers the steps and hides when emptied', () => {
+    const html = renderToString(<Steps data={{}} />);
+    expect(html).toContain('<em>03</em>');
+    expect(renderToString(<Steps data={{ steps: [] }} />)).toBe('');
   });
 });

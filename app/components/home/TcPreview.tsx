@@ -17,6 +17,7 @@ import { InstallBanner } from './InstallBanner';
 import { InstallCenters } from './InstallCenters';
 import { InstallBooking } from './InstallBooking';
 import { CallStrip } from './CallStrip';
+import { Steps } from './Steps';
 
 const IMG = '/assets/images/home';
 
@@ -96,6 +97,7 @@ export function TcPreview() {
         <InstallBanner data={{}} />
         <InstallCenters data={{}} />
         <InstallBooking data={{}} />
+        <Steps data={{}} />
         <CallStrip data={{ phone: '0500000000' }} />
       </section>
       <section style={{ borderTop: '6px solid #1d2023' }}>

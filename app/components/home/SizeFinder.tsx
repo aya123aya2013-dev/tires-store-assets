@@ -10,7 +10,8 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { useNavigate } from '@salla.sa/twilight-theme-engine/providers';
 import { HEAVY_INCH_WIDTHS, HEAVY_METRIC_WIDTHS, HEAVY_RIMS, PASSENGER_WIDTHS, TIRE_RATIOS, TIRE_RIMS, TRUCK_WIDTHS, isTruckWidth } from '../tires/sizes';
 import type { TireSize } from '../tires/sizes';
-import { asBool, asLink, asText, customClass, isRow, opt, useLang } from './fields';
+import { asBool, asLink, asText, isRow, opt, useLang } from './fields';
+import { Section } from './tc/Section';
 import type { Lang, Row } from './fields';
 
 const EN: Record<string, string> = {
@@ -224,7 +225,8 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
   };
 
   return (
-    <div className={['tc', 'tc-finder-band', overlap ? 'tc-finder--overlap' : '', heading ? 'tc-finder--page' : '', customClass(data.custom_class)].join(' ')}>
+    <Section data={data} scoped={false}>
+    <div className={['tc', 'tc-finder-band', overlap ? 'tc-finder--overlap' : '', heading ? 'tc-finder--page' : ''].join(' ')}>
       <section className="tc-wrap tc-finder-wrap" id={heading ? undefined : 'size'}>
         <form className="tc-finder" ref={root} onSubmit={submit}>
           <div className="tc-finder__title">
@@ -243,5 +245,6 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
         </form>
       </section>
     </div>
+    </Section>
   );
 }

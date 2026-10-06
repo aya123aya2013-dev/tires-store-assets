@@ -6,7 +6,8 @@
  */
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
-import { asBool, asImage, asLink, asText, customClass, isCleared, isRow, opt, pick, useLang, useReducedMotion } from './fields';
+import { Section } from './tc/Section';
+import { asBool, asImage, asLink, asText, isCleared, isRow, opt, pick, useLang, useReducedMotion } from './fields';
 import type { Lang, Row } from './fields';
 
 const DEFAULT_STATS = [
@@ -57,7 +58,11 @@ export interface TireHeroProps {
 
 /** Entry: the merchant either uses our tire design, or just uploads banner images. */
 export function TireHero({ data }: TireHeroProps) {
-  return asBool(data.image_mode, false) ? <BannerSlider data={data} /> : <TireDesign data={data} />;
+  return (
+    <Section data={data} scoped={false}>
+      {asBool(data.image_mode, false) ? <BannerSlider data={data} /> : <TireDesign data={data} />}
+    </Section>
+  );
 }
 
 /* ===================== image mode: plain banner / slider ===================== */
@@ -133,7 +138,7 @@ function BannerSlider({ data }: TireHeroProps) {
 
   if (!slides.length) {
     return (
-      <div className={'tc tc-banner tc-banner--empty ' + customClass(data.custom_class)}>
+      <div className="tc tc-banner tc-banner--empty">
         <div className="tc-wrap">أضف صورة البنر من إعدادات العنصر (صورة للكمبيوتر وصورة للجوال).</div>
       </div>
     );
@@ -146,7 +151,7 @@ function BannerSlider({ data }: TireHeroProps) {
   const cls = [
     'tc', 'tc-banner', `tc-banner--h-${height}`, `tc-banner--m-${mobRatio}`, `tc-banner--${fit}`, boxed ? 'tc-banner--boxed' : '',
     `tc-banner--x-${posX}`, `tc-banner--y-${posY}`, `tc-banner--ym-${posYm}`, `tc-banner--shade-${shade}`,
-    `tc-banner--fx-${effect}`, topSpace ? 'tc-banner--top-space' : '', customClass(data.custom_class),
+    `tc-banner--fx-${effect}`, topSpace ? 'tc-banner--top-space' : '',
   ].join(' ');
   const go = (n: number) => setI((n + slides.length) % slides.length);
   // swipe: phones always have a way to move, even with arrows / dots / autoplay off
@@ -352,7 +357,7 @@ function TireDesign({ data }: TireHeroProps) {
         `tc-hero--m-${opt(data.mobile_order, 'image')}`, // image | text — what comes first on phones
         `tc-hero--d-${opt(data.desktop_side, 'text-right')}`, // text-right | text-left
         `tc-hero--a-${opt(data.mobile_align, 'center')}`, // center | start
-        customClass(data.custom_class),
+       
       ].join(' ')}
     >
       <div className="tc-wrap tc-hero__grid">

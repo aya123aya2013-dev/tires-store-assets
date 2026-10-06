@@ -7,9 +7,11 @@ import type { ReactNode } from 'react';
 import { asBool, customClass, opt } from '../fields';
 import type { Row } from '../fields';
 
-export function Section({ data, children, className = '' }: { data: Row; children: ReactNode; className?: string }) {
+/** `scoped={false}`: settings only, without the design CSS scope (the hero and the size finder have their own styles) */
+export function Section({ data, children, className = '', scoped = true }: { data: Row; children: ReactNode; className?: string; scoped?: boolean }) {
   const cls = [
-    'tc-s',
+    scoped ? 'tc-s' : '',
+    'tc-sp',
     className,
     asBool(data.show_mobile, true) ? '' : 'tc-hide-m',
     asBool(data.show_desktop, true) ? '' : 'tc-hide-d',

@@ -303,14 +303,17 @@
 @media (max-width: 640px) { .tc-finder__title h1 { font-size: 20px; margin: 0; } .tc-finder--page { padding-top: 16px; } }
 
 /* ---------- shared section settings (tc/Section.tsx) ---------- */
-@media (max-width: 767px) { .tc-s.tc-hide-m { display: none; } }
-@media (min-width: 768px) { .tc-s.tc-hide-d { display: none; } }
-.tc-s.tc-pt-small > * { padding-top: 32px !important; }
-.tc-s.tc-pt-large > * { padding-top: 140px !important; }
-.tc-s.tc-pb-small > * { padding-bottom: 32px !important; }
-.tc-s.tc-pb-large > * { padding-bottom: 140px !important; }
-.tc-s.tc-pt-none > * { padding-top: 0 !important; }
-.tc-s.tc-pb-none > * { padding-bottom: 0 !important; }
+@media (max-width: 767px) { .tc-sp.tc-hide-m { display: none; } }
+@media (min-width: 768px) { .tc-sp.tc-hide-d { display: none; } }
+// space above / below (R1-16): change the section's OWN spacing — padding on .sec sections,
+// margin on the others (strips, banners) — so «small» is always smaller and «normal» = the design
+.tc-sp.tc-pt-none > .sec { padding-top: 0 !important; }    .tc-sp.tc-pt-none > :not(.sec) { margin-top: 0 !important; }
+.tc-sp.tc-pt-small > .sec { padding-top: 40px !important; } .tc-sp.tc-pt-small > :not(.sec) { margin-top: 16px !important; }
+.tc-sp.tc-pt-large > .sec { padding-top: 140px !important; } .tc-sp.tc-pt-large > :not(.sec) { margin-top: 80px !important; }
+.tc-sp.tc-pb-none > .sec { padding-bottom: 0 !important; }    .tc-sp.tc-pb-none > :not(.sec) { margin-bottom: 0 !important; }
+.tc-sp.tc-pb-small > .sec { padding-bottom: 40px !important; } .tc-sp.tc-pb-small > :not(.sec) { margin-bottom: 16px !important; }
+.tc-sp.tc-pb-large > .sec { padding-bottom: 140px !important; } .tc-sp.tc-pb-large > :not(.sec) { margin-bottom: 80px !important; }
+@media (max-width: 640px) { .tc-sp.tc-pt-small > .sec { padding-top: 28px !important; } .tc-sp.tc-pb-small > .sec { padding-bottom: 28px !important; } }
 
 /* #3 benefits strip: 2–4 columns on desktop (the design shows 4) */
 @media (min-width: 901px) {

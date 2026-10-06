@@ -13,6 +13,8 @@ import { ServicesBento } from '../../app/components/home/ServicesBento';
 import { Ticker } from '../../app/components/home/Ticker';
 import { ServicesRow } from '../../app/components/home/ServicesRow';
 import { InstallBanner } from '../../app/components/home/InstallBanner';
+import { TireHero } from '../../app/components/home/TireHero';
+import { SizeFinder } from '../../app/components/home/SizeFinder';
 import { toTcProduct } from '../../app/components/home/tc/products';
 
 vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
@@ -185,5 +187,15 @@ describe('#7 shop by car — car lists', () => {
       { make: 'تويوتا', model: 'كامري', from: 2018, to: 2024, size: '215/55 R17' },
       { make: 'كيا', model: 'K5', from: 2021, to: 2025, size: '215/55 R17' },
     ]);
+  });
+});
+
+describe('R1-14 / R1-16 shared settings', () => {
+  it('hero and finder take show/space/class settings without the design scope', () => {
+    const hero = renderToString(<TireHero data={{ show_mobile: false, space_top: 'small', custom_class: 'h1x' }} />);
+    expect(hero).toMatch(/class="tc-sp tc-hide-m tc-pt-small tc-pb-normal h1x"/);
+    const finder = renderToString(<SizeFinder data={{ show_desktop: false }} />);
+    expect(finder).toContain('tc-sp tc-hide-d');
+    expect(finder).not.toContain('tc-s ');
   });
 });

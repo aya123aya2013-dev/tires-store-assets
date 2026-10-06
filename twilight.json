@@ -62,7 +62,14 @@
       "description": null,
       "placeholder": "تركيب مجاني في مراكزنا بالرياض",
       "minLength": 0,
-      "maxLength": 120
+      "maxLength": 120,
+      "conditions": [
+        {
+          "id": "tc_topbar_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -76,7 +83,14 @@
       "description": null,
       "placeholder": "· تقسيط على 4 دفعات مع تابي وتمارا",
       "minLength": 0,
-      "maxLength": 120
+      "maxLength": 120,
+      "conditions": [
+        {
+          "id": "tc_topbar_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "boolean",
@@ -87,7 +101,14 @@
       "format": "switch",
       "required": false,
       "value": false,
-      "selected": false
+      "selected": false,
+      "conditions": [
+        {
+          "id": "tc_topbar_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "items",
@@ -156,6 +177,13 @@
           "key": "custom",
           "value": "custom"
         }
+      ],
+      "conditions": [
+        {
+          "id": "tc_topbar_show",
+          "operation": "=",
+          "value": true
+        }
       ]
     },
     {
@@ -167,7 +195,14 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "conditions": [
+        {
+          "id": "tc_topbar_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "static",
@@ -187,19 +222,19 @@
         {
           "label": "شعار متجرك (من لوحة سلة)",
           "value": "store",
-          "key": "f2b33e53-1d73-4506-8886-ea2d48b6093d"
+          "key": "2ac63fd1-e794-4a97-92bb-674ad6e6859e"
         }
       ],
       "options": [
         {
           "label": "شعار متجرك (من لوحة سلة)",
           "value": "store",
-          "key": "f2b33e53-1d73-4506-8886-ea2d48b6093d"
+          "key": "2ac63fd1-e794-4a97-92bb-674ad6e6859e"
         },
         {
           "label": "علامة الإطار + اسم المتجر",
           "value": "mark",
-          "key": "c64c3304-99c8-49d2-8376-c8ee038e0a75"
+          "key": "a0d46b52-9139-487b-a8aa-4860a0672b7d"
         }
       ],
       "source": "Manual",
@@ -217,7 +252,14 @@
       "description": null,
       "placeholder": "TIRES STORE",
       "minLength": 0,
-      "maxLength": 30
+      "maxLength": 30,
+      "conditions": [
+        {
+          "id": "tc_logo_mode",
+          "operation": "=",
+          "value": "mark"
+        }
+      ]
     },
     {
       "type": "string",
@@ -278,7 +320,14 @@
       "description": null,
       "placeholder": "اختر مقاسك",
       "minLength": 0,
-      "maxLength": 24
+      "maxLength": 24,
+      "conditions": [
+        {
+          "id": "tc_header_cta",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "items",
@@ -346,6 +395,13 @@
           "label": "رابط خارجي",
           "key": "custom",
           "value": "custom"
+        }
+      ],
+      "conditions": [
+        {
+          "id": "tc_header_cta",
+          "operation": "=",
+          "value": true
         }
       ]
     },
@@ -495,6 +551,13 @@
           "key": "custom",
           "value": "custom"
         }
+      ],
+      "conditions": [
+        {
+          "id": "tc_footer_news",
+          "operation": "=",
+          "value": true
+        }
       ]
     },
     {
@@ -555,7 +618,14 @@
       "description": null,
       "placeholder": "9665xxxxxxxx",
       "minLength": 0,
-      "maxLength": 20
+      "maxLength": 20,
+      "conditions": [
+        {
+          "id": "tc_wa_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -569,7 +639,14 @@
       "description": null,
       "placeholder": "السلام عليكم، أبي أستفسر عن مقاس إطار",
       "minLength": 0,
-      "maxLength": 160
+      "maxLength": 160,
+      "conditions": [
+        {
+          "id": "tc_wa_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "id": "tc_float_side",
@@ -583,19 +660,19 @@
         {
           "label": "يسار الشاشة",
           "value": "left",
-          "key": "feb54d7e-97eb-44ad-a8fa-89ad7cb8f8d8"
+          "key": "67b70860-30fb-4ecd-9f54-d011d2bdbb1c"
         }
       ],
       "options": [
         {
           "label": "يسار الشاشة",
           "value": "left",
-          "key": "feb54d7e-97eb-44ad-a8fa-89ad7cb8f8d8"
+          "key": "67b70860-30fb-4ecd-9f54-d011d2bdbb1c"
         },
         {
           "label": "يمين الشاشة",
           "value": "right",
-          "key": "ea1713a3-64a3-41ad-8a6b-e638396143b8"
+          "key": "115d19b7-7da0-4c44-b05e-790e7f37e6bc"
         }
       ],
       "source": "Manual",
@@ -630,7 +707,14 @@
       "description": null,
       "placeholder": "05xxxxxxxx",
       "minLength": 0,
-      "maxLength": 20
+      "maxLength": 20,
+      "conditions": [
+        {
+          "id": "tc_call_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "static",
@@ -678,7 +762,14 @@
       "description": null,
       "placeholder": "خصم 10% على أول طقم إطارات",
       "minLength": 0,
-      "maxLength": 60
+      "maxLength": 60,
+      "conditions": [
+        {
+          "id": "tc_popup_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -692,7 +783,14 @@
       "description": null,
       "placeholder": "استخدم الكود عند الدفع. العرض لفترة محدودة.",
       "minLength": 0,
-      "maxLength": 140
+      "maxLength": 140,
+      "conditions": [
+        {
+          "id": "tc_popup_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -706,7 +804,14 @@
       "description": null,
       "placeholder": "TIRES10",
       "minLength": 0,
-      "maxLength": 30
+      "maxLength": 30,
+      "conditions": [
+        {
+          "id": "tc_popup_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -721,7 +826,14 @@
       "settings": {
         "width": 600,
         "height": 600
-      }
+      },
+      "conditions": [
+        {
+          "id": "tc_popup_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "number",
@@ -733,7 +845,14 @@
       "value": 6,
       "minimum": 0,
       "maximum": 120,
-      "description": null
+      "description": null,
+      "conditions": [
+        {
+          "id": "tc_popup_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "id": "tc_popup_repeat",
@@ -747,28 +866,35 @@
         {
           "label": "مرة وحدة لكل زائر",
           "value": "once",
-          "key": "8734a923-b581-4ea0-b3b7-c8f91c0d391c"
+          "key": "be10b4f3-2941-4419-8f31-36b702d3f708"
         }
       ],
       "options": [
         {
           "label": "مرة وحدة لكل زائر",
           "value": "once",
-          "key": "8734a923-b581-4ea0-b3b7-c8f91c0d391c"
+          "key": "be10b4f3-2941-4419-8f31-36b702d3f708"
         },
         {
           "label": "كل زيارة جديدة",
           "value": "session",
-          "key": "8dfeb8b7-5077-45c5-a69d-98b4fc3ced6f"
+          "key": "7fac89aa-d1cc-4956-bc30-fd9446df6cd0"
         },
         {
           "label": "كل يوم",
           "value": "daily",
-          "key": "54a3fc64-924c-4383-98ac-d6d2eae779e1"
+          "key": "322b110f-8b56-42c4-95ac-b709aaa049e3"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_popup_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "static",
@@ -805,24 +931,24 @@
         {
           "label": "بدون",
           "value": "none",
-          "key": "8f989fef-4e5a-41ea-ad1f-7edf59c51fef"
+          "key": "408c86a6-146b-40fa-8a21-307c6bb26977"
         }
       ],
       "options": [
         {
           "label": "بدون",
           "value": "none",
-          "key": "8f989fef-4e5a-41ea-ad1f-7edf59c51fef"
+          "key": "408c86a6-146b-40fa-8a21-307c6bb26977"
         },
         {
           "label": "آثار إطار",
           "value": "tread",
-          "key": "e0486f26-c1aa-402f-8567-96a4eff7a8ac"
+          "key": "8b78053f-d79d-4a0e-b4c1-f35e807e5a16"
         },
         {
           "label": "نقاط",
           "value": "dots",
-          "key": "40695e32-89d2-446e-801c-b5363731c6df"
+          "key": "3248c43f-bee8-47ae-af9b-41bd94f02e75"
         }
       ],
       "source": "Manual",
@@ -884,7 +1010,14 @@
       "value": 4,
       "minimum": 2,
       "maximum": 12,
-      "description": null
+      "description": null,
+      "conditions": [
+        {
+          "id": "tc_set_price",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "boolean",
@@ -909,34 +1042,34 @@
         {
           "label": "بدون — ألواني من الأعلى",
           "value": "none",
-          "key": "08efcf11-3494-411a-ad40-6f03c97adc63"
+          "key": "d7827c31-3c85-4f8d-b224-270b2fb208d2"
         }
       ],
       "options": [
         {
           "label": "بدون — ألواني من الأعلى",
           "value": "none",
-          "key": "08efcf11-3494-411a-ad40-6f03c97adc63"
+          "key": "d7827c31-3c85-4f8d-b224-270b2fb208d2"
         },
         {
           "label": "ذهبي وفحمي (الأصلي)",
           "value": "gold",
-          "key": "916f5027-6bbb-42ad-aac8-c7a7fb71a234"
+          "key": "30ca426b-111e-4a7e-878a-e9624d260097"
         },
         {
           "label": "أحمر وأسود (رياضي)",
           "value": "red",
-          "key": "50bfcb54-593d-4a2f-84e6-41997c81395f"
+          "key": "3e9d8124-7727-4696-89db-c86420bbf751"
         },
         {
           "label": "أزرق وكحلي",
           "value": "blue",
-          "key": "0e5951b8-c58a-4342-9206-5602bb977280"
+          "key": "8e241c21-708b-4e20-87f1-e0c2c5069e73"
         },
         {
           "label": "أخضر وزيتي (بر ودفع رباعي)",
           "value": "green",
-          "key": "99f5c9c5-3fc4-4541-8091-a5c532879ed8"
+          "key": "53616da7-ddef-4d83-92de-9603dd09f2a9"
         }
       ],
       "source": "Manual",
@@ -969,7 +1102,14 @@
       "format": "color",
       "value": "#ffb71b",
       "required": false,
-      "description": null
+      "description": null,
+      "conditions": [
+        {
+          "id": "tc_use_store_color",
+          "operation": "=",
+          "value": false
+        }
+      ]
     },
     {
       "type": "string",
@@ -979,7 +1119,14 @@
       "format": "color",
       "value": "#221800",
       "required": false,
-      "description": null
+      "description": null,
+      "conditions": [
+        {
+          "id": "tc_use_store_color",
+          "operation": "=",
+          "value": false
+        }
+      ]
     },
     {
       "type": "string",
@@ -1040,24 +1187,24 @@
         {
           "label": "مطفأ — المتجر فاتح دائماً",
           "value": "off",
-          "key": "ec4067c0-4405-49f7-9d0c-df6fd5e6b0ca"
+          "key": "a1f40ac6-f353-4db5-bfe4-27c50349aa2b"
         }
       ],
       "options": [
         {
           "label": "مطفأ — المتجر فاتح دائماً",
           "value": "off",
-          "key": "ec4067c0-4405-49f7-9d0c-df6fd5e6b0ca"
+          "key": "a1f40ac6-f353-4db5-bfe4-27c50349aa2b"
         },
         {
           "label": "حسب جهاز الزائر (تلقائي)",
           "value": "auto",
-          "key": "fd4dbdac-1c73-4da4-b4b4-fa16250afa6b"
+          "key": "7d53ffff-93a5-4f71-9001-59045172e98a"
         },
         {
           "label": "مفعّل — المتجر داكن دائماً",
           "value": "on",
-          "key": "6bd28a22-f946-4c51-b1a4-8e37fabac56b"
+          "key": "5b4578b8-8cad-494d-9c1f-d10f3475da54"
         }
       ],
       "source": "Manual",
@@ -1122,34 +1269,34 @@
         {
           "label": "IBM Plex Sans Arabic (التصميم)",
           "value": "ibm",
-          "key": "e9dbee46-094c-439a-b387-6d8476ae36c7"
+          "key": "c9a0afca-d73e-49ae-9a5b-dcb31446de22"
         }
       ],
       "options": [
         {
           "label": "IBM Plex Sans Arabic (التصميم)",
           "value": "ibm",
-          "key": "e9dbee46-094c-439a-b387-6d8476ae36c7"
+          "key": "c9a0afca-d73e-49ae-9a5b-dcb31446de22"
         },
         {
           "label": "Tajawal",
           "value": "tajawal",
-          "key": "2f5f5c1a-9104-4c6d-a6bf-55c43237a8c7"
+          "key": "149b4fa3-9563-42b7-8b5d-4adba22330c5"
         },
         {
           "label": "Cairo",
           "value": "cairo",
-          "key": "810c7ee0-49bd-46a2-9ec0-e87f30cf172b"
+          "key": "08ab397e-cb19-4b7a-98e2-8359ed08b774"
         },
         {
           "label": "Almarai",
           "value": "almarai",
-          "key": "a5062f04-234d-43ad-bed3-5c8125f6d5cd"
+          "key": "027dc68f-0b4f-4d47-a364-b80464e1d9c7"
         },
         {
           "label": "خط المتجر من لوحة سلة",
           "value": "store",
-          "key": "e5868197-bf72-449a-bf2b-09af61f1592b"
+          "key": "0c33bc05-c9ea-4f67-a3c9-02972649c995"
         }
       ],
       "source": "Manual",
@@ -1167,24 +1314,24 @@
         {
           "label": "Archivo (التصميم)",
           "value": "archivo",
-          "key": "1b456013-e299-4169-a762-9e1f289f4d4c"
+          "key": "6ca3f13b-62f8-487b-b5b7-bc837d68bc02"
         }
       ],
       "options": [
         {
           "label": "Archivo (التصميم)",
           "value": "archivo",
-          "key": "1b456013-e299-4169-a762-9e1f289f4d4c"
+          "key": "6ca3f13b-62f8-487b-b5b7-bc837d68bc02"
         },
         {
           "label": "Inter",
           "value": "inter",
-          "key": "a7e1760b-6a70-4dd7-be69-2ad0cf6c7926"
+          "key": "b0cbb9fa-101b-4f3e-82e4-695370544a7d"
         },
         {
           "label": "نفس الخط العربي",
           "value": "same",
-          "key": "6b57830e-fb52-41a6-89b2-ad285aedb069"
+          "key": "8442f585-6821-4de4-baf6-8df9e6f5eae8"
         }
       ],
       "source": "Manual",
@@ -1208,24 +1355,24 @@
         {
           "label": "ناعمة (التصميم)",
           "value": "soft",
-          "key": "75054a25-745d-4c71-8b8f-178a77f5fe00"
+          "key": "4f487212-bf7f-413b-913e-49aadd6a63c1"
         }
       ],
       "options": [
         {
           "label": "ناعمة (التصميم)",
           "value": "soft",
-          "key": "75054a25-745d-4c71-8b8f-178a77f5fe00"
+          "key": "4f487212-bf7f-413b-913e-49aadd6a63c1"
         },
         {
           "label": "حادة",
           "value": "sharp",
-          "key": "89099cd0-ec74-469b-8695-c075271b24f1"
+          "key": "ec816f09-c0a4-4d08-ab05-93ca338e9d9b"
         },
         {
           "label": "دائرية",
           "value": "round",
-          "key": "7ec2adb6-fdb5-45f0-a029-f79c433fbd00"
+          "key": "76dbb0d3-9905-4138-bcb5-4ce9f3619b05"
         }
       ],
       "source": "Manual",

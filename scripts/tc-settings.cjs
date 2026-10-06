@@ -150,7 +150,22 @@ const GROUP_TIRES = [
   ], 'none', { description: 'يتقدّم على ألوان المتجر بالأعلى إذا اخترت قالب' }),
 ];
 
-const ALL = [...GROUP_GENERAL, ...GROUP_FRAME, ...GROUP_EXTRAS, ...GROUP_TIRES];
+// A switched-off feature hides its own fields in the editor (child → [parent, value]).
+const DEPS = {
+  tc_topbar_text: ['tc_topbar_show', true], tc_topbar_highlight: ['tc_topbar_show', true],
+  tc_topbar_marquee: ['tc_topbar_show', true], tc_topbar_link: ['tc_topbar_show', true], tc_topbar_phone: ['tc_topbar_show', true],
+  tc_brand_sub: ['tc_logo_mode', 'mark'],
+  tc_header_cta_text: ['tc_header_cta', true], tc_header_cta_link: ['tc_header_cta', true],
+  tc_footer_news_link: ['tc_footer_news', true],
+  tc_wa_number: ['tc_wa_show', true], tc_wa_message: ['tc_wa_show', true],
+  tc_call_number: ['tc_call_show', true],
+  tc_popup_title: ['tc_popup_show', true], tc_popup_text: ['tc_popup_show', true], tc_popup_code: ['tc_popup_show', true],
+  tc_popup_image: ['tc_popup_show', true], tc_popup_delay: ['tc_popup_show', true], tc_popup_repeat: ['tc_popup_show', true],
+  tc_installments: ['tc_set_price', true],
+  tc_color_primary: ['tc_use_store_color', false], tc_color_on_primary: ['tc_use_store_color', false],
+};
+
+const ALL = [...GROUP_GENERAL, ...GROUP_FRAME, ...GROUP_EXTRAS, ...GROUP_TIRES].map(f => (DEPS[f.id] ? F.when(f, ...DEPS[f.id]) : f));
 
 // base-theme settings replaced by the groups above (header / footer now come from TcHeader / TcFooter)
 const REMOVED = ['header_is_sticky', 'topnav_is_dark', 'important_links', 'enable_more_menu', 'header_show_store_info', 'footer_is_dark', 'static-line1', 'static-label2', 'static-line3', 'static-label4', 'static-line5', 'static-label6'];

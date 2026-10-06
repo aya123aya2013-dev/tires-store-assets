@@ -7,6 +7,7 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { asBool, asImage, asLink, makeT, rows, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
+import { useSellsFitting } from '../tires/features/cardSettings';
 import { Icon } from './tc/Icon';
 
 const EN: Record<string, string> = {
@@ -23,6 +24,7 @@ const DEFAULTS = [
 ].map(c => ({ ...c, hours: 'السبت–الخميس · 9 ص – 11 م', phone: '', map: 'https://maps.google.com', open: true, book: 'احجز موعد', bookLink: '/help#install' }));
 
 export function InstallCenters({ data }: { data: Row }) {
+  const fitting = useSellsFitting();
   const t = makeT(useLang(), EN);
   const list = rows(data.centers, 'centers')
     .map(r => ({
@@ -42,6 +44,7 @@ export function InstallCenters({ data }: { data: Row }) {
   if (!centers.length) return null;
   const lead = t(data.text, 'اختر المركز في السلة، ونجهّز إطاراتك قبل ما توصل.');
 
+  if (!fitting) return null; // «بيع فقط»: no fitting sections
   return (
     <Section data={data}>
       <section className="sec" id="centers" style={{ paddingTop: 0 }}>

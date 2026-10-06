@@ -12,6 +12,8 @@ import { withHead } from '@salla.sa/twilight-theme-engine/tanstack';
 import { ProductListPage } from '../components/product/ProductListPage';
 import { ProductListSkeleton } from '../components/product/ProductListSkeleton';
 import { useCallback } from 'react';
+import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
+import { opt } from '../components/home/fields';
 import type { Product } from '@salla.sa/twilight-theme-engine/types';
 import { SizeFinder } from '../components/home/SizeFinder';
 import { formatTireSize, parseSizeSources, parseTireSize, productHasTireSize } from '../components/tires/sizes';
@@ -38,7 +40,10 @@ export const Route = createFileRoute('/{-$locale}/search')({
 
 function ListComponent() {
   const data: ProductListLoaderData = Route.useLoaderData();
-  const { q, m } = Route.useSearch();
+  const { q, m: mParam } = Route.useSearch();
+  // no `m` in the link → the store-wide «وين تكتب المقاس» setting (group «متجر الإطارات»)
+  const { theme } = useTwilight();
+  const m = mParam || (opt((theme?.settings as Record<string, unknown> | undefined)?.tc_spec_source, 'all') === 'all' ? '' : opt((theme?.settings as Record<string, unknown> | undefined)?.tc_spec_source, 'all'));
   // A tire-size search shows ONLY that exact size — read from the product name,
   // its tags or its option values (`m` narrows the sources; all three by default).
   const size = parseTireSize(q);

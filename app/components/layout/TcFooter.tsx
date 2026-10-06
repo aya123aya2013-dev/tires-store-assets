@@ -8,7 +8,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { SallaPayments } from '@salla.sa/twilight-components-react/payments';
 import { SallaMenu } from '@salla.sa/twilight-components-react/menu';
-import type { FormEvent } from 'react';
+import { useState } from 'react';
+import type { FormEvent, ReactNode } from 'react';
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { HookSlot } from '@salla.sa/twilight-theme-engine/hooks';
 import { Link } from '@salla.sa/twilight-theme-engine/common';
@@ -34,6 +35,18 @@ const socialUrl = (k: keyof Social, v: string) => {
   return { instagram: `https://instagram.com/${h}`, twitter: `https://x.com/${h}`, snapchat: `https://snapchat.com/add/${h}`, tiktok: `https://tiktok.com/@${h}` }[k];
 };
 
+/** a footer column; on mobile it folds under its title when «أعمدة الفوتر تنطوي» is on */
+function Col({ title, acc, className = '', children }: { title: string; acc: boolean; className?: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  if (!acc) return <div className={className || undefined}><h4>{title}</h4>{children}</div>;
+  return (
+    <div className={`${className} tc-acc${open ? ' open' : ''}`.trim()}>
+      <h4 role="button" tabIndex={0} aria-expanded={open} onClick={() => setOpen(!open)} onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setOpen(!open))}>{title}</h4>
+      {children}
+    </div>
+  );
+}
+
 export function TcFooter() {
   const { store, theme } = useTwilight();
   const s = (theme?.settings ?? {}) as Record<string, unknown>;
@@ -42,12 +55,14 @@ export function TcFooter() {
   const year = new Date().getFullYear();
 
   const about = t(s.tc_footer_about, 'إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.');
-  const phone = String(store?.contacts?.mobile || store?.contacts?.phone || '').trim();
-  const email = String(store?.contacts?.email || '').trim();
+  const storeEmail = String(store?.contacts?.email || '').trim();
+  const phone = asBool(s.tc_footer_phone, true) ? String(store?.contacts?.mobile || store?.contacts?.phone || '').trim() : '';
+  const email = asBool(s.tc_footer_email, true) ? storeEmail : '';
+  const acc = asBool(s.tc_footer_accordion, true);
   const city = t(s.tc_footer_city, 'الرياض');
   const social = (store?.social ?? {}) as Social;
   const newsLink = asLink(s.tc_footer_news_link, '');
-  const showNews = asBool(s.tc_footer_news, true) && (!!newsLink || !!email);
+  const showNews = asBool(s.tc_footer_news, true) && (!!newsLink || !!storeEmail);
   const legal = asBool(s.tc_footer_legal, true);
   const cr = (store?.settings as { commercial_number?: string | null } | undefined)?.commercial_number;
 
@@ -56,7 +71,7 @@ export function TcFooter() {
     const mail = String(new FormData(e.currentTarget).get('email') ?? '').trim();
     if (!mail) return;
     if (newsLink) window.open(signupUrl(newsLink, mail), '_blank');
-    else if (email) window.location.href = `mailto:${email}?subject=Newsletter&body=${encodeURIComponent(mail)}`;
+    else if (storeEmail) window.location.href = `mailto:${storeEmail}?subject=Newsletter&body=${encodeURIComponent(mail)}`;
   };
 
   return (
@@ -68,7 +83,7 @@ export function TcFooter() {
             <div>
               <TcBrand footer />
               {about && <p style={{ marginTop: 16, fontSize: 13.5, color: '#9a9ea2', maxWidth: 300 }}>{about}</p>}
-              {SOCIAL.some(([k]) => social[k]) && (
+              {asBool(s.tc_footer_social, true) && SOCIAL.some(([k]) => social[k]) && (
                 <div className="tc-soc">
                   {SOCIAL.filter(([k]) => social[k]).map(([k, icon, label]) => (
                     <a key={k} href={socialUrl(k, String(social[k]))} target="_blank" rel="noopener noreferrer" aria-label={label}><Icon name={icon} /></a>
@@ -76,17 +91,17 @@ export function TcFooter() {
                 </div>
               )}
             </div>
-            {shop.length > 0 && (
-              <div>
-                <h4>{t(s.tc_footer_shop_title, 'تسوّق')}</h4>
+            {asBool(s.tc_footer_shop, true) && shop.length > 0 && (
+              <Col title={t(s.tc_footer_shop_title, 'تسوّق')} acc={acc}>
                 {shop.filter(i => i.title).slice(0, 6).map(i => <Link key={i.id} to={i.url}>{i.title}</Link>)}
-              </div>
+              </Col>
             )}
-            <div className="tc-f-menu">
-              <h4>{t(s.tc_footer_help_title, 'المساعدة')}</h4>
-              {/* the merchant's footer menu (shipping, returns, terms, privacy) */}
-              <SallaMenu source="footer" useReactLink suppressHydrationWarning />
-            </div>
+            {asBool(s.tc_footer_help, true) && (
+              <Col title={t(s.tc_footer_help_title, 'المساعدة')} acc={acc} className="tc-f-menu">
+                {/* the merchant's footer menu (shipping, returns, terms, privacy) */}
+                <SallaMenu source="footer" useReactLink suppressHydrationWarning />
+              </Col>
+            )}
             <div className="contact">
               <h4>{t('تواصل', 'تواصل')}</h4>
               {phone && <a href={`tel:${phone.replace(/[^\d+]/g, '')}`}><Icon name="phone" style={{ width: 16, height: 16 }} /><span dir="ltr">{phone}</span></a>}

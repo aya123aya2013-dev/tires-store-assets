@@ -10,6 +10,7 @@ import { asBool, asImage, makeT, opt, useLang, useReducedMotion } from '../home/
 import { Icon } from '../home/tc/Icon';
 import { useCurrency } from '../home/tc/useCurrency';
 import { CompareTray } from '../tires/features/Compare';
+import { onThisScreen, where, whereClass } from './devices';
 
 const EN: Record<string, string> = {
   'السلام عليكم، أبي أستفسر عن مقاس إطار': 'Hello, I have a question about a tire size',
@@ -68,15 +69,15 @@ export function TcExtras() {
       {(waOn || callOn || (topOn && showTop)) && (
         <div className={`tc-float tc-float-${side}`}>
           {topOn && showTop && (
-            <button type="button" className="tc-fbtn tc-fbtn-top" aria-label={t('للأعلى', 'للأعلى')} onClick={() => window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' })}>
+            <button type="button" className={'tc-fbtn tc-fbtn-top' + whereClass(s.tc_totop_where, 'wide')} aria-label={t('للأعلى', 'للأعلى')} onClick={() => window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' })}>
               <Icon name="up" />
             </button>
           )}
           {callOn && (
-            <a className="tc-fbtn tc-fbtn-call" href={`tel:${call}`} aria-label={t('اتصل بنا', 'اتصل بنا')}><Icon name="phone" /></a>
+            <a className={'tc-fbtn tc-fbtn-call' + whereClass(s.tc_call_where, 'mobile')} href={`tel:${call}`} aria-label={t('اتصل بنا', 'اتصل بنا')}><Icon name="phone" /></a>
           )}
           {waOn && (
-            <a className="tc-fbtn tc-fbtn-wa" href={`https://wa.me/${wa}?text=${encodeURIComponent(waMsg)}`} target="_blank" rel="noopener noreferrer" aria-label={t('تواصل واتساب', 'تواصل واتساب')}>
+            <a className={'tc-fbtn tc-fbtn-wa' + whereClass(s.tc_wa_where)} href={`https://wa.me/${wa}?text=${encodeURIComponent(waMsg)}`} target="_blank" rel="noopener noreferrer" aria-label={t('تواصل واتساب', 'تواصل واتساب')}>
               <Icon name="whatsapp" />
             </a>
           )}
@@ -118,10 +119,10 @@ function Popup({ s, t }: { s: Record<string, unknown>; t: (v: unknown, d: string
         seen = st === stamp && day === new Date().toDateString() ? st : null;
       }
     } catch { /* storage blocked — show it */ }
-    if (seen === stamp) return;
+    if (seen === stamp || !onThisScreen(where(s.tc_popup_where))) return;
     const id = setTimeout(() => setOpen(true), delay);
     return () => clearTimeout(id);
-  }, [repeat, delay, stamp]);
+  }, [repeat, delay, stamp, s.tc_popup_where]);
 
   const close = () => {
     setOpen(false);

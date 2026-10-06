@@ -1,9 +1,14 @@
 /**
- * Theme settings (twilight.json → settings[]) for the tires theme, grouped like the store
- * editor shows them: each group opens with a title bar, then its fields.
- * Group 1 — general look: colours (light + dark), dark mode, fonts, corners.
- * Values are read in app/components/layout/ThemeTokens.tsx.
- * Run:  node scripts/tc-settings.cjs   (upserts by id, keeps every other setting)
+ * Theme settings (twilight.json → settings[]) for the tires theme.
+ * Built from the owner-approved analysis (2026-10-06), not copied from a competitor:
+ *  - grouped by what a tire merchant actually changes (identity → tires → header → card →
+ *    mobile → floating → footer);
+ *  - every visible element has a switch, and a switched-off element hides its own fields
+ *    (`conditions`, see DEPS);
+ *  - «وين يظهر» (devices) for elements whose use differs by screen:
+ *    desktop > 1100px · tablet 768–1100px · mobile < 768px (the design's breakpoints).
+ * Values are read in ThemeTokens / TcHeader / TcFooter / TcExtras / MobileBottomBar / cards.
+ * Run:  node scripts/tc-settings.cjs   (rewrites the tires settings in this order; keeps others)
  */
 const fs = require('fs');
 const path = require('path');
@@ -17,166 +22,226 @@ const title = (id, text) => ({
   value: `<div style="background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px">${text}</div>`,
 });
 const sub = (id, text) => F.head(id, text);
+const tip = (id, t) => ({ ...F.tip(t), id });
+/** «وين يظهر» — read with `devices()` in app/components/layout/devices.ts */
+const DEVICES = [
+  ['كل الشاشات', 'all'],
+  ['الكمبيوتر فقط', 'desktop'],
+  ['الكمبيوتر والتابلت', 'wide'],
+  ['الجوال والتابلت', 'narrow'],
+  ['الجوال فقط', 'mobile'],
+];
+const where = (id, d = 'all') => F.dd(id, 'يظهر على', DEVICES, d);
 
-const GROUP_GENERAL = [
-  title('tc-set-general', 'الخيارات العامة والألوان'),
-  { ...F.tip('ألوان الهوية تنطبق على كل المتجر: الأزرار والعناوين والشارات. القيم الافتراضية هي ألوان تصميم الإطارات (ذهبي وفحمي).'), id: 'tc-set-tip-general' },
-
-  sub('tc-set-h-colors', 'ألوان المتجر'),
+// 1 — identity
+const G_IDENTITY = [
+  title('tc-set-identity', 'هوية المتجر'),
+  tip('tc-set-tip-identity', 'القيم الافتراضية هي ألوان وخطوط تصميم الإطارات. القالب الجاهز يغيّر الهوية كلها بضغطة.'),
+  F.dd('tc_preset', 'قالب ألوان جاهز', [
+    ['بدون — ألواني أنا', 'none'],
+    ['ذهبي وفحمي (الأصلي)', 'gold'],
+    ['أحمر وأسود (رياضي)', 'red'],
+    ['أزرق وكحلي', 'blue'],
+    ['أخضر وزيتي (بر ودفع رباعي)', 'green'],
+  ], 'none'),
+  F.sw('tc_use_store_color', 'استخدام لون هوية المتجر من لوحة سلة', false),
   F.color('tc_color_primary', 'اللون الرئيسي (الأزرار والتمييز)', '#ffb71b'),
   F.color('tc_color_on_primary', 'لون النص فوق اللون الرئيسي', '#221800'),
   F.color('tc_color_dark', 'اللون الداكن (الأقسام الداكنة والعناوين)', '#1d2023'),
   F.color('tc_color_bg', 'خلفية الصفحة', '#ffffff'),
   F.color('tc_color_bg_alt', 'خلفية الأقسام الفاتحة', '#f5f4f0'),
-  F.sw('tc_use_store_color', 'استخدام لون هوية المتجر من لوحة سلة بدل اللون الرئيسي', false),
-
-  sub('tc-set-h-dark', 'الوضع الداكن'),
-  F.dd('tc_dark_mode', 'الوضع الداكن', [
-    ['مطفأ — المتجر فاتح دائماً', 'off'],
-    ['حسب جهاز الزائر (تلقائي)', 'auto'],
-    ['مفعّل — المتجر داكن دائماً', 'on'],
-  ], 'off'),
-  F.sw('tc_dark_toggle', 'إظهار زر التبديل (فاتح / داكن) للزائر بالهيدر', true, 'الزائر يختار، ويتذكر المتجر اختياره'),
-  F.color('tc_dark_bg', 'خلفية الوضع الداكن', '#121416'),
-  F.color('tc_dark_surface', 'خلفية البطاقات بالوضع الداكن', '#1b1e21'),
-  F.color('tc_dark_text', 'لون النص بالوضع الداكن', '#ecebe6'),
-
-  sub('tc-set-h-fonts', 'الخطوط'),
+  sub('tc-set-h-fonts', 'الخطوط والشكل'),
   F.dd('tc_font_ar', 'الخط العربي', [
-    ['IBM Plex Sans Arabic (التصميم)', 'ibm'],
-    ['Tajawal', 'tajawal'],
-    ['Cairo', 'cairo'],
-    ['Almarai', 'almarai'],
-    ['خط المتجر من لوحة سلة', 'store'],
+    ['IBM Plex Sans Arabic (التصميم)', 'ibm'], ['Tajawal', 'tajawal'], ['Cairo', 'cairo'], ['Almarai', 'almarai'], ['خط المتجر من لوحة سلة', 'store'],
   ], 'ibm'),
-  F.dd('tc_font_en', 'خط الأرقام والإنجليزي', [
-    ['Archivo (التصميم)', 'archivo'],
-    ['Inter', 'inter'],
-    ['نفس الخط العربي', 'same'],
-  ], 'archivo'),
-
-  sub('tc-set-h-shape', 'الشكل'),
-  F.dd('tc_radius', 'زوايا البطاقات والأزرار', [
-    ['ناعمة (التصميم)', 'soft'],
-    ['حادة', 'sharp'],
-    ['دائرية', 'round'],
-  ], 'soft'),
+  F.dd('tc_font_en', 'خط الأرقام والإنجليزي', [['Archivo (التصميم)', 'archivo'], ['Inter', 'inter'], ['نفس الخط العربي', 'same']], 'archivo'),
+  F.dd('tc_radius', 'زوايا البطاقات والأزرار', [['ناعمة (التصميم)', 'soft'], ['حادة', 'sharp'], ['دائرية', 'round']], 'soft'),
+  F.dd('tc_pattern', 'نقشة خلفية خفيفة', [['بدون', 'none'], ['آثار إطار', 'tread'], ['نقاط', 'dots']], 'none'),
+  F.sw('tc_loader_show', 'شاشة تحميل (إطار يدور) عند فتح المتجر', false, 'تختفي أول ما تجهز الصفحة'),
 ];
 
-const tip = (id, t) => ({ ...F.tip(t), id });
+// 2 — dark mode
+const G_DARK = [
+  title('tc-set-dark', 'الوضع الداكن'),
+  F.dd('tc_dark_mode', 'الوضع الداكن', [
+    ['مطفأ — المتجر فاتح دائماً', 'off'], ['حسب جهاز الزائر (تلقائي)', 'auto'], ['مفعّل — المتجر داكن دائماً', 'on'],
+  ], 'off'),
+  F.dd('tc_dark_style', 'لون الداكن', [['فحمي (يناسب الهوية)', 'charcoal'], ['أسود', 'black']], 'charcoal'),
+  F.sw('tc_dark_toggle', 'زر التبديل (فاتح / داكن) للزائر بالهيدر', true, 'الزائر يختار، ويتذكر المتجر اختياره'),
+  where('tc_dark_toggle_where'),
+];
 
-// Group 2 — top bar, header, footer (app/components/layout/TcHeader.tsx / TcFooter.tsx)
-const GROUP_FRAME = [
-  title('tc-set-frame', 'أعلى المتجر والهيدر والفوتر'),
+// 3 — tire store
+const G_TIRES = [
+  title('tc-set-tires', 'متجر الإطارات'),
+  tip('tc-set-tip-tires', 'المقاس وسنة الصنع يُقرآن من المكان اللي تكتبهم فيه بمنتجاتك. نوع المتجر يخفي أقسام التركيب لو متجرك بيع فقط.'),
+  F.dd('tc_store_type', 'نوع المتجر', [['بيع وتركيب', 'install'], ['بيع فقط (توصيل)', 'sale'], ['بيع وتركيب وصيانة', 'service']], 'install'),
+  F.dd('tc_sale_unit', 'سعر المنتج عندك', [['للحبة الواحدة', 'tire'], ['للطقم (4 حبات)', 'set']], 'tire'),
+  F.dd('tc_default_qty', 'الكمية عند الضغط على «أضف»', [['1', '1'], ['2', '2'], ['4', '4']], '1', { description: 'الأغلب يشتري 4 حبات' }),
+  F.dd('tc_spec_source', 'وين تكتب المقاس وسنة الصنع بمنتجاتك', [
+    ['بأي مكان (الاسم أو الوسوم أو الخيارات)', 'all'], ['اسم المنتج', 'name'], ['الوسوم', 'tags'], ['خيارات المنتج', 'options'],
+  ], 'all'),
+  F.sw('tc_install_badge', 'شارة «تركيب مجاني» على المنتجات', true),
+  F.text('tc_install_badge_text', 'نص الشارة', 'تركيب مجاني', 30),
+  F.text('tc_warranty', 'نص الضمان بصفحة المنتج (فاضي = بدون)', 'ضمان الوكيل', 60),
+  sub('tc-set-h-tirefeat', 'مميزات للزبون'),
+  F.sw('tc_my_size', '«مقاسي المحفوظ» — يتذكر مقاس الزبون ويعلّم المناسب له', true),
+  F.sw('tc_year_badge', 'سنة الصنع على البطاقة', true),
+  F.sw('tc_set_price', 'سعر الطقم والتقسيط على البطاقة', true),
+  F.num('tc_installments', 'عدد دفعات التقسيط (تابي / تمارا)', 4, 2, 12),
+  F.sw('tc_compare', 'مقارنة الإطارات (حتى 3)', true),
+  where('tc_compare_where', 'wide'),
+];
 
-  sub('tc-set-h-topbar', 'الشريط الترويجي أعلى المتجر'),
+// 4 — top bar
+const G_TOPBAR = [
+  title('tc-set-topbar', 'الشريط العلوي'),
   F.sw('tc_topbar_show', 'إظهار الشريط', true),
+  where('tc_topbar_where'),
   F.text('tc_topbar_text', 'النص', 'تركيب مجاني في مراكزنا بالرياض', 120),
-  F.text('tc_topbar_highlight', 'نص مميّز (ذهبي، يختفي بالجوال)', '· تقسيط على 4 دفعات مع تابي وتمارا', 120),
-  F.sw('tc_topbar_marquee', 'نص متحرك (يتحرك بالعرض)', false),
+  F.text('tc_topbar_highlight', 'نص مميّز (ذهبي)', '· تقسيط على 4 دفعات مع تابي وتمارا', 120),
+  where('tc_topbar_highlight_where', 'wide'),
+  F.sw('tc_topbar_marquee', 'نص متحرك', false),
   F.link('tc_topbar_link', 'رابط الشريط (اختياري)'),
-  F.sw('tc_topbar_phone', 'إظهار رقم الجوال (من بيانات التواصل بالمتجر)', true),
-
-  sub('tc-set-h-header', 'الهيدر'),
-  F.dd('tc_logo_mode', 'الشعار', [['شعار متجرك (من لوحة سلة)', 'store'], ['علامة الإطار + اسم المتجر', 'mark']], 'store'),
-  F.text('tc_brand_sub', 'السطر الصغير تحت الاسم (مع علامة الإطار)', 'TIRES STORE', 30),
-  F.text('tc_search_placeholder', 'نص خانة البحث', 'ابحث باسم الإطار أو الماركة أو المقاس…', 80),
-  F.sw('tc_header_sticky', 'تثبيت الهيدر عند النزول', true),
-  F.sw('tc_header_nav', 'إظهار صف الأقسام (من قائمة الهيدر بلوحة سلة)', true),
-  F.sw('tc_header_cta', 'إظهار زر «اختر مقاسك»', true),
-  F.text('tc_header_cta_text', 'نص الزر', 'اختر مقاسك', 24),
-  F.link('tc_header_cta_link', 'رابط الزر', 'فاضي = يفتح باحث المقاسات'),
-
-  sub('tc-set-h-footer', 'الفوتر'),
-  F.area('tc_footer_about', 'نبذة عن المتجر', 'إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.', 220),
-  F.text('tc_footer_shop_title', 'عنوان العمود الأول', 'تسوّق', 30),
-  F.text('tc_footer_help_title', 'عنوان العمود الثاني', 'المساعدة', 30),
-  tip('tc-set-tip-footer', 'العمود الأول من «قائمة الهيدر» والثاني من «قائمة الفوتر» بلوحة سلة (المتجر ← القوائم). الجوال والإيميل والسوشال من «بيانات المتجر».'),
-  F.text('tc_footer_city', 'المدينة أو العنوان', 'الرياض', 60),
-  F.sw('tc_footer_news', 'إظهار خانة الاشتراك بالعروض', true),
-  F.link('tc_footer_news_link', 'رابط الاشتراك (Mailchimp، Brevo…)', 'فاضي = تنفتح رسالة لإيميل المتجر'),
-  F.sw('tc_footer_payments', 'إظهار شعارات الدفع', true),
-  F.sw('tc_footer_legal', 'إظهار السجل التجاري والرقم الضريبي وشارات الثقة', true),
+  F.sw('tc_topbar_phone', 'رقم الجوال (من بيانات المتجر)', true),
+  where('tc_topbar_phone_where', 'wide'),
 ];
 
-// Group 3 — floating buttons, popup, loader, background (app/components/layout/TcExtras.tsx)
-const GROUP_EXTRAS = [
-  title('tc-set-extras', 'الأزرار العائمة والنوافذ'),
+// 5 — header
+const G_HEADER = [
+  title('tc-set-header', 'الهيدر'),
+  F.dd('tc_logo_mode', 'الشعار', [['شعار متجرك (من لوحة سلة)', 'store'], ['علامة الإطار + اسم المتجر', 'mark']], 'store'),
+  F.text('tc_brand_sub', 'السطر الصغير تحت الاسم', 'TIRES STORE', 30),
+  F.num('tc_logo_h', 'ارتفاع الشعار — الكمبيوتر (بكسل)', 46, 28, 80),
+  F.num('tc_logo_h_m', 'ارتفاع الشعار — الجوال (بكسل)', 36, 24, 60),
+  F.sw('tc_header_sticky', 'تثبيت الهيدر عند النزول — الكمبيوتر', true),
+  F.sw('tc_header_sticky_m', 'تثبيت الهيدر عند النزول — الجوال', true),
+  sub('tc-set-h-hsearch', 'البحث'),
+  F.sw('tc_search_show', 'خانة البحث', true),
+  F.text('tc_search_placeholder', 'نص خانة البحث', 'ابحث باسم الإطار أو الماركة أو المقاس…', 80),
+  sub('tc-set-h-hicons', 'الأيقونات والأزرار'),
+  F.sw('tc_account_show', 'أيقونة الحساب', true),
+  F.sw('tc_cart_show', 'أيقونة السلة', true),
+  F.sw('tc_mysize_chip', 'شريحة «مقاسي» (بعد ما يبحث الزبون)', true),
+  F.sw('tc_header_cta', 'زر «اختر مقاسك»', true),
+  where('tc_header_cta_where', 'wide'),
+  F.text('tc_header_cta_text', 'نص الزر', 'اختر مقاسك', 24),
+  F.link('tc_header_cta_link', 'رابط الزر', 'فاضي = باحث المقاسات بالصفحة الرئيسية'),
+  F.sw('tc_header_nav', 'صف الأقسام (من قائمة الهيدر بلوحة سلة)', true),
+];
 
-  sub('tc-set-h-wa', 'زر واتساب'),
-  F.sw('tc_wa_show', 'إظهار زر واتساب العائم', true),
-  F.plain('tc_wa_number', 'رقم واتساب مع رمز الدولة (فاضي = رقم المتجر)', '', { maxLength: 20, placeholder: '9665xxxxxxxx' }),
-  F.text('tc_wa_message', 'الرسالة الجاهزة', 'السلام عليكم، أبي أستفسر عن مقاس إطار', 160),
+// 6 — product card
+const G_CARD = [
+  title('tc-set-card', 'بطاقة المنتج'),
+  tip('tc-set-tip-card', 'تنطبق على بطاقات الإطارات بكل المتجر.'),
+  F.sw('tc_card_fav', 'زر المفضلة (القلب)', true),
+  F.sw('tc_card_brand', 'اسم الماركة', true),
+  F.sw('tc_card_rim', 'رقم الجنط الكبير خلف الصورة', true),
+  F.dd('tc_card_price', 'السعر', [['يظهر السعر', 'show'], ['«اطلب السعر» عبر واتساب بدل السعر', 'ask']], 'show'),
+  F.sw('tc_card_add', 'زر «أضف للسلة»', true),
+  F.dd('tc_cols_d', 'عدد الأعمدة — الكمبيوتر', [['3', '3'], ['4', '4'], ['5', '5']], '4'),
+  F.dd('tc_cols_t', 'عدد الأعمدة — التابلت', [['2', '2'], ['3', '3']], '3'),
+  F.dd('tc_cols_m', 'عدد الأعمدة — الجوال', [['1', '1'], ['2', '2']], '2'),
+];
+
+// 7 — mobile
+const G_MOBILE = [
+  title('tc-set-mobile', 'الجوال'),
+  F.sw('tc_bottombar', 'الشريط السفلي (الجوال والتابلت)', true),
+  F.dd('tc_bottombar_items', 'أزرار الشريط السفلي', [
+    ['الرئيسية · الأقسام · مقاسي · السلة · حسابي', 'size'],
+    ['الرئيسية · الأقسام · واتساب · السلة · حسابي', 'whatsapp'],
+    ['الرئيسية · الأقسام · السلة · حسابي', 'basic'],
+  ], 'size'),
+  F.sw('tc_footer_accordion', 'أعمدة الفوتر تنطوي بالجوال', true),
+];
+
+// 8 — floating buttons & popup
+const G_FLOAT = [
+  title('tc-set-float', 'الأزرار العائمة ونافذة الخصم'),
   F.dd('tc_float_side', 'مكان الأزرار العائمة', [['يسار الشاشة', 'left'], ['يمين الشاشة', 'right']], 'left'),
-
-  sub('tc-set-h-call', 'زر الاتصال'),
-  F.sw('tc_call_show', 'إظهار زر الاتصال العائم (جوال فقط)', false),
+  sub('tc-set-h-wa', 'واتساب'),
+  F.sw('tc_wa_show', 'زر واتساب العائم', true),
+  where('tc_wa_where'),
+  F.plain('tc_wa_number', 'الرقم مع رمز الدولة (فاضي = رقم المتجر)', '', { maxLength: 20, placeholder: '9665xxxxxxxx' }),
+  F.text('tc_wa_message', 'الرسالة الجاهزة', 'السلام عليكم، أبي أستفسر عن مقاس إطار', 160),
+  sub('tc-set-h-call', 'اتصال'),
+  F.sw('tc_call_show', 'زر الاتصال العائم', false),
+  where('tc_call_where', 'mobile'),
   F.plain('tc_call_number', 'الرقم (فاضي = رقم المتجر)', '', { maxLength: 20, placeholder: '05xxxxxxxx' }),
-
-  sub('tc-set-h-top', 'زر الرجوع للأعلى'),
-  F.sw('tc_totop_show', 'إظهار زر الرجوع للأعلى', true),
-
+  sub('tc-set-h-top', 'للأعلى'),
+  F.sw('tc_totop_show', 'زر الرجوع للأعلى', true),
+  where('tc_totop_where', 'wide'),
   sub('tc-set-h-popup', 'نافذة الخصم'),
-  F.sw('tc_popup_show', 'إظهار نافذة الخصم', false),
+  F.sw('tc_popup_show', 'نافذة الخصم', false),
+  where('tc_popup_where'),
   F.text('tc_popup_title', 'العنوان', 'خصم 10% على أول طقم إطارات', 60),
   F.text('tc_popup_text', 'النص', 'استخدم الكود عند الدفع. العرض لفترة محدودة.', 140),
   F.plain('tc_popup_code', 'كود الخصم', 'TIRES10', { maxLength: 30 }),
   F.image('tc_popup_image', 'صورة (اختياري)', '600×600 بكسل', 600, 600),
   F.num('tc_popup_delay', 'تظهر بعد (ثواني)', 6, 0, 120),
   F.dd('tc_popup_repeat', 'تكرار الظهور', [['مرة وحدة لكل زائر', 'once'], ['كل زيارة جديدة', 'session'], ['كل يوم', 'daily']], 'once'),
-
-  sub('tc-set-h-loader', 'صفحة التحميل'),
-  F.sw('tc_loader_show', 'إظهار شاشة تحميل (إطار يدور) عند فتح المتجر', false, 'تختفي أول ما تجهز الصفحة'),
-
-  sub('tc-set-h-pattern', 'خلفية المتجر'),
-  F.dd('tc_pattern', 'نقشة خلفية خفيفة', [['بدون', 'none'], ['آثار إطار', 'tread'], ['نقاط', 'dots']], 'none'),
 ];
 
-// Group 4 — tires features (app/components/tires/features/*)
-const GROUP_TIRES = [
-  title('tc-set-tires', 'مميزات متجر الإطارات'),
-  tip('tc-set-tip-tires', 'هاي المميزات خاصة بمتاجر الإطارات. المقاس يُقرأ من اسم المنتج أو الوسوم أو الخيارات (مثل 205/55 R16).'),
-  F.sw('tc_my_size', '«مقاسي المحفوظ» — يتذكر مقاس الزبون ويعلّم المنتجات المناسبة له', true),
-  F.sw('tc_year_badge', 'شارة سنة الصنع على بطاقة المنتج (من وسم مثل 2026)', true),
-  F.sw('tc_set_price', 'سعر الطقم (4 حبات) والقسط الشهري على بطاقة المنتج', true),
-  F.num('tc_installments', 'عدد دفعات التقسيط (تابي / تمارا)', 4, 2, 12),
-  F.sw('tc_compare', 'مقارنة الإطارات (حتى 3)', true),
-  F.dd('tc_preset', 'قالب ألوان جاهز', [
-    ['بدون — ألواني من الأعلى', 'none'],
-    ['ذهبي وفحمي (الأصلي)', 'gold'],
-    ['أحمر وأسود (رياضي)', 'red'],
-    ['أزرق وكحلي', 'blue'],
-    ['أخضر وزيتي (بر ودفع رباعي)', 'green'],
-  ], 'none', { description: 'يتقدّم على ألوان المتجر بالأعلى إذا اخترت قالب' }),
+// 9 — footer
+const G_FOOTER = [
+  title('tc-set-footer', 'الفوتر'),
+  tip('tc-set-tip-footer', 'عمود «تسوّق» من قائمة الهيدر، وعمود «المساعدة» من قائمة الفوتر بلوحة سلة. الجوال والإيميل والسوشال من «بيانات المتجر».'),
+  F.area('tc_footer_about', 'نبذة عن المتجر (فاضي = بدون)', 'إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.', 220),
+  F.sw('tc_footer_social', 'أيقونات السوشال', true),
+  F.sw('tc_footer_shop', 'عمود «تسوّق»', true),
+  F.text('tc_footer_shop_title', 'عنوان العمود', 'تسوّق', 30),
+  F.sw('tc_footer_help', 'عمود «المساعدة»', true),
+  F.text('tc_footer_help_title', 'عنوان العمود', 'المساعدة', 30),
+  sub('tc-set-h-fcontact', 'التواصل'),
+  F.sw('tc_footer_phone', 'رقم الجوال', true),
+  F.sw('tc_footer_email', 'الإيميل', true),
+  F.text('tc_footer_city', 'المدينة أو العنوان (فاضي = بدون)', 'الرياض', 60),
+  F.sw('tc_footer_news', 'خانة الاشتراك بالعروض', true),
+  F.link('tc_footer_news_link', 'رابط الاشتراك (Mailchimp، Brevo…)', 'فاضي = تنفتح رسالة لإيميل المتجر'),
+  sub('tc-set-h-flegal', 'أسفل الفوتر'),
+  F.sw('tc_footer_payments', 'شعارات الدفع (المفعّلة بمتجرك)', true),
+  F.sw('tc_footer_legal', 'السجل التجاري وشارات الثقة', true),
 ];
 
-// A switched-off feature hides its own fields in the editor (child → [parent, value]).
+// A switched-off element hides its own fields (child → [parent, value]).
 const DEPS = {
-  tc_topbar_text: ['tc_topbar_show', true], tc_topbar_highlight: ['tc_topbar_show', true],
-  tc_topbar_marquee: ['tc_topbar_show', true], tc_topbar_link: ['tc_topbar_show', true], tc_topbar_phone: ['tc_topbar_show', true],
-  tc_brand_sub: ['tc_logo_mode', 'mark'],
-  tc_header_cta_text: ['tc_header_cta', true], tc_header_cta_link: ['tc_header_cta', true],
-  tc_footer_news_link: ['tc_footer_news', true],
-  tc_wa_number: ['tc_wa_show', true], tc_wa_message: ['tc_wa_show', true],
-  tc_call_number: ['tc_call_show', true],
-  tc_popup_title: ['tc_popup_show', true], tc_popup_text: ['tc_popup_show', true], tc_popup_code: ['tc_popup_show', true],
-  tc_popup_image: ['tc_popup_show', true], tc_popup_delay: ['tc_popup_show', true], tc_popup_repeat: ['tc_popup_show', true],
-  tc_installments: ['tc_set_price', true],
   tc_color_primary: ['tc_use_store_color', false], tc_color_on_primary: ['tc_use_store_color', false],
+  tc_dark_toggle_where: ['tc_dark_toggle', true],
+  tc_install_badge_text: ['tc_install_badge', true],
+  tc_installments: ['tc_set_price', true],
+  tc_compare_where: ['tc_compare', true],
+  tc_topbar_where: ['tc_topbar_show', true], tc_topbar_text: ['tc_topbar_show', true], tc_topbar_highlight: ['tc_topbar_show', true],
+  tc_topbar_highlight_where: ['tc_topbar_show', true], tc_topbar_marquee: ['tc_topbar_show', true], tc_topbar_link: ['tc_topbar_show', true],
+  tc_topbar_phone: ['tc_topbar_show', true], tc_topbar_phone_where: ['tc_topbar_phone', true],
+  tc_brand_sub: ['tc_logo_mode', 'mark'],
+  tc_search_placeholder: ['tc_search_show', true],
+  tc_header_cta_where: ['tc_header_cta', true], tc_header_cta_text: ['tc_header_cta', true], tc_header_cta_link: ['tc_header_cta', true],
+  tc_bottombar_items: ['tc_bottombar', true],
+  tc_wa_where: ['tc_wa_show', true], tc_wa_number: ['tc_wa_show', true], tc_wa_message: ['tc_wa_show', true],
+  tc_call_where: ['tc_call_show', true], tc_call_number: ['tc_call_show', true],
+  tc_totop_where: ['tc_totop_show', true],
+  tc_popup_where: ['tc_popup_show', true], tc_popup_title: ['tc_popup_show', true], tc_popup_text: ['tc_popup_show', true],
+  tc_popup_code: ['tc_popup_show', true], tc_popup_image: ['tc_popup_show', true], tc_popup_delay: ['tc_popup_show', true],
+  tc_popup_repeat: ['tc_popup_show', true],
+  tc_footer_shop_title: ['tc_footer_shop', true], tc_footer_help_title: ['tc_footer_help', true],
+  tc_footer_news_link: ['tc_footer_news', true],
 };
 
-const ALL = [...GROUP_GENERAL, ...GROUP_FRAME, ...GROUP_EXTRAS, ...GROUP_TIRES].map(f => (DEPS[f.id] ? F.when(f, ...DEPS[f.id]) : f));
+const ALL = [...G_IDENTITY, ...G_DARK, ...G_TIRES, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER]
+  .map(f => (DEPS[f.id] ? F.when(f, ...DEPS[f.id]) : f));
 
-// base-theme settings replaced by the groups above (header / footer now come from TcHeader / TcFooter)
-const REMOVED = ['header_is_sticky', 'topnav_is_dark', 'important_links', 'enable_more_menu', 'header_show_store_info', 'footer_is_dark', 'static-line1', 'static-label2', 'static-line3', 'static-label4', 'static-line5', 'static-label6'];
-const settings = (json.settings || []).filter(x => !REMOVED.includes(x.id));
-for (const s of ALL) {
-  const i = settings.findIndex(x => x.id === s.id);
-  if (i >= 0) settings[i] = s;
-}
-// new ones go to the top, in order, ahead of the old base-theme settings
-const fresh = ALL.filter(s => !settings.some(x => x.id === s.id));
-json.settings = [...fresh, ...settings];
+const ids = ALL.map(s => s.id);
+const dup = ids.filter((x, i) => ids.indexOf(x) !== i);
+if (dup.length) throw new Error('duplicate setting ids: ' + dup.join(', '));
+for (const k of Object.keys(DEPS)) if (!ids.includes(k) || !ids.includes(DEPS[k][0])) throw new Error('bad DEPS entry ' + k);
+
+// base-theme settings replaced by the groups above
+const REMOVED = ['header_is_sticky', 'topnav_is_dark', 'important_links', 'enable_more_menu', 'header_show_store_info', 'footer_is_dark',
+  'static-line1', 'static-label2', 'static-line3', 'static-label4', 'static-line5', 'static-label6'];
+// ours always lead, in this order; old tires ids no longer in the list are dropped; base settings kept after
+const others = (json.settings || []).filter(x => !REMOVED.includes(x.id) && !/^tc[_-]/.test(x.id));
+json.settings = [...ALL, ...others];
 
 fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
-console.log('settings:', json.settings.length, '(tires:', ALL.length, ')');
+console.log('settings:', json.settings.length, '(tires:', ALL.length, ', conditional:', ALL.filter(s => s.conditions).length, ')');

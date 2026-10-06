@@ -79,7 +79,7 @@ export function ThemeLayout({ children }: ThemeLayoutProps) {
     <>
       <ThemeTokens />
       <div
-        className={`app-inner flex flex-col min-h-full product-card-img--${imgRatio}`}
+        className={`app-inner flex flex-col min-h-full product-card-img--${imgRatio}${(theme?.settings as Record<string, unknown> | undefined)?.tc_bottombar === false ? ' tc-nobar' : ''}`}
         suppressHydrationWarning
       >
         <TcHeader navOpen={navOpen} onNavOpenChange={setNavOpen} />

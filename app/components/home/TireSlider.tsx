@@ -8,12 +8,14 @@ import { asBool, makeT, opt, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
+import { FitsMine } from '../tires/features/MySize';
+import { useCardSettings } from '../tires/features/cardSettings';
 import { SAMPLE_PRODUCTS, filterBrands, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import { useAddToCart } from './tc/useAddToCart';
 import { useCurrency } from './tc/useCurrency';
 import type { TcProduct } from './tc/products';
 
-const EN: Record<string, string> = {
+const EN: Record<string, string> = { 'اطلب السعر': 'Ask for price', 'تركيب مجاني': 'Free fitting',
   'الأكثر طلباً': 'Most requested', 'إطارات هالأسبوع': 'Tires of the week', 'الكل': 'All',
   'عرض': 'Offer', 'للإطار الواحد': 'per tire', 'عرض التفاصيل': 'View details', 'ر.س': 'SAR',
   'أُضيف للسلة': 'Added to cart', 'تعذّر تحميل المنتجات.': 'Could not load the products.', 'حاول مرة ثانية': 'Try again', 'تعذّرت الإضافة — حاول مرة ثانية': 'Could not add — try again', 'اختر المقاس والكمية': 'Choose size & quantity', 'إطار': 'Tire',
@@ -61,6 +63,7 @@ export function TireSlider({ data }: { data: Row }) {
   const shown = brand ? list.filter(p => p.brand === brand) : list;
   // RTL: "next" moves left; LTR: right
   const move = (dir: 1 | -1) => slider.current?.scrollBy({ left: (isEn ? 1 : -1) * dir * slider.current.clientWidth * 0.75, behavior: 'smooth' });
+  const card = useCardSettings();
   const addLabel = qty === 1 ? (isEn ? '+ Add a tire to cart' : '+ أضف إطارًا للسلة') : isEn ? `+ Add ${qty} tires to cart` : `+ أضف ${qty} إطارات للسلة`;
 
   return (
@@ -93,11 +96,12 @@ export function TireSlider({ data }: { data: Row }) {
             {shown.map((p, i) => (
               <article className={'pcard' + (i === 0 && asBool(data.feature_first, true) ? ' feat' : '')} key={p.id}>
                 <div className="pimg">
-                  {p.tag && <span className={'ptag' + (p.old ? ' g' : '')}>{p.tag}</span>}
+                  {p.tag ? <span className={'ptag' + (p.old ? ' g' : '')}>{p.tag}</span> : card.install ? <span className="ptag">{card.install}</span> : null}
                   {p.image && <img src={p.image} alt={p.name} loading="lazy" />}
                 </div>
                 <div className="pbody">
-                  {p.brand && <span className="pbrand">{p.brand}</span>}
+                  {card.brand && p.brand && <span className="pbrand">{p.brand}</span>}
+                  <FitsMine size={p.size} />
                   <h3>{p.name}</h3>
                   <span className="pline">
                     {p.type || t('إطار', 'إطار')}
@@ -105,24 +109,30 @@ export function TireSlider({ data }: { data: Row }) {
                   </span>
                   <div className="pfoot2">
                     <div className="pprice2">
-                      <div>
-                        <b>{p.price}</b> <span>{cur(p.currency)}</span>
-                        {p.old && <s>{p.old}</s>}
-                      </div>
-                      <small>{t('للإطار الواحد', 'للإطار الواحد')}</small>
+                      {card.askUrl ? (
+                        <a className="tc-ask" href={card.askUrl(p.name)} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" style={{ width: 18, height: 18 }} /> {t('اطلب السعر', 'اطلب السعر')}</a>
+                      ) : (
+                        <>
+                          <div>
+                            <b>{p.price}</b> <span>{cur(p.currency)}</span>
+                            {p.old && <s>{p.old}</s>}
+                          </div>
+                          <small>{t('للإطار الواحد', 'للإطار الواحد')}</small>
+                        </>
+                      )}
                     </div>
                     <Link className="pdetails" to={p.url}>
                       {t('عرض التفاصيل', 'عرض التفاصيل')} <span>{isEn ? '→' : '←'}</span>
                     </Link>
                   </div>
-                  <button
+                  {card.add && !card.askUrl && <button
                     type="button"
                     className={'add2' + (cart.stateOf(p.id) === 'done' ? ' done' : '')}
                     disabled={cart.stateOf(p.id) === 'busy'}
                     onClick={() => cart.add(p, qty)}
                   >
                     {cart.stateOf(p.id) === 'done' ? `✓ ${t('أُضيف للسلة', 'أُضيف للسلة')}` : cart.stateOf(p.id) === 'failed' ? t('تعذّرت الإضافة — حاول مرة ثانية', 'تعذّرت الإضافة — حاول مرة ثانية') : p.hasOptions ? t('اختر المقاس والكمية', 'اختر المقاس والكمية') : addLabel}
-                  </button>
+                  </button>}
                 </div>
               </article>
             ))}

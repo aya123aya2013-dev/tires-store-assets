@@ -12,8 +12,9 @@ import type { Row } from './fields';
 import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
 import { FitsMine } from '../tires/features/MySize';
-import { CompareToggle } from '../tires/features/Compare';
+import { CompareToggle, useCompareWhere } from '../tires/features/Compare';
 import { perInstallment, useCardSettings } from '../tires/features/cardSettings';
+import { whereClass } from '../layout/devices';
 import { SAMPLE_PRODUCTS, filterBrands, sourceFrom, toTcProduct, useTcProducts } from './tc/products';
 import { useAddToCart } from './tc/useAddToCart';
 import { useCurrency } from './tc/useCurrency';
@@ -23,7 +24,7 @@ const EN: Record<string, string> = {
   'اختياراتنا لك': 'Our picks for you', 'إطارات لكل رحلة.': 'Tires for every trip.', 'عرض جميع الإطارات': 'View all tires',
   'عرض': 'Offer', 'اختيار مميز': 'Featured pick', 'منتجات': 'products', 'الترتيب': 'Sort',
   'المميزة أولاً': 'Featured first', 'الأكثر مبيعاً': 'Best selling', 'السعر: الأقل أولاً': 'Price: low to high', 'السعر: الأعلى أولاً': 'Price: high to low',
-  'جميع الماركات': 'All brands', 'ر.س': 'SAR', 'أضف': 'Add', 'تعذّر تحميل المنتجات.': 'Could not load the products.', 'حاول مرة ثانية': 'Try again', 'بالسلة': 'In cart', 'أعد المحاولة': 'Retry', 'اختر': 'Choose', 'تعذّرت الإضافة': 'Could not add', 'صنع': 'made',
+  'جميع الماركات': 'All brands', 'ر.س': 'SAR', 'أضف': 'Add', 'تعذّر تحميل المنتجات.': 'Could not load the products.', 'حاول مرة ثانية': 'Try again', 'بالسلة': 'In cart', 'أعد المحاولة': 'Retry', 'اختر': 'Choose', 'تعذّرت الإضافة': 'Could not add', 'صنع': 'made', 'اطلب السعر': 'Ask for price',
 };
 type Sort = 'feat' | 'pop' | 'low' | 'high';
 
@@ -43,6 +44,7 @@ export function TireGrid({ data }: { data: Row }) {
   const cart = useAddToCart();
   const cur = useCurrency();
   const card = useCardSettings();
+  const cmpWhere = useCompareWhere();
   if (loading || failed) {
     return (
       <Section data={data}>
@@ -118,18 +120,21 @@ export function TireGrid({ data }: { data: Row }) {
               return (
                 <article className={'ccard' + (feat ? ' feat' : '')} key={p.id}>
                   <div className="ctop">
-                    <button type="button" className="fav" aria-label={isEn ? 'Add to wishlist' : 'أضف للمفضلة'} aria-pressed={fav} onClick={() => wishlist.toggle(p.id)}>
-                      <Icon name="heart" />
-                    </button>
-                    {p.brand && <span className="cbrand">{p.brand}</span>}
-                    <CompareToggle item={{ id: p.id, name: p.name, url: p.url, image: p.image, price: p.price, currency: p.currency, size: p.size, year: p.year, brand: p.brand }} />
+                    {card.fav && (
+                      <button type="button" className="fav" aria-label={isEn ? 'Add to wishlist' : 'أضف للمفضلة'} aria-pressed={fav} onClick={() => wishlist.toggle(p.id)}>
+                        <Icon name="heart" />
+                      </button>
+                    )}
+                    {card.brand && p.brand && <span className="cbrand">{p.brand}</span>}
+                    <CompareToggle className={whereClass(cmpWhere, 'wide')} item={{ id: p.id, name: p.name, url: p.url, image: p.image, price: p.price, currency: p.currency, size: p.size, year: p.year, brand: p.brand }} />
                   </div>
                   <div className="ctagrow">
                     <FitsMine size={p.size} />
+                    {card.install && <span className="ctag tc-install">{card.install}</span>}
                     {feat ? <span className="ctag g">{t('اختيار مميز', 'اختيار مميز')}</span> : p.tag ? <span className="ctag">{p.tag}</span> : null}
                   </div>
                   <Link className="cimg" to={p.url}>
-                    {p.rim && <span className="cghost">{p.rim}</span>}
+                    {card.rim && p.rim && <span className="cghost">{p.rim}</span>}
                     {p.image && <img src={p.image} alt={p.name} loading="lazy" />}
                   </Link>
                   <div className="cbody">
@@ -140,24 +145,30 @@ export function TireGrid({ data }: { data: Row }) {
                     </span>
                     <div className="pfoot">
                       <div className="pprice">
-                        <b>{p.price}</b> {cur(p.currency)}
-                        {p.old && <s>{p.old}</s>}
-                        {card.setPrice && (
+                        {card.askUrl ? (
+                          <a className="tc-ask" href={card.askUrl(p.name)} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" style={{ width: 18, height: 18 }} /> {t('اطلب السعر', 'اطلب السعر')}</a>
+                        ) : (
+                          <>
+                            <b>{p.price}</b> {cur(p.currency)}
+                            {p.old && <s>{p.old}</s>}
+                          </>
+                        )}
+                        {!card.askUrl && card.setPrice && (
                           <small>
                             {isEn ? `per tire · ${p.price * 4} for four` : `للحبة · ${p.price * 4} للأربع`}
                             <span className="tc-inst">{isEn ? `or ${card.installments} × ${perInstallment(p.price, card.installments)}` : `أو ${card.installments} دفعات × ${perInstallment(p.price, card.installments)}`}</span>
                           </small>
                         )}
                       </div>
-                      <button
+                      {card.add && !card.askUrl && <button
                         type="button"
                         className={'add' + (cart.stateOf(p.id) === 'done' ? ' done' : '')}
                         disabled={cart.stateOf(p.id) === 'busy'}
                         title={cart.stateOf(p.id) === 'failed' ? t('تعذّرت الإضافة', 'تعذّرت الإضافة') : undefined}
-                        onClick={() => cart.add(p, 1)}
+                        onClick={() => cart.add(p, card.qty)}
                       >
                         <Icon name="plus" /> {cart.stateOf(p.id) === 'done' ? t('بالسلة', 'بالسلة') : cart.stateOf(p.id) === 'failed' ? t('أعد المحاولة', 'أعد المحاولة') : p.hasOptions ? t('اختر', 'اختر') : t('أضف', 'أضف')}
-                      </button>
+                      </button>}
                     </div>
                   </div>
                 </article>

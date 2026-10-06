@@ -5,7 +5,10 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { useTranslation } from '@salla.sa/twilight-theme-engine/i18n';
 import { useNavigate, useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { useUser } from '@salla.sa/twilight-theme-engine/hooks/useUser';
-import { DashboardSquare01Icon, HomeIcon, SearchIcon, ShoppingBagIcon, UserIcon } from '../icons';
+import { DashboardSquare01Icon, HomeIcon, ShoppingBagIcon, UserIcon } from '../icons';
+import { asBool, opt, useLang } from '../home/fields';
+import { Icon } from '../home/tc/Icon';
+import { useMySize } from '../tires/features/MySize';
 
 interface MobileBottomBarProps {
   /** Whether the shared nav drawer (opened from the header) is currently open. */
@@ -356,10 +359,6 @@ export function MobileBottomBar({ navOpen, onOpenNav, onCloseNav }: MobileBottom
     openTab('categories');
     onOpenNav();
   };
-  const handleSearch = () => {
-    openTab('search');
-    openSearch();
-  };
   const { isLoggedIn } = useUser();
   const navigate = useNavigate();
   // Same as the header's account button: guests get the login modal, signed-in
@@ -371,6 +370,15 @@ export function MobileBottomBar({ navOpen, onOpenNav, onCloseNav }: MobileBottom
     else openUserMenu();
   };
 
+  // theme settings «الجوال»: the bar itself and its middle button
+  const ts = (theme?.settings ?? {}) as Record<string, unknown>;
+  const barOn = asBool(ts.tc_bottombar, true);
+  const middle = opt(ts.tc_bottombar_items, 'size'); // size | whatsapp | basic
+  const mySize = useMySize();
+  const { store } = useTwilight();
+  const waDigits = String(store?.contacts?.whatsapp || '').replace(/D/g, '') || String(store?.contacts?.mobile || '').replace(/D/g, '').replace(/^0/, '966');
+  const isEn = useLang() === 'en';
+
   const labels = {
     home: t('common.titles.home', 'Home'),
     search: t('blocks.header.search', 'Search'),
@@ -379,6 +387,8 @@ export function MobileBottomBar({ navOpen, onOpenNav, onCloseNav }: MobileBottom
     cart: t('blocks.header.cart', 'Cart'),
     account: t('common.titles.account', 'Account'),
   };
+
+  if (!barOn) return null;
 
   return (
     <>
@@ -413,18 +423,24 @@ export function MobileBottomBar({ navOpen, onOpenNav, onCloseNav }: MobileBottom
             <span className="mobile-bottom-bar__label">{labels.categories}</span>
           </button>
 
-          <button
-            type="button"
-            className={`mobile-bottom-bar__item${active === 'search' ? ' is-active' : ''}`}
-            aria-pressed={active === 'search'}
-            data-testid="mobile-bottom-bar-search"
-            onClick={handleSearch}
-          >
-            <span className="mobile-bottom-bar__icon">
-              <SearchIcon aria-hidden="true" />
-            </span>
-            <span className="mobile-bottom-bar__label">{labels.search}</span>
-          </button>
+          {middle === 'size' && (
+            // «مقاسي»: straight to the saved size's tires, or to the size finder
+            <Link
+              to={mySize ? `/search?q=${encodeURIComponent(mySize)}` : '/#finder'}
+              className="mobile-bottom-bar__item"
+              data-testid="mobile-bottom-bar-size"
+              onClick={() => openTab('home')}
+            >
+              <span className="mobile-bottom-bar__icon"><Icon name="tire" /></span>
+              <span className="mobile-bottom-bar__label">{isEn ? 'My size' : 'مقاسي'}</span>
+            </Link>
+          )}
+          {middle === 'whatsapp' && waDigits.length >= 10 && (
+            <a className="mobile-bottom-bar__item" href={`https://wa.me/${waDigits}`} target="_blank" rel="noopener noreferrer" data-testid="mobile-bottom-bar-wa">
+              <span className="mobile-bottom-bar__icon"><Icon name="whatsapp" /></span>
+              <span className="mobile-bottom-bar__label">{isEn ? 'WhatsApp' : 'واتساب'}</span>
+            </a>
+          )}
 
           <Link
             to="/cart"

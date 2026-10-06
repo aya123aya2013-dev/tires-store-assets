@@ -59,9 +59,15 @@ export function ThemeTokens() {
   const dark = preset?.[2] || col(s.tc_color_dark, '#1d2023');
   const bg = col(s.tc_color_bg, '#ffffff');
   const bgAlt = col(s.tc_color_bg_alt, '#f5f4f0');
-  const dBg = col(s.tc_dark_bg, '#121416');
-  const dSurface = col(s.tc_dark_surface, '#1b1e21');
-  const dText = col(s.tc_dark_text, '#ecebe6');
+  // «لون الداكن»: charcoal (the identity) or black
+  const black = opt(s.tc_dark_style, 'charcoal') === 'black';
+  const dBg = black ? '#0a0a0a' : '#121416';
+  const dSurface = black ? '#161616' : '#1b1e21';
+  const dText = '#ecebe6';
+  const num = (v: unknown, d: number, lo: number, hi: number) => { const n = Number(v); return Number.isFinite(n) && n >= lo && n <= hi ? n : d; };
+  const logoH = num(s.tc_logo_h, 46, 28, 80);
+  const logoHm = num(s.tc_logo_h_m, 36, 24, 60);
+  const cols = [num(opt(s.tc_cols_d, '4'), 4, 3, 5), num(opt(s.tc_cols_t, '3'), 3, 2, 3), num(opt(s.tc_cols_m, '2'), 2, 1, 2)];
 
   const arKey = opt(s.tc_font_ar, 'ibm');
   const storeFont = theme?.font?.family_name || theme?.settings?.font?.family_name;
@@ -76,7 +82,8 @@ export function ThemeTokens() {
 :root{--tires-yellow:${primary};--color-primary:${primary};--color-primary-dark:color-mix(in srgb,${primary} 86%,#000);--color-primary-reverse:${onPrimary};--tires-black:${dark};
 --tc-primary:${primary};--tc-on-primary:${onPrimary};--tc-radius:${r};--tc-radius-btn:${rBtn};
 --font-ar:${ar.family},Tahoma,sans-serif;--font-main:var(--font-ar);--tc-font-en:${en.family},Arial,sans-serif;
---tc-dark-bg:${dBg};--tc-dark-surface:${dSurface};--tc-dark-text:${dText}}
+--tc-dark-bg:${dBg};--tc-dark-surface:${dSurface};--tc-dark-text:${dText};
+--tc-logo-h:${logoH}px;--tc-logo-h-m:${logoHm}px;--tc-cols-d:${cols[0]};--tc-cols-t:${cols[1]};--tc-cols-m:${cols[2]}}
 .tc-s{--gold:${primary};--gold-2:color-mix(in srgb,${primary} 88%,#000);--gold-3:color-mix(in srgb,${primary} 55%,#000);--gold-soft:color-mix(in srgb,${primary} 14%,#fff);
 --ink:${dark};--bg:${bg};--bg-2:${bgAlt};--en:var(--tc-font-en);font-family:var(--font-ar)}
 .tc-s .btn-gold{color:${onPrimary}}${radiusKey === 'soft' ? '' : `

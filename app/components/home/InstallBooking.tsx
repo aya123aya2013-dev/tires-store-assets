@@ -11,6 +11,7 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { asImage, asLink, makeT, opt, rows, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
+import { useSellsFitting } from '../tires/features/cardSettings';
 
 const EN: Record<string, string> = {
   'اختيارك علينا، وطريقك قدّامك': 'Your choice is on us, your road is ahead',
@@ -57,6 +58,7 @@ const withParams = (link: string, params: Record<string, string>) => {
 };
 
 export function InstallBooking({ data }: { data: Row }) {
+  const fitting = useSellsFitting();
   const lang = useLang();
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
@@ -94,6 +96,7 @@ export function InstallBooking({ data }: { data: Row }) {
     : time && date ? withParams(asLink(data.book_link, '/help#install'), { date, time }) : asLink(data.book_link, '/help#install');
   const terms = t(data.terms_text, 'الموقع وشروط التركيب');
 
+  if (!fitting) return null; // «بيع فقط»: no fitting sections
   return (
     <Section data={data}>
       <section className="wrap fit" id="book">

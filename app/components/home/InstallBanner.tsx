@@ -7,6 +7,7 @@ import { Link } from '@salla.sa/twilight-theme-engine/common';
 import { asImage, asLink, makeT, opt, rows, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
+import { useSellsFitting } from '../tires/features/cardSettings';
 
 const EN: Record<string, string> = {
   'اهتمام بالتفاصيل، من أول مسمار.': 'Care in the details, from the first bolt.',
@@ -24,12 +25,14 @@ const EN: Record<string, string> = {
 const STEPS = ['اختر المقاس والإطار', 'راجع طريقة الاستلام', 'نسّق موعد التركيب'];
 
 export function InstallBanner({ data }: { data: Row }) {
+  const fitting = useSellsFitting();
   const t = makeT(useLang(), EN);
   const steps = rows(data.steps, 'steps').map(r => t(r.text, '')).filter(Boolean).slice(0, 4);
   // a saved list (even empty) is the merchant's choice — defaults only when the field was never saved
   const list = Array.isArray(data.steps) ? steps : STEPS.map(s => t(s, s));
   const fine = t(data.fine, 'نطاق الخدمة وما يشمله التركيب يُحدّدان وفق شروط المركز.');
   const imageRight = opt(data.image_side, 'left') === 'right';
+  if (!fitting) return null; // «بيع فقط»: no fitting sections
   return (
     <Section data={data}>
       <section className={'fitd' + (imageRight ? ' tc-img-right' : '')} id="fit">

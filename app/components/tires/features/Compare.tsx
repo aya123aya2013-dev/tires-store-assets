@@ -48,7 +48,12 @@ export function toggleCompare(item: CompareItem): boolean {
   return true;
 }
 
-export function CompareToggle({ item }: { item: CompareItem }) {
+export function useCompareWhere() {
+  const { theme } = useTwilight();
+  return (theme?.settings as Record<string, unknown> | undefined)?.tc_compare_where;
+}
+
+export function CompareToggle({ item, className = '' }: { item: CompareItem; className?: string }) {
   const enabled = useCompareEnabled();
   const items = useCompare();
   const t = makeT(useLang(), EN);
@@ -58,7 +63,7 @@ export function CompareToggle({ item }: { item: CompareItem }) {
   return (
     <button
       type="button"
-      className={'tc-cmp-btn' + (on ? ' on' : '')}
+      className={'tc-cmp-btn' + (on ? ' on' : '') + className}
       aria-pressed={on}
       title={full ? t('تقدر تقارن 3 إطارات بالكثير', 'تقدر تقارن 3 إطارات بالكثير') : undefined}
       onClick={() => setFull(!toggleCompare(item))}

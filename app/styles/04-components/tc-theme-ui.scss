@@ -106,11 +106,10 @@
 .tc-s .tc-fbtn:hover { transform: translateY(-2px); }
 .tc-s .tc-fbtn .i { width: 24px; height: 24px; }
 .tc-s .tc-fbtn-wa { background: #1f9d55; color: #fff; }
-.tc-s .tc-fbtn-call { background: var(--gold); color: var(--tc-on-primary, #221800); display: none; }
+.tc-s .tc-fbtn-call { background: var(--gold); color: var(--tc-on-primary, #221800); }
 .tc-s .tc-fbtn-top { background: var(--tc-card, #fff); color: var(--ink); width: 44px; height: 44px; border-radius: 12px; margin-inline: auto; }
 @media (max-width: 767px) {
   .tc-s .tc-float { bottom: 80px; }
-  .tc-s .tc-fbtn-call { display: grid; }
 }
 
 /* ---- discount popup ---- */
@@ -157,3 +156,43 @@ html[data-tc-dark="1"] body[data-tc-pattern="dots"] { background-image: radial-g
 html[data-tc-dark="1"] .tc-s header.scrolled { background: color-mix(in srgb, var(--tc-dark-bg) 92%, transparent); }
 html[data-tc-dark="1"] .tc-s .ctag.tc-fits { background: #17382a; color: #8fe0b2; }
 html[data-tc-dark="1"] .tc-s .tc-cmp-btn.on { background: var(--gold); color: #221800; }
+
+/* ---- «يظهر على» (devices.ts) — mobile < 768 · tablet 768–1100 · desktop > 1100 ---- */
+@media (max-width: 1100px) { .tc-on-desktop { display: none !important; } }
+@media (max-width: 767px) { .tc-on-wide { display: none !important; } }
+@media (min-width: 1101px) { .tc-on-narrow { display: none !important; } }
+@media (min-width: 768px) { .tc-on-mobile { display: none !important; } }
+
+/* ---- header: logo size and sticky per screen (ThemeTokens vars) ---- */
+.tc-s .hrow .brand img { height: var(--tc-logo-h, 42px); }
+@media (max-width: 767px) { .tc-s .hrow .brand img { height: var(--tc-logo-h-m, 36px); } }
+@media (min-width: 768px) { .tc-s header.tc-nosticky-d { position: relative; } }
+@media (max-width: 767px) { .tc-s header.tc-nosticky-m { position: relative; } }
+
+/* ---- product grid columns per screen (setting «بطاقة المنتج») ---- */
+.tc-s .cgrid.tc-cols-auto { grid-template-columns: repeat(var(--tc-cols-d, 4), minmax(0, 1fr)); }
+@media (max-width: 1100px) { .tc-s .cgrid.tc-cols-auto { grid-template-columns: repeat(var(--tc-cols-t, 3), minmax(0, 1fr)); } }
+@media (max-width: 767px) { .tc-s .cgrid.tc-cols-auto { grid-template-columns: repeat(var(--tc-cols-m, 2), minmax(0, 1fr)); } }
+
+/* ---- card extras ---- */
+.tc-s .ctag.tc-install { background: var(--gold-soft); color: var(--tc-gold-ink, #4d3800); }
+.tc-s .pprice .tc-ask { font-weight: 700; color: #1f6b41; display: inline-flex; align-items: center; gap: 6px; }
+
+/* ---- footer accordion on mobile ---- */
+@media (max-width: 767px) {
+  .tc-s .tc-acc > h4 { display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 0; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, .08); }
+  .tc-s .tc-acc > h4::after { content: '+'; color: var(--gold); font-size: 18px; }
+  .tc-s .tc-acc.open > h4::after { content: '−'; }
+  .tc-s .tc-acc:not(.open) > :not(h4) { display: none; }
+  .tc-s .tc-acc.open > h4 { margin-bottom: 8px; }
+}
+
+/* header CTA kept on mobile when the merchant chose so: compact */
+@media (max-width: 767px) { .tc-s .tc-hcta { height: 40px !important; padding-inline: 12px; font-size: 13px; margin-inline-start: 4px !important; } .tc-s .tc-hcta .tc-flip { display: none; } }
+
+/* bottom bar switched off («الجوال»): no reserved room, floating buttons back to the corner */
+@media (max-width: 767px) {
+  .app-inner.tc-nobar { padding-bottom: env(safe-area-inset-bottom); }
+  .tc-nobar .tc-s .tc-float { bottom: 22px; }
+  .tc-nobar .tc-s .tc-cmp-tray { bottom: 16px; }
+}

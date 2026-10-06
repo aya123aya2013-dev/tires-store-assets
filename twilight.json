@@ -30,14 +30,763 @@
       "type": "static",
       "format": "title",
       "variant": "h6",
-      "id": "tc-set-frame",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">أعلى المتجر والهيدر والفوتر</div>"
+      "id": "tc-set-identity",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">هوية المتجر</div>"
     },
     {
       "type": "static",
       "format": "description",
-      "id": "tc-set-h-topbar",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الشريط الترويجي أعلى المتجر</div>"
+      "id": "tc-set-tip-identity",
+      "value": "<div>💡 القيم الافتراضية هي ألوان وخطوط تصميم الإطارات. القالب الجاهز يغيّر الهوية كلها بضغطة.</div>"
+    },
+    {
+      "id": "tc_preset",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "قالب ألوان جاهز",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "بدون — ألواني أنا",
+          "value": "none",
+          "key": "3ded8f65-d66a-4b4f-89ad-18da24da3eb1"
+        }
+      ],
+      "options": [
+        {
+          "label": "بدون — ألواني أنا",
+          "value": "none",
+          "key": "3ded8f65-d66a-4b4f-89ad-18da24da3eb1"
+        },
+        {
+          "label": "ذهبي وفحمي (الأصلي)",
+          "value": "gold",
+          "key": "8ecb26c9-6f3e-40ae-a7d1-20a03b2c414d"
+        },
+        {
+          "label": "أحمر وأسود (رياضي)",
+          "value": "red",
+          "key": "0ca633a0-30ec-4ca8-9f49-0178ee367168"
+        },
+        {
+          "label": "أزرق وكحلي",
+          "value": "blue",
+          "key": "ea6bcbcc-8e94-4885-9a04-899d8b843be7"
+        },
+        {
+          "label": "أخضر وزيتي (بر ودفع رباعي)",
+          "value": "green",
+          "key": "cf585d7b-beef-4561-ba02-7f09f3c47b7d"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "استخدام لون هوية المتجر من لوحة سلة",
+      "description": null,
+      "id": "tc_use_store_color",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "اللون الرئيسي (الأزرار والتمييز)",
+      "id": "tc_color_primary",
+      "format": "color",
+      "value": "#ffb71b",
+      "required": false,
+      "description": null,
+      "conditions": [
+        {
+          "id": "tc_use_store_color",
+          "operation": "=",
+          "value": false
+        }
+      ]
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "لون النص فوق اللون الرئيسي",
+      "id": "tc_color_on_primary",
+      "format": "color",
+      "value": "#221800",
+      "required": false,
+      "description": null,
+      "conditions": [
+        {
+          "id": "tc_use_store_color",
+          "operation": "=",
+          "value": false
+        }
+      ]
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "اللون الداكن (الأقسام الداكنة والعناوين)",
+      "id": "tc_color_dark",
+      "format": "color",
+      "value": "#1d2023",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "خلفية الصفحة",
+      "id": "tc_color_bg",
+      "format": "color",
+      "value": "#ffffff",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-fill",
+      "label": "خلفية الأقسام الفاتحة",
+      "id": "tc_color_bg_alt",
+      "format": "color",
+      "value": "#f5f4f0",
+      "required": false,
+      "description": null
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-fonts",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الخطوط والشكل</div>"
+    },
+    {
+      "id": "tc_font_ar",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "الخط العربي",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "IBM Plex Sans Arabic (التصميم)",
+          "value": "ibm",
+          "key": "9f1384f9-7fe0-47be-b0d9-b3b33d403255"
+        }
+      ],
+      "options": [
+        {
+          "label": "IBM Plex Sans Arabic (التصميم)",
+          "value": "ibm",
+          "key": "9f1384f9-7fe0-47be-b0d9-b3b33d403255"
+        },
+        {
+          "label": "Tajawal",
+          "value": "tajawal",
+          "key": "a1fa9072-3fb9-4171-a222-cd1aba32706a"
+        },
+        {
+          "label": "Cairo",
+          "value": "cairo",
+          "key": "447be03b-d039-4109-868d-9b8398fbb2dc"
+        },
+        {
+          "label": "Almarai",
+          "value": "almarai",
+          "key": "66969101-2143-40d4-88ba-ad7306b2e8a8"
+        },
+        {
+          "label": "خط المتجر من لوحة سلة",
+          "value": "store",
+          "key": "c634d401-c055-4554-91f7-1eaf8350f01d"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_font_en",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "خط الأرقام والإنجليزي",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "Archivo (التصميم)",
+          "value": "archivo",
+          "key": "a4153184-ab05-4f19-b6b6-93db62c8146b"
+        }
+      ],
+      "options": [
+        {
+          "label": "Archivo (التصميم)",
+          "value": "archivo",
+          "key": "a4153184-ab05-4f19-b6b6-93db62c8146b"
+        },
+        {
+          "label": "Inter",
+          "value": "inter",
+          "key": "b905b773-74b5-4034-a89b-44b91e93df2e"
+        },
+        {
+          "label": "نفس الخط العربي",
+          "value": "same",
+          "key": "96d108c9-c5ea-455d-bfa0-3d38d120b8a2"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_radius",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "زوايا البطاقات والأزرار",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "ناعمة (التصميم)",
+          "value": "soft",
+          "key": "830044a9-b5e6-49d5-93aa-62a93a9b09f2"
+        }
+      ],
+      "options": [
+        {
+          "label": "ناعمة (التصميم)",
+          "value": "soft",
+          "key": "830044a9-b5e6-49d5-93aa-62a93a9b09f2"
+        },
+        {
+          "label": "حادة",
+          "value": "sharp",
+          "key": "4cc1d0c8-d387-43a3-9b6c-339b46d46ca7"
+        },
+        {
+          "label": "دائرية",
+          "value": "round",
+          "key": "de76223c-9d67-413d-8162-61a58fed7c4b"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_pattern",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "نقشة خلفية خفيفة",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "بدون",
+          "value": "none",
+          "key": "e342308a-76d4-471e-bb4c-b3519d3b238f"
+        }
+      ],
+      "options": [
+        {
+          "label": "بدون",
+          "value": "none",
+          "key": "e342308a-76d4-471e-bb4c-b3519d3b238f"
+        },
+        {
+          "label": "آثار إطار",
+          "value": "tread",
+          "key": "26aa585a-2106-4f89-a8ca-7dfc7a55ea39"
+        },
+        {
+          "label": "نقاط",
+          "value": "dots",
+          "key": "9f793624-8368-4963-8143-2e60a44d619d"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "شاشة تحميل (إطار يدور) عند فتح المتجر",
+      "description": "تختفي أول ما تجهز الصفحة",
+      "id": "tc_loader_show",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "variant": "h6",
+      "id": "tc-set-dark",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الوضع الداكن</div>"
+    },
+    {
+      "id": "tc_dark_mode",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "الوضع الداكن",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "مطفأ — المتجر فاتح دائماً",
+          "value": "off",
+          "key": "0293556e-3f75-44da-8834-84be9e86f81a"
+        }
+      ],
+      "options": [
+        {
+          "label": "مطفأ — المتجر فاتح دائماً",
+          "value": "off",
+          "key": "0293556e-3f75-44da-8834-84be9e86f81a"
+        },
+        {
+          "label": "حسب جهاز الزائر (تلقائي)",
+          "value": "auto",
+          "key": "d8925244-5a9d-4d95-a294-ad9cdb736bf5"
+        },
+        {
+          "label": "مفعّل — المتجر داكن دائماً",
+          "value": "on",
+          "key": "49f3f1e3-b5f9-451e-aab1-0d97b3c469c5"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_dark_style",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "لون الداكن",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "فحمي (يناسب الهوية)",
+          "value": "charcoal",
+          "key": "9307e6c3-6410-4eb7-8080-cefaff98acf5"
+        }
+      ],
+      "options": [
+        {
+          "label": "فحمي (يناسب الهوية)",
+          "value": "charcoal",
+          "key": "9307e6c3-6410-4eb7-8080-cefaff98acf5"
+        },
+        {
+          "label": "أسود",
+          "value": "black",
+          "key": "96bbc633-0dfa-4881-b0b5-0bf2b15a3a0f"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "زر التبديل (فاتح / داكن) للزائر بالهيدر",
+      "description": "الزائر يختار، ويتذكر المتجر اختياره",
+      "id": "tc_dark_toggle",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "tc_dark_toggle_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "eadfaef5-69ed-43d5-9342-d2ce5d77e37a"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "eadfaef5-69ed-43d5-9342-d2ce5d77e37a"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "731c0a68-e543-497a-a163-529a7db8a2ce"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "7a25ea41-4208-4f8a-83af-8627c007fde6"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "97b2e362-d9cd-4115-9c0d-6b379248e597"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "3eaee194-d41b-450a-a77a-b8e18f04460e"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_dark_toggle",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "variant": "h6",
+      "id": "tc-set-tires",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">متجر الإطارات</div>"
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-tip-tires",
+      "value": "<div>💡 المقاس وسنة الصنع يُقرآن من المكان اللي تكتبهم فيه بمنتجاتك. نوع المتجر يخفي أقسام التركيب لو متجرك بيع فقط.</div>"
+    },
+    {
+      "id": "tc_store_type",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "نوع المتجر",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "بيع وتركيب",
+          "value": "install",
+          "key": "496794b7-88fe-4a45-960e-7e098c16913c"
+        }
+      ],
+      "options": [
+        {
+          "label": "بيع وتركيب",
+          "value": "install",
+          "key": "496794b7-88fe-4a45-960e-7e098c16913c"
+        },
+        {
+          "label": "بيع فقط (توصيل)",
+          "value": "sale",
+          "key": "ff8d3b31-824a-4bf3-bfaa-f87d57c5b27b"
+        },
+        {
+          "label": "بيع وتركيب وصيانة",
+          "value": "service",
+          "key": "e6f62bcf-cc96-4d56-bfd6-be8ae759f46e"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_sale_unit",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "سعر المنتج عندك",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "للحبة الواحدة",
+          "value": "tire",
+          "key": "783dde58-0ec8-499d-aad1-82fafe95ecd7"
+        }
+      ],
+      "options": [
+        {
+          "label": "للحبة الواحدة",
+          "value": "tire",
+          "key": "783dde58-0ec8-499d-aad1-82fafe95ecd7"
+        },
+        {
+          "label": "للطقم (4 حبات)",
+          "value": "set",
+          "key": "32ec3000-a5f2-4c43-80c3-86824e461316"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_default_qty",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "الكمية عند الضغط على «أضف»",
+      "description": "الأغلب يشتري 4 حبات",
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "1",
+          "value": "1",
+          "key": "e7b335b9-1bad-4cbc-99ed-71cb71a025f3"
+        }
+      ],
+      "options": [
+        {
+          "label": "1",
+          "value": "1",
+          "key": "e7b335b9-1bad-4cbc-99ed-71cb71a025f3"
+        },
+        {
+          "label": "2",
+          "value": "2",
+          "key": "7fea08d0-4f0b-4329-86a6-55d8754ae3d6"
+        },
+        {
+          "label": "4",
+          "value": "4",
+          "key": "a8bdea81-220c-4cf7-b2b3-c967102cb406"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_spec_source",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "وين تكتب المقاس وسنة الصنع بمنتجاتك",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "بأي مكان (الاسم أو الوسوم أو الخيارات)",
+          "value": "all",
+          "key": "d402d62a-ecd2-4263-80d1-96e64653e7b2"
+        }
+      ],
+      "options": [
+        {
+          "label": "بأي مكان (الاسم أو الوسوم أو الخيارات)",
+          "value": "all",
+          "key": "d402d62a-ecd2-4263-80d1-96e64653e7b2"
+        },
+        {
+          "label": "اسم المنتج",
+          "value": "name",
+          "key": "4478e27e-bcd8-4ca9-902b-ea5f27c298f5"
+        },
+        {
+          "label": "الوسوم",
+          "value": "tags",
+          "key": "ebc37356-a55d-4637-aabf-b29f05778ac9"
+        },
+        {
+          "label": "خيارات المنتج",
+          "value": "options",
+          "key": "2c771667-e291-4c04-a0b8-1a839f2767ac"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "شارة «تركيب مجاني» على المنتجات",
+      "description": null,
+      "id": "tc_install_badge",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-text-alt",
+      "label": "نص الشارة",
+      "multilanguage": true,
+      "id": "tc_install_badge_text",
+      "value": "تركيب مجاني",
+      "required": false,
+      "format": "text",
+      "description": null,
+      "placeholder": "تركيب مجاني",
+      "minLength": 0,
+      "maxLength": 30,
+      "conditions": [
+        {
+          "id": "tc_install_badge",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-text-alt",
+      "label": "نص الضمان بصفحة المنتج (فاضي = بدون)",
+      "multilanguage": true,
+      "id": "tc_warranty",
+      "value": "ضمان الوكيل",
+      "required": false,
+      "format": "text",
+      "description": null,
+      "placeholder": "ضمان الوكيل",
+      "minLength": 0,
+      "maxLength": 60
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-tirefeat",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">مميزات للزبون</div>"
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "«مقاسي المحفوظ» — يتذكر مقاس الزبون ويعلّم المناسب له",
+      "description": null,
+      "id": "tc_my_size",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "سنة الصنع على البطاقة",
+      "description": null,
+      "id": "tc_year_badge",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "سعر الطقم والتقسيط على البطاقة",
+      "description": null,
+      "id": "tc_set_price",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "number",
+      "icon": "sicon-pencil-ruler",
+      "label": "عدد دفعات التقسيط (تابي / تمارا)",
+      "id": "tc_installments",
+      "format": "integer",
+      "required": false,
+      "value": 4,
+      "minimum": 2,
+      "maximum": 12,
+      "description": null,
+      "conditions": [
+        {
+          "id": "tc_set_price",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "مقارنة الإطارات (حتى 3)",
+      "description": null,
+      "id": "tc_compare",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "tc_compare_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "282533f7-69fb-44ab-9353-b087a23e2e1e"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "3c2b1297-ea7e-448b-9f7c-c315389bc5a9"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "ead585bf-09c6-41ff-a15a-2d2a0a0d90d3"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "282533f7-69fb-44ab-9353-b087a23e2e1e"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "0b18a2ae-f6d4-4963-a040-cf4f444badf9"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "117ecdfc-1cb9-4dcb-9455-e4b0ae742462"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_compare",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "variant": "h6",
+      "id": "tc-set-topbar",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الشريط العلوي</div>"
     },
     {
       "type": "boolean",
@@ -49,6 +798,58 @@
       "required": false,
       "value": true,
       "selected": true
+    },
+    {
+      "id": "tc_topbar_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "5b9c1c34-2b8b-4879-a204-f54d46b93f47"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "5b9c1c34-2b8b-4879-a204-f54d46b93f47"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "6ecbefd3-8714-4e1f-bc4f-adf246c45540"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "daca4dd1-c643-4645-9997-79b3ff994151"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "e2b86952-e517-4da0-bfcd-fcc5075a6604"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "e06abd34-c163-40f4-8200-dd1f53346ae8"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_topbar_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -74,7 +875,7 @@
     {
       "type": "string",
       "icon": "sicon-format-text-alt",
-      "label": "نص مميّز (ذهبي، يختفي بالجوال)",
+      "label": "نص مميّز (ذهبي)",
       "multilanguage": true,
       "id": "tc_topbar_highlight",
       "value": "· تقسيط على 4 دفعات مع تابي وتمارا",
@@ -93,9 +894,61 @@
       ]
     },
     {
+      "id": "tc_topbar_highlight_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "52b3e6c5-fa39-4f8c-92b1-b0359679fd93"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "39509dcf-f8c2-49fc-96ea-1dd7dd7763dc"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "9be4fb80-95b6-49b1-8fee-696e3120e11a"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "52b3e6c5-fa39-4f8c-92b1-b0359679fd93"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "63457e05-888e-41b4-9cc2-29de1f179d1f"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "dd0ee3dc-df2d-4890-a287-dbb5b3572e20"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_topbar_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "نص متحرك (يتحرك بالعرض)",
+      "label": "نص متحرك",
       "description": null,
       "id": "tc_topbar_marquee",
       "format": "switch",
@@ -189,7 +1042,7 @@
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار رقم الجوال (من بيانات التواصل بالمتجر)",
+      "label": "رقم الجوال (من بيانات المتجر)",
       "description": null,
       "id": "tc_topbar_phone",
       "format": "switch",
@@ -205,10 +1058,63 @@
       ]
     },
     {
+      "id": "tc_topbar_phone_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "97111686-bfad-4ae8-b4aa-95d2a24c1ac8"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "33b921fc-6929-4b73-a2d1-9893e00c3730"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "77453b4c-a54b-41be-a84f-4155135592f4"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "97111686-bfad-4ae8-b4aa-95d2a24c1ac8"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "2a131e8f-33a5-4bf7-abde-503124da3753"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "1630384f-ee8f-4778-af62-6c43b103b57c"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_topbar_phone",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
       "type": "static",
-      "format": "description",
-      "id": "tc-set-h-header",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الهيدر</div>"
+      "format": "title",
+      "variant": "h6",
+      "id": "tc-set-header",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الهيدر</div>"
     },
     {
       "id": "tc_logo_mode",
@@ -222,19 +1128,19 @@
         {
           "label": "شعار متجرك (من لوحة سلة)",
           "value": "store",
-          "key": "2ac63fd1-e794-4a97-92bb-674ad6e6859e"
+          "key": "f64cc994-7525-410e-8f87-258410899a1a"
         }
       ],
       "options": [
         {
           "label": "شعار متجرك (من لوحة سلة)",
           "value": "store",
-          "key": "2ac63fd1-e794-4a97-92bb-674ad6e6859e"
+          "key": "f64cc994-7525-410e-8f87-258410899a1a"
         },
         {
           "label": "علامة الإطار + اسم المتجر",
           "value": "mark",
-          "key": "a0d46b52-9139-487b-a8aa-4860a0672b7d"
+          "key": "e68d4a68-ca4c-4cd8-a79b-f00c980e5881"
         }
       ],
       "source": "Manual",
@@ -243,7 +1149,7 @@
     {
       "type": "string",
       "icon": "sicon-format-text-alt",
-      "label": "السطر الصغير تحت الاسم (مع علامة الإطار)",
+      "label": "السطر الصغير تحت الاسم",
       "multilanguage": true,
       "id": "tc_brand_sub",
       "value": "TIRES STORE",
@@ -262,6 +1168,69 @@
       ]
     },
     {
+      "type": "number",
+      "icon": "sicon-pencil-ruler",
+      "label": "ارتفاع الشعار — الكمبيوتر (بكسل)",
+      "id": "tc_logo_h",
+      "format": "integer",
+      "required": false,
+      "value": 46,
+      "minimum": 28,
+      "maximum": 80,
+      "description": null
+    },
+    {
+      "type": "number",
+      "icon": "sicon-pencil-ruler",
+      "label": "ارتفاع الشعار — الجوال (بكسل)",
+      "id": "tc_logo_h_m",
+      "format": "integer",
+      "required": false,
+      "value": 36,
+      "minimum": 24,
+      "maximum": 60,
+      "description": null
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "تثبيت الهيدر عند النزول — الكمبيوتر",
+      "description": null,
+      "id": "tc_header_sticky",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "تثبيت الهيدر عند النزول — الجوال",
+      "description": null,
+      "id": "tc_header_sticky_m",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-hsearch",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">البحث</div>"
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "خانة البحث",
+      "description": null,
+      "id": "tc_search_show",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
       "type": "string",
       "icon": "sicon-format-text-alt",
       "label": "نص خانة البحث",
@@ -273,14 +1242,27 @@
       "description": null,
       "placeholder": "ابحث باسم الإطار أو الماركة أو المقاس…",
       "minLength": 0,
-      "maxLength": 80
+      "maxLength": 80,
+      "conditions": [
+        {
+          "id": "tc_search_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-hicons",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الأيقونات والأزرار</div>"
     },
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "تثبيت الهيدر عند النزول",
+      "label": "أيقونة الحساب",
       "description": null,
-      "id": "tc_header_sticky",
+      "id": "tc_account_show",
       "format": "switch",
       "required": false,
       "value": true,
@@ -289,9 +1271,9 @@
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار صف الأقسام (من قائمة الهيدر بلوحة سلة)",
+      "label": "أيقونة السلة",
       "description": null,
-      "id": "tc_header_nav",
+      "id": "tc_cart_show",
       "format": "switch",
       "required": false,
       "value": true,
@@ -300,13 +1282,76 @@
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار زر «اختر مقاسك»",
+      "label": "شريحة «مقاسي» (بعد ما يبحث الزبون)",
+      "description": null,
+      "id": "tc_mysize_chip",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "زر «اختر مقاسك»",
       "description": null,
       "id": "tc_header_cta",
       "format": "switch",
       "required": false,
       "value": true,
       "selected": true
+    },
+    {
+      "id": "tc_header_cta_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "ce24b53b-3df5-4c1d-9da6-b76b181b7149"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "46182671-102f-40ff-a5f2-bb9b2319f0fd"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "8d034323-36f9-4cfd-8943-37d66373c251"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "ce24b53b-3df5-4c1d-9da6-b76b181b7149"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "0a03f7a2-0ebb-46e6-9c77-df48dd063ad8"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "c126b42d-5ff4-4053-a7c9-b672427166c8"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_header_cta",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -335,7 +1380,7 @@
       "label": "رابط الزر",
       "id": "tc_header_cta_link",
       "value": null,
-      "description": "فاضي = يفتح باحث المقاسات",
+      "description": "فاضي = باحث المقاسات بالصفحة الرئيسية",
       "required": false,
       "format": "variable-list",
       "searchable": true,
@@ -406,177 +1451,11 @@
       ]
     },
     {
-      "type": "static",
-      "format": "description",
-      "id": "tc-set-h-footer",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الفوتر</div>"
-    },
-    {
-      "type": "string",
-      "icon": "sicon-typography",
-      "label": "نبذة عن المتجر",
-      "multilanguage": true,
-      "id": "tc_footer_about",
-      "value": "إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.",
-      "required": false,
-      "format": "textarea",
-      "description": null,
-      "placeholder": "إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.",
-      "minLength": 0,
-      "maxLength": 220
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-text-alt",
-      "label": "عنوان العمود الأول",
-      "multilanguage": true,
-      "id": "tc_footer_shop_title",
-      "value": "تسوّق",
-      "required": false,
-      "format": "text",
-      "description": null,
-      "placeholder": "تسوّق",
-      "minLength": 0,
-      "maxLength": 30
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-text-alt",
-      "label": "عنوان العمود الثاني",
-      "multilanguage": true,
-      "id": "tc_footer_help_title",
-      "value": "المساعدة",
-      "required": false,
-      "format": "text",
-      "description": null,
-      "placeholder": "المساعدة",
-      "minLength": 0,
-      "maxLength": 30
-    },
-    {
-      "type": "static",
-      "format": "description",
-      "id": "tc-set-tip-footer",
-      "value": "<div>💡 العمود الأول من «قائمة الهيدر» والثاني من «قائمة الفوتر» بلوحة سلة (المتجر ← القوائم). الجوال والإيميل والسوشال من «بيانات المتجر».</div>"
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-text-alt",
-      "label": "المدينة أو العنوان",
-      "multilanguage": true,
-      "id": "tc_footer_city",
-      "value": "الرياض",
-      "required": false,
-      "format": "text",
-      "description": null,
-      "placeholder": "الرياض",
-      "minLength": 0,
-      "maxLength": 60
-    },
-    {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار خانة الاشتراك بالعروض",
+      "label": "صف الأقسام (من قائمة الهيدر بلوحة سلة)",
       "description": null,
-      "id": "tc_footer_news",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "items",
-      "icon": "sicon-link",
-      "label": "رابط الاشتراك (Mailchimp، Brevo…)",
-      "id": "tc_footer_news_link",
-      "value": null,
-      "description": "فاضي = تنفتح رسالة لإيميل المتجر",
-      "required": false,
-      "format": "variable-list",
-      "searchable": true,
-      "source": "custom",
-      "sources": [
-        {
-          "label": "منتج",
-          "key": "products",
-          "value": "products"
-        },
-        {
-          "label": "منتجات مع وسم",
-          "key": "products_tags",
-          "value": "products_tags"
-        },
-        {
-          "label": "تصنيف",
-          "key": "categories",
-          "value": "categories"
-        },
-        {
-          "label": "ماركة تجارية",
-          "key": "brands",
-          "value": "brands"
-        },
-        {
-          "label": "صفحة تعريفية",
-          "key": "pages",
-          "value": "pages"
-        },
-        {
-          "label": "مقالة",
-          "key": "blog_articles",
-          "value": "blog_articles"
-        },
-        {
-          "label": "تصنيف ضمن المدونة",
-          "key": "blog_categories",
-          "value": "blog_categories"
-        },
-        {
-          "label": "التخفيضات",
-          "key": "offers_link",
-          "value": "offers_link"
-        },
-        {
-          "label": "الماركات التجارية",
-          "key": "brands_link",
-          "value": "brands_link"
-        },
-        {
-          "label": "المدونة",
-          "key": "blog_link",
-          "value": "blog_link"
-        },
-        {
-          "label": "رابط خارجي",
-          "key": "custom",
-          "value": "custom"
-        }
-      ],
-      "conditions": [
-        {
-          "id": "tc_footer_news",
-          "operation": "=",
-          "value": true
-        }
-      ]
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "إظهار شعارات الدفع",
-      "description": null,
-      "id": "tc_footer_payments",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "إظهار السجل التجاري والرقم الضريبي وشارات الثقة",
-      "description": null,
-      "id": "tc_footer_legal",
+      "id": "tc_header_nav",
       "format": "switch",
       "required": false,
       "value": true,
@@ -586,19 +1465,302 @@
       "type": "static",
       "format": "title",
       "variant": "h6",
-      "id": "tc-set-extras",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الأزرار العائمة والنوافذ</div>"
+      "id": "tc-set-card",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">بطاقة المنتج</div>"
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-tip-card",
+      "value": "<div>💡 تنطبق على بطاقات الإطارات بكل المتجر.</div>"
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "زر المفضلة (القلب)",
+      "description": null,
+      "id": "tc_card_fav",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "اسم الماركة",
+      "description": null,
+      "id": "tc_card_brand",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "رقم الجنط الكبير خلف الصورة",
+      "description": null,
+      "id": "tc_card_rim",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "tc_card_price",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "السعر",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "يظهر السعر",
+          "value": "show",
+          "key": "3488794e-c24b-47a4-b649-da3db5928ad5"
+        }
+      ],
+      "options": [
+        {
+          "label": "يظهر السعر",
+          "value": "show",
+          "key": "3488794e-c24b-47a4-b649-da3db5928ad5"
+        },
+        {
+          "label": "«اطلب السعر» عبر واتساب بدل السعر",
+          "value": "ask",
+          "key": "bbc6d1ae-0060-4a74-92f9-5a00e4830024"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "زر «أضف للسلة»",
+      "description": null,
+      "id": "tc_card_add",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "tc_cols_d",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "عدد الأعمدة — الكمبيوتر",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "4",
+          "value": "4",
+          "key": "0451bf83-1764-4ec6-96fb-e43ea02c044c"
+        }
+      ],
+      "options": [
+        {
+          "label": "3",
+          "value": "3",
+          "key": "29c69740-c9fd-4d28-9d04-443f33cceb95"
+        },
+        {
+          "label": "4",
+          "value": "4",
+          "key": "0451bf83-1764-4ec6-96fb-e43ea02c044c"
+        },
+        {
+          "label": "5",
+          "value": "5",
+          "key": "b2b7c0ac-a928-464d-ae9c-53d691de7740"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_cols_t",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "عدد الأعمدة — التابلت",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "3",
+          "value": "3",
+          "key": "abcbc3f3-6098-4af1-a766-aec0874ada8a"
+        }
+      ],
+      "options": [
+        {
+          "label": "2",
+          "value": "2",
+          "key": "9a3e60ff-6a63-450d-b529-3632da37f5be"
+        },
+        {
+          "label": "3",
+          "value": "3",
+          "key": "abcbc3f3-6098-4af1-a766-aec0874ada8a"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "id": "tc_cols_m",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "عدد الأعمدة — الجوال",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "2",
+          "value": "2",
+          "key": "1001ef1e-53cb-4d2c-89db-0fd70abd5871"
+        }
+      ],
+      "options": [
+        {
+          "label": "1",
+          "value": "1",
+          "key": "80ce2601-5427-4e25-8996-88ee797641e7"
+        },
+        {
+          "label": "2",
+          "value": "2",
+          "key": "1001ef1e-53cb-4d2c-89db-0fd70abd5871"
+        }
+      ],
+      "source": "Manual",
+      "required": false
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "variant": "h6",
+      "id": "tc-set-mobile",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الجوال</div>"
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "الشريط السفلي (الجوال والتابلت)",
+      "description": null,
+      "id": "tc_bottombar",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "id": "tc_bottombar_items",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "أزرار الشريط السفلي",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "الرئيسية · الأقسام · مقاسي · السلة · حسابي",
+          "value": "size",
+          "key": "56d06c49-0ca3-4e58-9457-11f2f7d54926"
+        }
+      ],
+      "options": [
+        {
+          "label": "الرئيسية · الأقسام · مقاسي · السلة · حسابي",
+          "value": "size",
+          "key": "56d06c49-0ca3-4e58-9457-11f2f7d54926"
+        },
+        {
+          "label": "الرئيسية · الأقسام · واتساب · السلة · حسابي",
+          "value": "whatsapp",
+          "key": "9a3d230e-1937-4e7c-bbb7-1ae89470d797"
+        },
+        {
+          "label": "الرئيسية · الأقسام · السلة · حسابي",
+          "value": "basic",
+          "key": "7c06b76c-3009-4f74-aab5-99c9955e8c41"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_bottombar",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "أعمدة الفوتر تنطوي بالجوال",
+      "description": null,
+      "id": "tc_footer_accordion",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "static",
+      "format": "title",
+      "variant": "h6",
+      "id": "tc-set-float",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الأزرار العائمة ونافذة الخصم</div>"
+    },
+    {
+      "id": "tc_float_side",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "مكان الأزرار العائمة",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "يسار الشاشة",
+          "value": "left",
+          "key": "2c8392d1-7967-4914-b944-64dd11719b71"
+        }
+      ],
+      "options": [
+        {
+          "label": "يسار الشاشة",
+          "value": "left",
+          "key": "2c8392d1-7967-4914-b944-64dd11719b71"
+        },
+        {
+          "label": "يمين الشاشة",
+          "value": "right",
+          "key": "e06e58bf-2fb4-4ef4-9bb4-b093ebff3ba6"
+        }
+      ],
+      "source": "Manual",
+      "required": false
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-wa",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">زر واتساب</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">واتساب</div>"
     },
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار زر واتساب العائم",
+      "label": "زر واتساب العائم",
       "description": null,
       "id": "tc_wa_show",
       "format": "switch",
@@ -607,9 +1769,61 @@
       "selected": true
     },
     {
+      "id": "tc_wa_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "95aa303f-5eff-4d31-8593-03df45879ad0"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "95aa303f-5eff-4d31-8593-03df45879ad0"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "2c9a8663-17a0-4a2f-b11e-8cc7c38bcf66"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "8158ea6b-ce6f-4453-a27d-9cc22bbc3aae"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "163eee05-a707-4ec8-80b4-7a3372bad262"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "b009b812-ef57-439f-8204-129ad4eeb730"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_wa_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
+    },
+    {
       "type": "string",
       "icon": "sicon-format-text-alt",
-      "label": "رقم واتساب مع رمز الدولة (فاضي = رقم المتجر)",
+      "label": "الرقم مع رمز الدولة (فاضي = رقم المتجر)",
       "multilanguage": false,
       "id": "tc_wa_number",
       "value": "",
@@ -649,51 +1863,73 @@
       ]
     },
     {
-      "id": "tc_float_side",
-      "type": "items",
-      "format": "dropdown-list",
-      "label": "مكان الأزرار العائمة",
-      "description": null,
-      "labelHTML": null,
-      "icon": "sicon-list",
-      "selected": [
-        {
-          "label": "يسار الشاشة",
-          "value": "left",
-          "key": "67b70860-30fb-4ecd-9f54-d011d2bdbb1c"
-        }
-      ],
-      "options": [
-        {
-          "label": "يسار الشاشة",
-          "value": "left",
-          "key": "67b70860-30fb-4ecd-9f54-d011d2bdbb1c"
-        },
-        {
-          "label": "يمين الشاشة",
-          "value": "right",
-          "key": "115d19b7-7da0-4c44-b05e-790e7f37e6bc"
-        }
-      ],
-      "source": "Manual",
-      "required": false
-    },
-    {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-call",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">زر الاتصال</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">اتصال</div>"
     },
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار زر الاتصال العائم (جوال فقط)",
+      "label": "زر الاتصال العائم",
       "description": null,
       "id": "tc_call_show",
       "format": "switch",
       "required": false,
       "value": false,
       "selected": false
+    },
+    {
+      "id": "tc_call_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "f9392e56-d943-4034-9ff6-9bae6316cd6c"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "284e339b-d529-4098-a90d-690a55ff8641"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "4d71830a-a840-4b12-abad-0e8f0c935b46"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "36370582-28ad-489c-ab67-0d556412663a"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "81288e3e-0300-4c6e-b440-7579cf01c01f"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "f9392e56-d943-4034-9ff6-9bae6316cd6c"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_call_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -720,18 +1956,70 @@
       "type": "static",
       "format": "description",
       "id": "tc-set-h-top",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">زر الرجوع للأعلى</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">للأعلى</div>"
     },
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار زر الرجوع للأعلى",
+      "label": "زر الرجوع للأعلى",
       "description": null,
       "id": "tc_totop_show",
       "format": "switch",
       "required": false,
       "value": true,
       "selected": true
+    },
+    {
+      "id": "tc_totop_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "1ce9ad9d-500c-4bf6-bc37-2737d4882c09"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "8bb6f6bd-1b42-4e45-8210-938e807a8bec"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "438963f8-3ca6-43ca-b920-a5efa3bbf0e8"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "1ce9ad9d-500c-4bf6-bc37-2737d4882c09"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "1aacef14-902e-45ec-8287-b4b3873d3ebd"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "ecdb327b-b716-4a04-9f74-ae82907034f3"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_totop_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "static",
@@ -742,13 +2030,65 @@
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "إظهار نافذة الخصم",
+      "label": "نافذة الخصم",
       "description": null,
       "id": "tc_popup_show",
       "format": "switch",
       "required": false,
       "value": false,
       "selected": false
+    },
+    {
+      "id": "tc_popup_where",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "يظهر على",
+      "description": null,
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "8edd3f2a-4629-45c6-a80e-e4aa8e66af93"
+        }
+      ],
+      "options": [
+        {
+          "label": "كل الشاشات",
+          "value": "all",
+          "key": "8edd3f2a-4629-45c6-a80e-e4aa8e66af93"
+        },
+        {
+          "label": "الكمبيوتر فقط",
+          "value": "desktop",
+          "key": "66e36e8e-f88b-453d-a596-d97f358f5121"
+        },
+        {
+          "label": "الكمبيوتر والتابلت",
+          "value": "wide",
+          "key": "b7a27605-3d28-4474-8661-e31b78ea761f"
+        },
+        {
+          "label": "الجوال والتابلت",
+          "value": "narrow",
+          "key": "2226adbd-c725-45ee-8067-9eb4213a177e"
+        },
+        {
+          "label": "الجوال فقط",
+          "value": "mobile",
+          "key": "bf5d0db5-f57b-44fd-9940-efb37b4a0f94"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "conditions": [
+        {
+          "id": "tc_popup_show",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "string",
@@ -866,24 +2206,24 @@
         {
           "label": "مرة وحدة لكل زائر",
           "value": "once",
-          "key": "be10b4f3-2941-4419-8f31-36b702d3f708"
+          "key": "2de04b7b-3a32-4aff-9422-1173eb4998f2"
         }
       ],
       "options": [
         {
           "label": "مرة وحدة لكل زائر",
           "value": "once",
-          "key": "be10b4f3-2941-4419-8f31-36b702d3f708"
+          "key": "2de04b7b-3a32-4aff-9422-1173eb4998f2"
         },
         {
           "label": "كل زيارة جديدة",
           "value": "session",
-          "key": "7fac89aa-d1cc-4956-bc30-fd9446df6cd0"
+          "key": "5c8f1370-5657-4f43-bb3c-e4237ef4a11d"
         },
         {
           "label": "كل يوم",
           "value": "daily",
-          "key": "322b110f-8b56-42c4-95ac-b709aaa049e3"
+          "key": "ffd17c9d-798c-4b4b-8a83-91f5439ebd01"
         }
       ],
       "source": "Manual",
@@ -898,81 +2238,37 @@
     },
     {
       "type": "static",
-      "format": "description",
-      "id": "tc-set-h-loader",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">صفحة التحميل</div>"
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "إظهار شاشة تحميل (إطار يدور) عند فتح المتجر",
-      "description": "تختفي أول ما تجهز الصفحة",
-      "id": "tc_loader_show",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "static",
-      "format": "description",
-      "id": "tc-set-h-pattern",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">خلفية المتجر</div>"
-    },
-    {
-      "id": "tc_pattern",
-      "type": "items",
-      "format": "dropdown-list",
-      "label": "نقشة خلفية خفيفة",
-      "description": null,
-      "labelHTML": null,
-      "icon": "sicon-list",
-      "selected": [
-        {
-          "label": "بدون",
-          "value": "none",
-          "key": "408c86a6-146b-40fa-8a21-307c6bb26977"
-        }
-      ],
-      "options": [
-        {
-          "label": "بدون",
-          "value": "none",
-          "key": "408c86a6-146b-40fa-8a21-307c6bb26977"
-        },
-        {
-          "label": "آثار إطار",
-          "value": "tread",
-          "key": "8b78053f-d79d-4a0e-b4c1-f35e807e5a16"
-        },
-        {
-          "label": "نقاط",
-          "value": "dots",
-          "key": "3248c43f-bee8-47ae-af9b-41bd94f02e75"
-        }
-      ],
-      "source": "Manual",
-      "required": false
-    },
-    {
-      "type": "static",
       "format": "title",
       "variant": "h6",
-      "id": "tc-set-tires",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">مميزات متجر الإطارات</div>"
+      "id": "tc-set-footer",
+      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الفوتر</div>"
     },
     {
       "type": "static",
       "format": "description",
-      "id": "tc-set-tip-tires",
-      "value": "<div>💡 هاي المميزات خاصة بمتاجر الإطارات. المقاس يُقرأ من اسم المنتج أو الوسوم أو الخيارات (مثل 205/55 R16).</div>"
+      "id": "tc-set-tip-footer",
+      "value": "<div>💡 عمود «تسوّق» من قائمة الهيدر، وعمود «المساعدة» من قائمة الفوتر بلوحة سلة. الجوال والإيميل والسوشال من «بيانات المتجر».</div>"
+    },
+    {
+      "type": "string",
+      "icon": "sicon-typography",
+      "label": "نبذة عن المتجر (فاضي = بدون)",
+      "multilanguage": true,
+      "id": "tc_footer_about",
+      "value": "إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.",
+      "required": false,
+      "format": "textarea",
+      "description": null,
+      "placeholder": "إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.",
+      "minLength": 0,
+      "maxLength": 220
     },
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "«مقاسي المحفوظ» — يتذكر مقاس الزبون ويعلّم المنتجات المناسبة له",
+      "label": "أيقونات السوشال",
       "description": null,
-      "id": "tc_my_size",
+      "id": "tc_footer_social",
       "format": "switch",
       "required": false,
       "value": true,
@@ -981,39 +2277,30 @@
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "شارة سنة الصنع على بطاقة المنتج (من وسم مثل 2026)",
+      "label": "عمود «تسوّق»",
       "description": null,
-      "id": "tc_year_badge",
+      "id": "tc_footer_shop",
       "format": "switch",
       "required": false,
       "value": true,
       "selected": true
     },
     {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "سعر الطقم (4 حبات) والقسط الشهري على بطاقة المنتج",
-      "description": null,
-      "id": "tc_set_price",
-      "format": "switch",
+      "type": "string",
+      "icon": "sicon-format-text-alt",
+      "label": "عنوان العمود",
+      "multilanguage": true,
+      "id": "tc_footer_shop_title",
+      "value": "تسوّق",
       "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "number",
-      "icon": "sicon-pencil-ruler",
-      "label": "عدد دفعات التقسيط (تابي / تمارا)",
-      "id": "tc_installments",
-      "format": "integer",
-      "required": false,
-      "value": 4,
-      "minimum": 2,
-      "maximum": 12,
+      "format": "text",
       "description": null,
+      "placeholder": "تسوّق",
+      "minLength": 0,
+      "maxLength": 30,
       "conditions": [
         {
-          "id": "tc_set_price",
+          "id": "tc_footer_shop",
           "operation": "=",
           "value": true
         }
@@ -1022,200 +2309,9 @@
     {
       "type": "boolean",
       "icon": "sicon-toggle-off",
-      "label": "مقارنة الإطارات (حتى 3)",
+      "label": "عمود «المساعدة»",
       "description": null,
-      "id": "tc_compare",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "id": "tc_preset",
-      "type": "items",
-      "format": "dropdown-list",
-      "label": "قالب ألوان جاهز",
-      "description": "يتقدّم على ألوان المتجر بالأعلى إذا اخترت قالب",
-      "labelHTML": null,
-      "icon": "sicon-list",
-      "selected": [
-        {
-          "label": "بدون — ألواني من الأعلى",
-          "value": "none",
-          "key": "d7827c31-3c85-4f8d-b224-270b2fb208d2"
-        }
-      ],
-      "options": [
-        {
-          "label": "بدون — ألواني من الأعلى",
-          "value": "none",
-          "key": "d7827c31-3c85-4f8d-b224-270b2fb208d2"
-        },
-        {
-          "label": "ذهبي وفحمي (الأصلي)",
-          "value": "gold",
-          "key": "30ca426b-111e-4a7e-878a-e9624d260097"
-        },
-        {
-          "label": "أحمر وأسود (رياضي)",
-          "value": "red",
-          "key": "3e9d8124-7727-4696-89db-c86420bbf751"
-        },
-        {
-          "label": "أزرق وكحلي",
-          "value": "blue",
-          "key": "8e241c21-708b-4e20-87f1-e0c2c5069e73"
-        },
-        {
-          "label": "أخضر وزيتي (بر ودفع رباعي)",
-          "value": "green",
-          "key": "53616da7-ddef-4d83-92de-9603dd09f2a9"
-        }
-      ],
-      "source": "Manual",
-      "required": false
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-general",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الخيارات العامة والألوان</div>"
-    },
-    {
-      "type": "static",
-      "format": "description",
-      "id": "tc-set-tip-general",
-      "value": "<div>💡 ألوان الهوية تنطبق على كل المتجر: الأزرار والعناوين والشارات. القيم الافتراضية هي ألوان تصميم الإطارات (ذهبي وفحمي).</div>"
-    },
-    {
-      "type": "static",
-      "format": "description",
-      "id": "tc-set-h-colors",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">ألوان المتجر</div>"
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-fill",
-      "label": "اللون الرئيسي (الأزرار والتمييز)",
-      "id": "tc_color_primary",
-      "format": "color",
-      "value": "#ffb71b",
-      "required": false,
-      "description": null,
-      "conditions": [
-        {
-          "id": "tc_use_store_color",
-          "operation": "=",
-          "value": false
-        }
-      ]
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-fill",
-      "label": "لون النص فوق اللون الرئيسي",
-      "id": "tc_color_on_primary",
-      "format": "color",
-      "value": "#221800",
-      "required": false,
-      "description": null,
-      "conditions": [
-        {
-          "id": "tc_use_store_color",
-          "operation": "=",
-          "value": false
-        }
-      ]
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-fill",
-      "label": "اللون الداكن (الأقسام الداكنة والعناوين)",
-      "id": "tc_color_dark",
-      "format": "color",
-      "value": "#1d2023",
-      "required": false,
-      "description": null
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-fill",
-      "label": "خلفية الصفحة",
-      "id": "tc_color_bg",
-      "format": "color",
-      "value": "#ffffff",
-      "required": false,
-      "description": null
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-fill",
-      "label": "خلفية الأقسام الفاتحة",
-      "id": "tc_color_bg_alt",
-      "format": "color",
-      "value": "#f5f4f0",
-      "required": false,
-      "description": null
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "استخدام لون هوية المتجر من لوحة سلة بدل اللون الرئيسي",
-      "description": null,
-      "id": "tc_use_store_color",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
-    },
-    {
-      "type": "static",
-      "format": "description",
-      "id": "tc-set-h-dark",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الوضع الداكن</div>"
-    },
-    {
-      "id": "tc_dark_mode",
-      "type": "items",
-      "format": "dropdown-list",
-      "label": "الوضع الداكن",
-      "description": null,
-      "labelHTML": null,
-      "icon": "sicon-list",
-      "selected": [
-        {
-          "label": "مطفأ — المتجر فاتح دائماً",
-          "value": "off",
-          "key": "a1f40ac6-f353-4db5-bfe4-27c50349aa2b"
-        }
-      ],
-      "options": [
-        {
-          "label": "مطفأ — المتجر فاتح دائماً",
-          "value": "off",
-          "key": "a1f40ac6-f353-4db5-bfe4-27c50349aa2b"
-        },
-        {
-          "label": "حسب جهاز الزائر (تلقائي)",
-          "value": "auto",
-          "key": "7d53ffff-93a5-4f71-9001-59045172e98a"
-        },
-        {
-          "label": "مفعّل — المتجر داكن دائماً",
-          "value": "on",
-          "key": "5b4578b8-8cad-494d-9c1f-d10f3475da54"
-        }
-      ],
-      "source": "Manual",
-      "required": false
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "إظهار زر التبديل (فاتح / داكن) للزائر بالهيدر",
-      "description": "الزائر يختار، ويتذكر المتجر اختياره",
-      "id": "tc_dark_toggle",
+      "id": "tc_footer_help",
       "format": "switch",
       "required": false,
       "value": true,
@@ -1223,160 +2319,181 @@
     },
     {
       "type": "string",
-      "icon": "sicon-format-fill",
-      "label": "خلفية الوضع الداكن",
-      "id": "tc_dark_bg",
-      "format": "color",
-      "value": "#121416",
+      "icon": "sicon-format-text-alt",
+      "label": "عنوان العمود",
+      "multilanguage": true,
+      "id": "tc_footer_help_title",
+      "value": "المساعدة",
       "required": false,
-      "description": null
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-fill",
-      "label": "خلفية البطاقات بالوضع الداكن",
-      "id": "tc_dark_surface",
-      "format": "color",
-      "value": "#1b1e21",
-      "required": false,
-      "description": null
-    },
-    {
-      "type": "string",
-      "icon": "sicon-format-fill",
-      "label": "لون النص بالوضع الداكن",
-      "id": "tc_dark_text",
-      "format": "color",
-      "value": "#ecebe6",
-      "required": false,
-      "description": null
+      "format": "text",
+      "description": null,
+      "placeholder": "المساعدة",
+      "minLength": 0,
+      "maxLength": 30,
+      "conditions": [
+        {
+          "id": "tc_footer_help",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "static",
       "format": "description",
-      "id": "tc-set-h-fonts",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الخطوط</div>"
+      "id": "tc-set-h-fcontact",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">التواصل</div>"
     },
     {
-      "id": "tc_font_ar",
-      "type": "items",
-      "format": "dropdown-list",
-      "label": "الخط العربي",
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "رقم الجوال",
       "description": null,
-      "labelHTML": null,
-      "icon": "sicon-list",
-      "selected": [
-        {
-          "label": "IBM Plex Sans Arabic (التصميم)",
-          "value": "ibm",
-          "key": "c9a0afca-d73e-49ae-9a5b-dcb31446de22"
-        }
-      ],
-      "options": [
-        {
-          "label": "IBM Plex Sans Arabic (التصميم)",
-          "value": "ibm",
-          "key": "c9a0afca-d73e-49ae-9a5b-dcb31446de22"
-        },
-        {
-          "label": "Tajawal",
-          "value": "tajawal",
-          "key": "149b4fa3-9563-42b7-8b5d-4adba22330c5"
-        },
-        {
-          "label": "Cairo",
-          "value": "cairo",
-          "key": "08ab397e-cb19-4b7a-98e2-8359ed08b774"
-        },
-        {
-          "label": "Almarai",
-          "value": "almarai",
-          "key": "027dc68f-0b4f-4d47-a364-b80464e1d9c7"
-        },
-        {
-          "label": "خط المتجر من لوحة سلة",
-          "value": "store",
-          "key": "0c33bc05-c9ea-4f67-a3c9-02972649c995"
-        }
-      ],
-      "source": "Manual",
-      "required": false
+      "id": "tc_footer_phone",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
     },
     {
-      "id": "tc_font_en",
-      "type": "items",
-      "format": "dropdown-list",
-      "label": "خط الأرقام والإنجليزي",
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "الإيميل",
       "description": null,
-      "labelHTML": null,
-      "icon": "sicon-list",
-      "selected": [
+      "id": "tc_footer_email",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "string",
+      "icon": "sicon-format-text-alt",
+      "label": "المدينة أو العنوان (فاضي = بدون)",
+      "multilanguage": true,
+      "id": "tc_footer_city",
+      "value": "الرياض",
+      "required": false,
+      "format": "text",
+      "description": null,
+      "placeholder": "الرياض",
+      "minLength": 0,
+      "maxLength": 60
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "خانة الاشتراك بالعروض",
+      "description": null,
+      "id": "tc_footer_news",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "items",
+      "icon": "sicon-link",
+      "label": "رابط الاشتراك (Mailchimp، Brevo…)",
+      "id": "tc_footer_news_link",
+      "value": null,
+      "description": "فاضي = تنفتح رسالة لإيميل المتجر",
+      "required": false,
+      "format": "variable-list",
+      "searchable": true,
+      "source": "custom",
+      "sources": [
         {
-          "label": "Archivo (التصميم)",
-          "value": "archivo",
-          "key": "6ca3f13b-62f8-487b-b5b7-bc837d68bc02"
-        }
-      ],
-      "options": [
-        {
-          "label": "Archivo (التصميم)",
-          "value": "archivo",
-          "key": "6ca3f13b-62f8-487b-b5b7-bc837d68bc02"
+          "label": "منتج",
+          "key": "products",
+          "value": "products"
         },
         {
-          "label": "Inter",
-          "value": "inter",
-          "key": "b0cbb9fa-101b-4f3e-82e4-695370544a7d"
+          "label": "منتجات مع وسم",
+          "key": "products_tags",
+          "value": "products_tags"
         },
         {
-          "label": "نفس الخط العربي",
-          "value": "same",
-          "key": "8442f585-6821-4de4-baf6-8df9e6f5eae8"
+          "label": "تصنيف",
+          "key": "categories",
+          "value": "categories"
+        },
+        {
+          "label": "ماركة تجارية",
+          "key": "brands",
+          "value": "brands"
+        },
+        {
+          "label": "صفحة تعريفية",
+          "key": "pages",
+          "value": "pages"
+        },
+        {
+          "label": "مقالة",
+          "key": "blog_articles",
+          "value": "blog_articles"
+        },
+        {
+          "label": "تصنيف ضمن المدونة",
+          "key": "blog_categories",
+          "value": "blog_categories"
+        },
+        {
+          "label": "التخفيضات",
+          "key": "offers_link",
+          "value": "offers_link"
+        },
+        {
+          "label": "الماركات التجارية",
+          "key": "brands_link",
+          "value": "brands_link"
+        },
+        {
+          "label": "المدونة",
+          "key": "blog_link",
+          "value": "blog_link"
+        },
+        {
+          "label": "رابط خارجي",
+          "key": "custom",
+          "value": "custom"
         }
       ],
-      "source": "Manual",
-      "required": false
+      "conditions": [
+        {
+          "id": "tc_footer_news",
+          "operation": "=",
+          "value": true
+        }
+      ]
     },
     {
       "type": "static",
       "format": "description",
-      "id": "tc-set-h-shape",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الشكل</div>"
+      "id": "tc-set-h-flegal",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">أسفل الفوتر</div>"
     },
     {
-      "id": "tc_radius",
-      "type": "items",
-      "format": "dropdown-list",
-      "label": "زوايا البطاقات والأزرار",
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "شعارات الدفع (المفعّلة بمتجرك)",
       "description": null,
-      "labelHTML": null,
-      "icon": "sicon-list",
-      "selected": [
-        {
-          "label": "ناعمة (التصميم)",
-          "value": "soft",
-          "key": "4f487212-bf7f-413b-913e-49aadd6a63c1"
-        }
-      ],
-      "options": [
-        {
-          "label": "ناعمة (التصميم)",
-          "value": "soft",
-          "key": "4f487212-bf7f-413b-913e-49aadd6a63c1"
-        },
-        {
-          "label": "حادة",
-          "value": "sharp",
-          "key": "ec816f09-c0a4-4d08-ab05-93ca338e9d9b"
-        },
-        {
-          "label": "دائرية",
-          "value": "round",
-          "key": "76dbb0d3-9905-4138-bcb5-4ce9f3619b05"
-        }
-      ],
-      "source": "Manual",
-      "required": false
+      "id": "tc_footer_payments",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "السجل التجاري وشارات الثقة",
+      "description": null,
+      "id": "tc_footer_legal",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true
     },
     {
       "id": "squar_photo_bg_image_size",

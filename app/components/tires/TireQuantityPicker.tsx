@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 
-const QUICK_QUANTITIES = [1, 2, 4];
+/** per tire: 1 / 2 / 4 tires; per set (price is for 4 tires): 1 / 2 sets — the number is the unit Salla's API counts */
+const QUICK_TIRES = [1, 2, 4];
+const QUICK_SETS = [1, 2];
 
 type QuantityInput = HTMLElement & {
   setValue?: (value: number, fireChangeEvent?: boolean) => Promise<HTMLElement>;
@@ -9,7 +11,7 @@ type QuantityInput = HTMLElement & {
 };
 
 /**
- * Tire quantity shortcuts (1 / 2 / 4 tires) plus the running total. Drives the
+ * Tire quantity shortcuts (1 / 2 / 4 tires, or 1 / 2 sets when the store prices by the set) plus the running total. Drives the
  * product form's own `<salla-quantity-input>` so the cart gets the same number,
  * and follows it back when the shopper uses the +/- stepper instead.
  */
@@ -18,11 +20,13 @@ export function TireQuantityPicker({
   unitPrice,
   currency,
   lang = 'ar',
+  unit = 'tire',
 }: {
   productId: number;
   unitPrice: number;
   currency?: ReactNode;
   lang?: string;
+  unit?: 'tire' | 'set';
 }) {
   const [quantity, setQuantity] = useState(1);
 
@@ -52,17 +56,23 @@ export function TireQuantityPicker({
 
   const total = Math.round(unitPrice * quantity * 100) / 100;
   const en = lang === 'en';
+  const bySet = unit === 'set';
+  const quick = bySet ? QUICK_SETS : QUICK_TIRES;
+  const label = (value: number) => {
+    if (bySet) return value === 1 ? (en ? '1 set' : 'طقم') : en ? `${value} sets` : value === 2 ? 'طقمين' : `${value} أطقم`;
+    return value === 1 ? (en ? '1 tire' : '1 إطار') : value === 4 ? (en ? '4 (set)' : '4 (طقم)') : String(value);
+  };
 
   // design/store/product.html → .qrow (1 / 2 / 4 quick picks) + .ptot (running total);
   // the stepper itself is Salla's quantity input in the form, kept in sync both ways
   return (
     <div className="tc-s tc-qbox">
       <div className="qrow">
-        <span>{en ? 'Quantity' : 'الكمية'}</span>
+        <span>{bySet ? (en ? 'Sets' : 'عدد الأطقم') : (en ? 'Quantity' : 'الكمية')}</span>
         <div className="qbtn">
-          {QUICK_QUANTITIES.map((value) => (
+          {quick.map((value) => (
             <button key={value} type="button" className={quantity === value ? 'on' : undefined} aria-pressed={quantity === value} onClick={() => choose(value)}>
-              {value === 1 ? (en ? '1 tire' : '1 إطار') : value === 4 ? (en ? '4 (set)' : '4 (طقم)') : value}
+              {label(value)}
             </button>
           ))}
         </div>

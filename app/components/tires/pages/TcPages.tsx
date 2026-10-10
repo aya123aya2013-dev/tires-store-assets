@@ -3,7 +3,11 @@
  * Salla features as the engine pages (likes, comments, hooks), the design's markup around them.
  * Titles / switches: the «باقي الصفحات» settings group.
  */
+import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { brand as brandApi } from '@salla.sa/twilight-theme-engine/api/brands';
+import { useWishlist } from '@salla.sa/twilight-theme-engine/hooks/useWishlist';
 import { SallaComments } from '@salla.sa/twilight-components-react/comments';
 import { HookSlot } from '@salla.sa/twilight-theme-engine/hooks';
 import { useBlogLike } from '@salla.sa/twilight-theme-engine/hooks/useBlogLike';
@@ -27,6 +31,8 @@ const EN: Record<string, string> = {
   'ابحث بمقاسك': 'Search by size',
   'مقالات ذات صلة': 'Related articles',
   'الصفحة التالية': 'Next page',
+  'تعذّر تحميل باقي الماركات': 'Could not load the rest of the brands',
+  'حاول مرة ثانية': 'Try again',
 };
 
 const useS = () => {
@@ -60,16 +66,38 @@ function Empty({ title, text }: { title: string; text: string }) {
 export function TcWishlistPage({ page, products, pagination, query }: WishlistPageProps) {
   const s = useS();
   const t = usePT();
+  const wishlist = useWishlist();
   const next = (pagination as { next?: unknown } | undefined)?.next;
   const cur = Number((query as { page?: unknown } | undefined)?.page) || 1;
+
+  // The page list comes from the loader, so a heart removed here would stay on screen. Once the
+  // wishlist state has loaded (a product reads as «in the wishlist»), a later «not in it» = removed.
+  const seen = useRef(new Set<number>());
+  const [gone, setGone] = useState<Set<number>>(new Set());
+  useEffect(() => {
+    let changed = false;
+    const nextGone = new Set(gone);
+    for (const p of products) {
+      if (wishlist.has(p.id)) {
+        seen.current.add(p.id);
+        if (nextGone.delete(p.id)) changed = true;
+      } else if (seen.current.has(p.id) && !nextGone.has(p.id)) {
+        nextGone.add(p.id);
+        changed = true;
+      }
+    }
+    if (changed) setGone(nextGone);
+  });
+  const shown = products.filter(p => !gone.has(p.id));
+
   return (
     <div className="tc-s tc-page tc-wish">
       <TcPageTop page={page} title={t(s.tc_pg_wish_title, 'المفضلة')} />
       <section className="wrap tc-wish-body">
         <HookSlot name="customer:wishlist.start" />
-        {products.length ? (
+        {shown.length ? (
           <div className="s-products-list-wrapper s-products-list-vertical-cards tc-cols-set tc-wgrid">
-            {products.map((p, i) => <ProductCard key={p.id} product={p} index={i} layout="vertical" />)}
+            {shown.map((p, i) => <ProductCard key={p.id} product={p} index={i} layout="vertical" />)}
           </div>
         ) : (
           <Empty title={t(s.tc_pg_wish_empty, 'ما في إطارات بالمفضلة لسا.')} text={t(undefined, 'اضغط ♡ على أي إطار وبتلاقيه هون.')} />
@@ -84,21 +112,43 @@ export function TcWishlistPage({ page, products, pagination, query }: WishlistPa
 }
 
 // ---------- brands ----------
-export function TcBrandsPage({ page, brands }: BrandsPageProps) {
+export function TcBrandsPage({ page, brands, ...rest }: BrandsPageProps) {
   const s = useS();
   const t = usePT();
   const logos = asBool(s.tc_pg_brands_logos, true);
+  // the loader returns the first page only; the remaining pages are fetched the same way the home marquee does
+  const hasNext = !!(rest as { pagination?: { next?: unknown } }).pagination?.next;
+  const more = useQuery({
+    queryKey: ['tc-brands-rest'],
+    enabled: hasNext,
+    queryFn: async () => {
+      const all: typeof brands = [];
+      for (let p = 2; p <= 10; p++) {
+        const res = await brandApi.list(p);
+        all.push(...(res.items as unknown as typeof brands));
+        if (!res.next) break;
+      }
+      return all;
+    },
+  });
+  const known = new Set(brands.map(b => b.id));
+  const list = [...brands, ...(more.data ?? []).filter(b => !known.has(b.id))];
   return (
     <div className="tc-s tc-page tc-brands">
       <TcPageTop page={page} title={t(s.tc_pg_brands_title, 'ماركات أصلية، من الوكيل.')} />
       <section className="wrap bgrid">
-        {brands.map(b => (
+        {list.map(b => (
           <Link key={b.id} to={b.url}>
             {logos && b.logo ? <Image className="tc-blogo" src={b.logo} alt={b.name} aspectRatio="5/3" /> : <b>{b.name}</b>}
             {logos && b.logo && <small>{b.name}</small>}
           </Link>
         ))}
       </section>
+      {more.isError && (
+        <p className="wrap tc-more" role="alert">
+          {t(undefined, 'تعذّر تحميل باقي الماركات')} <button type="button" className="btn btn-line" onClick={() => void more.refetch()}>{t(undefined, 'حاول مرة ثانية')}</button>
+        </p>
+      )}
     </div>
   );
 }

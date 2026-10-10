@@ -59,24 +59,24 @@
         {
           "label": "بيع وتركيب",
           "value": "install",
-          "key": "59644686-0582-45f5-be89-ecb403165db2"
+          "key": "1be3ad36-d43a-459b-baec-d79eec8cc070"
         }
       ],
       "options": [
         {
           "label": "بيع وتركيب",
           "value": "install",
-          "key": "59644686-0582-45f5-be89-ecb403165db2"
+          "key": "1be3ad36-d43a-459b-baec-d79eec8cc070"
         },
         {
           "label": "بيع فقط (توصيل)",
           "value": "sale",
-          "key": "3a89eb75-3304-4502-9eb5-b1d811d5e75d"
+          "key": "e076a0f4-94d6-4ada-94ee-6a555190c343"
         },
         {
           "label": "بيع وتركيب وصيانة",
           "value": "service",
-          "key": "bdec1fa8-2d33-4d47-a7ba-44fedcbfde5f"
+          "key": "5cddf9d3-4ab9-4c9e-9195-71aaef5a1c70"
         }
       ],
       "source": "Manual",
@@ -98,19 +98,19 @@
         {
           "label": "للحبة الواحدة",
           "value": "tire",
-          "key": "a82f64bf-87dc-4dc9-8a2d-227a44178b95"
+          "key": "5acd1d42-65b9-428e-a1f7-a8310c5de0d2"
         }
       ],
       "options": [
         {
           "label": "للحبة الواحدة",
           "value": "tire",
-          "key": "a82f64bf-87dc-4dc9-8a2d-227a44178b95"
+          "key": "5acd1d42-65b9-428e-a1f7-a8310c5de0d2"
         },
         {
           "label": "للطقم (4 حبات)",
           "value": "set",
-          "key": "c3e42586-bebf-4d3b-ad40-5f82ae1d34a2"
+          "key": "1acd9886-9e8a-47e8-b14b-ca0a1c7531d7"
         }
       ],
       "source": "Manual",
@@ -132,24 +132,24 @@
         {
           "label": "1",
           "value": "1",
-          "key": "90497a53-29a5-43d4-914d-342369e7f99a"
+          "key": "70789931-7cf8-40c5-a09e-2d1568b1468d"
         }
       ],
       "options": [
         {
           "label": "1",
           "value": "1",
-          "key": "90497a53-29a5-43d4-914d-342369e7f99a"
+          "key": "70789931-7cf8-40c5-a09e-2d1568b1468d"
         },
         {
           "label": "2",
           "value": "2",
-          "key": "89c39490-0136-4bb8-b6d8-eeeba2f2a3eb"
+          "key": "a667bcef-3a7e-48b5-8c7c-4a15e44af011"
         },
         {
           "label": "4",
           "value": "4",
-          "key": "e7670c3a-3cb4-4d39-aa87-72990ff5018d"
+          "key": "e5ed7dc2-f2c2-4dc4-bb4c-d3cfbd97ef3c"
         }
       ],
       "source": "Manual",
@@ -178,29 +178,29 @@
         {
           "label": "بأي مكان (الاسم أو الوسوم أو الخيارات)",
           "value": "all",
-          "key": "6c92deb8-2e84-4cde-8561-c0d4ca0ae2ad"
+          "key": "a6d21ee7-a7cc-4957-ab27-a48dca0edc7c"
         }
       ],
       "options": [
         {
           "label": "بأي مكان (الاسم أو الوسوم أو الخيارات)",
           "value": "all",
-          "key": "6c92deb8-2e84-4cde-8561-c0d4ca0ae2ad"
+          "key": "a6d21ee7-a7cc-4957-ab27-a48dca0edc7c"
         },
         {
           "label": "اسم المنتج",
           "value": "name",
-          "key": "9f29e72e-b492-4f77-b8f5-f47b6429ecd3"
+          "key": "8a1b5e88-5d59-4c36-9b72-528e28e1f944"
         },
         {
           "label": "الوسوم",
           "value": "tags",
-          "key": "6cd79640-4ab7-4502-884f-7a96f43a91e1"
+          "key": "44e038b3-103f-49ff-94a7-e9021ff0d5d6"
         },
         {
           "label": "خيارات المنتج",
           "value": "options",
-          "key": "a5f82dd1-c48b-4a17-8622-13e11edf45c1"
+          "key": "9c567990-eb78-4829-9c28-aefdda02c811"
         }
       ],
       "source": "Manual",
@@ -385,34 +385,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "2fbb8989-bb86-45f1-98eb-5350cd88d046"
+          "key": "1d4096df-4b72-475f-964f-c98a4faf783f"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "d0c2b1a5-1390-4794-a903-a9d5056ec644"
+          "key": "040d8371-7cc5-4b00-b424-40f94efd4745"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "939f8f1c-4811-44af-99c4-a29bd7265639"
+          "key": "f6428a03-8fd4-4728-97d5-d62a7ddfa4ad"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "2fbb8989-bb86-45f1-98eb-5350cd88d046"
+          "key": "1d4096df-4b72-475f-964f-c98a4faf783f"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "2f72fa85-7b99-492c-9185-431a026b5e80"
+          "key": "22766b54-e989-43b7-b567-c30a2dd806ae"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "f89ea074-836e-4c70-b69b-d731d0bc3278"
+          "key": "f1f0b671-a54a-4594-ada2-159b7462d42c"
         }
       ],
       "source": "Manual",
@@ -462,34 +462,34 @@
         {
           "label": "بدون — ألواني أنا",
           "value": "none",
-          "key": "d02f764e-97f5-4681-b975-4a8de578ead0"
+          "key": "83e1398b-3173-49f6-b902-030d73b83732"
         }
       ],
       "options": [
         {
           "label": "بدون — ألواني أنا",
           "value": "none",
-          "key": "d02f764e-97f5-4681-b975-4a8de578ead0"
+          "key": "83e1398b-3173-49f6-b902-030d73b83732"
         },
         {
           "label": "ذهبي وفحمي (الأصلي)",
           "value": "gold",
-          "key": "6971cf54-7f85-4817-aedf-158f38ab8cae"
+          "key": "90dc1961-6354-4204-9381-5100aa1bd03f"
         },
         {
           "label": "أحمر وأسود (رياضي)",
           "value": "red",
-          "key": "23f4ef77-c872-42f3-a6a0-87db7743afe8"
+          "key": "cd7d5324-edfe-4641-84bb-5b620f8ca56c"
         },
         {
           "label": "أزرق وكحلي",
           "value": "blue",
-          "key": "1f2e67ee-85f8-4268-99db-222e0ade988c"
+          "key": "bc9f4510-22a7-435d-a939-27616eda9794"
         },
         {
           "label": "أخضر وزيتي (بر ودفع رباعي)",
           "value": "green",
-          "key": "97f4372f-0b55-40ae-82c3-673af2783e80"
+          "key": "53c20dfa-d6b1-4d70-8a2d-3a8e8878f8eb"
         }
       ],
       "source": "Manual",
@@ -644,34 +644,34 @@
         {
           "label": "IBM Plex Sans Arabic (التصميم)",
           "value": "ibm",
-          "key": "05c71824-dc3a-46ca-bfad-7b6f634f5393"
+          "key": "2f2f9960-c628-4da7-9497-925e748bdaa9"
         }
       ],
       "options": [
         {
           "label": "IBM Plex Sans Arabic (التصميم)",
           "value": "ibm",
-          "key": "05c71824-dc3a-46ca-bfad-7b6f634f5393"
+          "key": "2f2f9960-c628-4da7-9497-925e748bdaa9"
         },
         {
           "label": "Tajawal",
           "value": "tajawal",
-          "key": "e72e4d71-6bf4-4968-a82c-79ae7ddb59ef"
+          "key": "fc913338-5a92-41a2-8a43-d6097d4edcbc"
         },
         {
           "label": "Cairo",
           "value": "cairo",
-          "key": "746e2be0-26b0-4356-9f2c-11998af831ad"
+          "key": "cc8ccbec-4b75-4ff3-b655-4d4ae3280759"
         },
         {
           "label": "Almarai",
           "value": "almarai",
-          "key": "dfe0e305-ebda-4b5a-b2f6-05760a4ae49f"
+          "key": "6e208e73-40d7-45e9-b4b0-aaf62d16a991"
         },
         {
           "label": "خط المتجر من لوحة سلة",
           "value": "store",
-          "key": "bd31d730-f544-4da7-9308-cb4e8ad76f73"
+          "key": "9e75e33c-478a-4107-96e3-f2fe53fd0488"
         }
       ],
       "source": "Manual",
@@ -693,24 +693,24 @@
         {
           "label": "Archivo (التصميم)",
           "value": "archivo",
-          "key": "f3b12343-846f-4d4e-8040-eac7b6c6d313"
+          "key": "010612ba-5c4e-4f51-b707-ea5fd12b7e11"
         }
       ],
       "options": [
         {
           "label": "Archivo (التصميم)",
           "value": "archivo",
-          "key": "f3b12343-846f-4d4e-8040-eac7b6c6d313"
+          "key": "010612ba-5c4e-4f51-b707-ea5fd12b7e11"
         },
         {
           "label": "Inter",
           "value": "inter",
-          "key": "87c14db7-1398-408e-b2aa-683e0fb126db"
+          "key": "f25fe74e-8ed5-4df2-9aa3-facd481c2e2a"
         },
         {
           "label": "نفس الخط العربي",
           "value": "same",
-          "key": "019bbb7e-d9ae-481e-8f5c-3ba5e84f3cc2"
+          "key": "04751f93-d37e-451f-92f5-2b05712824aa"
         }
       ],
       "source": "Manual",
@@ -732,24 +732,24 @@
         {
           "label": "ناعمة (التصميم)",
           "value": "soft",
-          "key": "597851cb-e5ef-4a3d-9aed-52b989887b14"
+          "key": "d3485c46-adb6-4e64-85e7-9b5b190055d0"
         }
       ],
       "options": [
         {
           "label": "ناعمة (التصميم)",
           "value": "soft",
-          "key": "597851cb-e5ef-4a3d-9aed-52b989887b14"
+          "key": "d3485c46-adb6-4e64-85e7-9b5b190055d0"
         },
         {
           "label": "حادة",
           "value": "sharp",
-          "key": "1cf22d5c-bece-4b9f-93de-56c4f922277f"
+          "key": "9e2cfffd-5c7d-4aa6-aefd-c19b2ce19541"
         },
         {
           "label": "دائرية",
           "value": "round",
-          "key": "056a2e1f-0a68-446b-b7f5-dcaa3df455f7"
+          "key": "c803d856-326f-4d94-b37d-8fec8c66f9e7"
         }
       ],
       "source": "Manual",
@@ -797,34 +797,34 @@
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "fbc76e02-5a35-40b0-8c90-3a7fa669ee69"
+          "key": "94b64378-0f8e-4807-8855-6ab98a339371"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "fbc76e02-5a35-40b0-8c90-3a7fa669ee69"
+          "key": "94b64378-0f8e-4807-8855-6ab98a339371"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "2e3af300-be86-494b-9726-9dd9db6d7150"
+          "key": "d00b5c49-04b3-4dbc-a7f0-3d5481d74359"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "c00b41b9-3657-48f7-acb6-d83892af8d8e"
+          "key": "b564d0d5-2047-4229-a1f2-9c086af3febd"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "c9e06744-082c-471c-a1a6-464f304f68b9"
+          "key": "2e220575-9e7b-42f2-8e9f-921caf7e2a78"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "5a34e369-a750-4ab4-a191-07b327bfb27a"
+          "key": "22e4be83-3573-44a3-a0c7-aa789f79f0a6"
         }
       ],
       "source": "Manual",
@@ -903,34 +903,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "6b6eec9c-19e1-40ec-aa8c-99dfab98719a"
+          "key": "05a0b9c7-592d-494d-9229-de484debca22"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "8d834d25-b38a-4277-844a-14fe8c3c9f10"
+          "key": "79fa0ad4-cffd-41a5-ac4b-be1d84286968"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "3c5eac1d-36f0-473c-a420-fda8ef431c1b"
+          "key": "b338a469-8983-4e6c-8b38-ce7fc4bc2aaf"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "6b6eec9c-19e1-40ec-aa8c-99dfab98719a"
+          "key": "05a0b9c7-592d-494d-9229-de484debca22"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "5cbf099f-2bd8-4246-a41e-9a4236216961"
+          "key": "6d3976fe-4225-4a7b-8d0a-b34d0941bcb6"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "d54d8d06-4819-4e7f-99df-30647da074ea"
+          "key": "d69ee74a-a96c-490c-b37e-97bfbb75562b"
         }
       ],
       "source": "Manual",
@@ -1083,34 +1083,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "ab488fbc-64d9-425b-ae54-b51c348ee805"
+          "key": "ae604f70-7803-48f0-b8ff-22bc714a4888"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "03b141a4-9422-4bf3-bf21-ea3c5c6c5142"
+          "key": "ad26b594-593a-48ac-8de5-711f33c99708"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "f4e0f913-54e7-4d5e-a53d-777bfe36a6da"
+          "key": "851046c2-3818-4d84-b3b9-24c8617625ac"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "ab488fbc-64d9-425b-ae54-b51c348ee805"
+          "key": "ae604f70-7803-48f0-b8ff-22bc714a4888"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "2acb2d41-71a9-4a88-af1e-e9c1a68deecd"
+          "key": "7ef2194a-4e9d-4f99-924f-1c0491b792f7"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "89e73046-bb82-4bcd-8ac0-2b15821a1d0f"
+          "key": "e50052db-6879-42e8-82d1-5408fa437f73"
         }
       ],
       "source": "Manual",
@@ -1155,19 +1155,19 @@
         {
           "label": "شعار متجرك (من لوحة سلة)",
           "value": "store",
-          "key": "2a7d802c-f94b-408f-8bfb-53d860a94505"
+          "key": "a20ad643-8702-4567-89e6-37e0168e1b7e"
         }
       ],
       "options": [
         {
           "label": "شعار متجرك (من لوحة سلة)",
           "value": "store",
-          "key": "2a7d802c-f94b-408f-8bfb-53d860a94505"
+          "key": "a20ad643-8702-4567-89e6-37e0168e1b7e"
         },
         {
           "label": "علامة الإطار + اسم المتجر",
           "value": "mark",
-          "key": "0e6999c8-f960-4e4d-9cb2-f7b5edfad62f"
+          "key": "686c12ec-43ee-4a35-a908-213e2fd07739"
         }
       ],
       "source": "Manual",
@@ -1410,34 +1410,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "148e7f98-8c14-4afb-9389-1ae0fe18c9c2"
+          "key": "11bfa856-71c0-459a-b79b-89be10069890"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "fa47e48a-1f02-41c6-8e1e-a5e881c2a067"
+          "key": "aefb33e5-58f3-47fa-bc71-e4a5f2fc43b5"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "d580c4ee-5cc2-427d-81e4-92be32b1d1ac"
+          "key": "7b5749d1-42da-44e2-b333-d82322e7dca3"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "148e7f98-8c14-4afb-9389-1ae0fe18c9c2"
+          "key": "11bfa856-71c0-459a-b79b-89be10069890"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "d43d7d15-e9bb-41cf-bfe7-7db7a7a33478"
+          "key": "ec70f5b4-bb62-4cf1-8084-35fdf58d7db9"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "da1a17e6-d5ec-4879-bf0b-6b1e4b3ce384"
+          "key": "a879ce2f-9ea8-476d-b584-274eada8a441"
         }
       ],
       "source": "Manual",
@@ -1652,19 +1652,19 @@
         {
           "label": "يظهر السعر",
           "value": "show",
-          "key": "e7f90c5f-a481-4274-b4b5-a6f02b7aceb6"
+          "key": "3ccce855-09bf-4b85-bef8-6e7d1009e5e7"
         }
       ],
       "options": [
         {
           "label": "يظهر السعر",
           "value": "show",
-          "key": "e7f90c5f-a481-4274-b4b5-a6f02b7aceb6"
+          "key": "3ccce855-09bf-4b85-bef8-6e7d1009e5e7"
         },
         {
           "label": "«اطلب السعر» عبر واتساب بدل السعر",
           "value": "ask",
-          "key": "afaa0dc1-69c9-487a-8b2b-7d76b1415e90"
+          "key": "b1c9c9b2-76e5-4c22-8eff-37d2cd7d5628"
         }
       ],
       "source": "Manual",
@@ -1701,24 +1701,24 @@
         {
           "label": "4",
           "value": "4",
-          "key": "24777761-db79-4898-8779-217e58d2e5da"
+          "key": "b78f9b33-8050-4eee-9ff3-42b8f649109c"
         }
       ],
       "options": [
         {
           "label": "3",
           "value": "3",
-          "key": "55205968-118e-4cbb-9b32-4754a5d3806b"
+          "key": "15cd14d1-b65d-497a-8467-63c639aba53e"
         },
         {
           "label": "4",
           "value": "4",
-          "key": "24777761-db79-4898-8779-217e58d2e5da"
+          "key": "b78f9b33-8050-4eee-9ff3-42b8f649109c"
         },
         {
           "label": "5",
           "value": "5",
-          "key": "752888f5-fdaf-4f19-8672-f0595461af7a"
+          "key": "0711a028-a8f9-4716-9b40-f77b76175b7b"
         }
       ],
       "source": "Manual",
@@ -1740,19 +1740,19 @@
         {
           "label": "3",
           "value": "3",
-          "key": "6961ff49-4447-41ce-a7a7-0e2daba07464"
+          "key": "cc1b4806-6522-4bcb-846d-1f9af1902e87"
         }
       ],
       "options": [
         {
           "label": "2",
           "value": "2",
-          "key": "3b26ab5a-de15-4f45-a1ca-34aedc6fe9a0"
+          "key": "73a51277-e514-46da-9aa3-4b9b1d1ecf2d"
         },
         {
           "label": "3",
           "value": "3",
-          "key": "6961ff49-4447-41ce-a7a7-0e2daba07464"
+          "key": "cc1b4806-6522-4bcb-846d-1f9af1902e87"
         }
       ],
       "source": "Manual",
@@ -1774,19 +1774,19 @@
         {
           "label": "2",
           "value": "2",
-          "key": "fa79dcb9-8771-495a-8ed8-4e8b7fe6b4ef"
+          "key": "5b4639d9-85cf-459b-91fc-74281f73174c"
         }
       ],
       "options": [
         {
           "label": "1",
           "value": "1",
-          "key": "31b3dba8-5a0f-4368-bfa4-d541775d3f65"
+          "key": "a05dc9a2-e174-4692-81e2-4f3c96ed7d0d"
         },
         {
           "label": "2",
           "value": "2",
-          "key": "fa79dcb9-8771-495a-8ed8-4e8b7fe6b4ef"
+          "key": "5b4639d9-85cf-459b-91fc-74281f73174c"
         }
       ],
       "source": "Manual",
@@ -1849,24 +1849,24 @@
         {
           "label": "الرئيسية · الأقسام · مقاسي · السلة · حسابي",
           "value": "size",
-          "key": "99427de8-059c-423f-b31a-03e804566add"
+          "key": "9534bc24-c276-44e1-87bf-72571fd32931"
         }
       ],
       "options": [
         {
           "label": "الرئيسية · الأقسام · مقاسي · السلة · حسابي",
           "value": "size",
-          "key": "99427de8-059c-423f-b31a-03e804566add"
+          "key": "9534bc24-c276-44e1-87bf-72571fd32931"
         },
         {
           "label": "الرئيسية · الأقسام · واتساب · السلة · حسابي",
           "value": "whatsapp",
-          "key": "ed72d903-e370-4987-9be6-7b9671059654"
+          "key": "894abf6f-aa61-4ca1-943c-88f4c420df00"
         },
         {
           "label": "الرئيسية · الأقسام · السلة · حسابي",
           "value": "basic",
-          "key": "762d22e8-a316-4237-8aef-b4f59d2a1b28"
+          "key": "6cb18d25-0f01-43a7-a68b-1998f69fd47d"
         }
       ],
       "source": "Manual",
@@ -1921,19 +1921,19 @@
         {
           "label": "يسار الشاشة",
           "value": "left",
-          "key": "9a73cf57-32e1-4f7a-a608-25a79d63e446"
+          "key": "f66ca68b-9014-493c-b73d-a29d1cd38a49"
         }
       ],
       "options": [
         {
           "label": "يسار الشاشة",
           "value": "left",
-          "key": "9a73cf57-32e1-4f7a-a608-25a79d63e446"
+          "key": "f66ca68b-9014-493c-b73d-a29d1cd38a49"
         },
         {
           "label": "يمين الشاشة",
           "value": "right",
-          "key": "57655b3a-2366-4931-bc0e-e97a2846dafb"
+          "key": "58913135-f607-487e-9427-e17c4764c788"
         }
       ],
       "source": "Manual",
@@ -2008,34 +2008,34 @@
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "1d1fc690-0d8f-4d30-9d29-d30399f54731"
+          "key": "d61cb354-76af-493d-90d1-41c91f1bead4"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "1d1fc690-0d8f-4d30-9d29-d30399f54731"
+          "key": "d61cb354-76af-493d-90d1-41c91f1bead4"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "28b11bee-cf46-49df-8839-868040c14352"
+          "key": "9384cb03-f051-4825-b780-79ad018e7a0b"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "223de6d2-d869-43fe-866d-6d20010c4bb4"
+          "key": "98c06e57-67df-4fd3-9544-13befd5d668d"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "eaf7eb98-bc65-4b56-91f9-28541eb03a85"
+          "key": "87f4a8d6-978a-41ad-bd7a-a6ad398217b2"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "8cb6d0b0-797b-4249-84e5-d572ccba20e9"
+          "key": "ce760da2-6506-4d7c-8a0d-0d9c788c32d0"
         }
       ],
       "source": "Manual",
@@ -2114,34 +2114,34 @@
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "2f94960e-db38-49e6-910f-1fff17c695b3"
+          "key": "ce55cc5c-7a29-4361-822d-c94225ca779b"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "93336386-0e52-4f99-827d-e0d5c6be1afa"
+          "key": "3fd45c35-213a-4b27-873e-16eceebf8f98"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "3ca5a83f-ab78-402c-bb27-e139e6c10f3c"
+          "key": "5f0a8d84-9014-4637-86cd-2be2fd59d8c5"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "24bc1a1b-4b68-4750-92c5-36ea5426a945"
+          "key": "bc340ce1-d49f-455c-9f5d-e023cfdddb53"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "ef5e4c11-3354-45d9-ac6e-797e8e227037"
+          "key": "34132b41-aee8-44b7-83fd-693a0e569b2b"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "2f94960e-db38-49e6-910f-1fff17c695b3"
+          "key": "ce55cc5c-7a29-4361-822d-c94225ca779b"
         }
       ],
       "source": "Manual",
@@ -2220,34 +2220,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "8ab03410-dc65-4a0f-b707-db3318d4ba02"
+          "key": "dab5d0b2-a862-4da4-a0b6-a292006279f9"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "efb69141-8372-415a-a96e-08065c97742f"
+          "key": "3cdc0d4f-c81a-4342-b7ed-40f2f0950855"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "c1994a8c-377d-4bee-b2ca-0b61158e9b1f"
+          "key": "84374087-2e70-40f9-9bee-67cf74102d93"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "8ab03410-dc65-4a0f-b707-db3318d4ba02"
+          "key": "dab5d0b2-a862-4da4-a0b6-a292006279f9"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "06ade1d1-fc74-49b4-acd6-4d17ad37d647"
+          "key": "f4755c82-6675-4b87-9cf3-ffe0b6da11b1"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "20a07b4d-4607-46dc-81d2-9d2ed66d474b"
+          "key": "09f5117d-57db-4095-bb38-76e96bfea402"
         }
       ],
       "source": "Manual",
@@ -2301,34 +2301,34 @@
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "6ba7a9ac-a444-44c8-a726-af59281015dc"
+          "key": "a4b7cd6c-8433-40b2-b16f-7b4da5ddccf4"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "6ba7a9ac-a444-44c8-a726-af59281015dc"
+          "key": "a4b7cd6c-8433-40b2-b16f-7b4da5ddccf4"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "96a2c681-2e2f-482e-bd5c-3945d5f93a3f"
+          "key": "33f5a456-8dc9-4ef0-9d72-90e23e233051"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "90587d8a-a866-47ec-9526-efb8aa5bdf6c"
+          "key": "42a50417-4969-48ee-92c1-c3a555f554a8"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "cf21d170-8d13-4e17-96a4-156f1ec3029d"
+          "key": "f2da493f-6ac2-4f7f-89cf-44e4cedc964f"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "bbe51920-046c-4a35-bfd7-422decf667e9"
+          "key": "00c9f309-48b2-44c3-8377-affd106af8f9"
         }
       ],
       "source": "Manual",
@@ -2481,24 +2481,24 @@
         {
           "label": "مرة وحدة لكل زائر",
           "value": "once",
-          "key": "73c9550c-3291-44d6-a6a1-2fa5eb7be0cb"
+          "key": "d684272b-1fb7-4b52-b54c-90058ce98346"
         }
       ],
       "options": [
         {
           "label": "مرة وحدة لكل زائر",
           "value": "once",
-          "key": "73c9550c-3291-44d6-a6a1-2fa5eb7be0cb"
+          "key": "d684272b-1fb7-4b52-b54c-90058ce98346"
         },
         {
           "label": "كل زيارة جديدة",
           "value": "session",
-          "key": "67fb089f-3dd4-47e5-a20b-f881f902b89c"
+          "key": "1d1fad05-8504-4056-8484-20fc7023aa8b"
         },
         {
           "label": "كل يوم",
           "value": "daily",
-          "key": "2c0dc7f9-a60d-4744-822c-176e5b08e52e"
+          "key": "f4ff9932-eb88-4aac-ad26-87387e99c67f"
         }
       ],
       "source": "Manual",
@@ -2878,6 +2878,130 @@
       "variant": "h6",
       "id": "tc-set-product",
       "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">صفحة المنتج</div>",
+      "groups": [
+        "general",
+        "product"
+      ]
+    },
+    {
+      "type": "static",
+      "format": "description",
+      "id": "tc-set-h-pprice",
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">السعر والمقاس</div>",
+      "groups": [
+        "general",
+        "product"
+      ]
+    },
+    {
+      "id": "tc_p_note",
+      "type": "items",
+      "format": "dropdown-list",
+      "label": "سطر الضريبة تحت السعر",
+      "description": "اختر حسب أسعار متجرك. لا يغيّر السعر نفسه",
+      "labelHTML": null,
+      "icon": "sicon-list",
+      "selected": [
+        {
+          "label": "«شامل الضريبة»",
+          "value": "incl",
+          "key": "b609a89f-3330-4f9d-929d-150ccaefc805"
+        }
+      ],
+      "options": [
+        {
+          "label": "«شامل الضريبة»",
+          "value": "incl",
+          "key": "b609a89f-3330-4f9d-929d-150ccaefc805"
+        },
+        {
+          "label": "«الأسعار غير شاملة الضريبة»",
+          "value": "excl",
+          "key": "7ea3af2b-9e36-447e-9300-d67c0b45b064"
+        },
+        {
+          "label": "بدون سطر",
+          "value": "none",
+          "key": "d78cb31d-727c-4a80-b4bc-df4a74d38529"
+        }
+      ],
+      "source": "Manual",
+      "required": false,
+      "groups": [
+        "general",
+        "product"
+      ]
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "شارة «وفّر %» عند التخفيض",
+      "description": null,
+      "id": "tc_p_save",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true,
+      "groups": [
+        "general",
+        "product"
+      ]
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "سطر التقييم تحت العنوان",
+      "description": null,
+      "id": "tc_p_rating",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true,
+      "groups": [
+        "general",
+        "product"
+      ]
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "شارة المقاس",
+      "description": null,
+      "id": "tc_p_sizebadge",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true,
+      "groups": [
+        "general",
+        "product"
+      ]
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "اختصارات الكمية (1 · 2 · 4)",
+      "description": "لو سعرك للطقم تصير: طقم · طقمين",
+      "id": "tc_p_qty",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true,
+      "groups": [
+        "general",
+        "product"
+      ]
+    },
+    {
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "زر «أضف للمفضلة»",
+      "description": null,
+      "id": "tc_p_fav",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true,
       "groups": [
         "general",
         "product"
@@ -4796,24 +4920,24 @@
         {
           "label": "مطفأ — المتجر فاتح",
           "value": "off",
-          "key": "0667be6c-9269-400c-b7b4-e1ab867d4017"
+          "key": "09742eae-f209-4389-9437-e369ed5b70f9"
         }
       ],
       "options": [
         {
           "label": "مطفأ — المتجر فاتح",
           "value": "off",
-          "key": "0667be6c-9269-400c-b7b4-e1ab867d4017"
+          "key": "09742eae-f209-4389-9437-e369ed5b70f9"
         },
         {
           "label": "مفعّل — المتجر داكن",
           "value": "on",
-          "key": "97b316a9-4f0c-45e0-8909-22fbfcbe691b"
+          "key": "f357b7fc-6e3c-4136-8bcb-3662974de567"
         },
         {
           "label": "تلقائي — حسب جهاز الزائر، مع زر تبديل",
           "value": "auto",
-          "key": "3726f6f7-7aa4-4771-bf83-8002089102c3"
+          "key": "25b1b72d-c026-4e24-a08b-7ca19fd0459b"
         }
       ],
       "source": "Manual",
@@ -4835,19 +4959,19 @@
         {
           "label": "فحمي (يناسب الهوية)",
           "value": "charcoal",
-          "key": "69925f8a-132c-4af2-a319-7eda5e1b2ea1"
+          "key": "c9171849-c44b-4308-aff1-843faf925062"
         }
       ],
       "options": [
         {
           "label": "فحمي (يناسب الهوية)",
           "value": "charcoal",
-          "key": "69925f8a-132c-4af2-a319-7eda5e1b2ea1"
+          "key": "c9171849-c44b-4308-aff1-843faf925062"
         },
         {
           "label": "أسود",
           "value": "black",
-          "key": "362fe654-863a-4f8d-a10d-8cfa12304f43"
+          "key": "b4a140bd-31ad-4b73-944b-7131bf0149db"
         }
       ],
       "source": "Manual",
@@ -4891,34 +5015,34 @@
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "0ff2f85a-13bb-4474-a671-c5509ba5d7d6"
+          "key": "eb0f67fe-f6ce-435c-9070-93dd5d096629"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "0ff2f85a-13bb-4474-a671-c5509ba5d7d6"
+          "key": "eb0f67fe-f6ce-435c-9070-93dd5d096629"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "8fa645d1-ab1c-41c8-9d78-1594ec7e015e"
+          "key": "1f8970de-65ea-483d-90c3-31fbc711f569"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "7ef3df95-5994-45d3-8bde-a1bd08c467a0"
+          "key": "826889d5-d113-4881-b2eb-432718779957"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "21867445-91b5-4a0e-9c4e-c969b226a4c6"
+          "key": "702c4b67-1d9c-4453-8da6-3b2f6b949fd9"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "32ac6da3-4049-459b-8a62-48ad40936172"
+          "key": "1a75241d-9056-49bd-b63f-625fdb4ba7a1"
         }
       ],
       "source": "Manual",
@@ -4952,24 +5076,24 @@
         {
           "label": "بدون",
           "value": "none",
-          "key": "84004d9b-5b7a-4fb4-b4ef-5b80c23a890b"
+          "key": "aafd42f7-c335-4100-9064-8029cfa003c9"
         }
       ],
       "options": [
         {
           "label": "بدون",
           "value": "none",
-          "key": "84004d9b-5b7a-4fb4-b4ef-5b80c23a890b"
+          "key": "aafd42f7-c335-4100-9064-8029cfa003c9"
         },
         {
           "label": "آثار إطار",
           "value": "tread",
-          "key": "55d84c82-78ff-4dd0-b2b0-0624983ccb2c"
+          "key": "1babcd43-992b-45eb-b5ee-59ade59a0f76"
         },
         {
           "label": "نقاط",
           "value": "dots",
-          "key": "ae60302b-f067-4390-a49a-a77b503ae525"
+          "key": "56083f33-cde4-48fd-81d6-b7b2d52364bd"
         }
       ],
       "source": "Manual",

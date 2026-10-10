@@ -210,6 +210,13 @@ const G_FOOTER = [
 // settings Salla already reads (breadcrumb, tags, sticky bar…) are slotted in by id below
 const G_PRODUCT = [
   title('tc-set-product', 'صفحة المنتج'),
+  sub('tc-set-h-pprice', 'السعر والمقاس'),
+  F.dd('tc_p_note', 'سطر الضريبة تحت السعر', [['«شامل الضريبة»', 'incl'], ['«الأسعار غير شاملة الضريبة»', 'excl'], ['بدون سطر', 'none']], 'incl', { description: 'اختر حسب أسعار متجرك. لا يغيّر السعر نفسه' }),
+  F.sw('tc_p_save', 'شارة «وفّر %» عند التخفيض', true),
+  F.sw('tc_p_rating', 'سطر التقييم تحت العنوان', true),
+  F.sw('tc_p_sizebadge', 'شارة المقاس', true),
+  F.sw('tc_p_qty', 'اختصارات الكمية (1 · 2 · 4)', true, 'لو سعرك للطقم تصير: طقم · طقمين'),
+  F.sw('tc_p_fav', 'زر «أضف للمفضلة»', true),
   sub('tc-set-h-ptrust', 'الوعود تحت السعر'),
   F.sw('tc_p_trust', 'إظهار الوعود الثلاثة', true),
   F.text('tc_p_trust_1', 'الوعد 1 (فاضي = بدون)', 'أصلي بضمان الوكيل', 40),

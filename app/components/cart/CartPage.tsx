@@ -35,12 +35,14 @@ function CartPageContent({ page }: CartPageProps) {
   usePageConfig(page);
   const { data: loyaltyPoints } = useQuery(loyalty.queries.points());
 
-  const { data: cartId } = useQuery(cart.queries.currentId());
+  const idQuery = useQuery(cart.queries.currentId());
+  const cartId = idQuery.data;
 
-  const { data: cartData } = useQuery({
+  const detailQuery = useQuery({
     ...cart.queries.detail(cartId!),
     enabled: !!cartId,
   });
+  const cartData = detailQuery.data;
 
   // Refetch after a row mutates its quantity / gets deleted — the SDK doesn't
   // push cart changes back into React, so item totals and the summary would
@@ -60,13 +62,29 @@ function CartPageContent({ page }: CartPageProps) {
     };
   }, [refetchCart]);
 
-  const isLoading = cartId == null || cartData === undefined;
-
-  if (isLoading) {
+  // pending = still fetching; a resolved `null` id (no cart yet) and a failed request are NOT loading
+  if (idQuery.isPending || (!!cartId && detailQuery.isPending)) {
     return <CartSkeleton />;
   }
 
-  // No cart: it was already turned into an order, shown empty like Twig.
+  if (idQuery.isError || detailQuery.isError) {
+    return (
+      <div className="tc-s tc-page tc-cart">
+        <section className="wrap ptop-sec">
+          <Breadcrumb page={page} />
+          <h1 className="ph1">{ct(cs.tc_cart_title, 'سلة المشتريات')}</h1>
+        </section>
+        <section className="wrap">
+          <div className="empty tc-cart-empty" role="alert">
+            <h3>{ct(undefined, 'تعذّر تحميل السلة')}</h3>
+            <button type="button" className="btn btn-gold" onClick={() => { void idQuery.refetch(); if (cartId) void detailQuery.refetch(); }}>{ct(undefined, 'حاول مرة ثانية')}</button>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
+  // No cart yet (null id), or it was already turned into an order: shown empty like Twig.
   if (!cartData || cartData.items.length === 0) {
     return (
       <div className="tc-s tc-page tc-cart">
@@ -136,7 +154,7 @@ function CartPageContent({ page }: CartPageProps) {
             </div>
           )}
 
-          <TcAppointment items={cartData.items as { name?: string; quantity?: number }[]} />
+          <TcAppointment items={cartData.items.map(i => ({ name: (i as { product_name?: string; name?: string }).product_name ?? (i as { name?: string }).name, quantity: i.quantity }))} />
 
           <SallaOffer />
           <HookSlot name="cart:items.end" />

@@ -7,7 +7,7 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useNavigate, useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { asBool, makeT, opt, useLang } from '../../home/fields';
-import { PASSENGER_WIDTHS, TIRE_RATIOS, TIRE_RIMS, TRUCK_WIDTHS, HEAVY_RIMS, formatTireSize, isTruckWidth, parseTireSize, tireSizeQuery } from '../sizes';
+import { PASSENGER_WIDTHS, TIRE_RATIOS, TIRE_RIMS, TRUCK_WIDTHS, HEAVY_RIMS, HEAVY_METRIC_WIDTHS, HEAVY_INCH_WIDTHS, formatTireSize, isTruckWidth, parseTireSize, tireSizeQuery } from '../sizes';
 import type { TireSize } from '../sizes';
 import { saveMySize, useMySize, useMySizeEnabled } from '../features/MySize';
 import { useWhatsappNumber, waLink } from '../../layout/contact';
@@ -42,7 +42,8 @@ export function TcFbar({ initial }: { initial?: TireSize | null }) {
   const remember = useMySizeEnabled();
   const mine = parseTireSize(useMySize());
   const start = initial ?? mine;
-  const widths = [...PASSENGER_WIDTHS, ...TRUCK_WIDTHS];
+  // every width the parser understands, so a searched 11R22.5 / 385/65 R22.5 is shown as typed, not swapped for 205
+  const widths = [...PASSENGER_WIDTHS, ...HEAVY_METRIC_WIDTHS, ...TRUCK_WIDTHS, ...HEAVY_INCH_WIDTHS];
   const rims = [...TIRE_RIMS, ...HEAVY_RIMS];
   const [w, setW] = useState(() => sel(start?.width, widths, '205'));
   const [r, setR] = useState(() => sel(start?.ratio, TIRE_RATIOS, '55'));

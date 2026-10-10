@@ -15,8 +15,8 @@ import { ProductDetails } from './ProductDetails';
 import { AddToCartForm } from './AddToCartForm';
 import { BlockHookSlot } from '../common/BlockHookSlot';
 import { ProductsSlider } from '../home/ProductsSlider';
-import { TcDelivery, TcProductFaq, TcProductHead, TcSpecs, TcTrust } from '../tires/product/TcProductParts';
-import { asBool, makeT, useLang } from '../home/fields';
+import { TcDelivery, TcFav, TcProductFaq, TcProductHead, TcSpecs, TcTrust } from '../tires/product/TcProductParts';
+import { asBool, makeT, opt, useLang } from '../home/fields';
 import { useCurrency } from '../home/tc/useCurrency';
 import { WarrantyLine } from '../tires/features/Warranty';
 import { TireQuantityPicker } from '../tires/TireQuantityPicker';
@@ -141,12 +141,13 @@ export function ProductPage({ product: initialProduct, page }: ProductPageProps)
 
           <div className="pinfo" id="buybox">
             <HookSlot name="product:details.start" />
-            <TcProductHead product={initialProduct} />
+            <TcProductHead product={product} />
             <TcTrust />
-            {!product.is_out_of_stock && !product.is_hidden_quantity && (
+            {asBool(ts.tc_p_qty, true) && !product.is_out_of_stock && !product.is_hidden_quantity && (
               <TireQuantityPicker
                 productId={product.id}
-                unitPrice={product.is_on_sale ? product.sale_price : Number(product.price)}
+                unit={opt(ts.tc_sale_unit, 'tire') === 'set' ? 'set' : 'tire'}
+                unitPrice={product.is_on_sale ? Number(product.sale_price) : Number(product.starting_price || product.price)}
                 currency={cur(product.currency as string | undefined)}
                 lang={lang}
               />
@@ -155,6 +156,7 @@ export function ProductPage({ product: initialProduct, page }: ProductPageProps)
             <HookSlot name="product:single.form.start" />
             <AddToCartForm product={product} stickyAddToCart={theme.settings.sticky_add_to_cart} />
             <HookSlot name="product:single.form.end" />
+            <TcFav productId={product.id} />
             <WarrantyLine />
             <SallaQuickOrder className="mt-5 block" />
             <HookSlot name="product:details.end" />

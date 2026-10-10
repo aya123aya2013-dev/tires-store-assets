@@ -5,17 +5,18 @@
  * Nothing here is tied to one store.
  */
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
+import { useWishlist } from '@salla.sa/twilight-theme-engine/hooks/useWishlist';
 import type { Product } from '@salla.sa/twilight-theme-engine/types';
 import { asBool, makeT, opt, useLang } from '../../home/fields';
 import { Icon } from '../../home/tc/Icon';
 import { useCurrency } from '../../home/tc/useCurrency';
-import { formatTireSize, parseTireSize, specTexts } from '../sizes';
+import { formatTireSize, isTruckWidth, parseTireSize, specTexts } from '../sizes';
 import { useSpecSources } from '../features/cardSettings';
 import { FitsMine } from '../features/MySize';
 
 type S = Record<string, unknown>;
 const EN: Record<string, string> = {
-  'المقاس': 'Size', 'تقييم': 'reviews', 'سعر الإطار الواحد شامل الضريبة': 'Price per tire, VAT included',
+  'المقاس': 'Size', 'تقييم': 'reviews', 'يبدأ من': 'Starting from', 'أضف للمفضلة': 'Add to wishlist', 'في المفضلة': 'In your wishlist', 'الأسعار غير شاملة الضريبة': 'Prices exclude VAT', 'سعر الإطار الواحد شامل الضريبة': 'Price per tire, VAT included',
   'سعر الطقم (4 إطارات) شامل الضريبة': 'Price per set of 4, VAT included', 'وفّر': 'Save',
   'أصلي بضمان الوكيل': 'Genuine, manufacturer warranty', 'تركيب مجاني بالرياض': 'Free fitting in Riyadh', 'قسّطها مع تابي وتمارا': 'Split it with Tabby & Tamara',
   'استلام وتركيب — مجاناً': 'Pick up & fitting — free', 'نركّبها على جنوطك بنفس اليوم': 'We fit them on your rims the same day',
@@ -50,7 +51,8 @@ const labeled = (texts: string[], keys: RegExp) => {
 
 export function readSpecs(product: Product, sources: Parameters<typeof specTexts>[1]) {
   const texts = specTexts(product as unknown as Parameters<typeof specTexts>[0], sources);
-  const all = [product.name, ...texts].filter(Boolean) as string[];
+  // `texts` already holds the name only when the merchant chose «الاسم» (same rule as search and cards)
+  const all = texts;
   const size = all.map(x => parseTireSize(x)).find(Boolean) ?? null;
   const ls = all.map(x => x.replace(/\d{3}\/\d{2}\s*Z?R\s*\d{2}(\.5)?/i, ' ').match(LOAD_SPEED)).find(Boolean);
   const year = all.map(x => x.match(/(?<![\d/.])(20[2-3]\d)(?![\d/.])/)?.[1]).find(Boolean) ?? '';
@@ -66,7 +68,7 @@ export function readSpecs(product: Product, sources: Parameters<typeof specTexts
   };
 }
 
-/** `.pinfo` head: brand, name, rating, size badge, price, note */
+/** `.pinfo` head: brand, name, rating, size badge, price, note — `product` is the LIVE one (price follows the chosen options) */
 export function TcProductHead({ product }: { product: Product }) {
   const s = useProductSettings();
   const lang = useLang();
@@ -75,22 +77,29 @@ export function TcProductHead({ product }: { product: Product }) {
   const sources = useSpecSources();
   const spec = readSpecs(product, sources);
   const perSet = opt(s.tc_sale_unit, 'tire') === 'set';
-  const price = product.is_on_sale && product.sale_price ? Number(product.sale_price) : Number(product.price);
-  const old = product.is_on_sale && Number(product.regular_price) > price ? Number(product.regular_price) : 0;
+  const startingPrice = (product as { starting_price?: string | number | null }).starting_price;
+  const onSale = !!(product.is_on_sale && product.sale_price);
+  // a product whose options change the price shows «يبدأ من» + the lowest price until one is chosen
+  const price = onSale ? Number(product.sale_price) : Number(startingPrice || product.price);
+  const old = onSale && Number(product.regular_price) > price ? Number(product.regular_price) : 0;
   const pct = old ? Math.round((1 - price / old) * 100) : 0;
   const rating = product.rating as { stars?: number; count?: number } | undefined;
   const size = spec.size ? formatTireSize(spec.size) : '';
+  const note = opt(s.tc_p_note, 'incl');
+  const noteText = note === 'excl'
+    ? t('الأسعار غير شاملة الضريبة', 'الأسعار غير شاملة الضريبة')
+    : perSet ? t('سعر الطقم (4 إطارات) شامل الضريبة', 'سعر الطقم (4 إطارات) شامل الضريبة') : t('سعر الإطار الواحد شامل الضريبة', 'سعر الإطار الواحد شامل الضريبة');
   return (
     <>
       {product.brand?.name && <span className="pbrand">{product.brand.name}</span>}
       <h1>{product.name}</h1>
-      {!!rating?.count && (
+      {asBool(s.tc_p_rating, true) && !!rating?.count && (
         <div className="prate">
           <span className="st" aria-hidden="true">{'★★★★★'.slice(0, Math.round(rating.stars ?? 5)).padEnd(5, '☆')}</span>
           {Number(rating.stars ?? 0).toFixed(1)} · <a className="link" href="#prev">{rating.count} {t('تقييم', 'تقييم')}</a>
         </div>
       )}
-      {size && (
+      {asBool(s.tc_p_sizebadge, true) && size && (
         <div className="psizebadge">
           {t('المقاس', 'المقاس')} <b dir="ltr">{size}</b>
           {(spec.load || spec.speed) && <><span>·</span><span dir="ltr">{spec.load}{spec.speed}</span></>}
@@ -99,12 +108,29 @@ export function TcProductHead({ product }: { product: Product }) {
         </div>
       )}
       <div className="pp">
+        {!onSale && !!startingPrice && <small className="pfrom">{t('يبدأ من', 'يبدأ من')} </small>}
         <b>{price}</b> {cur(product.currency as string | undefined)}
         {old > 0 && <s>{old}</s>}
-        {pct > 0 && <span className="psave">{t('وفّر', 'وفّر')} {pct}%</span>}
+        {asBool(s.tc_p_save, true) && pct > 0 && <span className="psave">{t('وفّر', 'وفّر')} {pct}%</span>}
       </div>
-      <p className="pnote">{perSet ? t('سعر الطقم (4 إطارات) شامل الضريبة', 'سعر الطقم (4 إطارات) شامل الضريبة') : t('سعر الإطار الواحد شامل الضريبة', 'سعر الإطار الواحد شامل الضريبة')}{spec.year ? ` · ${lang === 'en' ? 'made' : 'صنع'} ${spec.year}` : ''}</p>
+      {(note !== 'none' || !!spec.year) && (
+        <p className="pnote">{note !== 'none' ? noteText : ''}{spec.year ? `${note !== 'none' ? ' · ' : ''}${lang === 'en' ? 'made' : 'صنع'} ${spec.year}` : ''}</p>
+      )}
     </>
+  );
+}
+
+/** `.pfav` — wishlist toggle under the buy buttons on every screen size (design/store/product.html) */
+export function TcFav({ productId }: { productId: number }) {
+  const s = useProductSettings();
+  const t = makeT(useLang(), EN);
+  const wishlist = useWishlist();
+  if (!asBool(s.tc_p_fav, true)) return null;
+  const on = wishlist.has(productId);
+  return (
+    <button type="button" className="pfav" aria-pressed={on} onClick={() => wishlist.toggle(productId)}>
+      <Icon name="heart" /> {on ? t('في المفضلة', 'في المفضلة') : t('أضف للمفضلة', 'أضف للمفضلة')}
+    </button>
   );
 }
 
@@ -167,7 +193,9 @@ export function TcSpecs({ product }: { product: Product }) {
   const rows: [string, string][] = [];
   if (sp.size) {
     rows.push(['المقاس', formatTireSize(sp.size)]);
-    rows.push(['العرض', `${sp.size.width} ${t('مم', 'مم')}`]);
+    // 205 → mm · 11R22.5 → inches · 900/16 is the trade code (no unit)
+    const w = sp.size.width;
+    rows.push(['العرض', Number(w) < 100 ? `${w} ${t('بوصة', 'بوصة')}` : isTruckWidth(w) ? w : `${w} ${t('مم', 'مم')}`]);
     if (sp.size.ratio) rows.push(['نسبة الارتفاع', `${sp.size.ratio}%`]);
     rows.push(['قطر الجنط', `${sp.size.rim} ${t('بوصة', 'بوصة')}`]);
   }

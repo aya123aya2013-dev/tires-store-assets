@@ -25,6 +25,25 @@
   .tc-dm-row small { font-size: 12.5px; color: var(--muted); }
 
   .psizebadge .ctag { margin-inline-start: 4px; }
+
+  /* gallery 1:1 with design/store/pages.css .gmain / .gghost / .gthumbs — the engine slider keeps
+     zoom, video and 3D; only its look changes: tinted square, tire at 78%, rim size behind it */
+  .tc-gallery > .sidebar { position: relative; overflow: visible; }
+  .tc-gallery .gghost {
+    position: absolute; top: 0; inset-inline: 0; aspect-ratio: 1 / 1; z-index: 0; pointer-events: none;
+    display: grid; place-items: center; font-family: var(--en); font-weight: 900; font-style: italic;
+    font-size: 200px; color: #ebe9e3; direction: ltr; line-height: 1;
+  }
+  .tc-gallery .details-slider { position: relative; z-index: 1; background: var(--bg-2); border-radius: var(--r); overflow: hidden; }
+  .tc-gallery .details-slider .swiper-slide > div { display: grid; place-items: center; aspect-ratio: 1 / 1; }
+  .tc-gallery .details-slider .swiper-slide img { width: 78%; height: 78%; object-fit: contain; mix-blend-mode: multiply; background: transparent; }
+  .tc-gallery .s-slider-thumbs { margin-top: 12px; }
+  .tc-gallery .slide--one-fourth { background: var(--bg-2); border: 1.5px solid transparent; border-radius: 12px; padding: 8px; aspect-ratio: 1 / 1; }
+  .tc-gallery .swiper-slide-thumb-active .slide--one-fourth,
+  .tc-gallery .slide--one-fourth.is-active { border-color: var(--ink); }
+  .tc-gallery .slide--one-fourth img { object-fit: contain; mix-blend-mode: multiply; background: transparent; }
+  .tc-gallery .gmain--empty { display: grid; place-items: center; aspect-ratio: 1 / 1; background: var(--bg-2); border-radius: var(--r); color: var(--muted); font-size: 14px; text-align: center; padding: 24px; }
+  @media (max-width: 640px) { .tc-gallery .gghost { font-size: 120px; } }
 }
 
 /* the description block keeps the merchant's rich text readable */

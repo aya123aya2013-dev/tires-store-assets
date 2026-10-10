@@ -6,9 +6,11 @@
  *    WhatsApp (or writes it in the order notes) and the store confirms the time.
  * Every piece has its own switch in the «السلة» settings group.
  */
+import { useId } from 'react';
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { asBool, makeT, opt, useLang } from '../../home/fields';
 import { useWhatsappNumber, waLink } from '../../layout/contact';
+import { useCurrency } from '../../home/tc/useCurrency';
 
 const EN: Record<string, string> = {
   'سلة المشتريات': 'Shopping cart',
@@ -21,6 +23,8 @@ const EN: Record<string, string> = {
   'موعد التركيب': 'Installation time',
   'احجز موعدك على واتساب': 'Book on WhatsApp',
   'ملخص الطلب': 'Order summary',
+  'تعذّر تحميل السلة': 'Could not load your cart',
+  'حاول مرة ثانية': 'Try again',
   'دفع آمن عبر سلة · مدى · Apple Pay · تابي · تمارا': 'Secure checkout · Mada · Apple Pay · Tabby · Tamara',
 };
 
@@ -43,20 +47,22 @@ export const cartSubtotal = (cart: Record<string, unknown>): number =>
 export function TcFreeShip({ subtotal, currency }: { subtotal: number; currency?: string }) {
   const s = useCartSettings();
   const t = useCartT();
+  const cur = useCurrency();
+  const labelId = useId();
   const goal = Number(s.tc_cart_free_ship) || 0;
   if (!asBool(s.tc_cart_ship_bar, true) || goal <= 0) return null;
   const left = Math.max(0, Math.ceil(goal - subtotal));
   const pct = Math.min(100, Math.round((subtotal / goal) * 100));
   return (
     <div className="box tc-fship">
-      <p>
+      <p id={labelId}>
         {left > 0 ? (
-          <>{t(undefined, 'باقي')} <b>{left.toLocaleString('en')} {currency}</b> {t(undefined, 'وتوصيلك مجاني')}</>
+          <>{t(undefined, 'باقي')} <b>{left.toLocaleString('en')} {cur(currency)}</b> {t(undefined, 'وتوصيلك مجاني')}</>
         ) : (
           <b>{t(undefined, 'مبروك! التوصيل مجاني')}</b>
         )}
       </p>
-      <div className="tc-fship-bar" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+      <div className="tc-fship-bar" role="progressbar" aria-labelledby={labelId} aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-valuetext={`${pct}%`}>
         <span style={{ width: `${pct}%` }} />
       </div>
     </div>

@@ -11,6 +11,8 @@ import { ArrowRightIcon } from '../icons';
 import { useHydrated } from '../common/useHydrated';
 import { useMobileViewport } from '../common/useMobileViewport';
 import { ProductMetadata } from './ProductMetadata';
+import { readSpecs } from '../tires/product/TcProductParts';
+import { useSpecSources } from '../tires/features/cardSettings';
 
 export interface ProductGalleryProps {
   product: Product;
@@ -38,6 +40,8 @@ export function ProductGallery({ product }: ProductGalleryProps) {
   const sliderId = `details-slider-${product.id}`;
   // same default as the setting (contain) when the store sends nothing (S3b-16)
   const objectFit = theme.settings.slider_background_size ?? 'contain';
+  const specSources = useSpecSources();
+  const rim = readSpecs(product, specSources).size?.rim ?? '';
   const hydrated = useHydrated();
   const isMobile = useMobileViewport();
   // `onAfterInit` fires once Swiper actually finishes laying the slider out —
@@ -128,6 +132,14 @@ export function ProductGallery({ product }: ProductGalleryProps) {
         </div>
       </div>
 
+      {/* design/store/product.html `.gghost` — the rim size, huge, behind the tire (decorative) */}
+      {rim && images.length > 0 && <span className="gghost" aria-hidden="true">R{rim}</span>}
+      {images.length === 0 && (
+        <div className="gmain gmain--empty" role="img" aria-label={product.name}>
+          <span aria-hidden="true">{product.name}</span>
+        </div>
+      )}
+
       <SallaSlider
         id={sliderId}
         className="details-slider rounded-md image-slider"
@@ -174,7 +186,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
           // — before hydration this content is still plain unstyled light-DOM
           // children of `salla-slider`, so it was briefly visible on mobile
           // until Stencil moved/wrapped it and the vendor-class rule could apply.
-          <div slot="thumbs" className="hidden md:block">
+          <div slot="thumbs">
             {images.map((image, index) => (
               <ThumbSlide
                 key={image.id ?? image.three_d_image_url ?? image.video_url ?? image.url}

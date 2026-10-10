@@ -276,11 +276,16 @@ describe('#19 lineup', () => {
 });
 
 describe('#20 reviews', () => {
-  it('manual reviews in the design; store mode uses Salla reviews', () => {
-    const html = renderToString(<Reviews data={{}} />);
-    expect(html).toContain('عبدالعزيز · الرياض');
+  it('auto asks Salla first (panel stays hidden while it checks), store = Salla only, manual = own list or samples', () => {
+    const auto = renderToString(<Reviews data={{}} />);
+    expect(auto).toContain('salla-reviews-mock');
+    expect(auto).toContain('hidden');
+    expect(auto).not.toContain('عبدالعزيز');
     expect(renderToString(<Reviews data={{ source: 'store' }} />)).toContain('salla-reviews-mock');
-    expect(renderToString(<Reviews data={{ reviews: [] }} />)).toBe('');
+    // manual: the merchant's own cards; empty list → sample cards, unless the samples switch is off
+    expect(renderToString(<Reviews data={{ source: 'manual' }} />)).toContain('عبدالعزيز · الرياض');
+    expect(renderToString(<Reviews data={{ source: 'manual', reviews: [] }} />)).toContain('عبدالعزيز · الرياض');
+    expect(renderToString(<Reviews data={{ source: 'manual', reviews: [], show_samples: false }} />)).toBe('');
   });
 });
 

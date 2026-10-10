@@ -2,9 +2,15 @@
  * Component #20 — آراء العملاء (`home.reviews`).
  * Design: design/final.html → `.rpanel` (light panel, .sec-head, `.rp3` cards: gold quote,
  * «name · city», text, product line).
- * Source: the merchant's own reviews (exact design), or the store's real ratings through Salla's
- * reviews component (Salla renders those cards, inside our panel and heading).
+ * Source (the merchant picks):
+ *  - auto (default): the store's real ratings through Salla's reviews component; a brand-new store with
+ *    none yet shows our sample cards instead (switch «show_samples»), and they disappear by themselves
+ *    the day a real rating exists;
+ *  - store: only Salla's real ratings;
+ *  - manual: the merchant's own list (sample cards while the list is empty, same switch).
+ * Salla renders its own cards inside our panel and heading.
  */
+import { useEffect, useRef, useState } from 'react';
 import { SallaReviews } from '@salla.sa/twilight-components-react/reviews';
 import { asBool, makeT, opt, rows, useLang } from './fields';
 import type { Row } from './fields';
@@ -26,24 +32,51 @@ const DEFAULTS = [
   { name: 'يزيد', city: 'الدمام', text: 'صوّرت الكفر وأرسلته واتساب، وردّوا علي بالمقاس والسعر خلال دقائق.', product: 'تاش 275/65 R18' },
 ];
 
+type StoreState = 'checking' | 'has' | 'empty';
+
+/** Salla's own reviews cards, plus a check whether the store has any (its component renders nothing when empty). */
+function StoreReviews({ limit, onState }: { limit: number; onState: (s: StoreState) => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let tries = 0;
+    const id = window.setInterval(() => {
+      tries += 1;
+      // a rendered card carries a name + the review text; an empty state is a short line
+      if ((ref.current?.textContent ?? '').trim().length > 30) { window.clearInterval(id); onState('has'); }
+      else if (tries >= 8) { window.clearInterval(id); onState('empty'); }
+    }, 500);
+    return () => window.clearInterval(id);
+  }, [onState]);
+  return <div ref={ref}><SallaReviews limit={limit} sort="latest" type="store" /></div>;
+}
+
 export function Reviews({ data }: { data: Row }) {
   const t = makeT(useLang(), EN);
-  const fromStore = opt(data.source, 'manual') === 'store';
+  const source = opt(data.source, 'auto');
+  const showSamples = asBool(data.show_samples, true);
   const limit = Math.min(12, Math.max(1, Number(data.limit) || 3));
-  const list = rows(data.reviews, 'reviews')
+  const [store, setStore] = useState<StoreState>('checking');
+  const own = rows(data.reviews, 'reviews')
     .map(r => {
       const name = t(r.name, ''), city = t(r.city, '');
       return { name: [name, city].filter(Boolean).join(' · '), text: t(r.text, ''), product: t(r.product, '') };
     })
     .filter(r => r.text);
-  // a saved list (even empty) is the merchant's choice — defaults only when the field was never saved
-  const reviews = (Array.isArray(data.reviews) ? list : DEFAULTS.map(d => ({ name: [t(d.name, d.name), t(d.city, d.city)].join(' · '), text: t(d.text, d.text), product: t(d.product, d.product) }))).slice(0, limit);
-  if (!fromStore && !reviews.length) return null;
+  const samples = showSamples ? DEFAULTS.map(d => ({ name: [t(d.name, d.name), t(d.city, d.city)].join(' · '), text: t(d.text, d.text), product: t(d.product, d.product) })) : [];
+  const fromStore = source !== 'manual';
+  // cards drawn by us: the merchant's own list, else samples (only while there is nothing real to show)
+  const mine = source === 'manual' ? (own.length ? own : samples) : store === 'empty' ? samples : [];
+  const cards = mine.slice(0, limit);
+  const showStore = fromStore && store !== 'empty';
+  if (source === 'manual' && !cards.length) return null;
+  if (source === 'auto' && store === 'empty' && !cards.length) return null;
   const lead = t(data.text, 'تقييمات موثّقة من عملاء المتجر.');
+  // while the store check runs (auto) the panel stays hidden: no flash of samples that then vanish
+  const hidden = source === 'auto' && store === 'checking';
 
   return (
     <Section data={data}>
-      <section className={'wrap rpanel' + (asBool(data.light_bg, true) ? '' : ' tc-plain')} id="reviews">
+      <section className={'wrap rpanel' + (asBool(data.light_bg, true) ? '' : ' tc-plain')} id="reviews" hidden={hidden}>
         <div className="sec-head">
           <div>
             <span className="kicker">{t(data.kicker, 'ثقة تصنعها التجربة')}</span>
@@ -51,11 +84,10 @@ export function Reviews({ data }: { data: Row }) {
           </div>
           {lead && <p className="lead">{lead}</p>}
         </div>
-        {fromStore ? (
-          <SallaReviews limit={limit} sort="latest" type="store" />
-        ) : (
-          <div className={`rp3 tc-n-${Math.min(3, reviews.length)}`}>
-            {reviews.map((r, i) => (
+        {showStore && <StoreReviews limit={limit} onState={setStore} />}
+        {cards.length > 0 && (
+          <div className={`rp3 tc-n-${Math.min(3, cards.length)}`}>
+            {cards.map((r, i) => (
               <div key={i}>
                 <span className="q" aria-hidden="true">“</span>
                 {r.name && <b>{r.name}</b>}

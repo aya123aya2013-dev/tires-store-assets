@@ -13,7 +13,8 @@
     "test:coverage": "vitest run --coverage",
     "test:salla": "playwright test",
     "test:salla:smoke": "playwright test --grep smoke",
-    "test:salla:lighthouse": "node scripts/salla-lighthouse.mjs"
+    "test:salla:lighthouse": "node scripts/salla-lighthouse.mjs",
+    "test:salla:lighthouse:prod": "node scripts/salla-lighthouse-prod.mjs"
   },
   "dependencies": {
     "@salla.sa/twilight-components-react": "^3.0.0-beta.1",

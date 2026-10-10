@@ -35,6 +35,7 @@ function mountSearchModal({ visible = false }: { visible?: boolean } = {}) {
 const route = { pathname: '/', locale: 'en' };
 
 vi.mock('@tanstack/react-router', () => ({
+  useParams: () => ({}),
   useRouterState: ({ select }: { select: (s: { location: { pathname: string } }) => unknown }) =>
     select({ location: { pathname: route.pathname } }),
 }));

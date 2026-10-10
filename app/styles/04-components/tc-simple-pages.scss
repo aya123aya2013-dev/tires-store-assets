@@ -9,8 +9,13 @@
 .tc-brands .tc-blogo { max-height: 60px; width: auto; object-fit: contain; }
 @media (max-width: 767px) { .tc-brands .bgrid { grid-template-columns: repeat(2, 1fr); } }
 
+/* final.html:306/313/314 — 3 columns, 2 under 1100px, a swipe row under 640px (the generated rules already carry the phone row) */
 .tc-blog .tips, .tc-related .tips { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-@media (max-width: 900px) { .tc-blog .tips, .tc-related .tips { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) { .tc-blog .tips, .tc-related .tips { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .tc-blog .tips, .tc-related .tips { display: flex; grid-template-columns: none; } }
+
+/* help-page bullets sit at the START of the text in both directions (the design is RTL only) */
+.tc-help .hlist li::before { right: auto; inset-inline-start: 0; }
 
 /* the merchant's article text gets the design's paragraph rhythm */
 .tc-article .tc-article-body { font-size: 16px; line-height: 2; color: var(--slate); }

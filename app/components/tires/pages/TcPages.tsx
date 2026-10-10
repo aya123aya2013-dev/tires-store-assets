@@ -31,6 +31,7 @@ const EN: Record<string, string> = {
   'ابحث بمقاسك': 'Search by size',
   'مقالات ذات صلة': 'Related articles',
   'الصفحة التالية': 'Next page',
+  'أعجبني': 'Like this article',
   'تعذّر تحميل باقي الماركات': 'Could not load the rest of the brands',
   'حاول مرة ثانية': 'Try again',
 };
@@ -210,7 +211,7 @@ export function TcArticlePage({ page, article, related = [] }: BlogSinglePagePro
         )}
         {social && (
           <div className="tc-article-social">
-            <button type="button" id="blog-like" data-blog-id={article.id} className={active ? 'on' : ''} onClick={toggle} disabled={loading} aria-pressed={active}>
+            <button type="button" id="blog-like" data-blog-id={article.id} className={active ? 'on' : ''} onClick={toggle} disabled={loading} aria-pressed={active} aria-label={t(undefined, 'أعجبني')}>
               <i className="sicon-thumbs-up" aria-hidden="true" /> {count}
             </button>
           </div>

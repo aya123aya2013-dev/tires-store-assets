@@ -39,11 +39,12 @@ const when = (field, id, value) => ({ ...field, conditions: [...(field.condition
 const SPACE = [['عادية', 'normal'], ['صغيرة', 'small'], ['كبيرة', 'large'], ['بدون', 'none']];
 const common = (cls = 'my-section') => [
   head('h-common', 'إعدادات عامة'),
-  sw('show_mobile', 'إظهار على الجوال', true),
-  sw('show_desktop', 'إظهار على الكمبيوتر', true),
-  dd('space_top', 'المسافة فوق القسم', SPACE, 'normal'),
-  dd('space_bottom', 'المسافة تحت القسم', SPACE, 'normal'),
-  { type: 'string', icon: 'sicon-format-text-alt', label: 'كلاس CSS مخصص', multilanguage: false, id: 'custom_class', value: null, required: false, format: 'text', description: 'حقل خاص بالمطورين ومصممين المتاجر: اسم كلاس يضاف للعنصر لتعديل شكله من CSS المتجر', placeholder: cls, minLength: 0, maxLength: 60 },
+  sw('show_advanced', 'إعدادات متقدمة (الظهور والمسافات)', false, 'القيم المحفوظة تبقى مطبّقة حتى لو أخفيت الحقول'),
+  when(sw('show_mobile', 'إظهار على الجوال', true), 'show_advanced', true),
+  when(sw('show_desktop', 'إظهار على الكمبيوتر', true), 'show_advanced', true),
+  when(dd('space_top', 'المسافة فوق القسم', SPACE, 'normal'), 'show_advanced', true),
+  when(dd('space_bottom', 'المسافة تحت القسم', SPACE, 'normal'), 'show_advanced', true),
+  when({ type: 'string', icon: 'sicon-format-text-alt', label: 'كلاس CSS مخصص', multilanguage: false, id: 'custom_class', value: null, required: false, format: 'text', description: 'حقل خاص بالمطورين ومصممين المتاجر: اسم كلاس يضاف للعنصر لتعديل شكله من CSS المتجر', placeholder: cls, minLength: 0, maxLength: 60 }, 'show_advanced', true),
 ];
 
 const ICONS = [

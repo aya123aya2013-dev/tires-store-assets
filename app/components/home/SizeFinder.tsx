@@ -28,7 +28,7 @@ const EN: Record<string, string> = {
   'شاحنات': 'Trucks',
   'باصات': 'Buses',
   'اقتراحات': 'Suggestions',
-  'ما في مقاس بهالرقم': 'No size matches that number',
+  'لا يوجد مقاس بهذا الرقم': 'No size matches that number',
 };
 const tr = (s: string, lang: Lang) => (lang === 'en' ? EN[s.trim()] ?? s : s);
 
@@ -205,7 +205,7 @@ export function SizeFinder({ data, initial, heading }: SizeFinderProps) {
             {typing && q ? (
               <>
                 <div className="t"><span>{tr('اقتراحات', lang)}</span><span>{suggestions.length}</span></div>
-                {suggestions.length ? <div className="tc-dd-grid tc-dd-suggest">{opts(suggestions, true)}</div> : <p className="tc-dd-none">{tr('ما في مقاس بهالرقم', lang)}</p>}
+                {suggestions.length ? <div className="tc-dd-grid tc-dd-suggest">{opts(suggestions, true)}</div> : <p className="tc-dd-none">{tr('لا يوجد مقاس بهذا الرقم', lang)}</p>}
               </>
             ) : (
               <>

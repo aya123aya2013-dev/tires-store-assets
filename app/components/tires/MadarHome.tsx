@@ -523,7 +523,7 @@ function Contact() {
   return (
     <section className="md-container md-contact">
       <div>
-        <span className="md-eyebrow">خلّينا نسهّلها عليك</span>
+        <span className="md-eyebrow">خلّنا نسهّلها عليك</span>
         <h2>تحتاج مساعدة في اختيار مقاسك؟</h2>
       </div>
       <a

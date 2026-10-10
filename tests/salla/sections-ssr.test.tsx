@@ -297,7 +297,7 @@ describe('#22 faq', () => {
     const html = renderToString(<Faq data={{}} />);
     expect(html).toContain('<details open="">');
     expect(html).toContain('>05<');
-    expect(html).toContain('<em>خلّينا نوضّح.</em>');
+    expect(html).toContain('<em>خلّنا نوضّح.</em>');
     expect(renderToString(<Faq data={{ open_first: false }} />)).not.toContain('open=""');
   });
 });

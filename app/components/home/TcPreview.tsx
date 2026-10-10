@@ -120,7 +120,7 @@ export function TcPreview() {
         <div style={{ background: '#1d2023', color: '#fff', padding: '10px 20px' }}>
           <b style={{ color: '#ffb71b' }}>2-ب · أداة المقاس لحالها (بدون ركوب، باصات بس، صيغة 205/55 R16)</b>
         </div>
-        <SizeFinder data={{ overlap_hero: false, show_trucks: false, show_buses: true, query_format: 'r', title: 'دوّر بالمقاس', popular_widths: '205, 225, 245' }} />
+        <SizeFinder data={{ overlap_hero: false, show_trucks: false, show_buses: true, query_format: 'r', title: 'ابحث بالمقاس', popular_widths: '205, 225, 245' }} />
       </section>
     </div>
   );

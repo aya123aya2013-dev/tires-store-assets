@@ -15,7 +15,7 @@ const EN: Record<string, string> = {
   'للرحلة، من أولها': 'For the trip, from the start', 'أربع إطارات.\nاختيار واحد مدروس.': 'Four tires.\nOne considered choice.',
   'ابدأ بالمقاس، وقارن المجموعة المناسبة لسيارتك.': 'Start with the size and compare the right range for your car.',
   'اكتشف الإطارات': 'Discover tires', 'دقيقة وحدة تكفي': 'One minute is enough',
-  'ثلاثة أرقام، وكل رقم له معنى.\nخلّينا نساعدك تفهم مقاسك.': 'Three numbers, each with a meaning.\nLet us help you read your size.',
+  'ثلاثة أرقام، وكل رقم له معنى.\nخلّنا نساعدك تفهم مقاسك.': 'Three numbers, each with a meaning.\nLet us help you read your size.',
   'افتح دليل المقاسات': 'Open the size guide',
 };
 // "line one\nline two" → line one<br>line two
@@ -48,7 +48,7 @@ export function DoubleBanner({ data }: { data: Row }) {
       <div className="dtxt">
         <span className="kicker">{t(data.light_kicker, 'دقيقة وحدة تكفي')}</span>
         <div className="dsize" dir="ltr">{t(data.light_size, '205 / 55 R16')}</div>
-        <p>{lines(t(data.light_text, 'ثلاثة أرقام، وكل رقم له معنى.\nخلّينا نساعدك تفهم مقاسك.'))}</p>
+        <p>{lines(t(data.light_text, 'ثلاثة أرقام، وكل رقم له معنى.\nخلّنا نساعدك تفهم مقاسك.'))}</p>
         <span className="link">{t(data.light_link_text, 'افتح دليل المقاسات')} {arrow}</span>
       </div>
     </Link>

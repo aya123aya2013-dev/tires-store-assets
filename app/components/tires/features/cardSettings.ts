@@ -50,7 +50,7 @@ export function useSellsFitting() {
   return opt((theme?.settings as Record<string, unknown> | undefined)?.tc_store_type, 'install') !== 'sale';
 }
 
-/** «وين تكتب المقاس وسنة الصنع» → the sources cards read size / year from */
+/** «أين تكتب المقاس وسنة الصنع» → the sources cards read size / year from */
 export function useSpecSources(): SizeSource[] {
   const { theme } = useTwilight();
   const v = opt((theme?.settings as Record<string, unknown> | undefined)?.tc_spec_source, 'all');

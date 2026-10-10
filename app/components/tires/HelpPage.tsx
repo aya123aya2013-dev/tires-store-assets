@@ -6,6 +6,7 @@
 import { Breadcrumb, Link } from '@salla.sa/twilight-theme-engine/common';
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { asBool, asLink, makeT, opt, useLang } from '../home/fields';
+import { Icon } from '../home/tc/Icon';
 
 const EN: Record<string, string> = {
   'المساعدة': 'Help',
@@ -23,7 +24,25 @@ const EN: Record<string, string> = {
   'السياسة الكاملة': 'Full policy',
   'الأسئلة الشائعة': 'FAQ',
   'عندك سؤال؟': 'Got a question?',
-  'خلّينا نوضّح.': "Let's clear it up.",
+  'خلّنا نوضّح.': "Let's clear it up.",
+  'المراكز': 'Centres',
+  'مراكز التركيب': 'Fitting centres',
+  // default lines / FAQ (translated one by one, so a merchant who edits one line keeps the others)
+  'التركيب على الجنط مجاني عند اختيار «استلام وتركيب».': 'Fitting on your rim is free when you choose “Pick up & fitting”.',
+  'الترصيص ووزن الأذرعة برسوم بسيطة تحددها المراكز.': 'Balancing and wheel weights cost a small fee set by each centre.',
+  'احضر بالموعد؛ التأخير أكثر من 30 دقيقة قد يتطلب موعد جديد.': 'Arrive on time; a delay of more than 30 minutes may need a new appointment.',
+  'التركيب خلال ساعة تقريباً لطقم الأربع إطارات.': 'Fitting a set of four tires takes about an hour.',
+  'يمكن إرجاع أو استبدال الإطارات غير المركّبة وبحالتها الأصلية خلال 7 أيام.': 'Tires that are not fitted and in their original condition can be returned or exchanged within 7 days.',
+  'لا يمكن إرجاع الإطارات بعد تركيبها أو استخدامها.': 'Tires cannot be returned once fitted or used.',
+  'يُسترد المبلغ بنفس وسيلة الدفع بعد استلام الإطارات وفحصها.': 'The refund goes back to the original payment method after we receive and inspect the tires.',
+  'كيف أعرف مقاس الإطار المناسب لسيارتي؟': 'How do I know which tire size fits my car?',
+  'المقاس مكتوب على جانب إطارك الحالي، أو بملصق باب السائق.': 'The size is printed on the side of your current tire, or on the sticker inside the driver’s door.',
+  'هل السعر يشمل التركيب؟': 'Does the price include fitting?',
+  'نعم، التركيب على الجنط مجاني عند اختيار «استلام وتركيب».': 'Yes, fitting on your rim is free when you choose “Pick up & fitting”.',
+  'كم مدة التوصيل؟': 'How long does delivery take?',
+  'داخل المدينة 1–2 يوم، وباقي المناطق 3–5 أيام.': 'Within the city 1–2 days, other regions 3–5 days.',
+  'هل يمكن التقسيط؟': 'Can I pay in instalments?',
+  'نعم، عبر تابي أو تمارا على 4 دفعات حسب أهلية العميل.': 'Yes, through Tabby or Tamara in 4 payments, subject to eligibility.',
 };
 
 const CODE: [string, string, string, string, string][] = [
@@ -47,6 +66,9 @@ const D_FAQ: [string, string][] = [
 ];
 
 const lines = (v: string) => v.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+/** «الاسم | العنوان | الدوام | الجوال» — one fitting centre per line (the merchant's own list) */
+const centerRows = (v: string) => lines(v).map(l => l.split('|').map(x => x.trim())).filter(r => r[0]);
+const digits = (v: string) => v.replace(/[^\d+]/g, '');
 
 export function HelpPage() {
   const { theme } = useTwilight();
@@ -55,18 +77,26 @@ export function HelpPage() {
   const en = lang === 'en';
   const t = makeT(lang, EN);
   const sale = opt(s.tc_store_type, 'install') === 'sale';
+  // each line is translated on its own: a custom line stays as typed, the defaults follow the language
+  const install = lines(t(s.tc_help_install_lines, D_INSTALL)).map(x => t(undefined, x));
+  const returns = lines(t(s.tc_help_returns_lines, D_RETURNS)).map(x => t(undefined, x));
+  const policy = asLink(s.tc_help_policy_link, '');
+  const centers = centerRows(String(t(s.tc_help_centers_lines, '')));
+  // the default «does the price include fitting?» answer promises a service a «sale only» store does not offer
+  const faq = D_FAQ
+    .map(([q, a], i) => [t(s[`tc_help_q${i + 1}`], q), t(s[`tc_help_a${i + 1}`], a), i === 1] as const)
+    .filter(([q, , fitting]) => q && !(sale && fitting && q === t(undefined, D_FAQ[1][0])))
+    .map(([q, a]) => [t(undefined, q), t(undefined, a)]);
+  // one visibility decision per section, used by the section AND its nav link (no dead anchors)
   const show = {
     size: asBool(s.tc_help_size, true),
-    install: asBool(s.tc_help_install, true) && !sale,
-    returns: asBool(s.tc_help_returns, true),
-    faq: asBool(s.tc_help_faq, true),
+    install: asBool(s.tc_help_install, true) && !sale && install.length > 0,
+    centers: asBool(s.tc_help_centers, true) && !sale && centers.length > 0,
+    returns: asBool(s.tc_help_returns, true) && (returns.length > 0 || !!policy),
+    faq: asBool(s.tc_help_faq, true) && faq.length > 0,
   };
-  const install = lines(t(s.tc_help_install_lines, D_INSTALL));
-  const returns = lines(t(s.tc_help_returns_lines, D_RETURNS));
-  const policy = asLink(s.tc_help_policy_link, '');
-  const faq = D_FAQ.map(([q, a], i) => [t(s[`tc_help_q${i + 1}`], q), t(s[`tc_help_a${i + 1}`], a)]).filter(([q]) => q);
   const page = { title: t(undefined, 'المساعدة'), breadcrumbs: [{ name: en ? 'Home' : 'الرئيسية', url: '/' }, { name: t(undefined, 'المساعدة'), url: '' }] };
-  const nav: [keyof typeof show, string, string][] = [['size', 'size', 'دليل المقاس'], ['install', 'install', 'خدمة التركيب'], ['returns', 'returns', 'الإرجاع'], ['faq', 'faq', 'الأسئلة']];
+  const nav: [keyof typeof show, string][] = [['size', 'دليل المقاس'], ['install', 'خدمة التركيب'], ['centers', 'المراكز'], ['returns', 'الإرجاع'], ['faq', 'الأسئلة']];
 
   return (
     <div className="tc-s tc-page tc-help">
@@ -74,7 +104,7 @@ export function HelpPage() {
         <Breadcrumb page={page as never} />
         <h1 className="ph1">{t(s.tc_help_title, 'كل اللي تحتاج تعرفه.')}</h1>
         <nav className="help-nav">
-          {nav.filter(([k]) => show[k]).map(([k, id, label]) => <a key={id} href={`#${id}`}>{t(undefined, label)}</a>)}
+          {nav.filter(([k]) => show[k]).map(([k, label]) => <a key={k} href={`#${k}`}>{t(undefined, label)}</a>)}
         </nav>
       </section>
 
@@ -92,7 +122,7 @@ export function HelpPage() {
         </section>
       )}
 
-      {show.install && install.length > 0 && (
+      {show.install && (
         <section className="wrap hsec" id="install">
           <span className="kicker">{t(undefined, 'خدمة التركيب')}</span>
           <h2>{t(s.tc_help_install_title, 'تركيب مجاني')}</h2>
@@ -100,20 +130,41 @@ export function HelpPage() {
         </section>
       )}
 
-      {show.returns && returns.length > 0 && (
+      {show.centers && (
+        <section className="wrap hsec" id="centers">
+          <span className="kicker">{t(undefined, 'المراكز')}</span>
+          <h2>{t(undefined, 'مراكز التركيب')}</h2>
+          <div className="centers">
+            {centers.map(([name, address, hours, phone]) => (
+              <article className="center" key={name}>
+                <div className="cin">
+                  <h3>{name}</h3>
+                  <ul>
+                    {address && <li><Icon name="pin" />{address}</li>}
+                    {hours && <li><Icon name="cal" />{hours}</li>}
+                    {phone && <li><Icon name="phone" /><a href={`tel:${digits(phone)}`} dir="ltr">{phone}</a></li>}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {show.returns && (
         <section className="wrap hsec" id="returns">
           <span className="kicker">{t(undefined, 'الإرجاع والاستبدال')}</span>
           <h2>{t(undefined, 'سياسة الإرجاع')}</h2>
-          <ul className="hlist">{returns.map(x => <li key={x}>{x}</li>)}</ul>
+          {returns.length > 0 && <ul className="hlist">{returns.map(x => <li key={x}>{x}</li>)}</ul>}
           {policy && <p style={{ marginTop: 16 }}><Link className="btn btn-line" to={policy}>{t(undefined, 'السياسة الكاملة')}</Link></p>}
         </section>
       )}
 
-      {show.faq && faq.length > 0 && (
+      {show.faq && (
         <section className="wrap hsec faq2" id="faq" style={{ border: 0 }}>
           <div className="side">
             <span className="kicker">{t(undefined, 'الأسئلة الشائعة')}</span>
-            <h2 className="h2">{t(undefined, 'عندك سؤال؟')}<br /><em>{t(undefined, 'خلّينا نوضّح.')}</em></h2>
+            <h2 className="h2">{t(undefined, 'عندك سؤال؟')}<br /><em>{t(undefined, 'خلّنا نوضّح.')}</em></h2>
           </div>
           <div>
             {faq.map(([q, a]) => (

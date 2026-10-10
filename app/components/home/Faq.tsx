@@ -10,11 +10,11 @@ import { Section } from './tc/Section';
 import { Icon } from './tc/Icon';
 
 const EN: Record<string, string> = {
-  'قبل ما تنطلق': 'Before you set off', 'عندك سؤال؟': 'Got a question?', 'خلّينا نوضّح.': "Let's clear it up.",
+  'قبل ما تنطلق': 'Before you set off', 'عندك سؤال؟': 'Got a question?', 'خلّنا نوضّح.': "Let's clear it up.",
   'إجابات تساعدك تختار براحة.': 'Answers that help you choose with ease.', 'تواصل معنا': 'Contact us',
   // the default questions, so the English store doesn't show Arabic until the merchant edits them
   'كيف أعرف مقاس الإطار المناسب لسيارتي؟': 'How do I know the right tire size for my car?',
-  'المقاس مكتوب على جانب إطارك الحالي بهذا الشكل: 205/55 R16. تقدر كمان تلقاه في ملصق إطار باب السائق أو دليل السيارة.': 'The size is printed on the side of your current tire, like 205/55 R16. You can also find it on the sticker in the driver’s door frame or in the car manual.',
+  'المقاس مكتوب على جانب إطارك الحالي بهذا الشكل: 205/55 R16. تجده أيضاً في ملصق إطار باب السائق أو دليل السيارة.': 'The size is printed on the side of your current tire, like 205/55 R16. You can also find it on the sticker in the driver’s door frame or in the car manual.',
   'هل السعر يشمل التركيب؟': 'Does the price include fitting?',
   'نعم، التركيب على الجنط مجاني عند اختيار «استلام وتركيب». الترصيص وزن الأذرعة برسوم بسيطة.': 'Yes — fitting on the rim is free when you choose “pick up & fit”. Balancing and alignment have a small fee.',
   'كم تاريخ صنع الإطارات؟': 'How recent are the tires?',
@@ -25,7 +25,7 @@ const EN: Record<string, string> = {
   'نعم، الإطارات غير المركّبة وبحالتها الأصلية وفق سياسة الإرجاع.': 'Yes — unfitted tires in their original condition, under the return policy.',
 };
 const DEFAULTS: [string, string][] = [
-  ['كيف أعرف مقاس الإطار المناسب لسيارتي؟', 'المقاس مكتوب على جانب إطارك الحالي بهذا الشكل: 205/55 R16. تقدر كمان تلقاه في ملصق إطار باب السائق أو دليل السيارة.'],
+  ['كيف أعرف مقاس الإطار المناسب لسيارتي؟', 'المقاس مكتوب على جانب إطارك الحالي بهذا الشكل: 205/55 R16. تجده أيضاً في ملصق إطار باب السائق أو دليل السيارة.'],
   ['هل السعر يشمل التركيب؟', 'نعم، التركيب على الجنط مجاني عند اختيار «استلام وتركيب». الترصيص وزن الأذرعة برسوم بسيطة.'],
   ['كم تاريخ صنع الإطارات؟', 'نضمن أن تاريخ الصنع لا يتجاوز 12 شهر من تاريخ الطلب، ويظهر في صفحة كل منتج.'],
   ['كم مدة التوصيل؟', 'المدة الدقيقة حسب مدينتك، وتظهر لك قبل الدفع.'],
@@ -51,7 +51,7 @@ export function Faq({ data }: { data: Row }) {
             <h2 className="h2">
               {t(data.title_1, 'عندك سؤال؟')}
               <br />
-              <em>{t(data.title_2, 'خلّينا نوضّح.')}</em>
+              <em>{t(data.title_2, 'خلّنا نوضّح.')}</em>
             </h2>
             {lead && <p className="lead">{lead}</p>}
             {contact && <Link className="link" to={asLink(data.contact_link, '/help')}>{contact} <span aria-hidden="true">↗</span></Link>}

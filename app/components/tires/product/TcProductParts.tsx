@@ -28,7 +28,7 @@ const EN: Record<string, string> = {
   'الشحن والإرجاع': 'Shipping & returns',
   'نشحن لكل مناطق المملكة. الإطارات غير المركّبة تقبل الإرجاع خلال 7 أيام بحالتها الأصلية.': 'We ship across the Kingdom. Unfitted tires can be returned within 7 days in their original condition.',
   'هل يناسب سيارتي؟': 'Does it fit my car?',
-  'إذا المقاس المكتوب على جانب إطارك الحالي نفس المقاس أعلاه، فهو مناسب. محتار؟ ابعت صورة إطارك على واتساب.': 'If the size on the side of your current tire matches the size above, it fits. Not sure? Send us a photo of your tire on WhatsApp.',
+  'إذا المقاس المكتوب على جانب إطارك الحالي نفس المقاس أعلاه، فهو مناسب. محتار؟ أرسل صورة إطارك على واتساب.': 'If the size on the side of your current tire matches the size above, it fits. Not sure? Send us a photo of your tire on WhatsApp.',
   'الضمان': 'Warranty',
   'ضمان الوكيل ضد عيوب التصنيع حسب الماركة، ونضمن تاريخ صنع لا يتجاوز 12 شهر.': 'Manufacturer warranty against defects per brand, and a production date within 12 months.',
 };
@@ -182,7 +182,7 @@ export function TcDelivery({ product }: { product: Product }) {
   );
 }
 
-/** `.pblk` «المواصفات» — read from the name / tags / options (setting «وين تكتب المقاس») */
+/** `.pblk` «المواصفات» — read from the name / tags / options (setting «أين تكتب المقاس») */
 export function TcSpecs({ product }: { product: Product }) {
   const s = useProductSettings();
   const lang = useLang();
@@ -226,7 +226,7 @@ export function TcProductFaq() {
   if (!asBool(s.tc_p_faq, true)) return null;
   const D: [string, string][] = [
     ['الشحن والإرجاع', 'نشحن لكل مناطق المملكة. الإطارات غير المركّبة تقبل الإرجاع خلال 7 أيام بحالتها الأصلية.'],
-    ['هل يناسب سيارتي؟', 'إذا المقاس المكتوب على جانب إطارك الحالي نفس المقاس أعلاه، فهو مناسب. محتار؟ ابعت صورة إطارك على واتساب.'],
+    ['هل يناسب سيارتي؟', 'إذا المقاس المكتوب على جانب إطارك الحالي نفس المقاس أعلاه، فهو مناسب. محتار؟ أرسل صورة إطارك على واتساب.'],
     ['الضمان', 'ضمان الوكيل ضد عيوب التصنيع حسب الماركة، ونضمن تاريخ صنع لا يتجاوز 12 شهر.'],
   ];
   const items = D.map(([q, a], i) => [t(s[`tc_p_faq_q${i + 1}`], q), t(s[`tc_p_faq_a${i + 1}`], a)]).filter(([q, a]) => q && a);

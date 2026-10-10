@@ -23,6 +23,16 @@ const EN: Record<string, string> = {
   'موعد التركيب': 'Installation time',
   'احجز موعدك على واتساب': 'Book on WhatsApp',
   'ملخص الطلب': 'Order summary',
+  'عندك إطار مفرد بالسلة — الأفضل تبديل الإطارات زوج على نفس المحور، أو طقم 4 كامل.': 'You have a single tire in the cart — it is best to change tires in pairs on the same axle, or a full set of 4.',
+  'أكمل طلبك واكتب الوقت المناسب لك بملاحظات الطلب، أو احجز الموعد مباشرة على واتساب.': 'Complete your order and write a convenient time in the order notes, or book the appointment directly on WhatsApp.',
+  'السلام عليكم، أبي أحجز موعد تركيب لـ:': 'Hello, I would like to book a fitting appointment for:',
+  'نجهّز إطاراتك ونتأكد من تاريخ الصنع': 'We prepare your tires and check the production date',
+  'نرسل لك تأكيد الموعد أو رقم التتبع': 'We send you the appointment confirmation or the tracking number',
+  'تركيب واستلام — وطريقك جاهز': 'Fitting and pickup — and you are on your way',
+  'نرسل لك رقم التتبع': 'We send you the tracking number',
+  'توصيل لباب بيتك': 'Delivery to your door',
+  'احجز وقت التركيب اللي يناسبك': 'Book the fitting time that suits you',
+  'أرسل لنا رقم الطلب على واتساب ونأكد لك الموعد والمركز.': 'Send us the order number on WhatsApp and we will confirm the time and the centre.',
   'تعذّر تحميل السلة': 'Could not load your cart',
   'حاول مرة ثانية': 'Try again',
   'دفع آمن عبر سلة · مدى · Apple Pay · تابي · تمارا': 'Secure checkout · Mada · Apple Pay · Tabby · Tamara',
@@ -89,14 +99,14 @@ export function TcAppointment({ items }: { items: { name?: string; quantity?: nu
   const wa = useWhatsappNumber();
   if (!asBool(s.tc_cart_appt, true) || opt(s.tc_store_type, 'install') === 'sale') return null;
   const list = items.map(i => `• ${i.name ?? ''} × ${i.quantity ?? 1}`).join('\n');
-  const msg = `${t(s.tc_cart_appt_msg, 'السلام عليكم، بدي أحجز موعد تركيب لـ:')}\n${list}`;
+  const msg = `${t(s.tc_cart_appt_msg, 'السلام عليكم، أبي أحجز موعد تركيب لـ:')}\n${list}`;
   return (
     <div className="box tc-appt">
       <h3>{t(s.tc_cart_appt_title, 'موعد التركيب')}</h3>
       <p>{t(s.tc_cart_appt_text, 'أكمل طلبك واكتب الوقت المناسب لك بملاحظات الطلب، أو احجز الموعد مباشرة على واتساب.')}</p>
       {wa && (
         <a className="btn btn-line" href={waLink(wa, msg)} target="_blank" rel="noopener noreferrer">
-          {t(undefined, 'احجز موعدك على واتساب')}
+          {t(s.tc_cart_appt_btn, 'احجز موعدك على واتساب')}
         </a>
       )}
     </div>
@@ -110,25 +120,32 @@ export function TcThankYouNext({ orderNo }: { orderNo?: string | number }) {
   const wa = useWhatsappNumber();
   if (!asBool(s.tc_ty_next, true)) return null;
   const sale = opt(s.tc_store_type, 'install') === 'sale';
+  // the saved defaults are the «fitting» wording; a «sale only» store swaps them unless the merchant wrote their own
+  const step = (value: unknown, fitting: string, saleOnly: string) => {
+    const v = t(value, fitting);
+    return sale && v === t(undefined, fitting) ? t(undefined, saleOnly) : v;
+  };
   const steps = [
     t(s.tc_ty_step1, 'نجهّز إطاراتك ونتأكد من تاريخ الصنع'),
-    t(s.tc_ty_step2, sale ? 'نرسل لك رقم التتبع' : 'نرسل لك تأكيد الموعد أو رقم التتبع'),
-    t(s.tc_ty_step3, sale ? 'توصيل لباب بيتك' : 'تركيب واستلام — وطريقك جاهز'),
+    step(s.tc_ty_step2, 'نرسل لك تأكيد الموعد أو رقم التتبع', 'نرسل لك رقم التتبع'),
+    step(s.tc_ty_step3, 'تركيب واستلام — وطريقك جاهز', 'توصيل لباب بيتك'),
   ].filter(Boolean);
-  const msg = `${t(s.tc_cart_appt_msg, 'السلام عليكم، بدي أحجز موعد تركيب لـ:')} #${orderNo ?? ''}`;
+  // the appointment asks for the order number, so it is offered only when the order is known
+  const hasOrder = orderNo !== undefined && orderNo !== null && String(orderNo) !== '';
+  const msg = `${t(s.tc_cart_appt_msg, 'السلام عليكم، أبي أحجز موعد تركيب لـ:')} #${orderNo ?? ''}`;
   return (
     <div className="tc-s tc-page">
       <section className="wrap ty tc-ty">
         <div className="ty-next">
           {steps.map((x, i) => <div key={x}><b>{String(i + 1).padStart(2, '0')}</b>{x}</div>)}
         </div>
-        {!sale && asBool(s.tc_cart_appt, true) && wa && (
+        {!sale && hasOrder && asBool(s.tc_cart_appt, true) && wa && (
           <aside className="ty-center">
             <span className="kicker">{t(s.tc_cart_appt_title, 'موعد التركيب')}</span>
             <h3>{t(s.tc_ty_appt_title, 'احجز وقت التركيب اللي يناسبك')}</h3>
-            <p>{t(s.tc_ty_appt_text, 'ابعتلنا رقم الطلب على واتساب ونأكد لك الموعد والمركز.')}</p>
+            <p>{t(s.tc_ty_appt_text, 'أرسل لنا رقم الطلب على واتساب ونأكد لك الموعد والمركز.')}</p>
             <a className="btn btn-gold" href={waLink(wa, msg)} target="_blank" rel="noopener noreferrer">
-              {t(undefined, 'احجز موعدك على واتساب')}
+              {t(s.tc_cart_appt_btn, 'احجز موعدك على واتساب')}
             </a>
           </aside>
         )}

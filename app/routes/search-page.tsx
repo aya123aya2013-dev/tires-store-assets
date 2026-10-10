@@ -40,7 +40,7 @@ export const Route = createFileRoute('/{-$locale}/search')({
 function ListComponent() {
   const data: ProductListLoaderData = Route.useLoaderData();
   const { q, m: mParam } = Route.useSearch();
-  // no `m` in the link → the store-wide «وين تكتب المقاس» setting (group «متجر الإطارات»)
+  // no `m` in the link → the store-wide «أين تكتب المقاس» setting (group «متجر الإطارات»)
   const { theme } = useTwilight();
   const m = mParam || (opt((theme?.settings as Record<string, unknown> | undefined)?.tc_spec_source, 'all') === 'all' ? '' : opt((theme?.settings as Record<string, unknown> | undefined)?.tc_spec_source, 'all'));
   // A tire-size search shows ONLY that exact size — read from the product name,

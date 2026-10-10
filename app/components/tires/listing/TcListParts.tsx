@@ -20,7 +20,7 @@ const EN: Record<string, string> = {
   'اعرض': 'Show',
   'تسوّق الإطارات': 'Shop tires',
   'ما لقيت مقاسك؟': "Can't find your size?",
-  'ابعتلنا المقاس على واتساب ونأمّنه لك بأسرع وقت.': 'Send us the size on WhatsApp and we will source it for you.',
+  'أرسل لنا المقاس على واتساب ونأمّنه لك بأسرع وقت.': 'Send us the size on WhatsApp and we will source it for you.',
   'اسألنا على واتساب': 'Ask on WhatsApp',
   'نتائج المقاس': 'Results for size',
 };
@@ -98,10 +98,10 @@ export function TcNoFind({ size }: { size?: TireSize | null }) {
     <div className="tc-nofind">
       <div>
         <b>{t(s.tc_list_nofind_title, 'ما لقيت مقاسك؟')}</b>
-        <small>{t(s.tc_list_nofind_text, 'ابعتلنا المقاس على واتساب ونأمّنه لك بأسرع وقت.')}</small>
+        <small>{t(s.tc_list_nofind_text, 'أرسل لنا المقاس على واتساب ونأمّنه لك بأسرع وقت.')}</small>
       </div>
       <a className="btn btn-gold" href={waLink(num, msg)} target="_blank" rel="noopener noreferrer">
-        {t(undefined, 'اسألنا على واتساب')}
+        {t(s.tc_list_nofind_btn, 'اسألنا على واتساب')}
       </a>
     </div>
   );

@@ -65,7 +65,7 @@ export function sourceFrom(data: Row, prefix: string, fallback: ProductsListSour
 
 const num = (v: unknown) => (typeof v === 'number' ? v : Number(v) || 0);
 
-/** `sources`: where the store writes size / year (setting «وين تكتب المقاس وسنة الصنع») */
+/** `sources`: where the store writes size / year (setting «أين تكتب المقاس وسنة الصنع») */
 export function toTcProduct(p: Product, offerLabel: string, sources: SizeSource[] = SIZE_SOURCES): TcProduct {
   const texts = specTexts(p as unknown as Parameters<typeof specTexts>[0], sources);
   const nameSize = sources.includes('name') ? parseTireSize(p.name) : null;

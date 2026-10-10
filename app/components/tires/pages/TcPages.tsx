@@ -23,8 +23,8 @@ import { asBool, makeT, useLang } from '../../home/fields';
 
 const EN: Record<string, string> = {
   'المفضلة': 'Wishlist',
-  'ما في إطارات بالمفضلة لسا.': 'No tires in your wishlist yet.',
-  'اضغط ♡ على أي إطار وبتلاقيه هون.': 'Tap ♡ on any tire to keep it here.',
+  'ما فيه إطارات بالمفضلة حتى الآن.': 'No tires in your wishlist yet.',
+  'اضغط ♡ على أي إطار وتجده هنا.': 'Tap ♡ on any tire to keep it here.',
   'تسوّق الإطارات': 'Shop tires',
   'ماركات أصلية، من الوكيل.': 'Genuine brands, from the dealer.',
   'نصائح تخلّي إطارك يعيش أطول.': 'Tips that make your tires last longer.',
@@ -100,7 +100,7 @@ export function TcWishlistPage({ page, products, pagination, query }: WishlistPa
             {shown.map((p, i) => <ProductCard key={p.id} product={p} index={i} layout="vertical" />)}
           </div>
         ) : (
-          <Empty title={t(s.tc_pg_wish_empty, 'ما في إطارات بالمفضلة لسا.')} text={t(undefined, 'اضغط ♡ على أي إطار وبتلاقيه هون.')} />
+          <Empty title={t(s.tc_pg_wish_empty, 'ما فيه إطارات بالمفضلة حتى الآن.')} text={t(undefined, 'اضغط ♡ على أي إطار وتجده هنا.')} />
         )}
         {!!next && (
           <p className="tc-more"><Link className="btn btn-line" to={`?page=${cur + 1}`}>{t(undefined, 'الصفحة التالية')}</Link></p>
@@ -205,7 +205,7 @@ export function TcArticlePage({ page, article, related = [] }: BlogSinglePagePro
         {asBool(s.tc_pg_article_cta, true) && (
           <p><Link className="btn btn-gold" to="/#size">{t(s.tc_pg_article_cta_text, 'ابحث بمقاسك')} <span aria-hidden="true">←</span></Link></p>
         )}
-        {!!article.tags?.length && (
+        {asBool(s.tc_pg_article_tags, true) && !!article.tags?.length && (
           <div className="chips tc-article-tags">{article.tags.map(tag => <Link key={tag.id} to={tag.url}><span>{tag.name}</span></Link>)}</div>
         )}
         {social && (
@@ -218,7 +218,7 @@ export function TcArticlePage({ page, article, related = [] }: BlogSinglePagePro
         {social && <SallaComments key={commentsKey} itemId={Number(article.id) || 0} type={'blog' as never} />}
         <HookSlot name="blog:single.end" />
       </article>
-      {related.length > 0 && (
+      {asBool(s.tc_pg_article_related, true) && related.length > 0 && (
         <section className="wrap tc-related">
           <h2>{t(undefined, 'مقالات ذات صلة')}</h2>
           <div className="tips">{related.slice(0, 3).map(a => <Tip key={a.id} a={a} />)}</div>

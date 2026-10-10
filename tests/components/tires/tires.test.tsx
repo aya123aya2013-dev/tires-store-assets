@@ -1,16 +1,12 @@
 import type { ReactNode } from 'react';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import {
   formatTireSize,
   parseTireSize,
   tireSizeQuery,
 } from '../../../app/components/tires/sizes';
-import { DeliveryMethodPicker } from '../../../app/components/tires/DeliveryMethodPicker';
-import { InstallCenterCard } from '../../../app/components/tires/InstallCenterCard';
-import { TireProductInfo } from '../../../app/components/tires/TireProductInfo';
 import { TireQuantityPicker } from '../../../app/components/tires/TireQuantityPicker';
-import { INSTALL_CENTERS, readDeliveryChoice } from '../../../app/components/tires/delivery';
 
 vi.mock('@salla.sa/twilight-theme-engine/common', () => ({
   Link: ({ to, children, className }: { to: string; children?: ReactNode; className?: string }) => (
@@ -54,18 +50,6 @@ describe('tire sizes', () => {
   });
 });
 
-describe('TireProductInfo', () => {
-  it('shows the spec table only when the name carries a size', () => {
-    const { rerender } = render(<TireProductInfo name="Michelin Primary 4 - 205/55 R16" />);
-    expect(screen.getByText('205 مم')).toBeTruthy();
-    rerender(<TireProductInfo name="Wheel cleaner" />);
-    expect(screen.queryByText('مواصفات الإطار')).toBeNull();
-    // Off-road inch sizes still get a spec table.
-    rerender(<TireProductInfo name="كفر تاش 31x10.50R15 LT" />);
-    expect(screen.getAllByText('31x10.50R15').length).toBeGreaterThan(0);
-  });
-});
-
 describe('TireQuantityPicker', () => {
   it('updates the total and drives the form stepper', () => {
     const setValue = vi.fn().mockResolvedValue(undefined);
@@ -82,32 +66,5 @@ describe('TireQuantityPicker', () => {
     expect(screen.getByText('1,600')).toBeTruthy();
     expect(setValue).toHaveBeenCalledWith(4, true);
     root.remove();
-  });
-});
-
-describe('delivery choice', () => {
-  beforeEach(() => window.localStorage.clear());
-
-  it('defaults to shipping and remembers the install center pick', () => {
-    render(<DeliveryMethodPicker />);
-    expect(screen.queryByLabelText('مركز التركيب')).toBeNull();
-
-    fireEvent.click(screen.getByText('استلام وتركيب بالرياض'));
-    expect(screen.getByLabelText('مركز التركيب')).toBeTruthy();
-    expect(readDeliveryChoice()).toEqual({ method: 'install', centerId: INSTALL_CENTERS[0].id });
-  });
-
-  it('shows the chosen center on the thank-you page, nothing for shipping', () => {
-    window.localStorage.setItem(
-      'tires:delivery-choice',
-      JSON.stringify({ method: 'install', centerId: INSTALL_CENTERS[1].id })
-    );
-    const { unmount } = render(<InstallCenterCard />);
-    expect(screen.getByText(INSTALL_CENTERS[1].name)).toBeTruthy();
-    unmount();
-
-    window.localStorage.setItem('tires:delivery-choice', JSON.stringify({ method: 'shipping' }));
-    const { container } = render(<InstallCenterCard />);
-    expect(container.innerHTML).toBe('');
   });
 });

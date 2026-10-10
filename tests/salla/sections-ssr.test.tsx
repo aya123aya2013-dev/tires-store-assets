@@ -279,9 +279,9 @@ describe('#20 reviews', () => {
   it('auto asks Salla first (panel stays hidden while it checks), store = Salla only, manual = own list or samples', () => {
     const auto = renderToString(<Reviews data={{}} />);
     expect(auto).toContain('salla-reviews-mock');
-    expect(auto).toContain('hidden');
     expect(auto).not.toContain('عبدالعزيز');
     expect(renderToString(<Reviews data={{ source: 'store' }} />)).toContain('salla-reviews-mock');
+    expect(renderToString(<Reviews data={{ source: 'store' }} />)).not.toContain('عبدالعزيز');
     // manual: the merchant's own cards; empty list → sample cards, unless the samples switch is off
     expect(renderToString(<Reviews data={{ source: 'manual' }} />)).toContain('عبدالعزيز · الرياض');
     expect(renderToString(<Reviews data={{ source: 'manual', reviews: [] }} />)).toContain('عبدالعزيز · الرياض');

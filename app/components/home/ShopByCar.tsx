@@ -16,7 +16,7 @@ import type { CarRow } from './tc/cars';
 const EN: Record<string, string> = {
   'ما تعرف مقاسك؟': "Don't know your size?", 'اختر سيارتك، ونطلع لك المقاس.': "Pick your car — we'll find the size.",
   'الماركة، الموديل، السنة — وبس.': 'Make, model, year — that’s it.',
-  'المقاس المرجعي لهذه السيارة حسب بيانات المتجر. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.': 'The factory size. Double-check it on your current tire or the driver-door sticker.',
+  'المقاس المرجعي لهذه السيارة حسب بيانات المتجر. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.': 'Reference size for this car, based on the store’s data. Double-check it on your current tire or the driver-door sticker.',
   'اعرض الإطارات': 'Show tires', 'اختر سيارتك عشان نعرض المقاس والإطارات المتوفرة.': 'Pick your car to see its size and available tires.',
 };
 type Car = CarRow;
@@ -26,13 +26,16 @@ const clean = (s: string) => s.replace(/\s+/g, ' ').trim();
 const latinDigits = (s: string) => s.replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x0660)).replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x06f0));
 
 export type CarLineError = 'columns' | 'year' | 'range' | 'size';
-const toCar = (make: string, model: string, from: number, to: number, sizeText: string): Car | CarLineError => {
+const validYear = (y: number) => Number.isInteger(y) && y >= 1950 && y <= 2100;
+/** `to` is undefined (or 0) when the end year is absent; any other value must be a real year */
+const toCar = (make: string, model: string, from: number, to: number | undefined, sizeText: string): Car | CarLineError => {
   if (!make || !model) return 'columns';
-  if (!(from >= 1950 && from <= 2100) || (to && !(to >= 1950 && to <= 2100))) return 'year';
-  if (to && to < from) return 'range'; // «2024-2018» is a typo, not a one-year car
+  const hasTo = to !== undefined && to !== 0;
+  if (!validYear(from) || (hasTo && !validYear(to as number))) return 'year';
+  if (hasTo && (to as number) < from) return 'range'; // «2024-2018» is a typo, not a one-year car
   const size = parseTireSize(sizeText);
   if (!size) return 'size';
-  return { make: clean(make), model: clean(model), from, to: to || from, size: formatTireSize(size) };
+  return { make: clean(make), model: clean(model), from, to: hasTo ? (to as number) : from, size: formatTireSize(size) };
 };
 
 /**
@@ -51,7 +54,7 @@ export function readCarsPaste(text: string): { cars: Car[]; rejected: { line: nu
     if (c.length >= 5) r = toCar(c[0], c[1], Number(c[2]), Number(c[3]), c.slice(4).join(' '));
     else if (c.length === 4) {
       const [from, to] = c[2].split(/\s*[-–]\s*/).map(Number);
-      r = toCar(c[0], c[1], from, to || 0, c[3]);
+      r = toCar(c[0], c[1], from, to, c[3]);
     }
     if (typeof r === 'string') rejected.push({ line: i + 1, reason: r });
     else cars.push(r);
@@ -62,11 +65,20 @@ export const parseCarsPaste = (text: string): Car[] => readCarsPaste(text).cars;
 
 const REASON: Record<CarLineError, string> = { columns: 'أعمدة ناقصة', year: 'السنة غير صحيحة', range: 'سنة البداية أكبر من النهاية', size: 'المقاس غير مقروء' };
 
-/** true only inside Salla's theme editor preview (an iframe) — merchant notes never reach shoppers */
+/** true inside Salla's theme editor preview (an iframe under a salla.* page) — merchant notes are meant for it only; Firefox exposes no ancestor origin, so the note may simply not show there */
 function useInEditor() {
   const [inEditor, set] = useState(false);
   useEffect(() => {
-    try { set(window.self !== window.top); } catch { set(true); }
+    try {
+      if (window.self === window.top) return;
+      // inside an iframe whose parent is a Salla site (the theme editor); an unrelated embed never sees merchant notes
+      const salla = /(^|.)salla.(sa|com|dev)$/i;
+      const host = (u: string) => { try { return new URL(u).hostname; } catch { return ''; } };
+      const origins = Array.from((window.location as unknown as { ancestorOrigins?: ArrayLike<string> }).ancestorOrigins ?? []);
+      set(origins.some(o => salla.test(host(o))) || salla.test(host(document.referrer)));
+    } catch {
+      set(false);
+    }
   }, []);
   return inEditor;
 }
@@ -84,7 +96,7 @@ export function ShopByCar({ data }: { data: Row }) {
     if (pasteText.trim()) return report.cars;
     const manual = rows(data.cars, 'cars')
       .map(r => toCar(asText(r.make, '', lang), asText(r.model, '', lang), Number(r.year_from) || 0, Number(r.year_to) || 0, asText(r.size, '', lang)))
-      .filter((x): x is Car => !!x);
+      .filter((x): x is Car => typeof x === 'object' && x !== null);
     if (!asBool(data.use_builtin, true)) return manual;
     const key = (c: Car) => `${c.make}|${c.model}`;
     const overridden = new Set(manual.map(key));
@@ -163,7 +175,7 @@ export function ShopByCar({ data }: { data: Row }) {
                 <>
                   <span className="cstep" style={{ color: '#9a9ea2' }}>{`${show(make)} ${show(model)} ${year}`}</span>
                   <div className="cres">{car.size}</div>
-                  <p>{t(data.result_text, 'المقاس الأصلي من المصنع. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.')}</p>
+                  <p>{t(data.result_text, 'المقاس المرجعي لهذه السيارة حسب بيانات المتجر. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.')}</p>
                   <Link className="btn btn-gold" to={`/search?q=${encodeURIComponent(tireSizeQuery(parsed))}`}>{t(data.btn_text, 'اعرض الإطارات')}</Link>
                 </>
               ) : (

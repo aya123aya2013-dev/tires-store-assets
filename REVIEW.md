@@ -1256,72 +1256,84 @@ items.name/avatar/stars/text تمر فعلًا إلى TestimonialsCarousel؛ م�
 - What happens: useProduct يحدّث product عند `product::price.updated`، لكن TcProductHead يستلم initialProduct؛ خيار يغيّر السعر من 400 إلى 500 يحدّث سعر زر الشراء ويبقي السعر الكبير 400 ونسبة التوفير القديمة. الرأس يتجاهل starting_price كذلك، ويعرض السعر حتى عند نفاد المخزون. تأكدت من عقد hook المثبت في `node_modules/@salla.sa/twilight-theme-engine/dist/chunk-OGVUFMLX.js:31` ومن مسار البيانات؛ لا عملية شراء حية.
 - Fix idea: تمرير المنتج الحي للرأس، وتمييز السعر الابتدائي وسعر الوحدة/الكمية وحالة المخزون قبل عرض الرقم والتوفير.
 - Status: ✅ fixed (282ca75) — the head now gets the live product (price follows the chosen options), shows «يبدأ من» + starting_price. The price is kept visible when out of stock on purpose (the add button already says so)
+- Round 5 recheck: ✔ confirmed — رأس الصفحة يستقبل product من useProduct؛ مع price.updated يمسح المحرك starting_price ويحدث السعر، وتسمية يبدأ من موجودة.
 
 ### R4-2 [P1] جدول المنتج يتجاوز مصدر المقاس ويعرض مقاسًا آخر
 - Where: app/components/tires/product/TcProductParts.tsx:53.
 - What happens: اختيار tc_spec_source=tags لا يمنع إضافة product.name أولًا إلى all. المسبار: الاسم `Wrong 205/55R16 2024` والوسوم `225/60R18` و`2026` أعادا 205/55R16 وسنة 2024 مع sources=['tags']؛ البحث والبطاقات بالمساعد المشترك يلتزمان بالوسوم. الزبون القادم لنتائج 225/60R18 يرى مواصفات مقاس آخر.
 - Fix idea: استخدام specTexts فقط بحسب المصادر المختارة، بأولوية واحدة مشتركة للبحث والبطاقة ورأس المنتج وجدوله.
 - Status: ✅ fixed (282ca75) — readSpecs uses only the chosen sources; test added
+- Round 5 recheck: ✔ confirmed — readSpecs يمر عبر مصادر specTexts المختارة؛ الاختبار المضاف يمر.
 
 ### R4-3 [P1] بيع الطقم يبقي اختصارات كمية الحبات ويضيف أربعة أطقم
 - Where: app/components/tires/TireQuantityPicker.tsx:4; app/components/tires/TireQuantityPicker.tsx:50; app/components/product/ProductPage.tsx:146.
 - What happens: tc_sale_unit=set يجعل الرأس يقول «سعر الطقم»، لكن picker لا يقرأ الوحدة ويسمي 1 «إطار» و4 «طقم». تجربة React DOM مع وحدة set، سعر 1000، وmax=20: النقر على «4 (طقم)» استدعى setValue(4,true). حقل كمية النموذج يصبح 4 وحدات، أي أربعة أطقم، مقابل إيحاء شراء طقم واحد.
 - Fix idea: عند وحدة set استخدم كمية الأطقم وتسمياتها الصحيحة، وأزل اختصارات الحبات أو حوّلها بما يطابق وحدة API والسعر.
 - Status: ✅ fixed (282ca75) — per-set store: 1 / 2 sets («طقم · طقمين»), label «عدد الأطقم»; test added
+- Round 5 recheck: ✔ confirmed — QUICK_SETS واختصارات طقم/طقمين ووحدة الأطقم؛ اختبار الطقم يمر.
 
 ### R4-4 [P1] حذف آخر عنصر بالمفضلة لا يظهر حالتها الفارغة
 - Where: app/components/tires/pages/TcPages.tsx:60; app/components/tires/pages/TcPages.tsx:72.
 - What happens: القائمة ترسم products القادمة من loader بلا state أو استماع لـwishlist::removed أو invalidation. تغيير القلب في ProductCard يحدّث hook المفضلة فقط، فلا يتغير products.length؛ بعد نجاح إزالة آخر عنصر تبقى بطاقته بدل Empty، ويمكن للنقرة التالية إعادته للمفضلة. المحرك الأصلي كان يعالج removedIds وإعادة التحميل في WishlistPage-FAEXGOAH.js:356–429؛ التخصيص حذف هذه المعالجة.
 - Fix idea: الاحتفاظ بمنطق إزالة العناصر وإعادة جلب الصفحة/ملئها من الصفحة التالية، مع حالة انتظار وفشل، حول markup التصميم.
 - Status: ✅ fixed (282ca75) — wishlist page hides a removed card (state-based) and shows the empty state; not verified on a live account
+- Round 5 recheck: ✔ confirmed لمسار has=true ثم has=false — seen/gone يخفي العنصر، وchanged يمنع حلقة تحديث مستمرة. التحميل المتأخر يبقي البطاقة حتى تتزامن الحالة؛ إزالة عنصر قبل أول has=true غير مثبتة حيًا، فلا أغلق اختبار الحساب الحقيقي.
 
 ### R4-5 [P1] صفحة الماركات تعرض الصفحة الأولى فقط
 - Where: app/components/tires/pages/TcPages.tsx:87; app/routes/brands-list-page.tsx:15.
 - What happens: Brands.loader يعيد brands وpagination.next؛ TcBrandsPage يفك page وbrands فقط ولا يقرأ next ولا يجلب صفحات أخرى. المسبار بماركة واحدة وnext='?page=2' أظهر الماركة وحدها دون مدخل للصفحة التالية. الماركات اللاحقة تصبح غير قابلة للوصول من صفحة كل الماركات.
 - Fix idea: استعادة تحميل next من API الماركات مع تصميم الشبكة وحالة تحميل/خطأ، وعدم الاقتصار على تغيير query دون loader يدعمه.
 - Status: ✅ fixed (282ca75) — remaining brand pages fetched like the home marquee (cap 10 pages) with a retry on failure
+- Round 5 recheck: ↩ reopened — متجر لديه صفحة 11: حلقة p<=10 توقف التحميل ولو بقي res.next؛ R5-8.
 
 ### R4-6 [P2] رسالة حجز السلة تفقد أسماء المنتجات
 - Where: app/components/cart/CartPage.tsx:139; app/components/tires/cart/TcCartParts.tsx:85.
 - What happens: CartItem الفعلي يحمل product_name، بينما cast والمكوّن يقرآن name. المسبار بصف `{product_name:'Tire A',quantity:4}` أعاد رسالة `•  × 4` دون الإطار؛ التاجر لا يستطيع معرفة ما يريد الزبون تركيبه. تحققت من types/index.d.ts:597 وعرض CartItemInfo الذي يقرأ product_name.
 - Fix idea: تمرير CartItem أو mapping صريح `{name:item.product_name,quantity:item.quantity}` دون cast يخفي اختلاف العقد.
 - Status: ✅ fixed (282ca75) — explicit {name: product_name, quantity} mapping
+- Round 5 recheck: ✔ confirmed — أسماء المنتجات تمر صراحة من product_name مع quantity إلى TcAppointment.
 
 ### R4-7 [P2] نصوص افتراضية عربية تبقى بصفحات إنجليزية
 - Where: app/components/tires/HelpPage.tsx:15; app/components/tires/HelpPage.tsx:64; app/components/tires/cart/TcCartParts.tsx:15.
 - What happens: EN في المساعدة لا يحتوي D_INSTALL/D_RETURNS وأسئلة وأجوبة D_FAQ؛ وEN السلة لا يحتوي نص التنبيه/وصف ورسالة الحجز/خطوات الشكر ووصف الموعد. makeT يعيد النص العربي عندما لا يجد mapping. SSR locale=en أكد ظهور شروط الإرجاع والتركيب والأسئلة بالعربية، وكذلك وصف ورسالة الحجز وخطوات الشكر. multilanguage=true وحده لا يترجم الافتراضي.
 - Fix idea: إضافة افتراضيات إنجليزية كاملة لكل نص مستخدم ومرسل بواتساب، واختبار defaults المحفوظة من twilight.json مع اللغتين.
 - Status: ✅ fixed (05f7c94) — default help lines / FAQ and cart / thank-you texts + the WhatsApp message have English, translated line by line
+- Round 5 recheck: ✔ confirmed للإصلاحات المذكورة — قاموس الإنجليزية وأسطر المساعدة ورسائل السلة/الشكر؛ اختلاف ترجمة ShopByCar الجديد مستقل R5-9.
 
 ### R4-8 [P2] بيع فقط يستمر بعرض وعود التركيب بالمساعدة والشكر
 - Where: app/components/tires/HelpPage.tsx:67; app/components/tires/cart/TcCartParts.tsx:110; scripts/tc-settings.cjs:310.
 - What happens: sale يخفي قسم التركيب وصندوق الحجز، لكن سؤال «هل السعر يشمل التركيب؟» وجوابه «نعم… مجاني» يبقيان. خطوات الشكر تغيّر fallback فقط: tc_ty_step3 المحفوظ افتراضيًا «تركيب واستلام — وطريقك جاهز» يغلب fallback البيع فقط؛ وكذلك step2 الخاص بالموعد. أكدت الحالتين بـSSR مع sale وقيمة step3 الافتراضية الفعلية. النتيجة وعود خدمة لم يفعّلها التاجر.
 - Fix idea: فصل خطوات/FAQ التركيب عن التسليم، وإخفاء ما يخص التركيب عند sale حتى مع قيم defaults المحفوظة، مع احترام النصوص العامة المخصصة.
 - Status: ✅ fixed (05f7c94) — «sale only» hides the default «does the price include fitting?» FAQ and swaps the saved fitting wording of thank-you steps 2–3 (custom wording is kept)
+- Round 5 recheck: ✔ confirmed — sale يخفي سؤال التركيب الافتراضي والمراكز والتركيب ويبدل خطوات الشكر الافتراضية مع إبقاء النص المخصص.
 
 ### R4-9 [P2] عناصر المنتج وصفحات أخرى ليست قابلة للإطفاء، والضريبة ادعاء دائم
 - Where: app/components/product/ProductPage.tsx:146; app/components/tires/product/TcProductParts.tsx:106; app/components/tires/pages/TcPages.tsx:171; app/components/tires/pages/TcNotFound.tsx:21; scripts/tc-settings.cjs:211.
 - What happens: لا مفتاح لاختصارات 1/2/4 المطلوبة صراحة في components-spec.md (آخر قسم «صفحة المنتج»)، ولا لسطر السعر/الضريبة والتوفير والتقييم/شارة المقاس. pnote يقول «شامل الضريبة» دون product.is_taxable؛ بينما ProductDetails القديم كان يشترطه. المقال يعرض related/tags دائمًا إذا توفرت، و404 يضيف زر المقاس دائمًا، ولا إعداد لإطفائها. مسح عنوان نص لا يزيل البنية دائمًا. شرط المستخدم وCLAUDE.md «كل عنصر مرئي قابل للإطفاء» غير متحقق.
 - Fix idea: مفاتيح محددة للعناصر الاختيارية ذات سبب للزبون/التاجر، وربط عبارة الضريبة ببيانات سلة وسياسة العرض؛ لا حاجة لإعدادات تعطل الوظائف الأساسية كإتمام الطلب.
 - Status: ✅ fixed (282ca75, 05f7c94) — switches: quantity shortcuts, save badge, rating line, size badge, wishlist button; tax line = dropdown (incl / excl / none) — not tied to Salla data (no tax field is exposed to the theme); article related + tags; 404 size button; editable WhatsApp button texts
+- Round 5 recheck: ✔ confirmed — مفاتيح المنتج الجديدة والمقال و404 والنصوص الجديدة لها مستهلكون؛ tc_p_note يوفر incl/excl/none.
 
 ### R4-10 [P2] DEPS لا يخفي حقول التركيب والشكر حين لا تظهر نتيجتها
 - Where: scripts/tc-settings.cjs:349; scripts/tc-settings.cjs:355; scripts/tc-settings.cjs:359; scripts/tc-settings.cjs:361.
 - What happens: مع sale تبقى tc_p_trust_2 وtc_p_dm_install/sub وtc_help_install/title/lines وtc_cart_appt/title/text/msg ظاهرة إذا مفاتيحها true، رغم إخفاء نتيجتها؛ الحقول التابعة لا تراعي نوع المتجر. ومع tc_cart_appt=false تبقى tc_ty_appt_title/text ظاهرة لأن شرطها tc_ty_next فقط. أجوبة FAQ تبقى بعد مسح سؤالها رغم أن الصف يختفي. IDs سليمة؛ هذه شروط ناقصة وليست مشكلة groups:['general',group].
 - Fix idea: سلسلة الشروط الموافقة للرسم الفعلي، بما فيها نوع المتجر وtc_cart_appt والصف غير الفارغ حيث تدعم المنصة ذلك؛ تحقق محرر للشروط غير البسيطة.
 - Status: ✅ partly (05f7c94) — thank-you appointment fields now need BOTH switches. NOT done: hiding the fitting fields when store type is «sale only» and hiding an FAQ answer when its question is cleared — conditions here only use «=» (the only operation proven in this theme) so «not equal» is not safe; the fields say so in their labels
+- Round 5 recheck: ✔ confirmed للجزء المصلح فقط — عنوان/نص موعد الشكر يشترطان tc_ty_next وtc_cart_appt، وكل العمليات =. الجزء المعلن غير المنفذ يبقى كما هو ولا أعيده كملاحظة جديدة.
 
 ### R4-11 [P2] زر المفضلة يختفي من صفحة المنتج على الكمبيوتر
 - Where: app/components/product/ProductPage.tsx:167; app/components/product/ProductDetails.tsx:67; app/components/product/ProductGallery.tsx:100.
 - What happens: headless يحذف كتلة العنوان التي تشمل wishlist/share، والرأس الجديد لا يعوضها. النسخة الأخرى من القلب والمشاركة داخل product-gallery__bar عليها md:hidden؛ عند ≥768 لا مدخل للمفضلة بصفحة المنتج. التصميم product.html:82 يطلب pfav تحت أزرار الشراء، على كل الأحجام. على الجوال الزر لا يعرض aria-pressed أو حالة المفضلة الحالية.
 - Fix idea: نقل أزرار المفضلة/المشاركة إلى موضع التصميم مع hook حالة حقيقي وتسميات مترجمة ومفتاح إظهار مناسب.
 - Status: ✅ fixed (282ca75) — `.pfav` toggle under the buy buttons on every size (aria-pressed, switch)
+- Round 5 recheck: ✔ confirmed — TcFav وزر pfav تحت الشراء مع المفتاح وaria-pressed.
 
 ### R4-12 [P2] معرض المنتج لم يُنقل إلى بنية التصميم ولا يعالج غياب الصورة
 - Where: app/components/product/ProductGallery.tsx:64; app/components/product/ProductGallery.tsx:92; app/components/product/ProductGallery.tsx:132; app/components/product/ProductGallery.tsx:174; scripts/build-tc-sections-css.cjs:31.
 - What happens: المولّد يعزل قواعد pages.css تحت .tc-s لكنه لا يحوّل DOM المحرك إلى gmain/gghost/gthumbs؛ المعرض ما زال SallaSlider بأبعاد/هوامش/تموضع قديم وmd:top-24، والثمبنيل hidden md:block. المرجع pages.css:35–42: مربع بخلفية bg-2، صورة 78% contain، رقم جنط خلفها، وأربع thumbnails بفجوة 10px؛ لا إخفاء للصور المصغرة على الجوال. إن images=[] وimage غائبة ينتج slot فارغ بلا placeholder. مقارنة مصدرية مؤكدة، لا قياسات screenshot.
 - Fix idea: تركيب gallery markup/قواعد المرجع حول مصادر سلة مع دعم الوسائط الفعلي والصورة المفقودة، ومقارنة desktop/375 قبل ادعاء 1:1؛ التعديل في المولّد أو glue المصدر، لا الناتج يدويًا.
 - Status: ✅ partly (282ca75) — the engine slider (zoom / video / 3D) keeps working; tinted square, tire at 78%, rim size behind it, thumbnails on phones, placeholder when there is no image. Not measured against the design visually
+- Round 5 recheck: ↩ reopened للجزء البصري — gghost خلف سطح details-slider المعتم، وmd:top-24 لم يُصفّر؛ R5-7. fallback غياب الصورة موجود. لم أقس المطابقة بالبكسل.
 
 ### R4-13 [P2] بطاقات التصنيف والمفضلة والمشابهة تبقى تصميم المحرك
 - Where: app/components/product/ProductCard.tsx:101; app/components/tires/pages/TcPages.tsx:72; app/components/product/ProductPage.tsx:48.
@@ -1334,36 +1346,42 @@ items.name/avatar/stars/text تمر فعلًا إلى TestimonialsCarousel؛ م�
 - What happens: المرجع assets/pages.js:97 يبني ci/ci-img/ci-q/ci-t؛ pages.css:95–103 يحدد صورة 110px مربعة، gap18، الاسم 17px، الكمية تحت الاسم، الإجمالي20px؛ عند ≤640 صورة80px والإجمالي بالعمود الثاني. الكود الحالي يحتفظ بصف md:flex وصورة w-24 h-20/6:5 وكمية بعرض120px مع إجمالي/حذف في controls منفصلة. glue tc-cart لا يعوض هذه القواعد، فمولّد الصفحات لا يطبق .ci على الصف الفعلي. مقارنة مصدرية وليست screenshot.
 - Fix idea: نقل بنية الصف وأبعاده من المرجع مع الاحتفاظ بFormData وخيارات سلة وتحديث/حذف الصف، ثم تحقق عند375 وبأسماء طويلة.
 - Status: ✅ fixed (01378e7) — CSS grid on Salla's row markup (image | name + quantity | total), 110px / 80px image; functions untouched; not verified visually
+- Round 5 recheck: ↩ reopened — input[type=hidden] أول طفل فعلي؛ .cart-item > div:first-child لا يطابق أي عنصر، وأثبت المسبار 0 matches؛ R5-5.
 
 ### R4-15 [P2] صفحة الشكر تضيف قطعة تصميم تحت صفحة المحرك بدل مطابقتها
 - Where: app/routes/thankyou-page.tsx:25; app/components/tires/cart/TcCartParts.tsx:115.
 - What happens: المرجع thankyou.html:62–68 يجمع تأكيد الطلب ورقمه وعناصره وخطواته بالعمود الأول وصندوق الموعد بالثاني في ty. المسار يرسم ThankYou.Component كاملًا أولًا (confetti140px وبانر/بطاقات المحرك) ثم ty منفصلة للخُطوات والموعد؛ لا يعرض عناصر الطلب والإجمالي بتصميم ty-i/ty-tot. لا override لهذا الجزء في CSS. عند غياب order لا يوقف TcThankYouNext ويولد رسالة حجز تنتهي بـ# فارغة إذا الرقم موجود؛ لا سياق طلب يصل للتاجر. فحصت loader الذي يسمح بـorder undefined، لا طلب حقيقي.
 - Fix idea: صفحة شكر مخصصة بالبنية المعتمدة مع بيانات الطلب/hooks الحقيقية، وحالة واضحة عند عدم توفر البيانات، وعدم طلب حجز مرتبط برقم غائب.
 - Status: ✅ partly (05f7c94) — the appointment box needs the order number now. NOT done: rebuilding the page in the design's `ty` structure (engine confetti / banner still on top)
+- Round 5 recheck: ✔ confirmed للجزء المصلح فقط — طلب موعد الشكر يحتاج رقم الطلب؛ إعادة بناء الصفحة مؤجلة حسب التعليمات.
 
 ### R4-16 [P2] المساعدة تحذف قسم مراكز التركيب المعتمد
 - Where: app/components/tires/HelpPage.tsx:58; app/components/tires/HelpPage.tsx:69.
 - What happens: help.html:63 و:69–71 يحتويان nav للمراكز وقسم #centers وبطاقات عنوان/دوام/اتصال؛ HelpPage يعرّف size/install/returns/faq فقط، ولا مصدر أو إعداد أو rendering للمراكز. في متجر تركيب لا يجد الزبون مكان الخدمة من هذه الصفحة، ولا يمكن للتاجر إعادته. لا أقترح إعادة بيانات الرياض الثابتة من التصميم؛ المطلوب نفس البنية ببيانات التاجر.
 - Fix idea: مصدر قابل للتعديل/مشترك لمراكز التاجر مع مفتاح، وتفعيل #centers وروابطه حين توجد بيانات؛ إخفاؤه عند sale.
 - Status: ✅ fixed (05f7c94) — `#centers` on /help from the merchant's own lines «name | address | hours | phone» (empty by default → hidden; hidden when «sale only»)
+- Round 5 recheck: ✔ confirmed — centers من نص التاجر، تُحذف فارغة أو في sale، وnav يستخدم نفس قرار الظهور.
 
 ### R4-17 [P2] تخطيط الحساب ونقطة التحول يختلفان عن التصميم
 - Where: app/styles/04-components/tc-account.scss:16; app/styles/04-components/tc-account.scss:30; app/routes/account.orders.tsx:39.
 - What happens: التصميم account.html:62–66 يضع عنوان الحساب أعلى شبكة acc؛ pages.css:152/169 يحدد 280px +1fr وgap30 ويتحول لعمود واحد ≤1100. CSS الحالي يستعمل شبكة من1024، عنوانًا داخل main-content بحجمclamp(26,3vw,36) بدل ph1 clamp(28,3vw,40)، وقائمة المحرك hidden lg:block. عند1050 يبقى جانبان خلاف المرجع؛ وعلى375 تختفي قائمة الحساب بدل ظهور روابطها في عمود واحد. هذه مقارنة CSS/markup مؤكدة؛ لم أختبر حسابًا حيًا.
 - Fix idea: مطابقة wrapper والعنوان والقائمة ونقطة1100 مع إبقاء أمان تسجيل الدخول ووظائف الحساب على سلة؛ إتاحة قائمة فعلية على الجوال.
 - Status: ✅ partly (01378e7) — breakpoint 1100, title size, account menu stays visible on phones. Layout not measured visually
+- Round 5 recheck: ↩ reopened — nav ظاهر لكن غلاف القائمة hidden lg:block يبقى مخفيًا على الجوال، وlg:flex-row يبدأ قبل نقطة 1100؛ R5-6.
 
 ### R4-18 [P3] نقاط قوائم المساعدة تبقى يمين النص الإنجليزي
 - Where: scripts/build-tc-sections-css.cjs:31; ../design/store/pages.css:148; app/components/tires/HelpPage.tsx:99.
 - What happens: المولّد يحافظ على `.hlist li::before{right:0}` بينما النص يستخدم padding-inline-start:22px. في LTR ينتقل الفراغ لليسار وتبقى النقطة يمينًا؛ لا override اتجاهي بالمصدر. القاعدة الأصلية صُممت RTL فقط ويجب تطبيعها عند النقل للمتجر الإنجليزي.
 - Fix idea: جعل الموضع inset-inline-start في التحويل أو glue المصدر بدل right، والتحقق بالاتجاهين دون تحرير الناتج.
 - Status: ✅ fixed (01378e7) — bullets use inset-inline-start
+- Round 5 recheck: ✔ confirmed — inset-inline-start مع right:auto لنقاط المساعدة.
 
 ### R4-19 [P3] شريط تقدم الشحن بلا اسم وصول
 - Where: app/components/tires/cart/TcCartParts.tsx:59.
 - What happens: progressbar لديه min/max/now لكن لا aria-label أو labelledby؛ النص المرئي قبله غير مربوط به. axe على DOM الشريط الفعلي مع goal1000/subtotal100 أعاد `aria-progressbar-name`. لا أعمم النتيجة على درجة Lighthouse.
 - Fix idea: ربط اسم مترجم ونص القيمة/المتبقي عبر aria-labelledby وaria-valuetext أو label مناسب.
 - Status: ✅ fixed (282ca75) — aria-labelledby + valuetext; currency from the store formatter
+- Round 5 recheck: ✔ confirmed — aria-labelledby/aria-valuetext موجودان وشكل العملة من formatter.
 
 ### إعادة التحقق — تحت كل بند سابق يخص هذا النطاق
 
@@ -1461,6 +1479,7 @@ items.name/avatar/stars/text تمر فعلًا إلى TestimonialsCarousel؛ م�
 - What happens: cartId=null يجعل detail معطلًا، لكن isLoading يظل true؛ كذلك error مع cartData=undefined لا يصل لحالة خطأ. عقد cart.queries.currentId() هو number|null، والمحرك يرجع null إذا SDK غير متاح. هذا إثبات للفرع، وليس ادعاءً بأن كل زائر جديد يحصل على null من سلة.
 - Fix idea: فرّق pending/error/resolved-null، وقدّم الحالة الفارغة أو إعادة محاولة حسب الحالة؛ لا تعتبر null تحميلًا دائمًا.
 - Status: ✅ fixed (282ca75) — pending / error (with retry) / empty are separate states
+- Round 5 recheck: ✔ confirmed — resolved null يصل empty، وفشل الاستعلام يصل alert/retry، pending منفصل.
 
 
 ### R4-21 [P1] شريط المقاس يغير مقاس الشاحنات قبل إعادة البحث
@@ -1468,6 +1487,7 @@ items.name/avatar/stars/text تمر فعلًا إلى TestimonialsCarousel؛ م�
 - What happens: widths تضم PASSENGER_WIDTHS وTRUCK_WIDTHS فقط؛ لا تضم HEAVY_INCH_WIDTHS أو HEAVY_METRIC_WIDTHS. فتح بحث 11R22.5 يعرض width=205 عبر sel() بدل 11، ثم «اعرض» يرسل 205/55/22.5. كذلك 385/65R22.5 يعاد عرضه كـ205/65R22.5. parser يدعم الاثنين لكن واجهة التصنيف لا تدعمهما.
 - Fix idea: استخدم قوائم المقاسات المشتركة كاملة، واحفظ initial دون استبدال صامت؛ أبقِ النسبة معطلة للمقاس الإنشي. أضف تحققًا لهذا الشريط لا للـparser فقط.
 - Status: ✅ fixed (282ca75) — the size bar offers every width the parser understands (385, 11 / 12 / 13)
+- Round 5 recheck: ✔ confirmed — عروض HEAVY_INCH/HEAVY_METRIC والجنوط HEAVY_RIMS موجودة؛ 11R22.5 و385/65R22.5 لا يستبدلان بـ205.
 
 
 
@@ -1478,6 +1498,7 @@ items.name/avatar/stars/text تمر فعلًا إلى TestimonialsCarousel؛ م�
 - What happens: 11R22.5 يصبح «العرض 11 مم»؛ الكود نفسه يعرّف هذا العرض على أنه inch. 900/16 يُعرض «900 مم» رغم أنه رمز المقاس بصيغته التجارية. parser الصحيح لا يكفي إذا أضيفت وحدة خاطئة عند العرض.
 - Fix idea: ميّز العرض المتري والإنشي، أو اعرض المقاس التجاري دون وحدة عرض غير مؤكدة؛ حافظ على 22.5 في قطر الجنط.
 - Status: ✅ fixed (282ca75) — inches for 11R22.5, no unit for the trade code 900/16, mm for the rest
+- Round 5 recheck: ✔ confirmed — تمييز inch/metric/code بوحدة صحيحة أو دون mm للرمز التجاري.
 
 
 
@@ -1486,12 +1507,14 @@ items.name/avatar/stars/text تمر فعلًا إلى TestimonialsCarousel؛ م�
 - What happens: final.html:313 يحدد عمودين لـ.tips تحت 1100px؛ glue يعيدها 3 أعمدة فوق 900px وعمودًا واحدًا تحته. عند 1000px تظهر ثلاثة بدل اثنين؛ وعند 800px واحد بدل اثنين. عند ≤640px قاعدة display:flex الأصلية ما زالت موجودة؛ لا أسجلها كشبكة عمود واحد على 375px.
 - Fix idea: احذف override المتعارض أو طابق نقاط 1100/640 والتخطيط المعتمد.
 - Status: ✅ fixed (01378e7) — 3 columns, 2 under 1100px, swipe row under 640px
+- Round 5 recheck: ✔ confirmed — 3 أعمدة ثم 2 تحت1100 ثم flex تحت640؛ override السابق زال.
 
 ### R4-24 [P2] زر إعجاب المقال لا يوضح وظيفته لقارئ الشاشة
 - Where: app/components/tires/pages/TcPages.tsx:186.
 - What happens: زر الإعجاب يحتوي أيقونة aria-hidden والعدد فقط؛ اسمه المتاح «3» مثلًا لا يشرح الإعجاب أو إلغاءه، رغم aria-pressed. نقص اسم progressbar واتجاه نقاط المساعدة موثقان بالتقرير الأول R4-18/19 ولا أكررهما هنا.
 - Fix idea: أضف اسم فعل مترجم، مع العدد والحالة عند الحاجة؛ تحقق بقارئ شاشة.
 - Status: ✅ fixed (01378e7) — aria-label «أعجبني / Like this article»
+- Round 5 recheck: ✔ confirmed — زر المقال له aria-label مترجم وaria-pressed.
 
 
 ### R4-25 [P2] مسح نص القسم يترك رابط مساعدة بلا هدف
@@ -1499,12 +1522,14 @@ items.name/avatar/stars/text تمر فعلًا إلى TestimonialsCarousel؛ م�
 - What happens: clearing tc_help_install_lines أو tc_help_returns_lines يخفي section عبر length، لكن nav يتحقق من switch فقط؛ «الإرجاع»/«التركيب» يقود إلى anchor غير موجود. حذف أسئلة FAQ جميعها يكرر المشكلة. وإذا مسحت أسطر الإرجاع وأبقيت رابط السياسة، يُحذف الرابط معه.
 - Fix idea: احسب visible النهائي مرة واحدة واستخدمه للقسم والروابط؛ اسمح بعرض رابط السياسة منفردًا عند توفره.
 - Status: ✅ fixed (05f7c94) — one visibility value drives the section and its nav link; the policy link shows alone
+- Round 5 recheck: ✔ confirmed — show مشتركة للقسم وnav؛ returns يسمح برابط policy وحده.
 
 ### R4-26 [P2] حجز الشكر بدون بيانات الطلب يرسل رقمًا فارغًا
 - Where: app/routes/thankyou-page.tsx:32؛ app/components/tires/cart/TcCartParts.tsx:112,119.
 - What happens: order اختيارية حسب عقد ThankYouPageProps عند guest/فشل جلب الطلب، لكن TcThankYouNext تُعرض دائمًا. رابط الموعد يرسل الرسالة ثم «#» بلا رقم رغم أن النص يطلب إرسال رقم الطلب. orderId متاح من route ولم يستخدم كبديل.
 - Fix idea: استخدم معرفًا موثوقًا متاحًا أو أخفِ طلب الحجز المرتبط بالطلب عند غياب الرقم؛ لا تؤكد بيانات طلب لم تُجلب.
 - Status: ✅ fixed (05f7c94) — no appointment request without an order number
+- Round 5 recheck: ✔ confirmed — شرط hasOrder ورقم reference_id يمنعان رابط الموعد دون رقم.
 
 
 ### R4-27 [P3] قراءات إعدادات قديمة لا تعريف لها
@@ -1543,3 +1568,86 @@ items.name/avatar/stars/text تمر فعلًا إلى TestimonialsCarousel؛ م�
 - لا ادعاء قبول/رفض رسمي من سلة؛ لم أستخدم الشبكة حسب الطلب. الترجمات والوصول والمطابقة ومعلومات الطلب عوامل يجب إغلاقها قبل النشر.
 - فحص التصميم هنا يثبت اختلافات المصادر. بقية المسافات/الفونت/طول الأسماء/الكثير من العناصر/اختيار options/OOS/إزالة السلة تحتاج جلسة browser QA مرخصة. لم أجد في BlogPageProps pagination؛ أسقطت شكًا أوليًا بأن الصفحة تفقد cursor بدل الإبلاغ عنه بلا عقد.
 - لم ألمس ملف UX-ANALYSIS.md الذي ظهر untracked أثناء الجولة؛ ليس من تعديلات هذه المراجعة. لا commit ولا push ولا بيانات اعتماد.
+
+
+## Round 5 — 2026-10-10
+
+مراجعة إعادة تحقق على HEAD `399b8b9aa71aa3f5a382e137ab805cac598b15a2`. قرأت CLAUDE/HANDOFF/الجولات السابقة وتقرير UX ومصادر التصميم والمستهلكين والمحرك المثبت. استخدمت salla-twilight-review وsalla-storefront-qa وتعليمات مهارة المشروع. لا مصدر معدل ولا commit/push ولا شبكة/خادم/شراء.
+
+**النتيجة: 1 P1، 8 P2، 1 P3.** إعادة الفتح: R4-5، R4-12، R4-14، R4-17. أضفت تحقق Round5 مباشرة تحت Status لكل fixed/partly؛ تأكيد الجزئي يقتصر على الجزء المنفذ. R4-13/R4-27 وإعادة بناء thank-you وUX-M3/UX-C4 خارج إعادة الإبلاغ كما طلب المالك.
+
+### الفحوص
+
+- `pnpm.cmd typecheck`: نجح، exit0.
+- `pnpm.cmd build`: نجح، exit0، client+SSR؛ CSS707.69kB، gzip101.12kB. عولجت صلاحيات المخرجات/كاش البناء بإعادة التشغيل بعد منحها، دون تعديل المصدر. تحذير Vite عن __dirname في مسار config loader؛ لا فشل بناء.
+- `pnpm.cmd exec vitest --run tests/salla tests/components/tires tests/routes`: نجح، **82 اختبارًا في9 ملفات**، exit0. تحذير key في ShopByCar موثق R5-1؛ الاختبار لا يمنع زرًا فارغًا.
+- مسبار منفصل offline: `C:/Users/m52oo/Documents/Codex/2026-10-05/you-are-reviewing-a-salla-e/round5-probe.cjs` يستورد مصادر TS عبر transpile ويستعمل mocks دون API؛ تحقق parser وSSR للصف غير الصالح ومحدد DOM للسلة. ليس اختبار محرر/SDK حيًا.
+
+### سلامة الإعدادات والإصلاحات المقبولة
+
+- JSON:235 setting،23 component؛ فحص جميع ids ضمن النطاق كشف صفر duplicate وصفر condition يشير إلى id مفقود، وكل العمليات =. مجموعات general+own مقصودة. هذا فحص بنيوي محلي، لا شهادة قبول محرر سلة.
+- المفاتيح الجديدة المذكورة بالطلب لها مستهلكون: product note/save/rating/sizebadge/qty/fav، المراكز، related/tags،404، أزرار المساعدة،price_note،confirm_note،show_samples. show_advanced خاص بإظهار حقول المحرر، وSection يقرأ show_mobile/show_desktop/spacing/custom_class مستقلاً عنه؛ لا يعطل القيم المخفية.
+- UX-M1/C3: الرقم الخاص أولوية ثم رقم المتجر؛ النص طلب موعد وconfirm_note. UX-C1: الأسعار التقريبية ونصها مقروءان. UX-C2: حدث الحد الأقصى يصل live region وينظف listener/timer. تلميحات إعداد الثيم ووحدة البيع موجودة. UX-M2/M5 ما زالا يحويان الحالات أدناه.
+- Help: مشاركة show بين nav/sections، السياسة وحدها، المراكز الفارغة وsale، والترجمة بحسب اللغة. موعد thank-you مشروط برقم reference_id؛ خطوات sale تستبدل الافتراضي وتبقي المخصص.
+- البحث عن الكلمات المحددة بدي/هون/لسا/شو/ابعتلنا لم يثبت لفظًا مخالفًا في النصوص الجديدة للزبون؛ المطابقات داخل كلمات مثل «السابق/مصنع/مكتوب» ليست نتائج. مشكلة إنجليزية مثبتة R5-9.
+- لا متصفح حي أو Lighthouse أو مقارنة screenshots؛ لا تأكيد عتبات الأداء/الوصول أو1:1 أو السلوك الحقيقي لخيارات المنتج/مفضلة الحساب. احتمال lazy loading لتقييمات سلة داخل hidden يحتاج تحققًا من الواجهة الفعلية؛ لم أسجله كعطل مستقل.
+
+### R5-1 [P1] صف السيارة اليدوي غير الصالح ينتج زرًا فارغًا
+- Where: app/components/home/ShopByCar.tsx:86
+- What happens: use_builtin=false، cars=[{make:"Toyota",model:"Camry",year_from:2018,year_to:2024,size:"invalid"}]. toCar يرجع النص size، وfilter(!!x) يبقيه بوصفه Car. SSR الفعلي في المسبار أظهر <button type="button"></button> وتحذير React عن key. لا يستطيع الزبون اختيار ماركة ذات معنى.
+- Fix idea: فلتر typeof x !== "string" بعد toCar، واجمع أخطاء الصفوف اليدوية لعرضها للتاجر بدل تمريرها كسيارات.
+- Status: ✅ fixed — unreadable manual rows are dropped (they were strings passed on as cars); test
+
+### R5-2 [P2] سنة نهاية غير رقمية تُقبل بصمت
+- Where: app/components/home/ShopByCar.tsx:34
+- What happens: readCarsPaste("Toyota | Camry | 2018 | abc | 215/55R17") أعاد سيارة from=2018,to=2018 وrejected=[] بالمسبار. Number(abc)=NaN يتجاوز شرط to && ثم يتحول إلى from. سنة 2018.5 تُقبل أيضًا رغم أنها ليست سنة صحيحة.
+- Fix idea: تحقق من Number.isInteger وNumber.isFinite للسنتين؛ ميّز النهاية الغائبة عن القيمة الموجودة غير الصالحة.
+- Status: ✅ fixed — a present end year must be a real integer year (abc / 2018.5 rejected), only an ABSENT end means the same year; test
+
+### R5-3 [P2] كشف تقييمات المتجر يعتمد على طول النص ومهلة قصيرة
+- Where: app/components/home/Reviews.tsx:46
+- What happens: اسم Ali مع نص Good طوله الإجمالي أقل من31 يُصنف empty بعد8 ticks. عند تأخر نص التقييم لأكثر من4 ثوانٍ يصنف empty كذلك ويُفك StoreReviews عبر showStore، فلا يكمل الظهور. وبالعكس رسالة فارغة طويلة (>30) تحقق has. أثبت المسبار اختبار الطول؛ سيناريو التأخر ثابت من فروع المؤقت، دون استدعاء سلة.
+- Fix idea: اعتمد حالة تحميل/عدد تقييمات موثوقًا من واجهة سلة المتاحة، وافصل timeout/error عن empty؛ لا تفك المصدر بسبب بطء التحميل.
+- Status: ✅ fixed — Salla's cards stay mounted and are checked for ~40 s (stars/rating element or card-sized text); «empty» only means «nothing yet» and flips to «has» if they load late; samples show only while empty
+
+### R5-4 [P2] اختيار «من المتجر» يعرض الأمثلة أيضًا
+- Where: app/components/home/Reviews.tsx:74
+- What happens: source="store", show_samples=true وحالة store="empty": mine يعيد samples لأن الفرع لا يفرق store عن auto. المستهلك يعلن store: only Salla real ratings، لكن التنفيذ يعرض الأسماء التجريبية. تبديل source من auto بعد empty إلى store لا يعيد الفحص لأن store state باقٍ.
+- Fix idea: اجعل fallback للأمثلة خاصًا بـauto/manual حسب الخيار؛ أعد دورة التحقق عند تبديل المصدر.
+- Status: ✅ fixed — `store` never shows samples; the check restarts when the source changes; the panel hides itself when there is nothing real and nothing to show
+
+### R5-5 [P2] شبكة السلة الجديدة لا تطابق DOM
+- Where: app/styles/04-components/tc-cart.scss:32
+- What happens: R4-14 reopened. CartItem.tsx:305 يضع input hidden قبل div؛ كل .cart-item > div:first-child لا يطابق div. مسبار DOM أعاد صفرًا. في المقابل controls display:contents يطبق، فتزال مجموعة أزرار الكمية/الحذف دون شبكة الأب الجديدة. المرجع pages.css:95 و118 يطلب110px/80px وشبكة ci.
+- Fix idea: استهدف div المباشر الصحيح بمحدد ثابت/موجود، ثم تحقق من موضع الكمية والمجموع والحذف والخيارات على375px.
+- Status: ✅ fixed — selectors now match the real DOM (`.cart-item > div`, the hidden input precedes the row)
+
+### R5-6 [P2] قائمة الحساب تبقى مخفية بالجوال
+- Where: app/styles/04-components/tc-account.scss:26
+- What happens: R4-17 reopened. CustomerLayout المثبت يضع SallaUserMenu داخل div.hidden.lg:block (dist/CustomerLayout-HXVLROR7.js:78). إظهار nav.sidebar لا يظهر هذا الابن تحت1024px. كذلك الأب lg:flex-row يبدأ عند1024 بينما تعديل الشبكة يبدأ1101: عرض1050 لا ينتقل إلى عمود واحد كما pages.css:169.
+- Fix idea: أظهر غلاف القائمة داخل نطاق الحساب، وطبق عمودًا واحدًا فعليًا حتى1100؛ افحص375 و1050 و1101.
+- Status: ✅ fixed — Salla's `hidden lg:block` menu wrapper is shown ≤1100px and the layout becomes one column at 1100 like pages.css (not measured visually)
+
+### R5-7 [P2] رقم الجنط خلف سطح المعرض المعتم والمعرض مزاح
+- Where: app/styles/04-components/tc-product.scss:33
+- What happens: R4-12 reopened. gghost أخ للـdetails-slider في ProductGallery.tsx:136؛ الأول z-index:0 والثاني1 مع background:var(--bg-2) معتم، فيُغطى الرقم. المرجع pages.css:35–37 يضع الرقم داخل gmain فوق خلفيته وتحت الصورة. ProductGallery.tsx:96 يحتفظ md:top-24 على position:relative، ولم يصفّر glue قيمة top، فيزيح المعرض96px عند>=768.
+- Fix idea: ضع الزخرفة ضمن سطح الصورة بالترتيب الموافق للمرجع، وصفّر إزاحة top في التخطيط الجديد. fallback الصورة مصلح؛ هذه ملاحظات CSS مؤكدة وليست قياس بكسلات.
+- Status: ✅ fixed — the ghost is the tinted square (bg + rim letters), the slider sits above it transparent; the `md:top-24` offset is cleared on a non-sticky column (not measured visually)
+
+### R5-8 [P2] الماركات تتوقف عند الصفحة العاشرة
+- Where: app/components/tires/pages/TcPages.tsx:127
+- What happens: R4-5 reopened للحالة الكبيرة فقط. pagination.next يستمر إلى الصفحة11 لكن حلقة p<=10 تنتهي بعد10؛ لا زر متابعة ولا بيان عن بقية الماركات. تم إصلاح الصفحة الأولى، لكن متجرًا بأكثر من10 صفحات يبقى ناقصًا.
+- Fix idea: تابع next حتى النهاية مع حماية من تكرار cursor/الصفحة، أو وفر تحميل المزيد بدل قطع القائمة بصمت.
+- Status: ✅ fixed — follows `next` to the end (cap 200 pages, stops on a page with nothing new)
+
+### R5-9 [P2] نص المقاس المرجعي يعود لادعاء المصنع وترجمة ناقصة
+- Where: app/components/home/ShopByCar.tsx:19
+- What happens: UX-M5 غير مكتمل: الافتراضي الجديد في JSON يقول مرجعي حسب بيانات المتجر، لكن EN يحوله إلى The factory size. عند data.result_text=undefined، السطر166 يستعمل النص القديم «المقاس الأصلي من المصنع…» الذي لا يوجد مفتاح ترجمة له في EN؛ makeT يتركه عربيًا في الواجهة الإنجليزية.
+- Fix idea: وحّد fallback مع افتراضي JSON وغيّر الإنجليزية إلى reference size based on store data؛ تحقق من غياب الحقل وقيم ar/en.
+- Status: ✅ fixed — one Arabic default in JSON, the component and the English map («Reference size for this car, based on the store’s data»)
+
+### R5-10 [P3] أي iframe يُعتبر محرر سلة
+- Where: app/components/home/ShopByCar.tsx:68
+- What happens: window.self!==window.top يتحقق في كل iframe، بما فيه تضمين واجهة المتجر خارج محرر سلة؛ فتظهر للزبون ملاحظات السطور والتداخل المخصصة للتاجر. لا أثبت مشكلة SSR: state الأول false وuseEffect بعد التحميل متسقان.
+- Fix idea: استخدم مؤشر محرر موثوقًا ومدعومًا بالمشروع بدل اختبار iframe وحده؛ حتى يتوفر الإثبات لا تصف الشرط بأنه editor-only.
+- Status: ✅ fixed — merchant notes need an iframe AND a salla.* ancestor / referrer; documented that Firefox exposes no ancestor origin, so the note may not show there (still not shown to shoppers)

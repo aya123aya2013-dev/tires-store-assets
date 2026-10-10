@@ -133,7 +133,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
       </div>
 
       {/* design/store/product.html `.gghost` — the rim size, huge, behind the tire (decorative) */}
-      {rim && images.length > 0 && <span className="gghost" aria-hidden="true">R{rim}</span>}
+      {images.length > 0 && <span className="gghost" aria-hidden="true">{rim ? `R${rim}` : ''}</span>}
       {images.length === 0 && (
         <div className="gmain gmain--empty" role="img" aria-label={product.name}>
           <span aria-hidden="true">{product.name}</span>

@@ -124,10 +124,14 @@ export function TcBrandsPage({ page, brands, ...rest }: BrandsPageProps) {
     enabled: hasNext,
     queryFn: async () => {
       const all: typeof brands = [];
-      for (let p = 2; p <= 10; p++) {
+      const seen = new Set<unknown>(brands.map(b => b.id));
+      for (let p = 2; p <= 200; p++) {
         const res = await brandApi.list(p);
-        all.push(...(res.items as unknown as typeof brands));
-        if (!res.next) break;
+        const fresh = (res.items as unknown as typeof brands).filter(b => !seen.has(b.id));
+        fresh.forEach(b => seen.add(b.id));
+        all.push(...fresh);
+        // no `next`, or a page with nothing new (a repeating cursor) ends the loop
+        if (!res.next || !fresh.length) break;
       }
       return all;
     },

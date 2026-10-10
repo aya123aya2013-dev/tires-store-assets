@@ -22,7 +22,11 @@ body.customer {
     margin: 0 !important; width: 100%; box-shadow: none !important; background: var(--tc-page-bg, #fff) !important;
     border: 1px solid rgba(0, 0, 0, .09); border-radius: var(--tc-radius, 16px); padding: 20px !important; top: 120px;
   }
-  @media (max-width: 1100px) { nav.sidebar { display: block !important; border: 0; padding: 0 !important; margin-bottom: 8px !important; } }
+  @media (max-width: 1100px) {
+    .container > .flex.items-start.flex-col { flex-direction: column !important; display: flex; }
+    nav.sidebar { display: block !important; width: 100%; border: 0; padding: 0 !important; margin-bottom: 8px !important; }
+    nav.sidebar > .hidden { display: block !important; }
+  }
   nav.sidebar salla-user-menu a,
   nav.sidebar .s-user-menu-inline-item a { border-radius: 10px; }
 

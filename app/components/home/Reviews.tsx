@@ -34,17 +34,25 @@ const DEFAULTS = [
 
 type StoreState = 'checking' | 'has' | 'empty';
 
-/** Salla's own reviews cards, plus a check whether the store has any (its component renders nothing when empty). */
+/**
+ * Salla's own reviews cards, plus a check whether the store has any (its component renders nothing when empty).
+ * Salla exposes no count to the theme, so we look at what it rendered: rating stars, or a card-sized text.
+ * It keeps looking for ~40 s and the cards stay mounted, so a slow load flips «empty» → «has» instead of
+ * being cut off; «empty» only means «nothing yet».
+ */
 function StoreReviews({ limit, onState }: { limit: number; onState: (s: StoreState) => void }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    let tries = 0;
+    let ticks = 0;
+    let last: StoreState = 'checking';
     const id = window.setInterval(() => {
-      tries += 1;
-      // a rendered card carries a name + the review text; an empty state is a short line
-      if ((ref.current?.textContent ?? '').trim().length > 30) { window.clearInterval(id); onState('has'); }
-      else if (tries >= 8) { window.clearInterval(id); onState('empty'); }
-    }, 500);
+      ticks += 1;
+      const el = ref.current;
+      const has = !!el && (!!el.querySelector('[class*="star"], [class*="rating"], salla-rating-stars') || (el.textContent ?? '').trim().length > 30);
+      const next: StoreState = has ? 'has' : ticks >= 6 ? 'empty' : 'checking';
+      if (next !== last) { last = next; onState(next); }
+      if (has || ticks >= 40) window.clearInterval(id);
+    }, 1000);
     return () => window.clearInterval(id);
   }, [onState]);
   return <div ref={ref}><SallaReviews limit={limit} sort="latest" type="store" /></div>;
@@ -56,6 +64,8 @@ export function Reviews({ data }: { data: Row }) {
   const showSamples = asBool(data.show_samples, true);
   const limit = Math.min(12, Math.max(1, Number(data.limit) || 3));
   const [store, setStore] = useState<StoreState>('checking');
+  // switching the source (editor) starts the check again
+  useEffect(() => setStore('checking'), [source]);
   const own = rows(data.reviews, 'reviews')
     .map(r => {
       const name = t(r.name, ''), city = t(r.city, '');
@@ -63,20 +73,18 @@ export function Reviews({ data }: { data: Row }) {
     })
     .filter(r => r.text);
   const samples = showSamples ? DEFAULTS.map(d => ({ name: [t(d.name, d.name), t(d.city, d.city)].join(' · '), text: t(d.text, d.text), product: t(d.product, d.product) })) : [];
-  const fromStore = source !== 'manual';
-  // cards drawn by us: the merchant's own list, else samples (only while there is nothing real to show)
-  const mine = source === 'manual' ? (own.length ? own : samples) : store === 'empty' ? samples : [];
+  // cards drawn by us: manual → own list (samples while empty); auto → samples only while Salla has nothing; store → never
+  const mine = source === 'manual' ? (own.length ? own : samples) : source === 'auto' && store === 'empty' ? samples : [];
   const cards = mine.slice(0, limit);
-  const showStore = fromStore && store !== 'empty';
+  const showStore = source !== 'manual';
   if (source === 'manual' && !cards.length) return null;
-  if (source === 'auto' && store === 'empty' && !cards.length) return null;
+  // nothing real and nothing to show: the panel stays out of the way (it comes back by itself if Salla's cards load late)
+  const nothing = source === 'store' ? store === 'empty' : source === 'auto' ? store === 'empty' && !cards.length : false;
   const lead = t(data.text, 'تقييمات موثّقة من عملاء المتجر.');
-  // while the store check runs (auto) the panel stays hidden: no flash of samples that then vanish
-  const hidden = source === 'auto' && store === 'checking';
 
   return (
     <Section data={data}>
-      <section className={'wrap rpanel' + (asBool(data.light_bg, true) ? '' : ' tc-plain')} id="reviews" hidden={hidden}>
+      <section className={'wrap rpanel' + (asBool(data.light_bg, true) ? '' : ' tc-plain')} id="reviews" style={nothing ? { display: 'none' } : undefined}>
         <div className="sec-head">
           <div>
             <span className="kicker">{t(data.kicker, 'ثقة تصنعها التجربة')}</span>

@@ -33,8 +33,11 @@
     position: absolute; top: 0; inset-inline: 0; aspect-ratio: 1 / 1; z-index: 0; pointer-events: none;
     display: grid; place-items: center; font-family: var(--en); font-weight: 900; font-style: italic;
     font-size: 200px; color: #ebe9e3; direction: ltr; line-height: 1;
+    background: var(--bg-2); border-radius: var(--r); overflow: hidden;
   }
-  .tc-gallery .details-slider { position: relative; z-index: 1; background: var(--bg-2); border-radius: var(--r); overflow: hidden; }
+  /* the engine adds `md:top-24` (sticky offset) — on a non-sticky column it would push the gallery down */
+  .tc-gallery > .sidebar:not([class*="md:sticky"]) { top: auto !important; }
+  .tc-gallery .details-slider { position: relative; z-index: 1; background: transparent; border-radius: var(--r); overflow: hidden; }
   .tc-gallery .details-slider .swiper-slide > div { display: grid; place-items: center; aspect-ratio: 1 / 1; }
   .tc-gallery .details-slider .swiper-slide img { width: 78%; height: 78%; object-fit: contain; mix-blend-mode: multiply; background: transparent; }
   .tc-gallery .s-slider-thumbs { margin-top: 12px; }

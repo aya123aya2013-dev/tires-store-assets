@@ -39,3 +39,11 @@ describe('UX-M2 pasted cars', () => {
     expect(r.rejected).toEqual([{ line: 3, reason: 'range' }, { line: 4, reason: 'size' }]);
   });
 });
+
+describe('round 5 — pasted cars edge cases', () => {
+  it('R5-2: a present but invalid end year is rejected; an absent end means the same year', () => {
+    const r = readCarsPaste(['Toyota | Camry | 2018 | abc | 215/55R17', 'Toyota | Corolla | 2018.5 | 2020 | 215/55R17', 'Kia | K5 | 2021 | | 215/55R17', 'Honda | Civic | 2019-2021 | 215/55R17'].join(String.fromCharCode(10)));
+    expect(r.rejected.map(x => x.line)).toEqual([1, 2]);
+    expect(r.cars.map(c => [c.model, c.from, c.to])).toEqual([['K5', 2021, 2021], ['Civic', 2019, 2021]]);
+  });
+});

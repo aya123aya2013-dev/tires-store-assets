@@ -364,16 +364,16 @@ const DEPS = {
 
 // Settings groups = the «اختر نوع الإعدادات» dropdown in the theme editor
 // (root `groups` in twilight.json + `groups: [id]` on each setting — Salla blog "Group Theme Settings").
-// Our own list, in this order. `header` / `footer` are Salla's predefined group types; the rest are custom pages.
+// Our own list, in this order. All type 'page': the predefined 'header'/'footer' types are not listed in the dropdown by the editor.
 const GROUPS = [
   { id: 'tires', icon: 'sicon-pencil-ruler', type: 'page', label: 'أساس متجر الإطارات (ابدأ من هنا)' },
   { id: 'identity', icon: 'sicon-format-fill', type: 'page', label: 'هوية المتجر' },
   { id: 'topbar', icon: 'sicon-add_row_before', type: 'page', label: 'الشريط العلوي' },
-  { id: 'header', icon: 'sicon-add_row_before', type: 'header', label: 'الهيدر' },
+  { id: 'header', icon: 'sicon-add_row_before', type: 'page', label: 'الهيدر' },
   { id: 'card', icon: 'sicon-list', type: 'page', label: 'بطاقة المنتج' },
   { id: 'mobile', icon: 'sicon-pencil-ruler', type: 'page', label: 'الجوال' },
   { id: 'float', icon: 'sicon-link', type: 'page', label: 'الأزرار العائمة ونافذة الخصم' },
-  { id: 'footer', icon: 'sicon-add_row_after', type: 'footer', label: 'الفوتر' },
+  { id: 'footer', icon: 'sicon-add_row_after', type: 'page', label: 'الفوتر' },
   { id: 'product', icon: 'sicon-audio-wave', type: 'page', label: 'صفحة المنتج' },
   { id: 'list', icon: 'sicon-list', type: 'page', label: 'التصنيف والبحث' },
   { id: 'cart', icon: 'sicon-cart2', type: 'page', label: 'السلة' },
@@ -403,7 +403,7 @@ for (const g of GROUPS) {
   // the dropdown shows the group name AND the old yellow title row stays at the top of the group (owner's choice)
   const own = BY_GROUP[g.id];
   const inherited = base.filter(x => BASE_GROUP[x.id] === g.id);
-  ALL.push(...[...own, ...inherited].map(f => ({ ...withDeps(f), groups: [g.id] })));
+  ALL.push(...[...own, ...inherited].map(f => ({ ...withDeps(f), groups: ['general', g.id] })));
 }
 
 const ids = ALL.map(s => s.id);

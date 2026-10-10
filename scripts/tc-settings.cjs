@@ -254,11 +254,37 @@ const LIST_BASE = ['product_index_show_breadcrumbs'];
 
 // wishlist / brands / blog / article (app/components/tires/pages/TcPages.tsx)
 const G_PAGES = [
+  sub('tc-set-h-help', 'صفحة المساعدة (/help)'),
+  F.text('tc_help_title', 'العنوان', 'كل اللي تحتاج تعرفه.', 60),
+  F.sw('tc_help_size', 'دليل قراءة المقاس', true),
+  F.sw('tc_help_install', 'شروط التركيب', true, 'ما يظهر لو «بيع فقط»'),
+  F.text('tc_help_install_title', 'عنوان التركيب', 'تركيب مجاني', 40),
+  F.area('tc_help_install_lines', 'شروط التركيب (كل سطر بند)', `التركيب على الجنط مجاني عند اختيار «استلام وتركيب».
+الترصيص ووزن الأذرعة برسوم بسيطة تحددها المراكز.
+احضر بالموعد؛ التأخير أكثر من 30 دقيقة قد يتطلب موعد جديد.
+التركيب خلال ساعة تقريباً لطقم الأربع إطارات.`, 800),
+  F.sw('tc_help_returns', 'سياسة الإرجاع', true),
+  F.area('tc_help_returns_lines', 'بنود الإرجاع (كل سطر بند)', `يمكن إرجاع أو استبدال الإطارات غير المركّبة وبحالتها الأصلية خلال 7 أيام.
+لا يمكن إرجاع الإطارات بعد تركيبها أو استخدامها.
+يُسترد المبلغ بنفس وسيلة الدفع بعد استلام الإطارات وفحصها.`, 800),
+  F.link('tc_help_policy_link', 'رابط صفحة السياسة الكاملة (من صفحات سلة)', 'فاضي = بدون زر'),
+  F.sw('tc_help_faq', 'الأسئلة الشائعة', true),
+  F.text('tc_help_q1', 'سؤال 1 (فاضي = بدون)', 'كيف أعرف مقاس الإطار المناسب لسيارتي؟', 100),
+  F.area('tc_help_a1', 'جواب 1', 'المقاس مكتوب على جانب إطارك الحالي، أو بملصق باب السائق.', 400),
+  F.text('tc_help_q2', 'سؤال 2', 'هل السعر يشمل التركيب؟', 100),
+  F.area('tc_help_a2', 'جواب 2', 'نعم، التركيب على الجنط مجاني عند اختيار «استلام وتركيب».', 400),
+  F.text('tc_help_q3', 'سؤال 3', 'كم مدة التوصيل؟', 100),
+  F.area('tc_help_a3', 'جواب 3', 'داخل المدينة 1–2 يوم، وباقي المناطق 3–5 أيام.', 400),
+  F.text('tc_help_q4', 'سؤال 4', 'هل يمكن التقسيط؟', 100),
+  F.area('tc_help_a4', 'جواب 4', 'نعم، عبر تابي أو تمارا على 4 دفعات حسب أهلية العميل.', 400),
+  sub('tc-set-h-opages', 'المفضلة والماركات والمدونة'),
   F.text('tc_pg_wish_title', 'المفضلة — العنوان', 'المفضلة', 40),
   F.text('tc_pg_wish_empty', 'المفضلة الفاضية — النص', 'ما في إطارات بالمفضلة لسا.', 80),
   F.text('tc_pg_brands_title', 'الماركات — العنوان', 'ماركات أصلية، من الوكيل.', 60),
   F.sw('tc_pg_brands_logos', 'الماركات — شعار الماركة (بدل الاسم)', true),
   F.text('tc_pg_blog_title', 'المدونة — العنوان', 'نصائح تخلّي إطارك يعيش أطول.', 60),
+  F.text('tc_404_title', 'صفحة 404 — العنوان', 'الطريق هذا مسكّر.', 60),
+  F.text('tc_404_text', 'صفحة 404 — السطر', 'الصفحة اللي تدوّر عليها غير موجودة.', 100),
   F.sw('tc_pg_article_cta', 'المقال — زر «ابحث بمقاسك» آخر المقال', true),
   F.text('tc_pg_article_cta_text', 'نص الزر', 'ابحث بمقاسك', 30),
 ];
@@ -277,6 +303,14 @@ const G_CART = [
   F.text('tc_cart_appt_title', 'العنوان', 'موعد التركيب', 40),
   F.text('tc_cart_appt_text', 'السطر', 'أكمل طلبك واكتب الوقت المناسب لك بملاحظات الطلب، أو احجز الموعد مباشرة على واتساب.', 160),
   F.text('tc_cart_appt_msg', 'أول رسالة الواتساب (المنتجات تنضاف بعدها)', 'السلام عليكم، بدي أحجز موعد تركيب لـ:', 100),
+  sub('tc-set-h-ty', 'صفحة الشكر بعد الطلب'),
+  F.sw('tc_ty_next', 'خطوات «شو بيصير بعدين» + حجز موعد التركيب', true),
+  F.text('tc_ty_step1', 'الخطوة 1 (فاضي = بدون)', 'نجهّز إطاراتك ونتأكد من تاريخ الصنع', 80),
+  F.text('tc_ty_step2', 'الخطوة 2', 'نرسل لك تأكيد الموعد أو رقم التتبع', 80),
+  F.text('tc_ty_step3', 'الخطوة 3', 'تركيب واستلام — وطريقك جاهز', 80),
+  F.text('tc_ty_appt_title', 'عنوان صندوق الموعد', 'احجز وقت التركيب اللي يناسبك', 60),
+  F.text('tc_ty_appt_text', 'سطر صندوق الموعد', 'ابعتلنا رقم الطلب على واتساب ونأكد لك الموعد والمركز.', 120),
+  sub('tc-set-h-csecure', 'أسفل الملخص'),
   F.sw('tc_cart_secure', 'سطر «دفع آمن» تحت الملخص', true),
   F.text('tc_cart_secure_text', 'نص السطر', 'دفع آمن عبر سلة · مدى · Apple Pay · تابي · تمارا', 80),
 ];
@@ -317,10 +351,13 @@ const DEPS = {
   tc_p_faq_title: ['tc_p_faq', true], tc_p_faq_q1: ['tc_p_faq', true], tc_p_faq_a1: ['tc_p_faq', true], tc_p_faq_q2: ['tc_p_faq', true], tc_p_faq_a2: ['tc_p_faq', true], tc_p_faq_q3: ['tc_p_faq', true], tc_p_faq_a3: ['tc_p_faq', true],
   tc_p_related_title: ['tc_p_related', true],
   tc_list_kicker: ['tc_list_kicker_show', true], tc_list_fbar_title: ['tc_list_fbar', true],
+  tc_help_install_title: ['tc_help_install', true], tc_help_install_lines: ['tc_help_install', true], tc_help_returns_lines: ['tc_help_returns', true], tc_help_policy_link: ['tc_help_returns', true],
+  tc_help_q1: ['tc_help_faq', true], tc_help_a1: ['tc_help_faq', true], tc_help_q2: ['tc_help_faq', true], tc_help_a2: ['tc_help_faq', true], tc_help_q3: ['tc_help_faq', true], tc_help_a3: ['tc_help_faq', true], tc_help_q4: ['tc_help_faq', true], tc_help_a4: ['tc_help_faq', true],
   tc_pg_article_cta_text: ['tc_pg_article_cta', true],
   tc_cart_free_ship: ['tc_cart_ship_bar', true], tc_cart_set_hint_text: ['tc_cart_set_hint', true],
   tc_cart_appt_title: ['tc_cart_appt', true], tc_cart_appt_text: ['tc_cart_appt', true], tc_cart_appt_msg: ['tc_cart_appt', true],
   tc_cart_secure_text: ['tc_cart_secure', true],
+  tc_ty_step1: ['tc_ty_next', true], tc_ty_step2: ['tc_ty_next', true], tc_ty_step3: ['tc_ty_next', true], tc_ty_appt_title: ['tc_ty_next', true], tc_ty_appt_text: ['tc_ty_next', true],
   tc_list_nofind_title: ['tc_list_nofind', true], tc_list_nofind_text: ['tc_list_nofind', true], tc_list_nofind_msg: ['tc_list_nofind', true],
 };
 

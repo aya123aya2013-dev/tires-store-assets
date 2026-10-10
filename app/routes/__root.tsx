@@ -9,6 +9,8 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import themeTranslations from 'virtual:twilight/theme-translations';
 import devSchema from 'virtual:twilight/schema';
 import { ThemeLayout } from '../components/layout/ThemeLayout';
+// design/store/404.html — loaded on demand, only when a page is missing
+const TcNotFound = lazy(() => import('../components/tires/pages/TcNotFound').then((m) => ({ default: m.TcNotFound })));
 import { useRouterState } from '@tanstack/react-router';
 import { useState } from 'react';
 import { HOME_ROUTE_ID } from '../components/common/routeIds';
@@ -27,6 +29,12 @@ const DevSettingsWidget = import.meta.env.DEV
 
 export const Route = createTwilightRootRoute()({
   shellComponent: RootComponent,
+  // design/store/404.html
+  notFoundComponent: () => (
+    <Suspense fallback={null}>
+      <TcNotFound />
+    </Suspense>
+  ),
 });
 
 // Flips the async home stylesheet on before hydration; after hydration React

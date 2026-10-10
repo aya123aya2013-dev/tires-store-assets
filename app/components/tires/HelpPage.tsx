@@ -1,118 +1,127 @@
-import { FaqList } from './FaqList';
-import { INSTALL_CENTERS } from './delivery';
-import { INSTALL_TERMS, whatsappUrl } from './storeInfo';
+/**
+ * /help — design/store/help.html: size guide (the sidewall code, explained once for every
+ * store), installation terms, returns, FAQ. Every section and every line comes from the
+ * «صفحة المساعدة» settings; the merchant can link their own Salla policy page under returns.
+ */
+import { Breadcrumb, Link } from '@salla.sa/twilight-theme-engine/common';
+import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
+import { asBool, asLink, makeT, opt, useLang } from '../home/fields';
 
-const SIZE_PARTS = [
-  { value: '205', title: 'عرض الإطار', text: 'عرض الإطار بالمليمتر (المسافة من جانب إلى جانب)' },
-  { value: '55', title: 'نسبة الارتفاع إلى العرض', text: 'ارتفاع الجدار الجانبي كنسبة مئوية من عرض الإطار' },
-  { value: '16', title: 'قطر الجنط', text: 'حجم الجنط المناسب بالبوصة' },
+const EN: Record<string, string> = {
+  'المساعدة': 'Help',
+  'كل اللي تحتاج تعرفه.': 'Everything you need to know.',
+  'دليل المقاس': 'Size guide',
+  'خدمة التركيب': 'Installation',
+  'الإرجاع': 'Returns',
+  'الأسئلة': 'FAQ',
+  'اقرأ الأرقام على جانب إطارك': 'Read the numbers on your sidewall',
+  'مثال:': 'Example:',
+  'ابحث بمقاسك': 'Search by size',
+  'تركيب مجاني': 'Free installation',
+  'الإرجاع والاستبدال': 'Returns and exchanges',
+  'سياسة الإرجاع': 'Return policy',
+  'السياسة الكاملة': 'Full policy',
+  'الأسئلة الشائعة': 'FAQ',
+  'عندك سؤال؟': 'Got a question?',
+  'خلّينا نوضّح.': "Let's clear it up.",
+};
+
+const CODE: [string, string, string, string, string][] = [
+  ['P', 'نوع الإطار', 'P سيارات ركاب، LT نقل خفيف.', 'Type', 'P passenger, LT light truck.'],
+  ['205', 'العرض', 'عرض الإطار بالمليمتر.', 'Width', 'Tire width in millimetres.'],
+  ['55', 'نسبة الارتفاع', 'ارتفاع الجانب = 55% من العرض.', 'Profile', 'Sidewall height = 55% of the width.'],
+  ['R', 'نوع البناء', 'R شعاعي، ZR للسرعات العالية.', 'Construction', 'R radial, ZR for high speeds.'],
+  ['16', 'قطر الجنط', 'بالبوصة، لازم يطابق جنطك.', 'Rim', 'In inches; must match your rim.'],
+  ['91', 'مؤشر الحمولة', 'حتى 615 كغ لكل إطار.', 'Load index', 'Up to 615 kg per tire.'],
+  ['V', 'مؤشر السرعة', 'حتى 240 كم/س.', 'Speed rating', 'Up to 240 km/h.'],
+  ['0324', 'تاريخ الصنع', 'الأسبوع 03 من سنة 2024.', 'DOT date', 'Week 03 of 2024.'],
 ];
 
-const CARDS = [
-  { href: '#size-guide', title: 'دليل المقاس', text: 'تعرف على معنى الأرقام على الإطار' },
-  { href: '#install', title: 'شروط التركيب', text: 'معلومات عن خدمة التركيب في فروعنا' },
-  { href: '#faq', title: 'الأسئلة الشائعة', text: 'إجابات على أكثر الأسئلة شيوعاً' },
+const D_INSTALL = 'التركيب على الجنط مجاني عند اختيار «استلام وتركيب».\nالترصيص ووزن الأذرعة برسوم بسيطة تحددها المراكز.\nاحضر بالموعد؛ التأخير أكثر من 30 دقيقة قد يتطلب موعد جديد.\nالتركيب خلال ساعة تقريباً لطقم الأربع إطارات.';
+const D_RETURNS = 'يمكن إرجاع أو استبدال الإطارات غير المركّبة وبحالتها الأصلية خلال 7 أيام.\nلا يمكن إرجاع الإطارات بعد تركيبها أو استخدامها.\nيُسترد المبلغ بنفس وسيلة الدفع بعد استلام الإطارات وفحصها.';
+const D_FAQ: [string, string][] = [
+  ['كيف أعرف مقاس الإطار المناسب لسيارتي؟', 'المقاس مكتوب على جانب إطارك الحالي، أو بملصق باب السائق.'],
+  ['هل السعر يشمل التركيب؟', 'نعم، التركيب على الجنط مجاني عند اختيار «استلام وتركيب».'],
+  ['كم مدة التوصيل؟', 'داخل المدينة 1–2 يوم، وباقي المناطق 3–5 أيام.'],
+  ['هل يمكن التقسيط؟', 'نعم، عبر تابي أو تمارا على 4 دفعات حسب أهلية العميل.'],
 ];
 
-/** "How can we help?" — size guide, installation terms and centers, FAQ. */
+const lines = (v: string) => v.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+
 export function HelpPage() {
+  const { theme } = useTwilight();
+  const s = (theme?.settings ?? {}) as Record<string, unknown>;
+  const lang = useLang();
+  const en = lang === 'en';
+  const t = makeT(lang, EN);
+  const sale = opt(s.tc_store_type, 'install') === 'sale';
+  const show = {
+    size: asBool(s.tc_help_size, true),
+    install: asBool(s.tc_help_install, true) && !sale,
+    returns: asBool(s.tc_help_returns, true),
+    faq: asBool(s.tc_help_faq, true),
+  };
+  const install = lines(t(s.tc_help_install_lines, D_INSTALL));
+  const returns = lines(t(s.tc_help_returns_lines, D_RETURNS));
+  const policy = asLink(s.tc_help_policy_link, '');
+  const faq = D_FAQ.map(([q, a], i) => [t(s[`tc_help_q${i + 1}`], q), t(s[`tc_help_a${i + 1}`], a)]).filter(([q]) => q);
+  const page = { title: t(undefined, 'المساعدة'), breadcrumbs: [{ name: en ? 'Home' : 'الرئيسية', url: '/' }, { name: t(undefined, 'المساعدة'), url: '' }] };
+  const nav: [keyof typeof show, string, string][] = [['size', 'size', 'دليل المقاس'], ['install', 'install', 'خدمة التركيب'], ['returns', 'returns', 'الإرجاع'], ['faq', 'faq', 'الأسئلة']];
+
   return (
-    <div className="bg-white">
-      <section className="container py-10 text-center">
-        <h1 className="mb-2 text-3xl font-bold text-gray-900">كيف نقدر نساعدك؟</h1>
-        <p className="mb-8 text-gray-500">معلومات ونصائح لمساعدتك في اختيار الإطارات وتركيبها</p>
-        <div className="grid gap-4 text-start sm:grid-cols-3">
-          {CARDS.map((card) => (
-            <a
-              key={card.href}
-              href={card.href}
-              className="rounded-2xl border border-gray-200 p-5 transition hover:border-[#ffb71b]"
-            >
-              <span className="mb-1 block text-lg font-bold text-gray-900">{card.title}</span>
-              <span className="block text-sm text-gray-500">{card.text}</span>
-            </a>
-          ))}
-        </div>
+    <div className="tc-s tc-page tc-help">
+      <section className="wrap ptop-sec">
+        <Breadcrumb page={page as never} />
+        <h1 className="ph1">{t(s.tc_help_title, 'كل اللي تحتاج تعرفه.')}</h1>
+        <nav className="help-nav">
+          {nav.filter(([k]) => show[k]).map(([k, id, label]) => <a key={id} href={`#${id}`}>{t(undefined, label)}</a>)}
+        </nav>
       </section>
 
-      <section id="size-guide" className="border-t border-gray-100 py-10">
-        <div className="container">
-          <h2 className="mb-1 text-2xl font-bold text-gray-900">دليل المقاس</h2>
-          <p className="mb-6 text-gray-500">
-            تعرف على معنى الأرقام الموجودة على جانب الإطار لمساعدتك في اختيار المقاس المناسب.
-          </p>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="flex items-center justify-center rounded-2xl bg-[#3b4045] p-10" dir="ltr">
-              <span className="font-mono text-4xl font-bold tracking-widest text-gray-200">
-                <span className="text-[#ffb71b]">205</span>/
-                <span className="text-[#ffb71b]">55</span> R
-                <span className="text-[#ffb71b]">16</span>
-              </span>
-            </div>
-            <div className="space-y-3">
-              {SIZE_PARTS.map((part) => (
-                <div key={part.value} className="flex items-center gap-4 rounded-xl border border-gray-200 p-4">
-                  <span className="flex h-12 w-14 shrink-0 items-center justify-center rounded-lg bg-[#ffb71b] text-lg font-bold text-gray-900">
-                    {part.value}
-                  </span>
-                  <span>
-                    <span className="block font-bold text-gray-900">{part.title}</span>
-                    <span className="block text-sm text-gray-500">{part.text}</span>
-                  </span>
-                </div>
-              ))}
-            </div>
+      {show.size && (
+        <section className="wrap hsec" id="size">
+          <span className="kicker">{t(undefined, 'دليل المقاس')}</span>
+          <h2>{t(undefined, 'اقرأ الأرقام على جانب إطارك')}</h2>
+          <p className="lead" style={{ marginBottom: 22 }}>{t(undefined, 'مثال:')} <b dir="ltr">P 205/55 R16 91V · 0324</b></p>
+          <div className="codegrid">
+            {CODE.map(([v, ar, arT, enL, enT]) => (
+              <div key={v}><b>{v}</b><span>{en ? enL : ar}</span><p>{en ? enT : arT}</p></div>
+            ))}
           </div>
-        </div>
-      </section>
+          <p style={{ marginTop: 22 }}><Link className="btn btn-gold" to="/#size">{t(undefined, 'ابحث بمقاسك')} <span aria-hidden="true">←</span></Link></p>
+        </section>
+      )}
 
-      <section id="install" className="border-t border-gray-100 py-10">
-        <div className="container">
-          <h2 className="mb-1 text-2xl font-bold text-gray-900">شروط التركيب</h2>
-          <p className="mb-6 text-gray-500">
-            نوفر خدمة تركيب الإطارات على الجنوط في مراكزنا بالرياض بواسطة فنيين متخصصين ومعدات مناسبة.
-          </p>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="rounded-2xl border border-gray-200 p-5">
-              <h3 className="mb-3 font-bold text-gray-900">أهم الشروط والمعلومات</h3>
-              <ul className="list-disc space-y-2 ps-5 text-sm leading-6 text-gray-600">
-                {INSTALL_TERMS.map((term) => (
-                  <li key={term}>{term}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="space-y-3">
-              {INSTALL_CENTERS.map((center) => (
-                <div key={center.id} className="rounded-2xl border border-gray-200 p-5">
-                  <h3 className="font-bold text-gray-900">{center.name}</h3>
-                  <p className="text-sm text-gray-500">{center.address}</p>
-                  <p className="mb-3 text-sm text-gray-500">{center.hours}</p>
-                  <a
-                    href={center.mapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-bold text-[#e5a00f] hover:underline"
-                  >
-                    عرض الموقع على الخريطة
-                  </a>
-                </div>
-              ))}
-              <a
-                href={whatsappUrl('مرحباً، عندي استفسار عن تركيب الإطارات')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25d366] py-3 font-bold text-white transition hover:opacity-90"
-              >
-                تواصل عبر واتساب
-              </a>
-            </div>
+      {show.install && install.length > 0 && (
+        <section className="wrap hsec" id="install">
+          <span className="kicker">{t(undefined, 'خدمة التركيب')}</span>
+          <h2>{t(s.tc_help_install_title, 'تركيب مجاني')}</h2>
+          <ul className="hlist">{install.map(x => <li key={x}>{x}</li>)}</ul>
+        </section>
+      )}
+
+      {show.returns && returns.length > 0 && (
+        <section className="wrap hsec" id="returns">
+          <span className="kicker">{t(undefined, 'الإرجاع والاستبدال')}</span>
+          <h2>{t(undefined, 'سياسة الإرجاع')}</h2>
+          <ul className="hlist">{returns.map(x => <li key={x}>{x}</li>)}</ul>
+          {policy && <p style={{ marginTop: 16 }}><Link className="btn btn-line" to={policy}>{t(undefined, 'السياسة الكاملة')}</Link></p>}
+        </section>
+      )}
+
+      {show.faq && faq.length > 0 && (
+        <section className="wrap hsec faq2" id="faq" style={{ border: 0 }}>
+          <div className="side">
+            <span className="kicker">{t(undefined, 'الأسئلة الشائعة')}</span>
+            <h2 className="h2">{t(undefined, 'عندك سؤال؟')}<br /><em>{t(undefined, 'خلّينا نوضّح.')}</em></h2>
           </div>
-        </div>
-      </section>
-
-      <div className="border-t border-gray-100">
-        <FaqList />
-      </div>
+          <div>
+            {faq.map(([q, a]) => (
+              <details key={q}><summary>{q}<span className="i" aria-hidden="true">+</span></summary><p>{a}</p></details>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

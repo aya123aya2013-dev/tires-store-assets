@@ -96,3 +96,37 @@ export function TcAppointment({ items }: { items: { name?: string; quantity?: nu
     </div>
   );
 }
+
+/** Thank-you page: the design's «what happens next» steps + the installation appointment for this order. */
+export function TcThankYouNext({ orderNo }: { orderNo?: string | number }) {
+  const s = useCartSettings();
+  const t = useCartT();
+  const wa = useWhatsappNumber();
+  if (!asBool(s.tc_ty_next, true)) return null;
+  const sale = opt(s.tc_store_type, 'install') === 'sale';
+  const steps = [
+    t(s.tc_ty_step1, 'نجهّز إطاراتك ونتأكد من تاريخ الصنع'),
+    t(s.tc_ty_step2, sale ? 'نرسل لك رقم التتبع' : 'نرسل لك تأكيد الموعد أو رقم التتبع'),
+    t(s.tc_ty_step3, sale ? 'توصيل لباب بيتك' : 'تركيب واستلام — وطريقك جاهز'),
+  ].filter(Boolean);
+  const msg = `${t(s.tc_cart_appt_msg, 'السلام عليكم، بدي أحجز موعد تركيب لـ:')} #${orderNo ?? ''}`;
+  return (
+    <div className="tc-s tc-page">
+      <section className="wrap ty tc-ty">
+        <div className="ty-next">
+          {steps.map((x, i) => <div key={x}><b>{String(i + 1).padStart(2, '0')}</b>{x}</div>)}
+        </div>
+        {!sale && asBool(s.tc_cart_appt, true) && wa && (
+          <aside className="ty-center">
+            <span className="kicker">{t(s.tc_cart_appt_title, 'موعد التركيب')}</span>
+            <h3>{t(s.tc_ty_appt_title, 'احجز وقت التركيب اللي يناسبك')}</h3>
+            <p>{t(s.tc_ty_appt_text, 'ابعتلنا رقم الطلب على واتساب ونأكد لك الموعد والمركز.')}</p>
+            <a className="btn btn-gold" href={waLink(wa, msg)} target="_blank" rel="noopener noreferrer">
+              {t(undefined, 'احجز موعدك على واتساب')}
+            </a>
+          </aside>
+        )}
+      </section>
+    </div>
+  );
+}

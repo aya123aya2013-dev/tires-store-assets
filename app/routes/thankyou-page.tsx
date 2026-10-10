@@ -9,7 +9,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { ThankYou } from '@salla.sa/twilight-theme-engine/routes/thank-you';
 import type { ThankYouPageProps } from '@salla.sa/twilight-theme-engine/routes/thank-you';
 import { withHead } from '@salla.sa/twilight-theme-engine/tanstack';
-import { InstallCenterCard } from '../components/tires/InstallCenterCard';
+import { TcThankYouNext } from '../components/tires/cart/TcCartParts';
 
 export const Route = createFileRoute('/{-$locale}/thankyou/$orderId')({
   loader: ({ params }): Promise<ThankYouPageProps> =>
@@ -23,7 +23,7 @@ function ThankYouComponent() {
   return (
     <>
       <ThankYou.Component {...data} />
-      <InstallCenterCard />
+      <TcThankYouNext orderNo={data.order?.reference_id} />
     </>
   );
 }

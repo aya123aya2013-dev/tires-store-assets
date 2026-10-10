@@ -1,0 +1,37 @@
+/* ==========================================================================
+   Account pages (orders, order, profile, wallet, notifications, loyalty…).
+   Salla renders them through its CustomerLayout (body.customer · .profile-header ·
+   nav.sidebar <salla-user-menu> · .main-content); restyled to design/store/account.html
+   (.ptop-sec title, .acc grid 280px | 1fr, bordered .acc-side menu). Same markup, so
+   every Salla feature (avatar upload, menu, logout) keeps working.
+   ========================================================================== */
+
+body.customer {
+  /* the gradient band becomes the design's plain .ptop-sec */
+  .profile-header { background: none !important; min-height: 0; height: auto; }
+  .profile-header .breadcrumbs { padding: 34px 0 6px; font-size: 13px; }
+
+  /* .acc: menu column | content */
+  .container > .flex.items-start.flex-col { gap: 30px; padding: 10px 0 70px; }
+  @media (min-width: 1024px) {
+    .container > .flex.items-start.flex-col { display: grid; grid-template-columns: 280px minmax(0, 1fr); align-items: start; }
+  }
+
+  nav.sidebar {
+    margin: 0 !important; width: 100%; box-shadow: none !important; background: var(--tc-page-bg, #fff) !important;
+    border: 1px solid rgba(0, 0, 0, .09); border-radius: var(--tc-radius, 16px); padding: 20px !important; top: 120px;
+  }
+  @media (max-width: 1023px) { nav.sidebar { border: 0; padding: 0 !important; } }
+  nav.sidebar salla-user-menu a,
+  nav.sidebar .s-user-menu-inline-item a { border-radius: 10px; }
+
+  .main-content { max-width: none; padding-top: 0 !important; min-width: 0; }
+  /* the page title in the design's size */
+  .main-content > h1 {
+    font-size: clamp(26px, 3vw, 36px); line-height: 1.25; letter-spacing: -.5px; font-weight: 700;
+    text-align: start !important; margin-bottom: 18px;
+  }
+  @media (max-width: 1023px) { .main-content > h1 { order: -1; } }
+}
+
+html[data-tc-dark="1"] body.customer nav.sidebar { border-color: rgba(255, 255, 255, .1); background: var(--tc-dark-surface, #1d2023) !important; }

@@ -177,3 +177,4 @@ export function TcArticlePage({ page, article, related = [] }: BlogSinglePagePro
     </div>
   );
 }
+

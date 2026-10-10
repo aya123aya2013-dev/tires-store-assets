@@ -397,3 +397,16 @@ describe('listing size bar', () => {
     expect(renderToString(<TcNoFind size={null} />)).toBe('');
   });
 });
+
+// ---- cart: set-of-4 hint + subtotal reader ----
+import { TcSetHint, cartSubtotal } from '../../app/components/tires/cart/TcCartParts';
+describe('cart extras', () => {
+  it('hints only for an odd tire count', () => {
+    expect(renderToString(<TcSetHint tires={3} />)).toContain('tc-sethint');
+    expect(renderToString(<TcSetHint tires={4} />)).toBe('');
+  });
+  it('reads the subtotal as a number or Money', () => {
+    expect(cartSubtotal({ sub_total: 760 })).toBe(760);
+    expect(cartSubtotal({ sub_total: { amount: 1200, currency: 'SAR' } })).toBe(1200);
+  });
+});

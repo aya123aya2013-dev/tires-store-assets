@@ -1,10 +1,10 @@
 # Prompt 4 — Codex: settings & UX review (round S3)
 
-Copy everything inside the box into Codex (working folder: `New Project`).
+Copy everything inside the box into Codex (working folder: `Salla Web Designs`).
 
 ```text
 You are reviewing (NOT building) a Salla Twilight React theme for tire stores: «متجر الإطارات / TIRES STORE».
-Repo: New Project/tires-store · approved design: New Project/design (final.html + store/*).
+Repo: Salla Web Designs/tires-store · approved design: Salla Web Designs/design (final.html + store/*).
 Codex only reviews; Claude fixes. Reply to me in Arabic.
 
 HARD RULES

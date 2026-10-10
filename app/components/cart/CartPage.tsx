@@ -3,8 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { SallaConditionalOffer } from '@salla.sa/twilight-components-react/conditional-offer';
 import { SallaOffer } from '@salla.sa/twilight-components-react/offer';
 import { HookSlot, usePageConfig } from '@salla.sa/twilight-theme-engine/hooks';
-import { useTranslation } from '@salla.sa/twilight-theme-engine/i18n';
-import { Breadcrumb, NoContent } from '@salla.sa/twilight-theme-engine/common';
+import { Breadcrumb } from '@salla.sa/twilight-theme-engine/common';
 import { CartSummary, SeoCartWidget } from '@salla.sa/twilight-theme-engine/cart';
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { CartSkeleton } from '@salla.sa/twilight-theme-engine/skeleton';
@@ -12,7 +11,9 @@ import { loyalty } from '@salla.sa/twilight-theme-engine/api/loyalty';
 import { cart } from '@salla.sa/twilight-theme-engine/api/cart';
 import type { CartPageProps } from '@salla.sa/twilight-theme-engine/routes/cart';
 import { CartItem } from './CartItem';
-import { DeliveryMethodPicker } from '../tires/DeliveryMethodPicker';
+import { Link } from '@salla.sa/twilight-theme-engine/common';
+import { TcAppointment, TcFreeShip, TcSetHint, cartSubtotal, useCartSettings, useCartT } from '../tires/cart/TcCartParts';
+import { asBool } from '../home/fields';
 
 /**
  * Theme fork of the engine `CartPage`.
@@ -23,7 +24,8 @@ import { DeliveryMethodPicker } from '../tires/DeliveryMethodPicker';
  */
 function CartPageContent({ page }: CartPageProps) {
   const { store } = useTwilight();
-  const { t } = useTranslation();
+  const cs = useCartSettings();
+  const ct = useCartT();
   const queryClient = useQueryClient();
   // Seed `salla.config.page` on first load. The engine only sets it from a
   // `router.subscribe('onLoad')` handler (SPA navigations), so a direct load of
@@ -67,45 +69,44 @@ function CartPageContent({ page }: CartPageProps) {
   // No cart: it was already turned into an order, shown empty like Twig.
   if (!cartData || cartData.items.length === 0) {
     return (
-      <div className="container">
-        <Breadcrumb page={page} />
-        <NoContent
-          icon="sicon-shopping-bag"
-          message={t('pages.cart.empty_cart', 'Your cart is empty')}
-          actionLabel={t('common.elements.back_home', 'Back to Home')}
-          actionUrl="/"
-        />
+      <div className="tc-s tc-page tc-cart">
+        <section className="wrap ptop-sec">
+          <Breadcrumb page={page} />
+          <h1 className="ph1">{ct(cs.tc_cart_title, 'سلة المشتريات')}</h1>
+        </section>
+        <section className="wrap">
+          <div className="empty tc-cart-empty">
+            <h3>{ct(cs.tc_cart_empty_title, 'سلتك فاضية.')}</h3>
+            <p>{ct(cs.tc_cart_empty_text, 'اختر مقاسك ونطلع لك الإطارات المناسبة.')}</p>
+            <Link className="btn btn-gold" to="/#size">{ct(undefined, 'تسوّق الإطارات')} <span aria-hidden="true">←</span></Link>
+          </div>
+        </section>
       </div>
     );
   }
 
+  const tires = cartData.items.reduce((n, i) => n + (Number(i.quantity) || 0), 0);
+  const currency = (cartData as unknown as { currency?: string }).currency;
+
   return (
-    <div className="container">
+    <div className="tc-s tc-page tc-cart">
       {/* Analytics — no visible UI, fires GTM checkout events */}
       <SeoCartWidget cart={cartData} />
 
-      <Breadcrumb page={page} />
-      <h1 className="sr-only">{t('common.titles.cart', 'Cart')}</h1>
-      <SallaConditionalOffer />
+      {/* design/store/cart.html — .ptop-sec, then .cartg (items | summary) */}
+      <section className="wrap ptop-sec">
+        <Breadcrumb page={page} />
+        <h1 className="ph1">{ct(cs.tc_cart_title, 'سلة المشتريات')}</h1>
+      </section>
 
+      <div className="wrap"><SallaConditionalOffer /></div>
       <HookSlot name="cart:start" />
 
-      <div className="pt-5 flex flex-col items-start lg:flex-row pb-6 lg:pb-20">
-        <div className="main-content w-full lg:w-[calc(100%-384px)]">
+      <section className="wrap cartg">
+        <div className="tc-cart-items">
           <HookSlot name="cart:items.start" context={{ cartItems: cartData.items }} />
 
-          <div className="cart-titles hidden md:flex rtl:space-x-reverse md:space-x-12 items-center border-b border-gray-200 pb-4 text-sm font-bold text-gray-900 mb-5">
-            <span className="flex-1">
-              {t('blocks.cart.products', 'Products')} ({cartData.items.length})
-            </span>
-            <span className="flex gap-6 md:gap-8">
-              <span className="w-[120px] text-center">
-                {t('pages.products.quantity', 'Quantity')}
-              </span>
-              <span>{t('blocks.cart.item_total', 'Total')}</span>
-              <span className="w-5" aria-hidden="true"></span>
-            </span>
-          </div>
+          <TcSetHint tires={tires} />
 
           {cartData.items.map((item, index) => (
             <CartItem key={item.id} item={item} isFirst={index === 0} onMutated={refetchCart} />
@@ -135,22 +136,31 @@ function CartPageContent({ page }: CartPageProps) {
             </div>
           )}
 
-          <DeliveryMethodPicker />
+          <TcAppointment items={cartData.items as { name?: string; quantity?: number }[]} />
 
           <SallaOffer />
           <HookSlot name="cart:items.end" />
         </div>
 
-        <CartSummary
-          cart={cartData}
-          applyCouponEnabled={store.settings?.cart?.apply_coupon_enabled}
-          taxAmount={cartData.tax_amount}
-          key={cartData.id}
-          loyalty={cartData.loyalty}
-          gift={cartData.gift}
-          loyaltyPoints={loyaltyPoints ?? undefined}
-        />
-      </div>
+        <aside className="tc-cart-side">
+          <TcFreeShip subtotal={cartSubtotal(cartData as unknown as Record<string, unknown>)} currency={currency} />
+          {/* Salla's summary: coupon, loyalty, gift, totals and the checkout button */}
+          <div className="box tc-cart-sum">
+            <CartSummary
+              cart={cartData}
+              applyCouponEnabled={store.settings?.cart?.apply_coupon_enabled}
+              taxAmount={cartData.tax_amount}
+              key={cartData.id}
+              loyalty={cartData.loyalty}
+              gift={cartData.gift}
+              loyaltyPoints={loyaltyPoints ?? undefined}
+            />
+            {asBool(cs.tc_cart_secure, true) && (
+              <p className="secure">{ct(cs.tc_cart_secure_text, 'دفع آمن عبر سلة · مدى · Apple Pay · تابي · تمارا')}</p>
+            )}
+          </div>
+        </aside>
+      </section>
 
       <HookSlot name="cart:end" />
     </div>

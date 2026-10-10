@@ -33,8 +33,8 @@ You are continuing work on a **Salla theme for tire stores** ("متجر الإط
 **Stack:** Salla Twilight React (`@salla.sa/twilight-theme-engine`), React, TanStack Router, Vite, SCSS. Windows: use `pnpm.cmd` (not pnpm), git at `C:\Program Files\Git\cmd\git.exe`.
 
 **Folders:**
-- `New Project/design/` — approved static design (source of truth): `final.html` (home), `store/` (full static store pages, `build.cjs`), `components-spec.md` (23 components + theme settings — the roadmap), `components-backlog.md`, `design-notes.md`. `store-pub/` = copy published to GitHub Pages.
-- `New Project/tires-store/` — the Salla theme.
+- `Salla Web Designs/design/` — approved static design (source of truth): `final.html` (home), `store/` (full static store pages, `build.cjs`), `components-spec.md` (23 components + theme settings — the roadmap), `components-backlog.md`, `design-notes.md`. `store-pub/` = copy published to GitHub Pages.
+- `Salla Web Designs/tires-store/` — the Salla theme.
 
 **Identity:** gold `#ffb71b` + charcoal; Archivo for Latin display; no "AI-looking" design; keep visual harmony. The Salla theme must be a **100% pixel copy** of the static store.
 

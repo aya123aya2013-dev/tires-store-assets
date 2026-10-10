@@ -243,3 +243,7 @@ html[data-tc-dark="1"] .tc {
   --tc-bg-2: var(--tc-dark-surface);
   --tc-gold-soft: color-mix(in srgb, var(--tc-primary, #ffb71b) 16%, var(--tc-dark-surface));
 }
+
+/* «حد المقارنة»: a visible + announced message above the tray (touch users have no hover) */
+.tc-s .tc-cmp-msg { position: absolute; inset-inline: 0; bottom: calc(100% + 8px); margin: 0; padding: 10px 14px; border-radius: 12px; background: #fff4d6; color: #4d3800; font-size: 13.5px; text-align: center; box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .4); }
+.tc-s .tc-cmp-msg:empty { display: none; }

@@ -11,6 +11,7 @@ import { Section } from './tc/Section';
 import { useCurrency } from './tc/useCurrency';
 
 const EN: Record<string, string> = {
+  'الأسعار تقريبية للمقارنة بين الفئات. السعر الفعلي يظهر بصفحة المنتج.': 'Prices are approximate, for comparing tiers. The actual price is on the product page.',
   'قارن قبل ما تختار': 'Compare before you choose', 'وش أهم شيء عندك؟': 'What matters most to you?', 'المقاس': 'Size',
   'الأفضل قيمة': 'Best value', 'أقل سعر': 'Lowest price', 'أطول عمر': 'Longest life', 'أهدأ قيادة': 'Quietest ride',
   'يعطيك أقل تكلفة لكل كيلومتر مع عمر وهدوء ممتازين.': 'The lowest cost per kilometre with great life and comfort.',
@@ -57,6 +58,8 @@ export function TirePicker({ data }: { data: Row }) {
   const base = (sizes.find(s => s[0] === size) ?? sizes[0])[1];
   const p = prios[Math.min(prio, prios.length - 1)];
   const recIndex = Math.min(Math.max(1, p.tier), tiers.length) - 1;
+  // the prices here are the merchant's own estimates for comparing tiers, not the product's price in Salla
+  const note = t(data.price_note, 'الأسعار تقريبية للمقارنة بين الفئات. السعر الفعلي يظهر بصفحة المنتج.');
   const price = (mult: number) => Math.round((base * mult) / 100 / 5) * 5;
 
   return (
@@ -94,7 +97,7 @@ export function TirePicker({ data }: { data: Row }) {
                   <h3>{x.name}</h3>
                   <div className="t-price">
                     <b>{pr}</b> {cur()}{' '}
-                    <small>{isEn ? `per tire · ${fmt(pr * 4, lang)} for four` : `للإطار · ${fmt(pr * 4, lang)} للأربع`}</small>
+                    <small>{isEn ? `approx. per tire · ${fmt(pr * 4, lang)} for four` : `تقريباً للإطار · ${fmt(pr * 4, lang)} للأربع`}</small>
                   </div>
                   <dl>
                     {x.life > 0 && <div><dt>{isEn ? 'Expected life' : 'العمر المتوقع'}</dt><dd>{fmt(x.life, lang)} {isEn ? 'km' : 'كم'}</dd></div>}
@@ -109,6 +112,7 @@ export function TirePicker({ data }: { data: Row }) {
               );
             })}
           </div>
+          {note && <p className="cmp-note">{note}</p>}
         </div>
       </section>
     </Section>

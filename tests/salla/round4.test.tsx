@@ -29,3 +29,13 @@ describe('review round 4', () => {
     expect(readSpecs({ name: '900/16' } as never, ['name']).size).toMatchObject({ width: '900', rim: '16' });
   });
 });
+
+import { readCarsPaste } from '../../app/components/home/ShopByCar';
+describe('UX-M2 pasted cars', () => {
+  it('Arabic digits are read, a reversed year range is rejected with its line, a header row is ignored', () => {
+    const r = readCarsPaste(['make,model,from,to,size', 'تويوتا، كامري، ٢٠١٨، ٢٠٢٤، 215/55/17', 'كيا | K5 | 2024-2018 | 215/55 R17', 'هيونداي | النترا | 2020-2024 | بدون مقاس'].join(String.fromCharCode(10)));
+    expect(r.cars).toHaveLength(1);
+    expect(r.cars[0]).toMatchObject({ make: 'تويوتا', from: 2018, to: 2024 });
+    expect(r.rejected).toEqual([{ line: 3, reason: 'range' }, { line: 4, reason: 'size' }]);
+  });
+});

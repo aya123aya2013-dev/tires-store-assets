@@ -49,3 +49,6 @@
 /* the description block keeps the merchant's rich text readable */
 .tc-page .tc-pdesc { line-height: 1.8; }
 .tc-page .tc-pdesc:empty { display: none; }
+.tc-s .fit-note{margin-top:12px;font-size:13px;color:var(--muted)}
+.tc-s .tc-editor-note{margin:0 0 16px;padding:12px 14px;border-radius:10px;background:#fff4d6;color:#4d3800;font-size:13.5px}
+.tc-s .cmp-note{margin-top:16px;font-size:13px;color:var(--muted);text-align:center}

@@ -15,11 +15,12 @@ export interface CompareItem { id: string | number; name: string; url: string; i
 
 const KEY = 'tc-compare';
 const EVT = 'tc-compare';
+const FULL_EVT = 'tc-compare-full';
 const MAX = 3;
 const EN: Record<string, string> = {
   'قارن': 'Compare', 'مقارنة الإطارات': 'Compare tires', 'قارن الآن': 'Compare now', 'مسح': 'Clear', 'إغلاق': 'Close',
   'المقاس': 'Size', 'سعر الحبة': 'Per tire', 'سعر الطقم (4)': 'Set of 4', 'سنة الصنع': 'Year', 'الماركة': 'Brand',
-  'تقدر تقارن 3 إطارات بالكثير': 'You can compare up to 3 tires', 'شوف المنتج': 'View',
+  'تقدر تقارن 3 إطارات، احذف واحداً لإضافة هذا': 'You can compare 3 tires — remove one to add this', 'شوف المنتج': 'View',
 };
 
 const read = (): CompareItem[] => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
@@ -59,7 +60,6 @@ export function CompareToggle({ item, className = '' }: { item: CompareItem; cla
   const enabled = useCompareEnabled();
   const items = useCompare();
   const t = makeT(useLang(), EN);
-  const [full, setFull] = useState(false);
   if (!enabled) return null;
   const on = items.some(x => String(x.id) === String(item.id));
   return (
@@ -67,8 +67,8 @@ export function CompareToggle({ item, className = '' }: { item: CompareItem; cla
       type="button"
       className={'tc-cmp-btn' + (on ? ' on' : '') + className}
       aria-pressed={on}
-      title={full ? t('تقدر تقارن 3 إطارات بالكثير', 'تقدر تقارن 3 إطارات بالكثير') : undefined}
-      onClick={() => setFull(!toggleCompare(item))}
+      // the tray shows (and announces) why a 4th tire was not added
+      onClick={() => { if (!toggleCompare(item)) window.dispatchEvent(new Event(FULL_EVT)); }}
     >
       <Icon name="scale" style={{ width: 15, height: 15 }} /> {t('قارن', 'قارن')}
     </button>
@@ -87,8 +87,15 @@ export function CompareTray({ currency }: { currency: (code?: string) => React.R
   const lang = useLang();
   const t = makeT(lang, EN);
   const [open, setOpen] = useState(false);
+  const [fullMsg, setFullMsg] = useState(false);
   const boxRef = useModal<HTMLDivElement>(open);
   useEffect(() => { if (!items.length) setOpen(false); }, [items.length]);
+  useEffect(() => {
+    let timer = 0;
+    const on = () => { setFullMsg(true); window.clearTimeout(timer); timer = window.setTimeout(() => setFullMsg(false), 5000); };
+    window.addEventListener(FULL_EVT, on);
+    return () => { window.removeEventListener(FULL_EVT, on); window.clearTimeout(timer); };
+  }, []);
   useEffect(() => {
     if (!open) return;
     const esc = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
@@ -113,6 +120,7 @@ export function CompareTray({ currency }: { currency: (code?: string) => React.R
   return (
     <div className="tc-s tc-frame">
       <div className={'tc-cmp-tray' + trayWhere} role="region" aria-label={t('مقارنة الإطارات', 'مقارنة الإطارات')}>
+        <p className="tc-cmp-msg" role="status" aria-live="polite">{fullMsg ? t('تقدر تقارن 3 إطارات، احذف واحداً لإضافة هذا', 'تقدر تقارن 3 إطارات، احذف واحداً لإضافة هذا') : ''}</p>
         <div className="tc-cmp-thumbs">
           {items.map(p => (
             <span key={p.id} className="tc-cmp-thumb">

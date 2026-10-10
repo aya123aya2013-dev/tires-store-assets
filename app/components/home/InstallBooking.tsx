@@ -2,8 +2,8 @@
  * Component #16 — حجز موعد التركيب (`home.install-booking`).
  * Design: design/final.html → `#book` (.fit: copy with day tabs + time slots + gold button +
  * steps; art side with the tire, «TIRES STORE / FIT & GO» label and the «45 min» badge).
- * Booking: Salla has no slot booking for themes, so the button sends the chosen date/time
- * on WhatsApp, or adds `date` + `time` to the merchant's booking link. Times are judged in the
+ * Booking: Salla has no slot booking for themes, so the button REQUESTS the chosen date/time
+ * (the store confirms after replying) on WhatsApp, or adds `date` + `time` to the merchant's booking link. Times are judged in the
  * store's time zone (Riyadh) and refreshed every minute, so today's past times stay disabled.
  */
 import { useEffect, useState } from 'react';
@@ -12,15 +12,17 @@ import { asImage, asLink, makeT, opt, rows, useLang } from './fields';
 import type { Row } from './fields';
 import { Section } from './tc/Section';
 import { useSellsFitting } from '../tires/features/cardSettings';
+import { toIntl, useWhatsappNumber } from '../layout/contact';
 
 const EN: Record<string, string> = {
   'اختيارك علينا، وطريقك قدّامك': 'Your choice is on us, your road is ahead',
   'اشترِ إطاراتك.': 'Buy your tires.', 'وركّبها عندنا.': 'Have them fitted with us.',
   'تركيب مجاني في مراكزنا بالرياض، بعناية تليق بسيارتك. اختر الموعد اللي يناسبك ونجهّز كل شيء قبل ما توصل.':
     'Free fitting at our Riyadh centres, with the care your car deserves. Pick a time and we prepare everything before you arrive.',
-  'اليوم': 'Today', 'بكرة': 'Tomorrow', 'بعد بكرة': 'Day after', 'احجز موعد التركيب': 'Book a fitting',
+  'اليوم': 'Today', 'بكرة': 'Tomorrow', 'بعد بكرة': 'Day after', 'اطلب موعد التركيب': 'Request a fitting',
+  'الموعد يتأكد بعد رد المتجر': 'The time is confirmed once the store replies',
   'الموقع وشروط التركيب': 'Location & fitting terms', 'اختر إطاراتك': 'Choose your tires', 'أكمل طلبك': 'Complete your order',
-  'ركّب واستلم': 'Fit & drive', 'دقيقة': 'min', 'متوسط التركيب': 'average fitting', 'احجز': 'Book',
+  'ركّب واستلم': 'Fit & drive', 'دقيقة': 'min', 'متوسط التركيب': 'average fitting', 'اطلب': 'Request',
 };
 const SLOTS = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30', '19:00', '20:30'];
 const STEPS = ['اختر إطاراتك', 'أكمل طلبك', 'ركّب واستلم'];
@@ -59,6 +61,7 @@ const withParams = (link: string, params: Record<string, string>) => {
 
 export function InstallBooking({ data }: { data: Row }) {
   const fitting = useSellsFitting();
+  const sharedPhone = useWhatsappNumber();
   const lang = useLang();
   const isEn = lang === 'en';
   const t = makeT(lang, EN);
@@ -84,17 +87,20 @@ export function InstallBooking({ data }: { data: Row }) {
   useEffect(() => { if (time && past(time)) setTime(''); });
   const date = now ? addDays(now.date, day) : '';
 
-  const btnText = t(data.btn_text, 'احجز موعد التركيب');
-  const label = time ? `${t('احجز', 'احجز')} ${days[day]} · ${show12(time, isEn)}` : btnText;
+  const btnText = t(data.btn_text, 'اطلب موعد التركيب');
+  const label = time ? `${t('اطلب', 'اطلب')} ${days[day]} · ${show12(time, isEn)}` : btnText;
+  // this section's own number first (optional), else the store-wide WhatsApp number from the theme settings;
   // a real number only — an example like 9665xxxxxxxx never becomes a recipient
   const rawPhone = String(data.whatsapp ?? '').trim();
-  const phone = /^\+?[\d\s-]+$/.test(rawPhone) ? rawPhone.replace(/\D/g, '') : '';
+  const ownPhone = /^\+?[\d\s-]+$/.test(rawPhone) ? toIntl(rawPhone) : '';
+  const phone = ownPhone || sharedPhone;
   const mode = opt(data.booking_mode, 'whatsapp');
-  const msg = `${isEn ? 'Fitting booking' : 'حجز موعد تركيب'}: ${days[day]}${date ? ` ${date}` : ''}${time ? ` · ${time} (${show12(time, isEn)})` : ''}`;
+  const msg = `${isEn ? 'Fitting appointment request' : 'طلب موعد تركيب'}: ${days[day]}${date ? ` ${date}` : ''}${time ? ` · ${time} (${show12(time, isEn)})` : ''}`;
   const href = mode === 'whatsapp' && phone.length >= 10 && phone.length <= 15
     ? `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`
     : time && date ? withParams(asLink(data.book_link, '/help#install'), { date, time }) : asLink(data.book_link, '/help#install');
   const terms = t(data.terms_text, 'الموقع وشروط التركيب');
+  const confirmNote = t(data.confirm_note, 'الموعد يتأكد بعد رد المتجر');
 
   if (!fitting) return null; // «بيع فقط»: no fitting sections
   return (
@@ -130,6 +136,7 @@ export function InstallBooking({ data }: { data: Row }) {
             )}
             {terms && <Link className="link" to={asLink(data.terms_link, '/help#install')}>{terms}</Link>}
           </div>
+          {confirmNote && <p className="fit-note">{confirmNote}</p>}
           {steps.length > 0 && (
             <ol className="fit-steps">
               {steps.map((s, i) => <li key={i}><b aria-hidden="true">{String(i + 1).padStart(2, '0')}</b>{s}</li>)}

@@ -1,6 +1,6 @@
 # HANDOFF — where we are, whose turn
 
-**Turn:** Claude (fix round 4)
+**Turn:** Owner (push, check the editor visually, then Codex re-check of round 4)
 
 **Last done by Claude (2026-10-06):**
 - Components #1–#14 built (see `../design/components-spec.md`), size finder combobox + trucks/buses switches,
@@ -34,3 +34,5 @@ Round 2 scope: components #15–#23 + re-check of round 1 fixes.
 **Settings groups (2026-10-10):** the «اختر نوع الإعدادات» dropdown — root `groups` (13, our own list from `tc-settings.cjs`) + `groups:[id]` on each setting (204, the 13 yellow title rows removed). Method from Salla blog "Group Theme Settings" (see memory settings-groups-twilight). typecheck + 78 tests pass. VERIFIED by owner in the Salla editor (works).
 **Update (2026-10-10):** per owner, the 13 yellow title rows are kept INSIDE each group (dropdown + old title look together); 217 settings again.
 **Settings groups FINAL (2026-10-10, b6489ec, verified by owner):** every setting has `groups: ["general", <own group>]` — `general` is Salla's built-in «الخيارات العامة» (shows ALL settings, old flat look with yellow titles) and the 13 groups (all type "page"; "header"/"footer" types are NOT listed in the dropdown) each show only their own.
+
+**Fix round 4 done by Claude (2026-10-10):** 27 findings marked in REVIEW.md (21 ✅, 4 partly, R4-13 deferred, R4-27 → cleanup). Commits 282ca75, 05f7c94, 2e43930, 01378e7 (+ tests). Also: reviews `auto` source (Salla ratings → samples only while empty, switch to turn samples off), Saudi/plain wording for customer text, «إعدادات متقدمة» switch on all 23 sections, setup-steps tip. typecheck, build, 81 tests pass. Visual parity items (gallery, cart rows, account) are CSS-only and NOT measured — need the owner's look.

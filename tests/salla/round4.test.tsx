@@ -1,0 +1,31 @@
+import { describe, expect, it, vi } from 'vitest';
+import { renderToString } from 'react-dom/server';
+vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
+vi.mock('@salla.sa/twilight-theme-engine/hooks/useWishlist', () => ({ useWishlist: () => ({ has: () => false, toggle: () => {} }) }));
+vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({ useNavigate: () => () => {}, useTwilight: () => ({}) }));
+vi.mock('@salla.sa/twilight-theme-engine/common', () => ({ Link: ({ to, children }: { to: string; children: React.ReactNode }) => <a href={to}>{children}</a> }));
+import { readSpecs } from '../../app/components/tires/product/TcProductParts';
+import { TireQuantityPicker } from '../../app/components/tires/TireQuantityPicker';
+
+const product = { name: 'Wrong 205/55R16 2024', tags: [{ name: '225-60-18' }, { name: '2026' }], options: [] } as never;
+
+describe('review round 4', () => {
+  it('R4-2: the spec table follows the chosen size source, not the product name', () => {
+    expect(readSpecs(product, ['tags']).size).toMatchObject({ width: '225', ratio: '60', rim: '18' });
+    expect(readSpecs(product, ['tags']).year).toBe('2026');
+    expect(readSpecs(product, ['name']).size).toMatchObject({ width: '205', ratio: '55', rim: '16' });
+  });
+
+  it('R4-3: per-set pricing offers 1 / 2 sets, never «4 sets»', () => {
+    const set = renderToString(<TireQuantityPicker productId={1} unitPrice={1000} unit="set" />);
+    expect(set).toContain('طقمين');
+    expect(set).not.toContain('4 (طقم)');
+    const tire = renderToString(<TireQuantityPicker productId={1} unitPrice={250} />);
+    expect(tire).toContain('4 (طقم)');
+  });
+
+  it('R4-22: truck sizes keep their trade code (no millimetre unit invented)', () => {
+    expect(readSpecs({ name: 'Truck 11R22.5' } as never, ['name']).size).toMatchObject({ width: '11', rim: '22.5' });
+    expect(readSpecs({ name: '900/16' } as never, ['name']).size).toMatchObject({ width: '900', rim: '16' });
+  });
+});

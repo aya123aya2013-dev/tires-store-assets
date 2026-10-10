@@ -77,7 +77,7 @@ describe('TireQuantityPicker', () => {
     document.body.appendChild(root);
 
     render(<TireQuantityPicker productId={7} unitPrice={400} />);
-    fireEvent.click(screen.getByRole('button', { name: '4' }));
+    fireEvent.click(screen.getByRole('button', { name: '4 (طقم)' }));
 
     expect(screen.getByText('1,600')).toBeTruthy();
     expect(setValue).toHaveBeenCalledWith(4, true);

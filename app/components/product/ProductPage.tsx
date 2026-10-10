@@ -15,7 +15,9 @@ import { ProductDetails } from './ProductDetails';
 import { AddToCartForm } from './AddToCartForm';
 import { BlockHookSlot } from '../common/BlockHookSlot';
 import { ProductsSlider } from '../home/ProductsSlider';
-import { TireProductInfo, TireSizeBadge } from '../tires/TireProductInfo';
+import { TcDelivery, TcProductFaq, TcProductHead, TcSpecs, TcTrust } from '../tires/product/TcProductParts';
+import { asBool, makeT, useLang } from '../home/fields';
+import { useCurrency } from '../home/tc/useCurrency';
 import { WarrantyLine } from '../tires/features/Warranty';
 import { TireQuantityPicker } from '../tires/TireQuantityPicker';
 
@@ -72,6 +74,9 @@ export function ProductPage({ product: initialProduct, page }: ProductPageProps)
   const { product } = useProduct(initialProduct);
   const { commentsKey } = useComments();
   const blockScope = useMemo(() => ({ product_id: product.id }), [product.id]);
+  const lang = useLang();
+  const ts = (theme?.settings ?? {}) as Record<string, unknown>;
+  const cur = useCurrency();
 
   // Seed `salla.config.page` on first load. The engine only sets it from a
   // `router.subscribe('onLoad')` handler, which fires on SPA navigations but not
@@ -121,48 +126,53 @@ export function ProductPage({ product: initialProduct, page }: ProductPageProps)
         scope={blockScope}
       />
 
-      <div className="container">
-        {theme?.settings?.product_show_breadcrumbs !== false && <Breadcrumb page={page} />}
+      {/* design/store/product.html — .ptop-sec (breadcrumb) + .pd (gallery | .pinfo buy box) */}
+      <div className="tc-s tc-page tc-product">
+        <section className="wrap ptop-sec">
+          {theme?.settings?.product_show_breadcrumbs !== false && <Breadcrumb page={page} />}
+        </section>
 
         <HookSlot name="product:start" />
 
-        <div className="flex flex-col items-start md:flex-row" id={`product-${product.id}`}>
-          <ProductGallery product={product} />
+        <section className="wrap pd" id={`product-${product.id}`}>
+          <div className="tc-gallery">
+            <ProductGallery product={product} />
+          </div>
 
-          <div className="main-content md:sticky md:overflow-hidden md:top-24 w-full md:w-2/4 md:pb-16">
+          <div className="pinfo" id="buybox">
             <HookSlot name="product:details.start" />
-            <HookSlot name="product:single.description.start" />
-            {/* Loader product: like Twig, the header price stays the unit price; only the SKU and barcode are live */}
-            <ProductDetails
-              product={initialProduct}
-              sku={product.sku}
-              barcode={product.barcode}
-              showTags={theme.settings.show_tags}
-            />
-            <TireSizeBadge name={product.name} />
-            <WarrantyLine />
-            <HookSlot name="product:single.description" />
-            <HookSlot name="product:single.description.end" />
-            <HookSlot name="product:details.end" />
-
-            <HookSlot name="product:single.form.start" />
-            <AddToCartForm product={product} stickyAddToCart={theme.settings.sticky_add_to_cart} />
-            <HookSlot name="product:single.form.end" />
+            <TcProductHead product={initialProduct} />
+            <TcTrust />
             {!product.is_out_of_stock && !product.is_hidden_quantity && (
               <TireQuantityPicker
                 productId={product.id}
                 unitPrice={product.is_on_sale ? product.sale_price : Number(product.price)}
+                currency={cur(product.currency as string | undefined)}
+                lang={lang}
               />
             )}
-            <TireProductInfo name={product.name} />
-            {/* Twig renders this hook's merchant blocks after the form */}
-            <PageBlocks hook="product:single.description.end" scope={blockScope} />
-
-            <SallaQuickOrder className="mt-5 md:-mb-2 block" />
+            <TcDelivery product={product} />
+            <HookSlot name="product:single.form.start" />
+            <AddToCartForm product={product} stickyAddToCart={theme.settings.sticky_add_to_cart} />
+            <HookSlot name="product:single.form.end" />
+            <WarrantyLine />
+            <SallaQuickOrder className="mt-5 block" />
+            <HookSlot name="product:details.end" />
           </div>
-        </div>
+        </section>
 
-        <SallaOffer />
+        {/* description, tags and Salla metadata — the merchant's own text */}
+        <section className="wrap pblk tc-pdesc">
+          <HookSlot name="product:single.description.start" />
+          <ProductDetails product={initialProduct} sku={product.sku} barcode={product.barcode} showTags={theme.settings.show_tags} headless />
+          <HookSlot name="product:single.description" />
+          <HookSlot name="product:single.description.end" />
+          {/* Twig renders this hook's merchant blocks after the form */}
+          <PageBlocks hook="product:single.description.end" scope={blockScope} />
+        </section>
+
+        <TcSpecs product={product} />
+        <div className="wrap"><SallaOffer /></div>
       </div>
 
       {/* App-block hook `product.single.before_customer_reviews` — between the info and the reviews */}
@@ -176,9 +186,13 @@ export function ProductPage({ product: initialProduct, page }: ProductPageProps)
         // `estimatedHeight="0"`: `RenderWhenVisible` hard-codes `min-height` on its
         // wrapper section and never clears it, so the default 400px leaves an empty
         // gap when the product has no reviews. Comments size themselves once present.
-        <RenderWhenVisible estimatedHeight="0px" className="s-block--full-bg">
-          <SallaComments key={commentsKey} itemId={product.id} type={'product' as never} />
-        </RenderWhenVisible>
+        <div className="tc-s tc-page">
+          <section className="wrap pblk" id="prev">
+            <RenderWhenVisible estimatedHeight="0px">
+              <SallaComments key={commentsKey} itemId={product.id} type={'product' as never} />
+            </RenderWhenVisible>
+          </section>
+        </div>
       )}
 
       {/* App-block hook `product.single.before_product_recommendations` — between the reviews and related */}
@@ -188,7 +202,11 @@ export function ProductPage({ product: initialProduct, page }: ProductPageProps)
         scope={blockScope}
       />
 
-      <RelatedProducts productId={product.id} title={t('pages.products.similar_products')} />
+      <div className="tc-s tc-page"><TcProductFaq /></div>
+
+      {asBool(ts.tc_p_related, true) && (
+        <RelatedProducts productId={product.id} title={makeT(lang, { 'إطارات مشابهة': 'Similar tires' })(ts.tc_p_related_title, 'إطارات مشابهة') || t('pages.products.similar_products')} />
+      )}
 
       {/* App-block hook `product.single.after_product_recommendations` — end of the product page */}
       <BlockHookSlot

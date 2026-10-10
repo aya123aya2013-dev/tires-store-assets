@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 
 const QUICK_QUANTITIES = [1, 2, 4];
 
@@ -15,9 +16,13 @@ type QuantityInput = HTMLElement & {
 export function TireQuantityPicker({
   productId,
   unitPrice,
+  currency,
+  lang = 'ar',
 }: {
   productId: number;
   unitPrice: number;
+  currency?: ReactNode;
+  lang?: string;
 }) {
   const [quantity, setQuantity] = useState(1);
 
@@ -46,36 +51,25 @@ export function TireQuantityPicker({
   };
 
   const total = Math.round(unitPrice * quantity * 100) / 100;
+  const en = lang === 'en';
 
+  // design/store/product.html → .qrow (1 / 2 / 4 quick picks) + .ptot (running total);
+  // the stepper itself is Salla's quantity input in the form, kept in sync both ways
   return (
-    <div className="mt-6 rounded-xl border border-gray-200 p-4">
-      <div className="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-        <span className="text-sm text-gray-500">
-          <span className="text-lg font-bold text-gray-900">{unitPrice.toLocaleString('en-US')}</span>{' '}
-          ر.س للإطار الواحد
-        </span>
-        <span className="text-sm text-gray-500">
-          الإجمالي:{' '}
-          <span className="text-xl font-bold text-gray-900">{total.toLocaleString('en-US')}</span> ر.س
-        </span>
+    <div className="tc-s tc-qbox">
+      <div className="qrow">
+        <span>{en ? 'Quantity' : 'الكمية'}</span>
+        <div className="qbtn">
+          {QUICK_QUANTITIES.map((value) => (
+            <button key={value} type="button" className={quantity === value ? 'on' : undefined} aria-pressed={quantity === value} onClick={() => choose(value)}>
+              {value === 1 ? (en ? '1 tire' : '1 إطار') : value === 4 ? (en ? '4 (set)' : '4 (طقم)') : value}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-bold text-gray-900">عدد الإطارات:</span>
-        {QUICK_QUANTITIES.map((value) => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => choose(value)}
-            aria-pressed={quantity === value}
-            className={`h-10 w-12 rounded-lg border text-sm font-bold transition ${
-              quantity === value
-                ? 'border-[#ffb71b] bg-[#ffb71b] text-gray-900'
-                : 'border-gray-300 bg-white text-gray-700 hover:border-[#ffb71b]'
-            }`}
-          >
-            {value}
-          </button>
-        ))}
+      <div className="ptot">
+        <span>{en ? 'Total' : 'الإجمالي'}</span>
+        <span><b>{total.toLocaleString('en-US')}</b> {currency}</span>
       </div>
     </div>
   );

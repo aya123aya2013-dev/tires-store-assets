@@ -20,6 +20,8 @@ interface ProductDetailsProps {
   /** Live barcode of the selected variant; defaults to `product.barcode`. */
   barcode?: string | null;
   showTags?: boolean;
+  /** the tires product page renders its own head (TcProductHead): skip brand / title / rating / price */
+  headless?: boolean;
 }
 
 /**
@@ -36,6 +38,7 @@ export function ProductDetails({
   sku = product.sku,
   barcode = product.barcode,
   showTags = true,
+  headless = false,
 }: ProductDetailsProps) {
   const { t } = useTranslation();
   const hydrated = useHydrated();
@@ -48,7 +51,7 @@ export function ProductDetails({
     <>
       <HookSlot name={HookName.PRODUCT_DESCRIPTION_START} context={productHookContext} />
 
-      {product.brand?.name && (
+      {!headless && product.brand?.name && (
         <div className="product-brand mb-5 w-12">
           <Link className="brand-logo" to={product.brand.url || '#'} title={product.brand.name}>
             <Image
@@ -62,6 +65,7 @@ export function ProductDetails({
         </div>
       )}
 
+      {!headless && (
       <div className="mb-2.5 flex items-start justify-between gap-4">
         <div>
           <h1 className="text-xl md:text-2xl leading-10 font-bold text-gray-800">{product.name}</h1>
@@ -92,15 +96,17 @@ export function ProductDetails({
         </div>
       </div>
 
-      {product.rating && (
+      )}
+
+      {!headless && product.rating && (
         <SallaRatingStars value={product.rating.stars} reviews={product.rating.count} />
       )}
 
-      {product.is_taxable && (
+      {!headless && product.is_taxable && (
         <small className="color-grey">{t('pages.products.tax_included')}</small>
       )}
 
-      <ProductPrice product={product} />
+      {!headless && <ProductPrice product={product} />}
 
       <ProductDescription product={product} />
 

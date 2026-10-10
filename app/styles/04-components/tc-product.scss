@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Product page glue — the design's `.pd / .pinfo / .pblk` (tc-pages.scss, generated) around Salla's
+   own pieces (gallery slider, options, add-to-cart, reviews). Only what the design can't know:
+   the engine's column widths inside our grid, the info-only delivery cards, and spacing.
+   ========================================================================== */
+
+.tc-product {
+  /* the engine gallery ships `md:w-2/4`; inside the design grid it fills its column */
+  .tc-gallery > .sidebar { width: 100% !important; max-width: 100%; margin: 0 !important; padding-bottom: 0; }
+  .tc-gallery { min-width: 0; }
+  .pinfo { min-width: 0; }
+
+  /* Salla's form (options, add button, quick order) inherits the design spacing */
+  .pinfo .product-form { margin-top: 0; gap: 18px; }
+  .pinfo .s-product-options-wrapper { margin-bottom: 4px; }
+
+  /* the design's quantity row lives above Salla's own stepper; keep one stepper visible */
+  .tc-qbox { margin-bottom: 4px; }
+
+  /* `.dm` as information (no product option to choose with) */
+  .tc-dm-info { display: grid; gap: 2px; }
+  .tc-dm-row { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border-radius: 10px; }
+  .tc-dm-row .i { width: 22px; height: 22px; color: var(--gold-2); flex: none; margin-top: 2px; }
+  .tc-dm-row b { display: block; font-size: 14.5px; }
+  .tc-dm-row small { font-size: 12.5px; color: var(--muted); }
+
+  .psizebadge .ctag { margin-inline-start: 4px; }
+}
+
+/* the description block keeps the merchant's rich text readable */
+.tc-page .tc-pdesc { line-height: 1.8; }
+.tc-page .tc-pdesc:empty { display: none; }

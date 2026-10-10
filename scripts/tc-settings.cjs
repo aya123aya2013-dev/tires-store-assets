@@ -206,6 +206,40 @@ const G_FOOTER = [
   F.sw('tc_footer_legal', 'السجل التجاري وشارات الثقة', true),
 ];
 
+// product page (app/components/tires/product/TcProductParts.tsx + ProductPage.tsx); the base product
+// settings Salla already reads (breadcrumb, tags, sticky bar…) are slotted in by id below
+const G_PRODUCT = [
+  title('tc-set-product', 'صفحة المنتج'),
+  sub('tc-set-h-ptrust', 'الوعود تحت السعر'),
+  F.sw('tc_p_trust', 'إظهار الوعود الثلاثة', true),
+  F.text('tc_p_trust_1', 'الوعد 1 (فاضي = بدون)', 'أصلي بضمان الوكيل', 40),
+  F.text('tc_p_trust_2', 'الوعد 2 — التركيب (يختفي لو «بيع فقط»)', 'تركيب مجاني بالرياض', 40),
+  F.text('tc_p_trust_3', 'الوعد 3', 'قسّطها مع تابي وتمارا', 40),
+  sub('tc-set-h-pdm', 'طريقة الاستلام'),
+  { ...F.tip('لو بدك الزبون يختار «تركيب أو توصيل» وتوصلك بالطلب: أضف للمنتج خيار اسمه «طريقة الاستلام» بقيم «استلام وتركيب» و«توصيل لعنوانك» (من تعديل المنتج ← خيارات المنتج). بدون الخيار تظهر البطاقتين كمعلومة.'), id: 'tc-set-tip-pdm' },
+  F.sw('tc_p_delivery', 'بطاقتي التركيب والتوصيل', true),
+  F.text('tc_p_dm_install', 'عنوان التركيب', 'استلام وتركيب — مجاناً', 50),
+  F.text('tc_p_dm_install_sub', 'سطر التركيب', 'نركّبها على جنوطك بنفس اليوم', 80),
+  F.text('tc_p_dm_ship', 'عنوان التوصيل', 'توصيل لعنوانك', 50),
+  F.text('tc_p_dm_ship_sub', 'سطر التوصيل', 'المدة والتكلفة تظهر قبل الدفع', 80),
+  sub('tc-set-h-pblocks', 'أقسام الصفحة'),
+  F.sw('tc_p_specs', 'جدول المواصفات (من الاسم والوسوم والخيارات)', true),
+  F.text('tc_p_specs_title', 'عنوان المواصفات', 'المواصفات', 30),
+  { ...F.tip('للجدول: اكتب بالوسوم أو الخيارات مثل «حمولة: 91»، «سرعة: V»، «بلد الصنع: تايلند»، «النقشة: Ventus Prime 4»، «2026». المقاس يُقرأ تلقائياً.'), id: 'tc-set-tip-pspecs' },
+  F.sw('tc_p_faq', 'أسئلة عن الإطار', true),
+  F.text('tc_p_faq_title', 'عنوان الأسئلة', 'أسئلة عن الإطار', 40),
+  F.text('tc_p_faq_q1', 'سؤال 1 (فاضي = بدون)', 'الشحن والإرجاع', 80),
+  F.area('tc_p_faq_a1', 'جواب 1', 'نشحن لكل مناطق المملكة. الإطارات غير المركّبة تقبل الإرجاع خلال 7 أيام بحالتها الأصلية.', 400),
+  F.text('tc_p_faq_q2', 'سؤال 2', 'هل يناسب سيارتي؟', 80),
+  F.area('tc_p_faq_a2', 'جواب 2', 'إذا المقاس المكتوب على جانب إطارك الحالي نفس المقاس أعلاه، فهو مناسب. محتار؟ ابعت صورة إطارك على واتساب.', 400),
+  F.text('tc_p_faq_q3', 'سؤال 3', 'الضمان', 80),
+  F.area('tc_p_faq_a3', 'جواب 3', 'ضمان الوكيل ضد عيوب التصنيع حسب الماركة، ونضمن تاريخ صنع لا يتجاوز 12 شهر.', 400),
+  F.sw('tc_p_related', 'إطارات مشابهة', true),
+  F.text('tc_p_related_title', 'عنوان المشابهة', 'إطارات مشابهة', 40),
+];
+// base settings that belong to the product page (kept, now under its title)
+const PRODUCT_BASE = ['product_show_breadcrumbs', 'show_tags', 'slider_background_size', 'sticky_add_to_cart', 'enable_add_product_toast'];
+
 // A switched-off element hides its own fields (child → [parent, value]).
 const DEPS = {
   tc_use_store_color: ['tc_preset', 'none'],
@@ -233,10 +267,15 @@ const DEPS = {
   tc_popup_repeat: ['tc_popup_show', true],
   tc_footer_shop_title: ['tc_footer_shop', true], tc_footer_help_title: ['tc_footer_help', true],
   tc_footer_news_link: ['tc_footer_news', true],
+  tc_p_trust_1: ['tc_p_trust', true], tc_p_trust_2: ['tc_p_trust', true], tc_p_trust_3: ['tc_p_trust', true],
+  tc_p_dm_install: ['tc_p_delivery', true], tc_p_dm_install_sub: ['tc_p_delivery', true], tc_p_dm_ship: ['tc_p_delivery', true], tc_p_dm_ship_sub: ['tc_p_delivery', true],
+  tc_p_specs_title: ['tc_p_specs', true],
+  tc_p_faq_title: ['tc_p_faq', true], tc_p_faq_q1: ['tc_p_faq', true], tc_p_faq_a1: ['tc_p_faq', true], tc_p_faq_q2: ['tc_p_faq', true], tc_p_faq_a2: ['tc_p_faq', true], tc_p_faq_q3: ['tc_p_faq', true], tc_p_faq_a3: ['tc_p_faq', true],
+  tc_p_related_title: ['tc_p_related', true],
 };
 
 // DEPS values: [parent, value] or a list of them (all must hold)
-const ALL = [...G_TIRES, ...G_IDENTITY, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER, ...G_DARK, title('tc-set-pages', 'صفحة المنتج والقوائم')]
+const ALL = [...G_TIRES, ...G_IDENTITY, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER, ...G_PRODUCT, ...G_DARK, title('tc-set-pages', 'التصنيف والبحث والسلة')]
   .map(f => (DEPS[f.id] ? (Array.isArray(DEPS[f.id][0]) ? DEPS[f.id] : [DEPS[f.id]]).reduce((g, d) => F.when(g, ...d), f) : f));
 
 const ids = ALL.map(s => s.id);
@@ -248,7 +287,11 @@ for (const k of Object.keys(DEPS)) for (const d of Array.isArray(DEPS[k][0]) ? D
 const REMOVED = ['squar_photo_bg_image_size', 'vertical_fixed_products', 'is_more_button_enabled', 'imageZoom', 'header_is_sticky', 'topnav_is_dark', 'important_links', 'enable_more_menu', 'header_show_store_info', 'footer_is_dark',
   'static-line1', 'static-label2', 'static-line3', 'static-label4', 'static-line5', 'static-label6'];
 // ours always lead, in this order; old tires ids no longer in the list are dropped; base settings kept after
-const others = (json.settings || []).filter(x => !REMOVED.includes(x.id) && !/^tc[_-]/.test(x.id));
+const base = (json.settings || []).filter(x => !REMOVED.includes(x.id) && !/^tc[_-]/.test(x.id));
+const productBase = PRODUCT_BASE.map(id => base.find(x => x.id === id)).filter(Boolean);
+const others = base.filter(x => !PRODUCT_BASE.includes(x.id));
+const darkAt = ALL.findIndex(x => x.id === 'tc-set-dark');
+ALL.splice(darkAt, 0, ...productBase);
 json.settings = [...ALL, ...others];
 
 fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');

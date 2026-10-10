@@ -367,3 +367,18 @@ describe('tire features', () => {
     expect(perInstallment(99.99, 4)).toBe(99.99);
   });
 });
+
+// ---- product page: specs read from name / tags / options ----
+import { readSpecs } from '../../app/components/tires/product/TcProductParts';
+describe('product specs', () => {
+  it('reads size, load/speed, year, origin and pattern', () => {
+    const p = { name: 'هانكوك فنتوس 205/55 R16 91V', tags: [{ name: 'بلد الصنع: كوريا' }, { name: '2026' }, { name: 'النقشة: Ventus Prime 4' }], options: [] } as never;
+    const s = readSpecs(p, ['name', 'tags', 'options']);
+    expect(s.size).toEqual({ width: '205', ratio: '55', rim: '16' });
+    expect([s.load, s.speed, s.year, s.origin, s.pattern]).toEqual(['91', 'V', '2026', 'كوريا', 'Ventus Prime 4']);
+  });
+  it('never takes a load index out of the size itself', () => {
+    const s = readSpecs({ name: 'Bridgestone 215/60 R17', tags: [], options: [] } as never, ['name']);
+    expect([s.load, s.speed]).toEqual(['', '']);
+  });
+});

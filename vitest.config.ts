@@ -8,6 +8,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.tsx'],
     include: ['tests/**/*.test.{ts,tsx}'],
+    // Salla's packages ship extension-less ESM imports (…/hydration/HydrationBoundary) that Node cannot load;
+    // letting Vite process them fixes the product tests that import @salla.sa/twilight-components-react
+    server: { deps: { inline: [/@salla.sa/] } },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],

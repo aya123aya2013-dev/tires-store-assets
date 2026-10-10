@@ -30,6 +30,8 @@ const makeCart = () => ({
 });
 let cartData = makeCart();
 
+// our cart reads the language from the route (useLang)
+vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
 vi.mock('@salla.sa/twilight-components-react/conditional-offer', () => ({
   SallaConditionalOffer: () => null,
 }));
@@ -81,9 +83,9 @@ vi.mock('@salla.sa/twilight-theme-engine/api/cart', async (importOriginal) => {
   };
 });
 
-function renderPage() {
+function renderPage(client = new QueryClient()) {
   return render(
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={client}>
       <CartPage page={{} as Page} />
     </QueryClientProvider>
   );
@@ -132,6 +134,25 @@ describe('CartPage', () => {
 
       await waitFor(() => expect(container.querySelector('.cart-options')).toBeTruthy());
       expect(getCurrentCartId).toHaveBeenCalled();
+    });
+  });
+
+  describe('load states (R4-20)', () => {
+    it('shows the empty cart, not a skeleton forever, when the shopper has no cart yet (null id)', async () => {
+      getCurrentCartId.mockImplementation(() => Promise.resolve(null));
+      const { container, queryByTestId } = renderPage();
+
+      await waitFor(() => expect(container.querySelector('.tc-cart-empty')).toBeTruthy());
+      expect(queryByTestId('skeleton')).toBeNull();
+    });
+
+    it('shows an error with a retry button when the cart id request fails', async () => {
+      getCurrentCartId.mockImplementation(() => Promise.reject(new Error('network')));
+      // no retries here, so the failure state is reached immediately (the app keeps the engine's defaults)
+      const { container, queryByTestId } = renderPage(new QueryClient({ defaultOptions: { queries: { retry: false } } }));
+
+      await waitFor(() => expect(container.querySelector('[role="alert"] button')).toBeTruthy());
+      expect(queryByTestId('skeleton')).toBeNull();
     });
   });
 

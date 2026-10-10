@@ -35,7 +35,7 @@ function mountSearchModal({ visible = false }: { visible?: boolean } = {}) {
 const route = { pathname: '/', locale: 'en' };
 
 vi.mock('@tanstack/react-router', () => ({
-  useParams: () => ({}),
+  useParams: () => ({ locale: route.locale }),
   useRouterState: ({ select }: { select: (s: { location: { pathname: string } }) => unknown }) =>
     select({ location: { pathname: route.pathname } }),
 }));
@@ -95,24 +95,43 @@ afterEach(() => {
 describe('MobileBottomBar', () => {
   const noop = () => {};
 
-  it('renders all five tabs with their labels', () => {
+  it('renders the five tabs with their labels (the middle one is «My size» by default)', () => {
     render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
 
     expect(screen.getByText('Home')).toBeTruthy();
-    expect(screen.getByText('Search')).toBeTruthy();
     expect(screen.getByText('Menu')).toBeTruthy();
+    expect(screen.getByText('My size')).toBeTruthy();
     expect(screen.getByText('Cart')).toBeTruthy();
     expect(screen.getByText('Account')).toBeTruthy();
+    expect(screen.queryByTestId('mobile-bottom-bar-search')).toBeNull();
   });
 
-  it('opens the Salla search modal when the Search tab is tapped', () => {
-    const dispatch = vi.fn();
-    (window as unknown as { salla: unknown }).salla = { event: { dispatch } };
-
+  it('«My size» leads to the size finder when no size is saved', () => {
     render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
-    fireEvent.click(screen.getByTestId('mobile-bottom-bar-search'));
+    expect(screen.getByTestId('mobile-bottom-bar-size').getAttribute('href')).toBe('/#size');
+  });
 
-    expect(dispatch).toHaveBeenCalledWith('search::open');
+  it('the middle button can be WhatsApp (needs a number) or removed', () => {
+    twilight.settings = { tc_bottombar_items: 'whatsapp' };
+    const { unmount } = render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
+    expect(screen.queryByTestId('mobile-bottom-bar-wa')).toBeNull(); // no number → no button
+    unmount();
+
+    twilight.settings = { tc_bottombar_items: 'whatsapp', tc_wa_number: '0551234567' };
+    const withNumber = render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
+    expect(screen.getByTestId('mobile-bottom-bar-wa').getAttribute('href')).toBe('https://wa.me/966551234567');
+    withNumber.unmount();
+
+    twilight.settings = { tc_bottombar_items: 'basic' };
+    render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
+    expect(screen.queryByTestId('mobile-bottom-bar-size')).toBeNull();
+    expect(screen.queryByTestId('mobile-bottom-bar-wa')).toBeNull();
+  });
+
+  it('renders nothing when the merchant switches the bottom bar off', () => {
+    twilight.settings = { tc_bottombar: false };
+    const { container } = render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
+    expect(container.querySelector('.mobile-bottom-bar')).toBeNull();
   });
 
   it('points the route tabs at their in-app paths', () => {
@@ -160,76 +179,17 @@ describe('MobileBottomBar', () => {
     expect(screen.getByTestId('mobile-bottom-bar-home').className).not.toContain('is-active');
   });
 
-  it('lights the Search tab while the search modal is open', () => {
-    mountSearchModal({ visible: true });
-
-    render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
-
-    expect(screen.getByTestId('mobile-bottom-bar-search').className).toContain('is-active');
-    expect(screen.getByTestId('mobile-bottom-bar-search').getAttribute('aria-pressed')).toBe(
-      'true'
-    );
-    expect(screen.getByTestId('mobile-bottom-bar-home').className).not.toContain('is-active');
-  });
-
-  it('lights the Search tab when a `search::open` event opens the modal later', async () => {
-    render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
-    expect(screen.getByTestId('mobile-bottom-bar-search').className).not.toContain('is-active');
-
-    // The modal mounts + gets `visible` after the bar (SDK / hydration lag).
-    await act(async () => {
-      mountSearchModal({ visible: true });
-      await new Promise((r) => setTimeout(r, 0));
-    });
-
-    expect(screen.getByTestId('mobile-bottom-bar-search').className).toContain('is-active');
-  });
-
-  it('does not observe for search/account overlays on desktop (matchMedia not matching)', async () => {
-    const originalMatchMedia = window.matchMedia;
-    window.matchMedia = ((query: string) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: () => {},
-      removeListener: () => {},
-      addEventListener: () => {},
-      removeEventListener: () => {},
-      dispatchEvent: () => false,
-    })) as typeof window.matchMedia;
-
-    try {
-      render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
-      expect(screen.getByTestId('mobile-bottom-bar-search').className).not.toContain('is-active');
-
-      // Same "modal mounts later" scenario the mobile test above covers — on
-      // desktop the observer is never started, so this must NOT light the tab.
-      await act(async () => {
-        mountSearchModal({ visible: true });
-        await new Promise((r) => setTimeout(r, 0));
-      });
-
-      expect(screen.getByTestId('mobile-bottom-bar-search').className).not.toContain('is-active');
-    } finally {
-      window.matchMedia = originalMatchMedia;
-    }
-  });
-
-  it('dismisses the drawer and the user-menu sheet when Search is tapped', async () => {
-    const dispatch = vi.fn();
-    (window as unknown as { salla: unknown }).salla = { event: { dispatch } };
+  it('dismisses the drawer and the user-menu sheet when a route tab is tapped', async () => {
     const menu = mountUserMenu({ opened: true });
     const onCloseNav = vi.fn();
 
     render(<MobileBottomBar navOpen onOpenNav={noop} onCloseNav={onCloseNav} />);
-    // `await act` so the DOM-observing hooks' state updates flush inside act.
     await act(async () => {
-      fireEvent.click(screen.getByTestId('mobile-bottom-bar-search'));
+      fireEvent.click(screen.getByTestId('mobile-bottom-bar-home'));
     });
 
     expect(onCloseNav).toHaveBeenCalledTimes(1);
     expect(menu.opened).toBe(false);
-    expect(dispatch).toHaveBeenCalledWith('search::open');
   });
 
   it('closes the search modal when a route tab is tapped', async () => {
@@ -248,7 +208,7 @@ describe('MobileBottomBar', () => {
     const { container } = render(<MobileBottomBar navOpen={false} onOpenNav={noop} />);
 
     expect(container.querySelector('.mobile-bottom-bar')).not.toBeNull();
-    for (const id of ['home', 'categories', 'search', 'cart', 'account']) {
+    for (const id of ['home', 'categories', 'cart', 'account']) {
       expect(screen.getByTestId(`mobile-bottom-bar-${id}`).className).not.toContain('is-active');
     }
   });
@@ -273,7 +233,7 @@ describe('MobileBottomBar', () => {
 
     expect(screen.getByTestId('mobile-bottom-bar-home').className).not.toContain('is-active');
     expect(screen.getByTestId('mobile-bottom-bar-home').getAttribute('aria-current')).toBeNull();
-    for (const id of ['categories', 'search', 'cart', 'account']) {
+    for (const id of ['categories', 'cart', 'account']) {
       expect(screen.getByTestId(`mobile-bottom-bar-${id}`).className).not.toContain('is-active');
     }
   });

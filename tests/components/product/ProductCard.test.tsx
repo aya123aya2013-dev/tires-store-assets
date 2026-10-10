@@ -64,6 +64,12 @@ vi.mock('@salla.sa/twilight-theme-engine/hooks/useWishlist', () => ({
   }),
 }));
 
+// our card reads the theme settings (price policy, compare, my size…) and the route language
+vi.mock('@salla.sa/twilight-theme-engine/providers', () => ({
+  useTwilight: () => ({ theme: { settings: {} }, store: { contacts: {} } }),
+  useNavigate: () => () => {},
+}));
+vi.mock('@tanstack/react-router', () => ({ useParams: () => ({}) }));
 vi.mock('@salla.sa/twilight-theme-engine/i18n', () => ({
   useTranslation: () => ({ t: (_k: string, fallback?: string) => fallback ?? _k }),
 }));

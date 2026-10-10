@@ -1,0 +1,27 @@
+/* Wishlist / brands / blog / article glue — design classes come from tc-pages + tc-sections (generated). */
+.tc-wish-body, .tc-blog-body { padding: 20px 0 70px; }
+.tc-wish .tc-wgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .tc-wish .tc-wgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 767px) { .tc-wish .tc-wgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tc-page .tc-more { text-align: center; margin-top: 26px; }
+
+.tc-brands .bgrid a { display: grid; gap: 8px; place-items: center; }
+.tc-brands .tc-blogo { max-height: 60px; width: auto; object-fit: contain; }
+@media (max-width: 767px) { .tc-brands .bgrid { grid-template-columns: repeat(2, 1fr); } }
+
+.tc-blog .tips, .tc-related .tips { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .tc-blog .tips, .tc-related .tips { grid-template-columns: 1fr; } }
+
+/* the merchant's article text gets the design's paragraph rhythm */
+.tc-article .tc-article-body { font-size: 16px; line-height: 2; color: var(--slate); }
+.tc-article .tc-article-body p { margin-bottom: 16px; }
+.tc-article .tc-article-body h2 { font-size: 22px; margin: 26px 0 10px; }
+.tc-article .tc-article-body h3 { font-size: 18px; margin: 20px 0 8px; }
+.tc-article .tc-article-body img { max-width: 100%; height: auto; border-radius: 12px; }
+.tc-article .tc-article-body ul, .tc-article .tc-article-body ol { padding-inline-start: 22px; margin-bottom: 16px; list-style: revert; }
+.tc-article .tc-article-tags { margin-top: 20px; }
+.tc-article .tc-article-social { margin: 18px 0; }
+.tc-article .tc-article-social button { display: inline-flex; gap: 6px; align-items: center; height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; }
+.tc-article .tc-article-social button.on { border-color: var(--gold); background: var(--gold-soft); }
+.tc-related { padding: 0 0 70px; }
+.tc-related h2 { font-size: 22px; margin-bottom: 18px; }

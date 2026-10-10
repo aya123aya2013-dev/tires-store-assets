@@ -64,4 +64,9 @@ export const routes = [
   // Help & installation page (size guide, install terms + centers, FAQ).
   // Implementation: `app/routes/help-page.tsx`.
   route('/help', 'help-page.tsx'),
+  // Design pages (app/components/tires/pages/TcPages.tsx): wishlist, brands, blog, article.
+  route('/account/wishlist', 'wishlist-page.tsx'),
+  route('/brands', 'brands-list-page.tsx'),
+  route('/blog', 'blog-page.tsx'),
+  route('/blog/$slug/a-{$id}', 'article-page.tsx'),
 ];

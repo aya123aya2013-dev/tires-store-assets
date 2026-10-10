@@ -252,6 +252,17 @@ const G_LIST = [
 ];
 const LIST_BASE = ['product_index_show_breadcrumbs'];
 
+// wishlist / brands / blog / article (app/components/tires/pages/TcPages.tsx)
+const G_PAGES = [
+  F.text('tc_pg_wish_title', 'المفضلة — العنوان', 'المفضلة', 40),
+  F.text('tc_pg_wish_empty', 'المفضلة الفاضية — النص', 'ما في إطارات بالمفضلة لسا.', 80),
+  F.text('tc_pg_brands_title', 'الماركات — العنوان', 'ماركات أصلية، من الوكيل.', 60),
+  F.sw('tc_pg_brands_logos', 'الماركات — شعار الماركة (بدل الاسم)', true),
+  F.text('tc_pg_blog_title', 'المدونة — العنوان', 'نصائح تخلّي إطارك يعيش أطول.', 60),
+  F.sw('tc_pg_article_cta', 'المقال — زر «ابحث بمقاسك» آخر المقال', true),
+  F.text('tc_pg_article_cta_text', 'نص الزر', 'ابحث بمقاسك', 30),
+];
+
 // cart (app/components/tires/cart/TcCartParts.tsx + cart/CartPage.tsx)
 const G_CART = [
   title('tc-set-cart', 'السلة'),
@@ -306,6 +317,7 @@ const DEPS = {
   tc_p_faq_title: ['tc_p_faq', true], tc_p_faq_q1: ['tc_p_faq', true], tc_p_faq_a1: ['tc_p_faq', true], tc_p_faq_q2: ['tc_p_faq', true], tc_p_faq_a2: ['tc_p_faq', true], tc_p_faq_q3: ['tc_p_faq', true], tc_p_faq_a3: ['tc_p_faq', true],
   tc_p_related_title: ['tc_p_related', true],
   tc_list_kicker: ['tc_list_kicker_show', true], tc_list_fbar_title: ['tc_list_fbar', true],
+  tc_pg_article_cta_text: ['tc_pg_article_cta', true],
   tc_cart_free_ship: ['tc_cart_ship_bar', true], tc_cart_set_hint_text: ['tc_cart_set_hint', true],
   tc_cart_appt_title: ['tc_cart_appt', true], tc_cart_appt_text: ['tc_cart_appt', true], tc_cart_appt_msg: ['tc_cart_appt', true],
   tc_cart_secure_text: ['tc_cart_secure', true],
@@ -313,7 +325,7 @@ const DEPS = {
 };
 
 // DEPS values: [parent, value] or a list of them (all must hold)
-const ALL = [...G_TIRES, ...G_IDENTITY, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER, ...G_PRODUCT, ...G_LIST, ...G_CART, ...G_DARK, title('tc-set-pages', 'باقي الصفحات')]
+const ALL = [...G_TIRES, ...G_IDENTITY, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER, ...G_PRODUCT, ...G_LIST, ...G_CART, title('tc-set-pages', 'باقي الصفحات'), ...G_PAGES, ...G_DARK]
   .map(f => (DEPS[f.id] ? (Array.isArray(DEPS[f.id][0]) ? DEPS[f.id] : [DEPS[f.id]]).reduce((g, d) => F.when(g, ...d), f) : f));
 
 const ids = ALL.map(s => s.id);

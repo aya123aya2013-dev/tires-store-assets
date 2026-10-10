@@ -12,8 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRouteImport } from './../node_modules/.pnpm/@salla.sa+twilight-theme-en_ca97de7a84720f7f009c6bda82824b44/node_modules/@salla.sa/twilight-theme-engine/.twilight/$locale'
 import { Route as homePageRouteImport } from './routes/home-page'
 import { Route as DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRouteImport } from './../node_modules/.pnpm/@salla.sa+twilight-theme-en_ca97de7a84720f7f009c6bda82824b44/node_modules/@salla.sa/twilight-theme-engine/.twilight/account'
-import { Route as blogRouteImport } from './routes/blog'
-import { Route as brandsRouteImport } from './routes/brands'
+import { Route as blogPageRouteImport } from './routes/blog-page'
+import { Route as brandsListPageRouteImport } from './routes/brands-list-page'
 import { Route as cartPageRouteImport } from './routes/cart-page'
 import { Route as helpPageRouteImport } from './routes/help-page'
 import { Route as latestProductsPageRouteImport } from './routes/latest-products-page'
@@ -42,12 +42,12 @@ import { Route as accountDotprofileRouteImport } from './routes/account.profile'
 import { Route as accountDotratingRouteImport } from './routes/account.rating'
 import { Route as accountDotsettingsRouteImport } from './routes/account.settings'
 import { Route as accountDotwalletRouteImport } from './routes/account.wallet'
-import { Route as accountDotwishlistRouteImport } from './routes/account.wishlist'
+import { Route as wishlistPageRouteImport } from './routes/wishlist-page'
 import { Route as brandsPageRouteImport } from './routes/brands-page'
 import { Route as tagsPageRouteImport } from './routes/tags-page'
 import { Route as thankyouPageRouteImport } from './routes/thankyou-page'
 import { Route as accountDotordersDotidRouteImport } from './routes/account.orders.$id'
-import { Route as blog_DotslugDotaIdRouteImport } from './routes/blog_.$slug.a-$id'
+import { Route as articlePageRouteImport } from './routes/article-page'
 import { Route as blog_DotslugDotcIdRouteImport } from './routes/blog_.$slug.c-$id'
 import { Route as blog_DotslugDottagIdRouteImport } from './routes/blog_.$slug.tag-$id'
 import { Route as blog_DotauthorDotidRouteImport } from './routes/blog_.author.$id'
@@ -76,13 +76,13 @@ const DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a8
         DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRoute,
     } as any,
   )
-const blogRoute = blogRouteImport.update({
+const blogPageRoute = blogPageRouteImport.update({
   id: '/blog',
   path: '/blog',
   getParentRoute: () =>
     DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRoute,
 } as any)
-const brandsRoute = brandsRouteImport.update({
+const brandsListPageRoute = brandsListPageRouteImport.update({
   id: '/brands',
   path: '/brands',
   getParentRoute: () =>
@@ -257,7 +257,7 @@ const accountDotwalletRoute = accountDotwalletRouteImport.update({
   getParentRoute: () =>
     DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRoute,
 } as any)
-const accountDotwishlistRoute = accountDotwishlistRouteImport.update({
+const wishlistPageRoute = wishlistPageRouteImport.update({
   id: '/wishlist',
   path: '/wishlist',
   getParentRoute: () =>
@@ -287,7 +287,7 @@ const accountDotordersDotidRoute = accountDotordersDotidRouteImport.update({
   getParentRoute: () =>
     DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRoute,
 } as any)
-const blog_DotslugDotaIdRoute = blog_DotslugDotaIdRouteImport.update({
+const articlePageRoute = articlePageRouteImport.update({
   id: '/blog/$slug/a-{$id}',
   path: '/blog/$slug/a-{$id}',
   getParentRoute: () =>
@@ -325,8 +325,8 @@ export interface FileRoutesByFullPath {
   '/{-$locale}': typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRouteWithChildren
   '/{-$locale}/': typeof homePageRoute
   '/{-$locale}/account': typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRouteWithChildren
-  '/{-$locale}/blog': typeof blogRoute
-  '/{-$locale}/brands': typeof brandsRoute
+  '/{-$locale}/blog': typeof blogPageRoute
+  '/{-$locale}/brands': typeof brandsListPageRoute
   '/{-$locale}/cart': typeof cartPageRoute
   '/{-$locale}/help': typeof helpPageRoute
   '/{-$locale}/latest-products': typeof latestProductsPageRoute
@@ -355,12 +355,12 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/account/rating': typeof accountDotratingRoute
   '/{-$locale}/account/settings': typeof accountDotsettingsRoute
   '/{-$locale}/account/wallet': typeof accountDotwalletRoute
-  '/{-$locale}/account/wishlist': typeof accountDotwishlistRoute
+  '/{-$locale}/account/wishlist': typeof wishlistPageRoute
   '/{-$locale}/brands/$id': typeof brandsPageRoute
   '/{-$locale}/tags/$id': typeof tagsPageRoute
   '/{-$locale}/thankyou/$orderId': typeof thankyouPageRoute
   '/{-$locale}/account/orders/$id': typeof accountDotordersDotidRoute
-  '/{-$locale}/blog/$slug/a-{$id}': typeof blog_DotslugDotaIdRoute
+  '/{-$locale}/blog/$slug/a-{$id}': typeof articlePageRoute
   '/{-$locale}/blog/$slug/c-{$id}': typeof blog_DotslugDotcIdRoute
   '/{-$locale}/blog/$slug/tag-{$id}': typeof blog_DotslugDottagIdRoute
   '/{-$locale}/blog/author/$id': typeof blog_DotauthorDotidRoute
@@ -369,8 +369,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/{-$locale}': typeof homePageRoute
   '/{-$locale}/account': typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRouteWithChildren
-  '/{-$locale}/blog': typeof blogRoute
-  '/{-$locale}/brands': typeof brandsRoute
+  '/{-$locale}/blog': typeof blogPageRoute
+  '/{-$locale}/brands': typeof brandsListPageRoute
   '/{-$locale}/cart': typeof cartPageRoute
   '/{-$locale}/help': typeof helpPageRoute
   '/{-$locale}/latest-products': typeof latestProductsPageRoute
@@ -399,12 +399,12 @@ export interface FileRoutesByTo {
   '/{-$locale}/account/rating': typeof accountDotratingRoute
   '/{-$locale}/account/settings': typeof accountDotsettingsRoute
   '/{-$locale}/account/wallet': typeof accountDotwalletRoute
-  '/{-$locale}/account/wishlist': typeof accountDotwishlistRoute
+  '/{-$locale}/account/wishlist': typeof wishlistPageRoute
   '/{-$locale}/brands/$id': typeof brandsPageRoute
   '/{-$locale}/tags/$id': typeof tagsPageRoute
   '/{-$locale}/thankyou/$orderId': typeof thankyouPageRoute
   '/{-$locale}/account/orders/$id': typeof accountDotordersDotidRoute
-  '/{-$locale}/blog/$slug/a-{$id}': typeof blog_DotslugDotaIdRoute
+  '/{-$locale}/blog/$slug/a-{$id}': typeof articlePageRoute
   '/{-$locale}/blog/$slug/c-{$id}': typeof blog_DotslugDotcIdRoute
   '/{-$locale}/blog/$slug/tag-{$id}': typeof blog_DotslugDottagIdRoute
   '/{-$locale}/blog/author/$id': typeof blog_DotauthorDotidRoute
@@ -415,8 +415,8 @@ export interface FileRoutesById {
   '/{-$locale}': typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRouteWithChildren
   '/{-$locale}/': typeof homePageRoute
   '/{-$locale}/account': typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRouteWithChildren
-  '/{-$locale}/blog': typeof blogRoute
-  '/{-$locale}/brands': typeof brandsRoute
+  '/{-$locale}/blog': typeof blogPageRoute
+  '/{-$locale}/brands': typeof brandsListPageRoute
   '/{-$locale}/cart': typeof cartPageRoute
   '/{-$locale}/help': typeof helpPageRoute
   '/{-$locale}/latest-products': typeof latestProductsPageRoute
@@ -445,12 +445,12 @@ export interface FileRoutesById {
   '/{-$locale}/account/rating': typeof accountDotratingRoute
   '/{-$locale}/account/settings': typeof accountDotsettingsRoute
   '/{-$locale}/account/wallet': typeof accountDotwalletRoute
-  '/{-$locale}/account/wishlist': typeof accountDotwishlistRoute
+  '/{-$locale}/account/wishlist': typeof wishlistPageRoute
   '/{-$locale}/brands/$id': typeof brandsPageRoute
   '/{-$locale}/tags/$id': typeof tagsPageRoute
   '/{-$locale}/thankyou/$orderId': typeof thankyouPageRoute
   '/{-$locale}/account/orders/$id': typeof accountDotordersDotidRoute
-  '/{-$locale}/blog/$slug/a-{$id}': typeof blog_DotslugDotaIdRoute
+  '/{-$locale}/blog/$slug/a-{$id}': typeof articlePageRoute
   '/{-$locale}/blog/$slug/c-{$id}': typeof blog_DotslugDotcIdRoute
   '/{-$locale}/blog/$slug/tag-{$id}': typeof blog_DotslugDottagIdRoute
   '/{-$locale}/blog/author/$id': typeof blog_DotauthorDotidRoute
@@ -624,14 +624,14 @@ declare module '@tanstack/react-router' {
       id: '/{-$locale}/blog'
       path: '/blog'
       fullPath: '/{-$locale}/blog'
-      preLoaderRoute: typeof blogRouteImport
+      preLoaderRoute: typeof blogPageRouteImport
       parentRoute: typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRoute
     }
     '/{-$locale}/brands': {
       id: '/{-$locale}/brands'
       path: '/brands'
       fullPath: '/{-$locale}/brands'
-      preLoaderRoute: typeof brandsRouteImport
+      preLoaderRoute: typeof brandsListPageRouteImport
       parentRoute: typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRoute
     }
     '/{-$locale}/cart': {
@@ -834,7 +834,7 @@ declare module '@tanstack/react-router' {
       id: '/{-$locale}/account/wishlist'
       path: '/wishlist'
       fullPath: '/{-$locale}/account/wishlist'
-      preLoaderRoute: typeof accountDotwishlistRouteImport
+      preLoaderRoute: typeof wishlistPageRouteImport
       parentRoute: typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRoute
     }
     '/{-$locale}/brands/$id': {
@@ -869,7 +869,7 @@ declare module '@tanstack/react-router' {
       id: '/{-$locale}/blog/$slug/a-{$id}'
       path: '/blog/$slug/a-{$id}'
       fullPath: '/{-$locale}/blog/$slug/a-{$id}'
-      preLoaderRoute: typeof blog_DotslugDotaIdRouteImport
+      preLoaderRoute: typeof articlePageRouteImport
       parentRoute: typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRoute
     }
     '/{-$locale}/blog/$slug/c-{$id}': {
@@ -911,7 +911,7 @@ interface DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97d
   accountDotratingRoute: typeof accountDotratingRoute
   accountDotsettingsRoute: typeof accountDotsettingsRoute
   accountDotwalletRoute: typeof accountDotwalletRoute
-  accountDotwishlistRoute: typeof accountDotwishlistRoute
+  wishlistPageRoute: typeof wishlistPageRoute
   accountDotordersDotidRoute: typeof accountDotordersDotidRoute
 }
 
@@ -924,7 +924,7 @@ const DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a8
     accountDotratingRoute: accountDotratingRoute,
     accountDotsettingsRoute: accountDotsettingsRoute,
     accountDotwalletRoute: accountDotwalletRoute,
-    accountDotwishlistRoute: accountDotwishlistRoute,
+    wishlistPageRoute: wishlistPageRoute,
     accountDotordersDotidRoute: accountDotordersDotidRoute,
   }
 
@@ -936,8 +936,8 @@ const DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a8
 interface DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightLocaleRouteChildren {
   homePageRoute: typeof homePageRoute
   DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRoute: typeof DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRouteWithChildren
-  blogRoute: typeof blogRoute
-  brandsRoute: typeof brandsRoute
+  blogPageRoute: typeof blogPageRoute
+  brandsListPageRoute: typeof brandsListPageRoute
   cartPageRoute: typeof cartPageRoute
   helpPageRoute: typeof helpPageRoute
   latestProductsPageRoute: typeof latestProductsPageRoute
@@ -962,7 +962,7 @@ interface DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97d
   brandsPageRoute: typeof brandsPageRoute
   tagsPageRoute: typeof tagsPageRoute
   thankyouPageRoute: typeof thankyouPageRoute
-  blog_DotslugDotaIdRoute: typeof blog_DotslugDotaIdRoute
+  articlePageRoute: typeof articlePageRoute
   blog_DotslugDotcIdRoute: typeof blog_DotslugDotcIdRoute
   blog_DotslugDottagIdRoute: typeof blog_DotslugDottagIdRoute
   blog_DotauthorDotidRoute: typeof blog_DotauthorDotidRoute
@@ -974,8 +974,8 @@ const DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a8
     homePageRoute: homePageRoute,
     DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRoute:
       DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a84720f7f009c6bda82824b44Node_modulesAtsallaDotsaTwilightThemeEngineDottwilightAccountRouteWithChildren,
-    blogRoute: blogRoute,
-    brandsRoute: brandsRoute,
+    blogPageRoute: blogPageRoute,
+    brandsListPageRoute: brandsListPageRoute,
     cartPageRoute: cartPageRoute,
     helpPageRoute: helpPageRoute,
     latestProductsPageRoute: latestProductsPageRoute,
@@ -1000,7 +1000,7 @@ const DotDotDotDotNode_modulesDotpnpmAtsallaDotsaChar43twilightThemeEn_ca97de7a8
     brandsPageRoute: brandsPageRoute,
     tagsPageRoute: tagsPageRoute,
     thankyouPageRoute: thankyouPageRoute,
-    blog_DotslugDotaIdRoute: blog_DotslugDotaIdRoute,
+    articlePageRoute: articlePageRoute,
     blog_DotslugDotcIdRoute: blog_DotslugDotcIdRoute,
     blog_DotslugDottagIdRoute: blog_DotslugDottagIdRoute,
     blog_DotauthorDotidRoute: blog_DotauthorDotidRoute,

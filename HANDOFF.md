@@ -25,3 +25,8 @@ Round 2 scope: components #15–#23 + re-check of round 1 fixes.
 **Settings review S3 fixed by Claude (2026-10-06):** 22 findings marked in REVIEW.md (19 ✅, 2 partly, S3-20 deferred to cleanup). typecheck, build, 72 tests passing.
 
 **Settings review S3 second pass fixed by Claude (2026-10-06):** 16 + 3 findings marked; 6 Raed components removed from twilight.json. typecheck, build, 72 tests passing.
+
+**Inner pages done by Claude (2026-10-10):** product, category/search, cart, wishlist, brands, blog + article, account, help, thank-you, 404 — 1:1 with `design/store/*` + page settings groups (commits c244495 … ac8058f). Inner-pages CSS generated from pages.css. NOT visually checked yet; not reviewed by Codex.
+**State:** branch `master`, 72 commits ahead of origin (nothing pushed since 2026-10-06), working tree clean.
+**Next:** owner pushes → owner preview check → Codex round 4 (inner pages) → cleanup (TcPreview/?tc-preview/?tc-samples, old tires components' store data) → Lighthouse (a11y≥90, perf≥60) → covers, demo store, 4 screenshots, description/price → image licensing reminder.
+**Turn:** Owner.

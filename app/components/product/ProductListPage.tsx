@@ -25,52 +25,19 @@ import { ProductCard } from './ProductCard';
 import { useAppliedFilters } from '@salla.sa/twilight-theme-engine/routes/product-listing';
 import type { ProductListFilters } from '@salla.sa/twilight-theme-engine/api/product';
 import { BlockHookSlot } from '../common/BlockHookSlot';
+import { TcFbar, TcNoFind, useListSettings, useListT } from '../tires/listing/TcListParts';
+import { formatTireSize } from '../tires/sizes';
+import type { TireSize } from '../tires/sizes';
+import { asBool } from '../home/fields';
 import { BottomSheet } from '../common/BottomSheet';
-import {
-  ChevronDownIcon,
-  DashboardSquare01Icon,
-  FilterHorizontalIcon,
-  RightToLeftListBulletIcon,
-} from '../icons';
+import { FilterHorizontalIcon } from '../icons';
 
 type View = 'grid' | 'list';
 
-/** localStorage-backed toolbar preference, read after mount to avoid SSR mismatch. */
-function usePref<T extends string>(
-  key: string,
-  values: readonly T[],
-  initial: T
-): [T, (v: T) => void] {
-  const [value, setValue] = useState<T>(initial);
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(key) as T | null;
-      // This fills the hook's own state from localStorage; no parent is
-      // involved: see .react-doctor/false-positives.md.
-      // react-doctor-disable-next-line react-doctor/no-pass-data-to-parent
-      if (stored && values.includes(stored)) setValue(stored);
-    } catch {
-      /* private mode */
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
-  const set = useCallback(
-    (v: T) => {
-      setValue(v);
-      try {
-        window.localStorage.setItem(key, v);
-      } catch {
-        /* private mode */
-      }
-    },
-    [key]
-  );
-  return [value, set];
-}
-
 /** `wideGrid`: full-width lists with no filter column (e.g. offers) render 5 grid columns on desktop. */
 /** `keep`: optional exact-match filter (e.g. the tire size search) applied to every loaded page. */
-type ProductListPageProps = ProductListLoaderData & { wideGrid?: boolean; keep?: (product: Product) => boolean };
+/** `size`: a tire-size search — the size becomes the title and «ما لقيت مقاسك؟» shows under the list. */
+type ProductListPageProps = ProductListLoaderData & { wideGrid?: boolean; keep?: (product: Product) => boolean; size?: TireSize | null };
 
 /** `ItemsList`'s `loader` for infinite scroll — the route already loaded the
  * first page, so this fetches subsequent ones from `pagination.next`, a full
@@ -156,115 +123,6 @@ function BrandHeader({ source }: { source: ProductListPageProps['source'] }) {
   );
 }
 
-/** Filter show/hide (desktop toggle + mobile trigger) at the start, product
- * count + grid/list switch + sort select at the end. */
-function CatalogToolbar({
-  showFilters,
-  filtersHidden,
-  onToggleFiltersHidden,
-  onOpenMobileFilters,
-  productsCount,
-  view,
-  onViewChange,
-  selectedSort,
-  sortOptionsWithTrans,
-  currentSortLabel,
-  onSortChange,
-}: {
-  showFilters: boolean;
-  filtersHidden: '0' | '1';
-  onToggleFiltersHidden: () => void;
-  onOpenMobileFilters: () => void;
-  /** `undefined` when the true total isn't known (more pages beyond this
-   * one) — the API is cursor-paginated with no total-count field, so
-   * `products.length` is only accurate once there's nothing left to load. */
-  productsCount: number | undefined;
-  view: View;
-  onViewChange: (view: View) => void;
-  selectedSort: string;
-  sortOptionsWithTrans: ReturnType<typeof sortOptions>;
-  currentSortLabel: string | undefined;
-  onSortChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-}) {
-  const { t } = useTranslation();
-
-  return (
-    <div className="s-catalog-toolbar">
-      {showFilters && (
-        <div className="s-catalog-toolbar__group s-catalog-toolbar__filters">
-          <button
-            type="button"
-            className="s-catalog-toolbar__filters-toggle hidden md:inline-flex"
-            aria-pressed={filtersHidden === '1'}
-            onClick={onToggleFiltersHidden}
-          >
-            <FilterHorizontalIcon aria-hidden="true" />
-            {filtersHidden === '1'
-              ? t('blocks.catalog.show_filters', 'Show filters')
-              : t('blocks.catalog.hide_filters', 'Hide filters')}
-          </button>
-
-          <button
-            type="button"
-            onClick={onOpenMobileFilters}
-            className="s-catalog-toolbar__filters-trigger md:hidden"
-            aria-label={t('pages.categories.filters', 'Filters')}
-          >
-            <FilterHorizontalIcon aria-hidden="true" />
-          </button>
-        </div>
-      )}
-
-      <div className="s-catalog-toolbar__group s-catalog-toolbar__options">
-        {productsCount !== undefined && (
-          <span className="s-catalog-toolbar__count hidden sm:inline">
-            {productsCount} {t('blocks.catalog.products_count', 'products')}
-          </span>
-        )}
-
-        <div
-          className="s-catalog-toolbar__views"
-          role="group"
-          aria-label={t('blocks.catalog.view', 'View')}
-        >
-          <button
-            type="button"
-            aria-pressed={view === 'grid'}
-            aria-label={t('blocks.catalog.view_grid', 'Grid view')}
-            onClick={() => onViewChange('grid')}
-          >
-            <DashboardSquare01Icon aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            aria-pressed={view === 'list'}
-            aria-label={t('blocks.catalog.view_list', 'List view')}
-            onClick={() => onViewChange('list')}
-          >
-            <RightToLeftListBulletIcon aria-hidden="true" />
-          </button>
-        </div>
-
-        {sortOptionsWithTrans.length > 0 && (
-          <label className="s-catalog-toolbar__sort">
-            <span className="s-catalog-toolbar__sort-label">
-              {t('pages.categories.sorting', 'Sort By')}: <b>{currentSortLabel}</b>
-            </span>
-            <ChevronDownIcon aria-hidden="true" />
-            <select value={selectedSort} onChange={onSortChange}>
-              {sortOptionsWithTrans.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
-      </div>
-    </div>
-  );
-}
-
 /** The desktop filter column (when visible) + the product grid/list itself. */
 function CatalogGrid({
   filtersVisible,
@@ -297,13 +155,11 @@ function CatalogGrid({
   const location = useLocation();
 
   return (
-    <div className={filtersVisible ? 'md:grid md:grid-cols-[288px_1fr] gap-8' : ''}>
+    <div className={filtersVisible ? 'cat-wrap' : 'cat-wrap tc-nofacets'}>
       {filtersVisible && (
-        <SallaFilters
-          id="filters-menu"
-          className="hidden md:block lg:sticky lg:top-20"
-          filters={filters as never}
-        />
+        <aside className="facets tc-facets">
+          <SallaFilters id="filters-menu" filters={filters as never} />
+        </aside>
       )}
 
       <div className="min-w-0">
@@ -407,6 +263,7 @@ export function ProductListPage({
   filters,
   wideGrid = false,
   keep,
+  size,
 }: ProductListPageProps) {
   const { t } = useTranslation();
   const store = useStore();
@@ -416,15 +273,15 @@ export function ProductListPage({
 
   const selectedSort = query.sort;
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [view, setView] = usePref<View>('catalog-view', ['grid', 'list'], 'grid');
-  const [filtersHidden, setFiltersHidden] = usePref<'0' | '1'>(
-    'catalog-filters-hidden',
-    ['0', '1'],
-    '0'
-  );
+  const ls = useListSettings();
+  const lt = useListT();
+  // the design has one card layout; the view switch is gone
+  const view = 'grid' as View;
 
-  const showFilters = !!(query.filters && store?.settings?.product?.filters);
-  const filtersVisible = showFilters && filtersHidden === '0';
+  // Salla's filters (type, brand, price, year… whatever the merchant set up), as the design's
+  // `.facets` column; the merchant can switch the column off from «التصنيف والبحث»
+  const showFilters = !!(query.filters && store?.settings?.product?.filters) && asBool(ls.tc_list_facets, true);
+  const filtersVisible = showFilters;
 
   // The selection made in `<salla-filters>` — re-queries the list (the route's
   // loader output was fetched without it).
@@ -520,7 +377,8 @@ export function ProductListPage({
   const wideGridClass = wideGrid && view === 'grid' ? ' s-products-list-cols-5' : '';
 
   return (
-    <div key={listKey} className="container px-2.5 ms:px-5 mb-10">
+    <div key={listKey} className="tc-s tc-page tc-listing">
+     <section className="wrap ptop-sec">
       {theme?.settings?.product_index_show_breadcrumbs !== false && <Breadcrumb page={page} />}
 
       <BrandHeader source={source} />
@@ -535,28 +393,43 @@ export function ProductListPage({
         scope={blockScope}
       />
 
-      <h1 className="font-bold text-xl mb-4" id="page-main-title">
-        {isBrand ? t('common.titles.products') : page.title}
-      </h1>
+      {/* design/store/category.html — .cat-top: kicker + title | count · sort */}
+      <div className="cat-top">
+        <div>
+          {asBool(ls.tc_list_kicker_show, true) && (
+            <span className="kicker">{size ? lt(undefined, 'نتائج المقاس') : lt(ls.tc_list_kicker, 'تسوّق الإطارات')}</span>
+          )}
+          <h1 className="ph1" id="page-main-title">
+            {size ? formatTireSize(size) : isBrand ? t('common.titles.products') : page.title}
+          </h1>
+        </div>
+        <div className="tc-cat-tools">
+          {showFilters && (
+            <button
+              type="button"
+              onClick={() => setFiltersOpen(true)}
+              className="btn btn-line tc-filters-trigger"
+              aria-label={t('pages.categories.filters', 'Filters')}
+            >
+              <FilterHorizontalIcon aria-hidden="true" /> {t('pages.categories.filters', 'Filters')}
+            </button>
+          )}
+          {sortOptionsWithTrans.length > 0 && (
+            <label className="cmp-pick">
+              {/* the API is cursor-paginated with no total, so a count shows only once every page is in */}
+              {!searching && !listNext && <span>{listProducts.length} {t('blocks.catalog.products_count', 'products')} ·</span>}
+              {t('pages.categories.sorting', 'Sort By')}
+              <select value={selectedSort} onChange={handleSortChange} aria-label={currentSortLabel}>
+                {sortOptionsWithTrans.map((option) => (
+                  <option key={option.id} value={option.id}>{option.name}</option>
+                ))}
+              </select>
+            </label>
+          )}
+        </div>
+      </div>
 
-      {/* Toolbar — one bar: filter show/hide at the start, options at the end */}
-      <CatalogToolbar
-        showFilters={showFilters}
-        filtersHidden={filtersHidden}
-        onToggleFiltersHidden={() => setFiltersHidden(filtersHidden === '1' ? '0' : '1')}
-        onOpenMobileFilters={() => setFiltersOpen(true)}
-        // `pagination.next` truthy means more pages exist beyond this one —
-        // `products.length` (this page only) isn't the true total then, and
-        // the API's cursor pagination has no total-count field to fall back
-        // to, so show nothing rather than a number that's quietly wrong.
-        productsCount={searching || listNext ? undefined : listProducts.length}
-        view={view}
-        onViewChange={setView}
-        selectedSort={selectedSort}
-        sortOptionsWithTrans={sortOptionsWithTrans}
-        currentSortLabel={currentSortLabel}
-        onSortChange={handleSortChange}
-      />
+      {asBool(ls.tc_list_fbar, true) && <TcFbar key={size ? formatTireSize(size) : 'none'} initial={size} />}
 
       <CatalogGrid
         filtersVisible={filtersVisible}
@@ -572,6 +445,10 @@ export function ProductListPage({
         listLayoutClass={listLayoutClass}
         wideGridClass={wideGridClass}
       />
+
+      {/* «ما لقيت مقاسك؟» — under every size search, and under an empty list */}
+      {(size || (!searching && filterStatus !== 'loading' && listProducts.length === 0)) && <TcNoFind size={size} />}
+     </section>
 
       {/* App-block hook `product.index.after_products_group_with_filter` — below the listing */}
       <BlockHookSlot

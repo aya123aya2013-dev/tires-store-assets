@@ -237,6 +237,21 @@ const G_PRODUCT = [
   F.sw('tc_p_related', 'إطارات مشابهة', true),
   F.text('tc_p_related_title', 'عنوان المشابهة', 'إطارات مشابهة', 40),
 ];
+// category / search (app/components/tires/listing/TcListParts.tsx + ProductListPage.tsx)
+const G_LIST = [
+  title('tc-set-list', 'التصنيف والبحث'),
+  F.sw('tc_list_kicker_show', 'السطر الصغير فوق العنوان', true),
+  F.text('tc_list_kicker', 'نص السطر', 'تسوّق الإطارات', 40),
+  F.sw('tc_list_fbar', 'شريط «مقاسك» (العرض · النسبة · الجنط)', true),
+  F.text('tc_list_fbar_title', 'عنوان الشريط', 'مقاسك', 20),
+  F.sw('tc_list_facets', 'عمود الفلاتر (من فلاتر سلة)', true, 'الفلاتر نفسها (الماركة، النوع، السعر، سنة الصنع…) تفعّلها وترتّبها من لوحة سلة ← الفلاتر'),
+  F.sw('tc_list_nofind', '«ما لقيت مقاسك؟» — واتساب بالمقاس مكتوب', true, 'يظهر تحت نتائج أي مقاس وتحت القائمة الفاضية. يحتاج رقم واتساب'),
+  F.text('tc_list_nofind_title', 'العنوان', 'ما لقيت مقاسك؟', 40),
+  F.text('tc_list_nofind_text', 'السطر', 'ابعتلنا المقاس على واتساب ونأمّنه لك بأسرع وقت.', 100),
+  F.text('tc_list_nofind_msg', 'أول رسالة الواتساب (المقاس ينضاف بعدها)', 'السلام عليكم، أبحث عن مقاس', 80),
+];
+const LIST_BASE = ['product_index_show_breadcrumbs'];
+
 // base settings that belong to the product page (kept, now under its title)
 const PRODUCT_BASE = ['product_show_breadcrumbs', 'show_tags', 'slider_background_size', 'sticky_add_to_cart', 'enable_add_product_toast'];
 
@@ -272,10 +287,12 @@ const DEPS = {
   tc_p_specs_title: ['tc_p_specs', true],
   tc_p_faq_title: ['tc_p_faq', true], tc_p_faq_q1: ['tc_p_faq', true], tc_p_faq_a1: ['tc_p_faq', true], tc_p_faq_q2: ['tc_p_faq', true], tc_p_faq_a2: ['tc_p_faq', true], tc_p_faq_q3: ['tc_p_faq', true], tc_p_faq_a3: ['tc_p_faq', true],
   tc_p_related_title: ['tc_p_related', true],
+  tc_list_kicker: ['tc_list_kicker_show', true], tc_list_fbar_title: ['tc_list_fbar', true],
+  tc_list_nofind_title: ['tc_list_nofind', true], tc_list_nofind_text: ['tc_list_nofind', true], tc_list_nofind_msg: ['tc_list_nofind', true],
 };
 
 // DEPS values: [parent, value] or a list of them (all must hold)
-const ALL = [...G_TIRES, ...G_IDENTITY, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER, ...G_PRODUCT, ...G_DARK, title('tc-set-pages', 'التصنيف والبحث والسلة')]
+const ALL = [...G_TIRES, ...G_IDENTITY, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER, ...G_PRODUCT, ...G_LIST, ...G_DARK, title('tc-set-pages', 'السلة وباقي الصفحات')]
   .map(f => (DEPS[f.id] ? (Array.isArray(DEPS[f.id][0]) ? DEPS[f.id] : [DEPS[f.id]]).reduce((g, d) => F.when(g, ...d), f) : f));
 
 const ids = ALL.map(s => s.id);
@@ -289,9 +306,11 @@ const REMOVED = ['squar_photo_bg_image_size', 'vertical_fixed_products', 'is_mor
 // ours always lead, in this order; old tires ids no longer in the list are dropped; base settings kept after
 const base = (json.settings || []).filter(x => !REMOVED.includes(x.id) && !/^tc[_-]/.test(x.id));
 const productBase = PRODUCT_BASE.map(id => base.find(x => x.id === id)).filter(Boolean);
-const others = base.filter(x => !PRODUCT_BASE.includes(x.id));
+const listBase = LIST_BASE.map(id => base.find(x => x.id === id)).filter(Boolean);
+const others = base.filter(x => !PRODUCT_BASE.includes(x.id) && !LIST_BASE.includes(x.id));
 const darkAt = ALL.findIndex(x => x.id === 'tc-set-dark');
-ALL.splice(darkAt, 0, ...productBase);
+ALL.splice(darkAt, 0, ...listBase);
+ALL.splice(ALL.findIndex(x => x.id === 'tc-set-list'), 0, ...productBase);
 json.settings = [...ALL, ...others];
 
 fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');

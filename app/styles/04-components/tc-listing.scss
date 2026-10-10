@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Category / search glue — the design's `.cat-top / .fbar / .cat-wrap / .facets`
+   (tc-pages.scss, generated) around Salla's filters and product list.
+   ========================================================================== */
+
+.tc-listing {
+  .tc-cat-tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .tc-filters-trigger { display: none; height: 44px; gap: 8px; align-items: center; }
+  .tc-filters-trigger svg { width: 18px; height: 18px; }
+
+  .cat-wrap.tc-nofacets { grid-template-columns: 1fr; }
+  .cat-wrap > div { min-width: 0; }
+  /* Salla's filters fill the design column without their own frame */
+  .tc-facets { padding: 16px; }
+  .tc-facets salla-filters { display: block; }
+
+  .fbar select:disabled { opacity: .45; }
+
+  /* «ما لقيت مقاسك؟» */
+  .tc-nofind {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    margin-top: 26px; padding: 18px 20px; border: 1px dashed var(--line); border-radius: var(--r);
+    background: var(--tc-card, #fff);
+  }
+  .tc-nofind b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .tc-nofind small { color: var(--muted); font-size: 13.5px; }
+
+  /* phones: the column moves into the bottom sheet behind the «الفلاتر» button */
+  @media (max-width: 767px) {
+    .tc-facets { display: none; }
+    .tc-filters-trigger { display: inline-flex; }
+    .cat-top { align-items: flex-start; }
+    .cmp-pick { flex-wrap: wrap; }
+  }
+}

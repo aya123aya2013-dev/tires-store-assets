@@ -15,8 +15,7 @@ import { useCallback } from 'react';
 import { useTwilight } from '@salla.sa/twilight-theme-engine/providers';
 import { opt } from '../components/home/fields';
 import type { Product } from '@salla.sa/twilight-theme-engine/types';
-import { SizeFinder } from '../components/home/SizeFinder';
-import { formatTireSize, parseSizeSources, parseTireSize, productHasTireSize } from '../components/tires/sizes';
+import { parseSizeSources, parseTireSize, productHasTireSize } from '../components/tires/sizes';
 
 export const Route = createFileRoute('/{-$locale}/search')({
   validateSearch: (search: Record<string, unknown>) => {
@@ -52,13 +51,6 @@ function ListComponent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [q, m]
   );
-  return (
-    <>
-      {size && (
-        // same card as the home "size finder" component, keyed so it resets per search
-        <SizeFinder key={q} data={{ match_by: m || 'all' }} initial={size} heading={formatTireSize(size)} />
-      )}
-      <ProductListPage {...data} keep={size ? keep : undefined} />
-    </>
-  );
+  // the size becomes the page title, the design's «مقاسك» bar starts from it
+  return <ProductListPage {...data} keep={size ? keep : undefined} size={size} />;
 }

@@ -382,3 +382,18 @@ describe('product specs', () => {
     expect([s.load, s.speed]).toEqual(['', '']);
   });
 });
+
+// ---- category / search: the «مقاسك» bar ----
+import { TcFbar, TcNoFind } from '../../app/components/tires/listing/TcListParts';
+describe('listing size bar', () => {
+  it('starts from the searched size and greys the profile for trucks', () => {
+    const html = renderToString(<TcFbar initial={{ width: '225', ratio: '45', rim: '18' }} />);
+    expect(html).toContain('class="fbar"');
+    expect(html).toMatch(/<option value="225" selected="">225<\/option>/);
+    const truck = renderToString(<TcFbar initial={{ width: '900', ratio: '', rim: '16' }} />);
+    expect(truck).toMatch(/id="tc-fr"[^>]*disabled/);
+  });
+  it('hides «ما لقيت مقاسك؟» without a WhatsApp number', () => {
+    expect(renderToString(<TcNoFind size={null} />)).toBe('');
+  });
+});

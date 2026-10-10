@@ -28,16 +28,12 @@
   "settings": [
     {
       "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-tires",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">أساس متجر الإطارات (ابدأ من هنا)</div>"
-    },
-    {
-      "type": "static",
       "format": "description",
       "id": "tc-set-tip-tires",
-      "value": "<div>💡 إعدادات اليوم الأول. «بيع فقط» يخفي: حجز التركيب، مراكز التركيب، بنر التركيب، وشارة «تركيب مجاني». بطاقات الخدمات بالأقسام الثانية تعدّلها من القسم نفسه.</div>"
+      "value": "<div>💡 إعدادات اليوم الأول. «بيع فقط» يخفي: حجز التركيب، مراكز التركيب، بنر التركيب، وشارة «تركيب مجاني». بطاقات الخدمات بالأقسام الثانية تعدّلها من القسم نفسه.</div>",
+      "groups": [
+        "tires"
+      ]
     },
     {
       "id": "tc_store_type",
@@ -51,28 +47,31 @@
         {
           "label": "بيع وتركيب",
           "value": "install",
-          "key": "ede95ae8-ad32-4785-b7a5-7c7ec4506743"
+          "key": "e635fda1-e30f-4d07-835a-3c6f6ce69ad6"
         }
       ],
       "options": [
         {
           "label": "بيع وتركيب",
           "value": "install",
-          "key": "ede95ae8-ad32-4785-b7a5-7c7ec4506743"
+          "key": "e635fda1-e30f-4d07-835a-3c6f6ce69ad6"
         },
         {
           "label": "بيع فقط (توصيل)",
           "value": "sale",
-          "key": "50590205-8882-41e1-9031-7a206373ad0b"
+          "key": "fbaa3c66-81ff-489f-97aa-21931e84951e"
         },
         {
           "label": "بيع وتركيب وصيانة",
           "value": "service",
-          "key": "4ebb573e-673d-42ae-8206-2eecae4b5c9b"
+          "key": "2c3e196c-25e7-49ff-a9f2-5dc9d38fbcea"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "tires"
+      ]
     },
     {
       "id": "tc_sale_unit",
@@ -86,23 +85,26 @@
         {
           "label": "للحبة الواحدة",
           "value": "tire",
-          "key": "98b415f2-a996-4fc6-9ffd-67f80ecb6c58"
+          "key": "08e8a6c4-23e8-458e-9465-73e9ef422002"
         }
       ],
       "options": [
         {
           "label": "للحبة الواحدة",
           "value": "tire",
-          "key": "98b415f2-a996-4fc6-9ffd-67f80ecb6c58"
+          "key": "08e8a6c4-23e8-458e-9465-73e9ef422002"
         },
         {
           "label": "للطقم (4 حبات)",
           "value": "set",
-          "key": "fc099459-85be-43d9-99ef-d2a21228007a"
+          "key": "9b6ad79b-3535-40d5-9749-29e96a08efcb"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "tires"
+      ]
     },
     {
       "id": "tc_default_qty",
@@ -116,24 +118,24 @@
         {
           "label": "1",
           "value": "1",
-          "key": "bfa1d8f6-5d46-4b3d-91fc-64d59ff266c2"
+          "key": "888c0a56-cc46-4d30-8f50-9cf2f51812cf"
         }
       ],
       "options": [
         {
           "label": "1",
           "value": "1",
-          "key": "bfa1d8f6-5d46-4b3d-91fc-64d59ff266c2"
+          "key": "888c0a56-cc46-4d30-8f50-9cf2f51812cf"
         },
         {
           "label": "2",
           "value": "2",
-          "key": "dd37bee3-3ecb-4854-9915-79f641c3b385"
+          "key": "f5989a0d-a7a7-4f35-b5a4-f4c3f20fb185"
         },
         {
           "label": "4",
           "value": "4",
-          "key": "1dc735a9-b3a3-4699-9da0-03c2f1335807"
+          "key": "16f1c2b2-06b9-498d-8e71-f760df152f66"
         }
       ],
       "source": "Manual",
@@ -144,6 +146,9 @@
           "operation": "=",
           "value": "tire"
         }
+      ],
+      "groups": [
+        "tires"
       ]
     },
     {
@@ -158,33 +163,36 @@
         {
           "label": "بأي مكان (الاسم أو الوسوم أو الخيارات)",
           "value": "all",
-          "key": "12318d52-7616-4b8a-8b56-64b52a476476"
+          "key": "ad972afd-31ea-4667-84fb-970e5c18d1d7"
         }
       ],
       "options": [
         {
           "label": "بأي مكان (الاسم أو الوسوم أو الخيارات)",
           "value": "all",
-          "key": "12318d52-7616-4b8a-8b56-64b52a476476"
+          "key": "ad972afd-31ea-4667-84fb-970e5c18d1d7"
         },
         {
           "label": "اسم المنتج",
           "value": "name",
-          "key": "d954913c-a621-4eff-b865-3a29c56fb1d3"
+          "key": "a80bfefd-bc4d-4571-9890-824cd02d544a"
         },
         {
           "label": "الوسوم",
           "value": "tags",
-          "key": "0f335d81-29de-4176-8215-05d76a2006e9"
+          "key": "e542bb8c-7bfa-4315-8c3c-068e96fbda74"
         },
         {
           "label": "خيارات المنتج",
           "value": "options",
-          "key": "91e0a58e-0d7b-4e94-a1a8-a0dca24727c2"
+          "key": "0b9123ed-a660-411d-a787-db5d99b63920"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "tires"
+      ]
     },
     {
       "type": "boolean",
@@ -195,7 +203,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "tires"
+      ]
     },
     {
       "type": "string",
@@ -216,6 +227,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "tires"
       ]
     },
     {
@@ -230,13 +244,19 @@
       "description": null,
       "placeholder": "ضمان الوكيل",
       "minLength": 0,
-      "maxLength": 60
+      "maxLength": 60,
+      "groups": [
+        "tires"
+      ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-tirefeat",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">مميزات للزبون</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">مميزات للزبون</div>",
+      "groups": [
+        "tires"
+      ]
     },
     {
       "type": "boolean",
@@ -247,7 +267,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "tires"
+      ]
     },
     {
       "type": "boolean",
@@ -258,7 +281,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "tires"
+      ]
     },
     {
       "type": "boolean",
@@ -276,6 +302,9 @@
           "operation": "=",
           "value": "tire"
         }
+      ],
+      "groups": [
+        "tires"
       ]
     },
     {
@@ -300,6 +329,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "tires"
       ]
     },
     {
@@ -311,7 +343,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "tires"
+      ]
     },
     {
       "id": "tc_compare_where",
@@ -325,34 +360,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "586f3f52-c30e-43e3-ae94-a82a8f5f54f4"
+          "key": "a3b55ab7-1184-4528-8d30-aa265a902b72"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "7f18c83e-a43e-4a6b-a953-c2f4c1c13671"
+          "key": "1ba45bb7-7038-422e-92f1-9fb3ca625cf0"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "6b47337f-e41a-4f40-a93b-47c7d23440f1"
+          "key": "f81bda57-4303-429e-9c18-2cf9922b6652"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "586f3f52-c30e-43e3-ae94-a82a8f5f54f4"
+          "key": "a3b55ab7-1184-4528-8d30-aa265a902b72"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "1d5bb02b-3748-49e9-861c-0dd5fd7097a9"
+          "key": "25647268-42c6-4916-9761-e9cacbf9d7f6"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "a601333b-e87b-46b8-99e7-1dc5bbb7c65d"
+          "key": "ea19cb4b-a53a-4938-a048-226fe16905b6"
         }
       ],
       "source": "Manual",
@@ -363,20 +398,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "tires"
       ]
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-identity",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">هوية المتجر</div>"
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-tip-identity",
-      "value": "<div>💡 القيم الافتراضية هي ألوان وخطوط تصميم الإطارات. القالب الجاهز يغيّر الهوية كلها بضغطة.</div>"
+      "value": "<div>💡 القيم الافتراضية هي ألوان وخطوط تصميم الإطارات. القالب الجاهز يغيّر الهوية كلها بضغطة.</div>",
+      "groups": [
+        "identity"
+      ]
     },
     {
       "id": "tc_preset",
@@ -390,38 +424,41 @@
         {
           "label": "بدون — ألواني أنا",
           "value": "none",
-          "key": "1da3e3ff-11b8-4d80-9411-5ec456b49b02"
+          "key": "3eb938c8-8364-46a7-9636-eb063ff4f59e"
         }
       ],
       "options": [
         {
           "label": "بدون — ألواني أنا",
           "value": "none",
-          "key": "1da3e3ff-11b8-4d80-9411-5ec456b49b02"
+          "key": "3eb938c8-8364-46a7-9636-eb063ff4f59e"
         },
         {
           "label": "ذهبي وفحمي (الأصلي)",
           "value": "gold",
-          "key": "7ef3eed1-4442-4e7e-ab7e-828156f6a64f"
+          "key": "438eae4a-081c-49a9-b8fa-cd7236f79c92"
         },
         {
           "label": "أحمر وأسود (رياضي)",
           "value": "red",
-          "key": "7f2c2ba9-09df-4ee7-a965-7aa6a54e5fe6"
+          "key": "162d8540-d68c-464e-a995-4a53a1bbfef9"
         },
         {
           "label": "أزرق وكحلي",
           "value": "blue",
-          "key": "32065c82-b13c-456c-bb09-866477b2d8d5"
+          "key": "b9c84f77-39ae-4ed0-9f18-ca226a9746f5"
         },
         {
           "label": "أخضر وزيتي (بر ودفع رباعي)",
           "value": "green",
-          "key": "9ec6e03c-2995-4530-9f43-e4983bbe025e"
+          "key": "5504ddd2-d4e4-479e-95b6-a57279ca81b0"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "identity"
+      ]
     },
     {
       "type": "boolean",
@@ -439,6 +476,9 @@
           "operation": "=",
           "value": "none"
         }
+      ],
+      "groups": [
+        "identity"
       ]
     },
     {
@@ -461,6 +501,9 @@
           "operation": "=",
           "value": false
         }
+      ],
+      "groups": [
+        "identity"
       ]
     },
     {
@@ -483,6 +526,9 @@
           "operation": "=",
           "value": false
         }
+      ],
+      "groups": [
+        "identity"
       ]
     },
     {
@@ -500,6 +546,9 @@
           "operation": "=",
           "value": "none"
         }
+      ],
+      "groups": [
+        "identity"
       ]
     },
     {
@@ -510,7 +559,10 @@
       "format": "color",
       "value": "#ffffff",
       "required": false,
-      "description": null
+      "description": null,
+      "groups": [
+        "identity"
+      ]
     },
     {
       "type": "string",
@@ -520,13 +572,19 @@
       "format": "color",
       "value": "#f5f4f0",
       "required": false,
-      "description": null
+      "description": null,
+      "groups": [
+        "identity"
+      ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-fonts",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الخطوط والشكل</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الخطوط والشكل</div>",
+      "groups": [
+        "identity"
+      ]
     },
     {
       "id": "tc_font_ar",
@@ -540,38 +598,41 @@
         {
           "label": "IBM Plex Sans Arabic (التصميم)",
           "value": "ibm",
-          "key": "3c70dc10-2b5f-4eb3-b560-6b8ac0fa64e6"
+          "key": "1a8f409a-ee9c-48ee-b7db-648fbb09433e"
         }
       ],
       "options": [
         {
           "label": "IBM Plex Sans Arabic (التصميم)",
           "value": "ibm",
-          "key": "3c70dc10-2b5f-4eb3-b560-6b8ac0fa64e6"
+          "key": "1a8f409a-ee9c-48ee-b7db-648fbb09433e"
         },
         {
           "label": "Tajawal",
           "value": "tajawal",
-          "key": "6fb19b27-b70c-4401-ad1a-55fd80c622c8"
+          "key": "b49f90be-5c15-48cb-97f6-f2a073b59fd4"
         },
         {
           "label": "Cairo",
           "value": "cairo",
-          "key": "2e651ff5-f45d-4232-bc24-e8c363eee4a1"
+          "key": "3a80be4e-1265-4d73-afb9-ac0f226196c1"
         },
         {
           "label": "Almarai",
           "value": "almarai",
-          "key": "35c013fb-dd12-4048-a164-80a3f77cd97c"
+          "key": "a6255263-cb71-45d6-83bf-3fcdcc9c6aac"
         },
         {
           "label": "خط المتجر من لوحة سلة",
           "value": "store",
-          "key": "2e5930e4-8889-40f6-bb7b-f1182af181a5"
+          "key": "343baa18-f829-48e7-9e5b-c75dbe4754bf"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "identity"
+      ]
     },
     {
       "id": "tc_font_en",
@@ -585,28 +646,31 @@
         {
           "label": "Archivo (التصميم)",
           "value": "archivo",
-          "key": "b7c2a53d-4f9b-4b49-a2a4-a42aecc51248"
+          "key": "ec26fb3f-7e51-4f86-97a8-fcf14c918bd9"
         }
       ],
       "options": [
         {
           "label": "Archivo (التصميم)",
           "value": "archivo",
-          "key": "b7c2a53d-4f9b-4b49-a2a4-a42aecc51248"
+          "key": "ec26fb3f-7e51-4f86-97a8-fcf14c918bd9"
         },
         {
           "label": "Inter",
           "value": "inter",
-          "key": "a8bc108b-d306-4702-a4d1-2c1b70ae335e"
+          "key": "ad3c41c7-7005-4408-998f-6f4930040d85"
         },
         {
           "label": "نفس الخط العربي",
           "value": "same",
-          "key": "7658b6d7-fcfe-42a4-91ca-406eb114b411"
+          "key": "42565f82-8a5b-4983-97dd-6aa9cd60d153"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "identity"
+      ]
     },
     {
       "id": "tc_radius",
@@ -620,35 +684,31 @@
         {
           "label": "ناعمة (التصميم)",
           "value": "soft",
-          "key": "d87f85a1-5d97-4124-9506-6bf32891e713"
+          "key": "4dfaabf8-aab9-4fe1-a77a-60930c8912d7"
         }
       ],
       "options": [
         {
           "label": "ناعمة (التصميم)",
           "value": "soft",
-          "key": "d87f85a1-5d97-4124-9506-6bf32891e713"
+          "key": "4dfaabf8-aab9-4fe1-a77a-60930c8912d7"
         },
         {
           "label": "حادة",
           "value": "sharp",
-          "key": "63e034ae-80b5-415a-9aa3-a35046701e35"
+          "key": "d67fd8fa-75a7-4ac7-a9d8-6ea4eb825751"
         },
         {
           "label": "دائرية",
           "value": "round",
-          "key": "2d594b5c-29a2-4c8e-a9a0-1e95d5dc5fa7"
+          "key": "3eed7276-75df-4b27-b398-62650302d560"
         }
       ],
       "source": "Manual",
-      "required": false
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-topbar",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الشريط العلوي</div>"
+      "required": false,
+      "groups": [
+        "identity"
+      ]
     },
     {
       "type": "boolean",
@@ -659,7 +719,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "topbar"
+      ]
     },
     {
       "id": "tc_topbar_where",
@@ -673,34 +736,34 @@
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "e7051181-1d20-4fce-b53b-5e3df432aff9"
+          "key": "d57b6468-0600-44bf-86c7-e73c2e010ce5"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "e7051181-1d20-4fce-b53b-5e3df432aff9"
+          "key": "d57b6468-0600-44bf-86c7-e73c2e010ce5"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "7715b710-0994-46b3-a37d-ddb2a27efc09"
+          "key": "2f83873f-c5aa-44a7-bd8b-711754145636"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "7fb0aa35-61ee-47be-bc78-a26b7626dd3c"
+          "key": "6df393f6-00f3-411a-82c1-5d396fabf756"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "2c5d18e2-ed68-40ab-b5b9-19b6df7ac85f"
+          "key": "61e191ad-95d8-4392-afb8-5b48515e7e95"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "351f8cd1-d953-46c1-8ada-efac6b4b1636"
+          "key": "237f203a-6c9a-41e0-8291-f6cefc964f3f"
         }
       ],
       "source": "Manual",
@@ -711,6 +774,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "topbar"
       ]
     },
     {
@@ -732,6 +798,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "topbar"
       ]
     },
     {
@@ -753,6 +822,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "topbar"
       ]
     },
     {
@@ -767,34 +839,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "d2cb1a40-15ce-4805-83e1-d781d090010b"
+          "key": "645a6259-d236-4684-9d51-debaf1d75f07"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "e81fc787-53f3-44eb-8542-fc4bff29f8ed"
+          "key": "2b1a998e-a114-4598-94d6-f4a89b7215ee"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "62d14363-0dfa-4d8c-bf6b-c838a5a5d694"
+          "key": "a4c9a35f-10b8-42b9-a16c-db91a050031b"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "d2cb1a40-15ce-4805-83e1-d781d090010b"
+          "key": "645a6259-d236-4684-9d51-debaf1d75f07"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "9ca2257a-d741-4719-b268-58b6fdd077b1"
+          "key": "8d7f0a7b-e31d-4d03-b827-4f9d1ee03320"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "63f36c65-d6dd-41d2-9018-0f6cfd15e798"
+          "key": "2c82821a-a152-4b3b-aa2a-176f1dec55de"
         }
       ],
       "source": "Manual",
@@ -805,6 +877,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "topbar"
       ]
     },
     {
@@ -823,6 +898,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "topbar"
       ]
     },
     {
@@ -899,6 +977,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "topbar"
       ]
     },
     {
@@ -917,6 +998,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "topbar"
       ]
     },
     {
@@ -931,34 +1015,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "f7e2e352-d8f5-419d-9dc9-84db465e9138"
+          "key": "655484ac-0c4a-4f2b-b0b6-0d1ae75a7434"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "96f0186a-dc2f-4bf4-bd66-2279318c95eb"
+          "key": "431d90d0-9901-462d-ae52-f38dc54501ec"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "9aaab7b4-c277-4051-a6bc-02cba28394e2"
+          "key": "1624a1e3-e49d-445a-a70c-12b584fee6dc"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "f7e2e352-d8f5-419d-9dc9-84db465e9138"
+          "key": "655484ac-0c4a-4f2b-b0b6-0d1ae75a7434"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "1f4137b9-baf9-441f-83fc-18e268d74083"
+          "key": "16168325-6c1a-490e-a1e0-9bba2052c69d"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "e7537b6d-8ff1-4883-9386-e0ddecbe2832"
+          "key": "11fd8bca-c573-4906-b2e0-11049046fa58"
         }
       ],
       "source": "Manual",
@@ -974,14 +1058,10 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "topbar"
       ]
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-header",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الهيدر</div>"
     },
     {
       "id": "tc_logo_mode",
@@ -995,23 +1075,26 @@
         {
           "label": "شعار متجرك (من لوحة سلة)",
           "value": "store",
-          "key": "9a586935-eda1-499e-bc03-14a7685d467c"
+          "key": "758b1048-7d87-4e91-bb39-a73b2ea56e5d"
         }
       ],
       "options": [
         {
           "label": "شعار متجرك (من لوحة سلة)",
           "value": "store",
-          "key": "9a586935-eda1-499e-bc03-14a7685d467c"
+          "key": "758b1048-7d87-4e91-bb39-a73b2ea56e5d"
         },
         {
           "label": "علامة الإطار + اسم المتجر",
           "value": "mark",
-          "key": "6b0c8406-023f-4c30-9e12-17129680e64f"
+          "key": "45ba4597-0104-4675-9166-0a0a9345d51d"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "string",
@@ -1025,7 +1108,10 @@
       "description": null,
       "placeholder": "TIRES STORE",
       "minLength": 0,
-      "maxLength": 30
+      "maxLength": 30,
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "number",
@@ -1044,6 +1130,9 @@
           "operation": "=",
           "value": "store"
         }
+      ],
+      "groups": [
+        "header"
       ]
     },
     {
@@ -1063,6 +1152,9 @@
           "operation": "=",
           "value": "store"
         }
+      ],
+      "groups": [
+        "header"
       ]
     },
     {
@@ -1074,7 +1166,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "boolean",
@@ -1085,13 +1180,19 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-hsearch",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">البحث</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">البحث</div>",
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "boolean",
@@ -1102,7 +1203,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "string",
@@ -1123,13 +1227,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "header"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-hicons",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الأيقونات والأزرار</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الأيقونات والأزرار</div>",
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "boolean",
@@ -1140,7 +1250,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "boolean",
@@ -1151,7 +1264,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "boolean",
@@ -1169,6 +1285,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "header"
       ]
     },
     {
@@ -1180,7 +1299,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "header"
+      ]
     },
     {
       "id": "tc_header_cta_where",
@@ -1194,34 +1316,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "b9d949c2-c025-4e17-9680-5f07371c3cf5"
+          "key": "5b1a334d-b71d-4c26-9b6f-8c1e3dd92da6"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "fa362a81-0d98-4f3d-b354-164ba132482e"
+          "key": "a0a08c15-c936-4bee-ad82-12e57f5679f7"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "3a441197-d7b2-466b-8caa-c032e95ea4b8"
+          "key": "122353ae-737c-4826-b3e1-2685db9ed515"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "b9d949c2-c025-4e17-9680-5f07371c3cf5"
+          "key": "5b1a334d-b71d-4c26-9b6f-8c1e3dd92da6"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "c7555676-1826-45c1-83a3-ef7192717ed0"
+          "key": "73ef2a31-c6ad-4e77-aeca-6ede454500a9"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "6cc1cde5-735e-4e2e-93c6-9b08e128cb1e"
+          "key": "3b566114-30dd-4979-95cc-19b9ad63cdf4"
         }
       ],
       "source": "Manual",
@@ -1232,6 +1354,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "header"
       ]
     },
     {
@@ -1253,6 +1378,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "header"
       ]
     },
     {
@@ -1329,6 +1457,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "header"
       ]
     },
     {
@@ -1340,20 +1471,19 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-card",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">بطاقة المنتج</div>"
+      "selected": true,
+      "groups": [
+        "header"
+      ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-tip-card",
-      "value": "<div>💡 تنطبق على بطاقات الإطارات بكل المتجر.</div>"
+      "value": "<div>💡 تنطبق على بطاقات الإطارات بكل المتجر.</div>",
+      "groups": [
+        "card"
+      ]
     },
     {
       "type": "boolean",
@@ -1364,7 +1494,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "card"
+      ]
     },
     {
       "type": "boolean",
@@ -1375,7 +1508,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "card"
+      ]
     },
     {
       "type": "boolean",
@@ -1386,7 +1522,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "card"
+      ]
     },
     {
       "id": "tc_card_price",
@@ -1400,23 +1539,26 @@
         {
           "label": "يظهر السعر",
           "value": "show",
-          "key": "665fff5d-2c2b-4c26-97e0-8567a9fb10a8"
+          "key": "c6de917e-bf21-4186-a398-4bb4f783b204"
         }
       ],
       "options": [
         {
           "label": "يظهر السعر",
           "value": "show",
-          "key": "665fff5d-2c2b-4c26-97e0-8567a9fb10a8"
+          "key": "c6de917e-bf21-4186-a398-4bb4f783b204"
         },
         {
           "label": "«اطلب السعر» عبر واتساب بدل السعر",
           "value": "ask",
-          "key": "3e3c8635-ec7e-4ec1-a3fe-db38da1f64cb"
+          "key": "750b7e32-0cd2-4c41-b506-2979d5ab1e5a"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "card"
+      ]
     },
     {
       "type": "boolean",
@@ -1427,7 +1569,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "card"
+      ]
     },
     {
       "id": "tc_cols_d",
@@ -1441,28 +1586,31 @@
         {
           "label": "4",
           "value": "4",
-          "key": "41130a7f-9b18-43e8-8318-d810da619589"
+          "key": "7b25defb-4393-4b60-b102-108f8d03cb71"
         }
       ],
       "options": [
         {
           "label": "3",
           "value": "3",
-          "key": "afac0ea8-e07f-4003-80c0-50a00a056ed8"
+          "key": "4183d261-0fe5-4dd3-b02b-0ab8813e40f9"
         },
         {
           "label": "4",
           "value": "4",
-          "key": "41130a7f-9b18-43e8-8318-d810da619589"
+          "key": "7b25defb-4393-4b60-b102-108f8d03cb71"
         },
         {
           "label": "5",
           "value": "5",
-          "key": "9c5165d9-a93b-4efb-9bf2-1969d073c03e"
+          "key": "2fb771cf-f650-4ba0-bffa-54f37577d2ca"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "card"
+      ]
     },
     {
       "id": "tc_cols_t",
@@ -1476,23 +1624,26 @@
         {
           "label": "3",
           "value": "3",
-          "key": "ea42e280-afa5-4916-bb98-495c32042bcc"
+          "key": "682d4a04-7202-4ec3-b8e8-dbea15f42b62"
         }
       ],
       "options": [
         {
           "label": "2",
           "value": "2",
-          "key": "008cd2e2-5add-40c4-915b-895dd87a7b86"
+          "key": "04a23991-0097-4dca-904c-dfbdc90d5015"
         },
         {
           "label": "3",
           "value": "3",
-          "key": "ea42e280-afa5-4916-bb98-495c32042bcc"
+          "key": "682d4a04-7202-4ec3-b8e8-dbea15f42b62"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "card"
+      ]
     },
     {
       "id": "tc_cols_m",
@@ -1506,30 +1657,40 @@
         {
           "label": "2",
           "value": "2",
-          "key": "cf007d70-a924-41dc-bc21-3ffe3137fe59"
+          "key": "f70f4541-e68e-41d7-826f-a0949ba23d7d"
         }
       ],
       "options": [
         {
           "label": "1",
           "value": "1",
-          "key": "3d9a7095-bbca-4eba-acea-ab0b93bb04b3"
+          "key": "c278e728-73be-4e49-bdd5-486fd042c05d"
         },
         {
           "label": "2",
           "value": "2",
-          "key": "cf007d70-a924-41dc-bc21-3ffe3137fe59"
+          "key": "f70f4541-e68e-41d7-826f-a0949ba23d7d"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "card"
+      ]
     },
     {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-mobile",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الجوال</div>"
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "إظهار زر \"أعلمني عند التوفر\" في بطاقة المنتج",
+      "description": "يظهر زر إشعار التوفر في بطاقات المنتجات التي نفذت كميتها",
+      "id": "notify_when_available_in_card",
+      "format": "switch",
+      "required": false,
+      "value": true,
+      "selected": true,
+      "groups": [
+        "card"
+      ]
     },
     {
       "type": "boolean",
@@ -1540,7 +1701,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "mobile"
+      ]
     },
     {
       "id": "tc_bottombar_items",
@@ -1554,24 +1718,24 @@
         {
           "label": "الرئيسية · الأقسام · مقاسي · السلة · حسابي",
           "value": "size",
-          "key": "e68513a6-ba18-440c-82a3-e393170ad454"
+          "key": "64d7580f-afe1-4293-ae96-e5b20b2f5c31"
         }
       ],
       "options": [
         {
           "label": "الرئيسية · الأقسام · مقاسي · السلة · حسابي",
           "value": "size",
-          "key": "e68513a6-ba18-440c-82a3-e393170ad454"
+          "key": "64d7580f-afe1-4293-ae96-e5b20b2f5c31"
         },
         {
           "label": "الرئيسية · الأقسام · واتساب · السلة · حسابي",
           "value": "whatsapp",
-          "key": "e03b9d95-be6d-4496-a23c-26765f19f6b6"
+          "key": "08b5c95e-bf54-4d43-8298-006d3e56dbf7"
         },
         {
           "label": "الرئيسية · الأقسام · السلة · حسابي",
           "value": "basic",
-          "key": "bd130295-d565-4f09-bc74-4f04fbfe49a7"
+          "key": "900383ab-97f7-4c26-af49-9ce2b1430e40"
         }
       ],
       "source": "Manual",
@@ -1582,14 +1746,24 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "mobile"
       ]
     },
     {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-float",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الأزرار العائمة ونافذة الخصم</div>"
+      "type": "boolean",
+      "icon": "sicon-toggle-off",
+      "label": "تقريب حواف شريط التنقل السفلي في صفحة المنتج",
+      "description": "الافتراضي: شريط ملاصق لحواف الشاشة دون هوامش. عند التفعيل: يطابق الشكل الدائري العائم المستخدم في باقي الصفحات",
+      "id": "product_bottom_nav_rounded",
+      "format": "switch",
+      "required": false,
+      "value": false,
+      "selected": false,
+      "groups": [
+        "mobile"
+      ]
     },
     {
       "id": "tc_float_side",
@@ -1603,29 +1777,35 @@
         {
           "label": "يسار الشاشة",
           "value": "left",
-          "key": "5720a614-eed0-438f-8891-4618697f2e34"
+          "key": "60761342-a7bd-40d0-b34f-241502072467"
         }
       ],
       "options": [
         {
           "label": "يسار الشاشة",
           "value": "left",
-          "key": "5720a614-eed0-438f-8891-4618697f2e34"
+          "key": "60761342-a7bd-40d0-b34f-241502072467"
         },
         {
           "label": "يمين الشاشة",
           "value": "right",
-          "key": "619a1fec-72f2-459c-933f-cfb8a69f80c4"
+          "key": "5d867601-ad7a-4cc1-974b-38cb8203c051"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "float"
+      ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-wanum",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">رقم واتساب المتجر</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">رقم واتساب المتجر</div>",
+      "groups": [
+        "float"
+      ]
     },
     {
       "type": "string",
@@ -1639,13 +1819,19 @@
       "description": null,
       "placeholder": "9665xxxxxxxx",
       "minLength": 0,
-      "maxLength": 20
+      "maxLength": 20,
+      "groups": [
+        "float"
+      ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-wa",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">زر واتساب العائم</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">زر واتساب العائم</div>",
+      "groups": [
+        "float"
+      ]
     },
     {
       "type": "boolean",
@@ -1656,7 +1842,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "float"
+      ]
     },
     {
       "id": "tc_wa_where",
@@ -1670,34 +1859,34 @@
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "06783a1f-e03e-4c2c-a750-f5ae5dbfdbc5"
+          "key": "5416f2eb-2bf0-4d6d-8f5c-40234c1f9c56"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "06783a1f-e03e-4c2c-a750-f5ae5dbfdbc5"
+          "key": "5416f2eb-2bf0-4d6d-8f5c-40234c1f9c56"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "9e34dd18-6dee-44e1-9d21-5cb958dfd9a1"
+          "key": "8c1980c2-705c-46f6-b533-581556caf01d"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "3409edb5-3137-4325-9a08-4ecd82a71b9d"
+          "key": "80076c59-8764-42ec-81a6-77a0497d42dc"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "8403ecee-aaa3-493e-b925-c4180f224658"
+          "key": "f8a45cc2-1eed-479f-87c3-ca1be20ce89b"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "df6ac236-46c8-426d-8bc0-55bd3eb13e3c"
+          "key": "63a63100-d770-48b6-8bcc-09784d7b20c5"
         }
       ],
       "source": "Manual",
@@ -1708,6 +1897,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
@@ -1729,13 +1921,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-call",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">اتصال</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">اتصال</div>",
+      "groups": [
+        "float"
+      ]
     },
     {
       "type": "boolean",
@@ -1746,7 +1944,10 @@
       "format": "switch",
       "required": false,
       "value": false,
-      "selected": false
+      "selected": false,
+      "groups": [
+        "float"
+      ]
     },
     {
       "id": "tc_call_where",
@@ -1760,34 +1961,34 @@
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "e0a5f7c1-03c3-4d2b-8f7c-0be0a50f83a4"
+          "key": "94b297fa-d500-4617-b842-4ffeac327910"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "07f82b3d-4a48-4034-9277-fd36f19e8a50"
+          "key": "771ff092-b055-4c84-bd1a-4e848558f964"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "daa6fa80-0e43-4f63-8bcf-9ca5a08b42b3"
+          "key": "62e17cc9-5ec5-4087-9be0-a844e81c69e5"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "550a4a62-acc3-4705-8900-e124779dd6f6"
+          "key": "bf992b04-e5f6-46cf-a71e-110d2775150f"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "0582b320-ba25-4429-9e9e-e88d37f805a6"
+          "key": "f8f16d94-4534-41f4-a561-cb771ada9e68"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "e0a5f7c1-03c3-4d2b-8f7c-0be0a50f83a4"
+          "key": "94b297fa-d500-4617-b842-4ffeac327910"
         }
       ],
       "source": "Manual",
@@ -1798,6 +1999,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
@@ -1819,13 +2023,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-top",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">للأعلى</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">للأعلى</div>",
+      "groups": [
+        "float"
+      ]
     },
     {
       "type": "boolean",
@@ -1836,7 +2046,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "float"
+      ]
     },
     {
       "id": "tc_totop_where",
@@ -1850,34 +2063,34 @@
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "a462333a-eb2c-4445-bfa5-d32118d49694"
+          "key": "769e6f4f-45e4-4592-a7f6-ed7b7f85388a"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "6daa3f50-5e51-49f0-b72b-ef0b33f346bf"
+          "key": "0390deaa-3d7b-4ead-9583-2455d47a8b9e"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "a03d3e2d-5fad-41f1-81c3-1a299264b728"
+          "key": "6d15cef1-5577-410a-91ed-980465dc9054"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "a462333a-eb2c-4445-bfa5-d32118d49694"
+          "key": "769e6f4f-45e4-4592-a7f6-ed7b7f85388a"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "8f702e05-8103-4f38-af56-2353cbc7318f"
+          "key": "fa674b04-1574-4c94-b3c0-7f4932084c43"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "169f0424-6a53-40ab-8d81-38cbebd7fd87"
+          "key": "6a1aa549-0cad-4bca-8087-32409f177548"
         }
       ],
       "source": "Manual",
@@ -1888,13 +2101,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-popup",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">نافذة الخصم</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">نافذة الخصم</div>",
+      "groups": [
+        "float"
+      ]
     },
     {
       "type": "boolean",
@@ -1905,7 +2124,10 @@
       "format": "switch",
       "required": false,
       "value": false,
-      "selected": false
+      "selected": false,
+      "groups": [
+        "float"
+      ]
     },
     {
       "id": "tc_popup_where",
@@ -1919,34 +2141,34 @@
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "1e767ff7-2123-4943-a009-392617f91a0d"
+          "key": "0f48efdc-9283-45ca-87ce-46c09222f531"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "1e767ff7-2123-4943-a009-392617f91a0d"
+          "key": "0f48efdc-9283-45ca-87ce-46c09222f531"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "dda1131a-8e4a-429a-b31a-1d5799c39c18"
+          "key": "9021d258-6831-4162-aa57-0286bca2e59c"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "61320a01-ea5d-479a-8488-9d360e411d06"
+          "key": "c9c646ce-340c-4fd7-bf71-a8c705e1bb37"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "2da0d563-3227-4ae4-b33a-ac27421aa3cb"
+          "key": "8f2b1f36-adde-44f6-8e87-1678c75653f2"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "81cdd77f-7f0c-49d1-828f-79f3e5722ab1"
+          "key": "fd358b51-52d9-49ea-9510-0c521b4788f5"
         }
       ],
       "source": "Manual",
@@ -1957,6 +2179,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
@@ -1978,6 +2203,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
@@ -1999,6 +2227,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
@@ -2020,6 +2251,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
@@ -2042,6 +2276,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
@@ -2061,6 +2298,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
     },
     {
@@ -2075,24 +2315,24 @@
         {
           "label": "مرة وحدة لكل زائر",
           "value": "once",
-          "key": "6be327f6-91ed-463f-bfa3-3a0c28fea75e"
+          "key": "49206627-3fbc-46d1-94b2-f15e13b42fb6"
         }
       ],
       "options": [
         {
           "label": "مرة وحدة لكل زائر",
           "value": "once",
-          "key": "6be327f6-91ed-463f-bfa3-3a0c28fea75e"
+          "key": "49206627-3fbc-46d1-94b2-f15e13b42fb6"
         },
         {
           "label": "كل زيارة جديدة",
           "value": "session",
-          "key": "32a19d84-8514-4639-95fb-1328a050cc8c"
+          "key": "f3d15c89-4583-451b-8476-9a51e7718c11"
         },
         {
           "label": "كل يوم",
           "value": "daily",
-          "key": "43e7dff8-ee8e-470b-a97c-a6c131f25a35"
+          "key": "de2627d8-6159-457c-a447-d7d9774f1b43"
         }
       ],
       "source": "Manual",
@@ -2103,20 +2343,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "float"
       ]
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-footer",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">الفوتر</div>"
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-tip-footer",
-      "value": "<div>💡 عمود «تسوّق» من قائمة الهيدر، وعمود «المساعدة» من قائمة الفوتر بلوحة سلة. الجوال والإيميل والسوشال من «بيانات المتجر».</div>"
+      "value": "<div>💡 عمود «تسوّق» من قائمة الهيدر، وعمود «المساعدة» من قائمة الفوتر بلوحة سلة. الجوال والإيميل والسوشال من «بيانات المتجر».</div>",
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "string",
@@ -2130,7 +2369,10 @@
       "description": null,
       "placeholder": "إطارات أصلية لكل سيارة، تركيب مجاني بالرياض، وتوصيل لكل مناطق المملكة.",
       "minLength": 0,
-      "maxLength": 220
+      "maxLength": 220,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2141,7 +2383,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2152,7 +2397,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2163,7 +2411,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2174,7 +2425,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "string",
@@ -2195,6 +2449,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "footer"
       ]
     },
     {
@@ -2206,7 +2463,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "string",
@@ -2227,13 +2487,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "footer"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-fcontact",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">التواصل</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">التواصل</div>",
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2244,7 +2510,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2255,7 +2524,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "string",
@@ -2269,7 +2541,10 @@
       "description": null,
       "placeholder": "الرياض",
       "minLength": 0,
-      "maxLength": 60
+      "maxLength": 60,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2280,7 +2555,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "items",
@@ -2356,13 +2634,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "footer"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-flegal",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">أسفل الفوتر</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">أسفل الفوتر</div>",
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2373,7 +2657,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "boolean",
@@ -2384,20 +2671,19 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-product",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">صفحة المنتج</div>"
+      "selected": true,
+      "groups": [
+        "footer"
+      ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-ptrust",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الوعود تحت السعر</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">الوعود تحت السعر</div>",
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "boolean",
@@ -2408,7 +2694,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "string",
@@ -2429,6 +2718,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2450,6 +2742,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2471,19 +2766,28 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-pdm",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">طريقة الاستلام</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">طريقة الاستلام</div>",
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-tip-pdm",
-      "value": "<div>💡 لو بدك الزبون يختار «تركيب أو توصيل» وتوصلك بالطلب: أضف للمنتج خيار اسمه «طريقة الاستلام» بقيم «استلام وتركيب» و«توصيل لعنوانك» (من تعديل المنتج ← خيارات المنتج). بدون الخيار تظهر البطاقتين كمعلومة.</div>"
+      "value": "<div>💡 لو بدك الزبون يختار «تركيب أو توصيل» وتوصلك بالطلب: أضف للمنتج خيار اسمه «طريقة الاستلام» بقيم «استلام وتركيب» و«توصيل لعنوانك» (من تعديل المنتج ← خيارات المنتج). بدون الخيار تظهر البطاقتين كمعلومة.</div>",
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "boolean",
@@ -2494,7 +2798,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "string",
@@ -2515,6 +2822,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2536,6 +2846,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2557,6 +2870,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2578,13 +2894,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-pblocks",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">أقسام الصفحة</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">أقسام الصفحة</div>",
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "boolean",
@@ -2595,7 +2917,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "string",
@@ -2616,13 +2941,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-tip-pspecs",
-      "value": "<div>💡 للجدول: اكتب بالوسوم أو الخيارات مثل «حمولة: 91»، «سرعة: V»، «بلد الصنع: تايلند»، «النقشة: Ventus Prime 4»، «2026». المقاس يُقرأ تلقائياً.</div>"
+      "value": "<div>💡 للجدول: اكتب بالوسوم أو الخيارات مثل «حمولة: 91»، «سرعة: V»، «بلد الصنع: تايلند»، «النقشة: Ventus Prime 4»، «2026». المقاس يُقرأ تلقائياً.</div>",
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "boolean",
@@ -2633,7 +2964,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "string",
@@ -2654,6 +2988,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2675,6 +3012,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2696,6 +3036,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2717,6 +3060,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2738,6 +3084,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2759,6 +3108,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2780,6 +3132,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2791,7 +3146,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "string",
@@ -2812,6 +3170,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "product"
       ]
     },
     {
@@ -2823,7 +3184,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "boolean",
@@ -2834,7 +3198,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "id": "slider_background_size",
@@ -2864,7 +3231,10 @@
         }
       ],
       "source": "Manual",
-      "required": true
+      "required": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "boolean",
@@ -2875,7 +3245,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "boolean",
@@ -2886,14 +3259,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-list",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">التصنيف والبحث</div>"
+      "selected": true,
+      "groups": [
+        "product"
+      ]
     },
     {
       "type": "boolean",
@@ -2904,7 +3273,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "list"
+      ]
     },
     {
       "type": "string",
@@ -2925,6 +3297,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "list"
       ]
     },
     {
@@ -2936,7 +3311,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "list"
+      ]
     },
     {
       "type": "string",
@@ -2957,6 +3335,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "list"
       ]
     },
     {
@@ -2968,7 +3349,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "list"
+      ]
     },
     {
       "type": "boolean",
@@ -2979,7 +3363,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "list"
+      ]
     },
     {
       "type": "string",
@@ -3000,6 +3387,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "list"
       ]
     },
     {
@@ -3021,6 +3411,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "list"
       ]
     },
     {
@@ -3042,6 +3435,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "list"
       ]
     },
     {
@@ -3053,14 +3449,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-cart",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">السلة</div>"
+      "selected": true,
+      "groups": [
+        "list"
+      ]
     },
     {
       "type": "string",
@@ -3074,7 +3466,10 @@
       "description": null,
       "placeholder": "سلة المشتريات",
       "minLength": 0,
-      "maxLength": 40
+      "maxLength": 40,
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "string",
@@ -3088,7 +3483,10 @@
       "description": null,
       "placeholder": "سلتك فاضية.",
       "minLength": 0,
-      "maxLength": 40
+      "maxLength": 40,
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "string",
@@ -3102,7 +3500,10 @@
       "description": null,
       "placeholder": "اختر مقاسك ونطلع لك الإطارات المناسبة.",
       "minLength": 0,
-      "maxLength": 100
+      "maxLength": 100,
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "boolean",
@@ -3113,7 +3514,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "number",
@@ -3132,6 +3536,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
@@ -3143,7 +3550,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "string",
@@ -3164,6 +3574,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
@@ -3175,7 +3588,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "string",
@@ -3196,6 +3612,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
@@ -3217,6 +3636,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
@@ -3238,13 +3660,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-ty",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">صفحة الشكر بعد الطلب</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">صفحة الشكر بعد الطلب</div>",
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "boolean",
@@ -3255,7 +3683,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "string",
@@ -3276,6 +3707,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
@@ -3297,6 +3731,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
@@ -3318,6 +3755,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
@@ -3339,6 +3779,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
@@ -3360,13 +3803,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-csecure",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">أسفل الملخص</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">أسفل الملخص</div>",
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "boolean",
@@ -3377,7 +3826,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "cart"
+      ]
     },
     {
       "type": "string",
@@ -3398,20 +3850,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "cart"
       ]
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-pages",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">باقي الصفحات</div>"
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-help",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">صفحة المساعدة (/help)</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">صفحة المساعدة (/help)</div>",
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3425,7 +3876,10 @@
       "description": null,
       "placeholder": "كل اللي تحتاج تعرفه.",
       "minLength": 0,
-      "maxLength": 60
+      "maxLength": 60,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "boolean",
@@ -3436,7 +3890,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "boolean",
@@ -3447,7 +3904,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3468,6 +3928,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3489,6 +3952,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3500,7 +3966,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3521,6 +3990,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3597,6 +4069,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3608,7 +4083,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3629,6 +4107,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3650,6 +4131,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3671,6 +4155,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3692,6 +4179,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3713,6 +4203,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3734,6 +4227,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3755,6 +4251,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
@@ -3776,13 +4275,19 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
     },
     {
       "type": "static",
       "format": "description",
       "id": "tc-set-h-opages",
-      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">المفضلة والماركات والمدونة</div>"
+      "value": "<div style=\"font-weight:700;margin-top:6px;padding-bottom:6px;border-bottom:1px solid #e8e7e3\">المفضلة والماركات والمدونة</div>",
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3796,7 +4301,10 @@
       "description": null,
       "placeholder": "المفضلة",
       "minLength": 0,
-      "maxLength": 40
+      "maxLength": 40,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3810,7 +4318,10 @@
       "description": null,
       "placeholder": "ما في إطارات بالمفضلة لسا.",
       "minLength": 0,
-      "maxLength": 80
+      "maxLength": 80,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3824,7 +4335,10 @@
       "description": null,
       "placeholder": "ماركات أصلية، من الوكيل.",
       "minLength": 0,
-      "maxLength": 60
+      "maxLength": 60,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "boolean",
@@ -3835,7 +4349,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3849,7 +4366,10 @@
       "description": null,
       "placeholder": "نصائح تخلّي إطارك يعيش أطول.",
       "minLength": 0,
-      "maxLength": 60
+      "maxLength": 60,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3863,7 +4383,10 @@
       "description": null,
       "placeholder": "الطريق هذا مسكّر.",
       "minLength": 0,
-      "maxLength": 60
+      "maxLength": 60,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3877,7 +4400,10 @@
       "description": null,
       "placeholder": "الصفحة اللي تدوّر عليها غير موجودة.",
       "minLength": 0,
-      "maxLength": 100
+      "maxLength": 100,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "boolean",
@@ -3888,7 +4414,10 @@
       "format": "switch",
       "required": false,
       "value": true,
-      "selected": true
+      "selected": true,
+      "groups": [
+        "pages"
+      ]
     },
     {
       "type": "string",
@@ -3909,14 +4438,10 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "pages"
       ]
-    },
-    {
-      "type": "static",
-      "format": "title",
-      "variant": "h6",
-      "id": "tc-set-dark",
-      "value": "<div style=\"background:#1d2023;color:#ffb71b;border-radius:10px;padding:12px 14px;margin:6px 0 14px;font-weight:700;font-size:14px\">مظهر متقدم: الوضع الداكن والخلفية</div>"
     },
     {
       "id": "tc_dark_mode",
@@ -3930,28 +4455,31 @@
         {
           "label": "مطفأ — المتجر فاتح",
           "value": "off",
-          "key": "c18873dc-ee16-45fa-9f38-c8719e04cdcc"
+          "key": "677feb2d-9876-4d2f-ab1c-77b526824c6c"
         }
       ],
       "options": [
         {
           "label": "مطفأ — المتجر فاتح",
           "value": "off",
-          "key": "c18873dc-ee16-45fa-9f38-c8719e04cdcc"
+          "key": "677feb2d-9876-4d2f-ab1c-77b526824c6c"
         },
         {
           "label": "مفعّل — المتجر داكن",
           "value": "on",
-          "key": "cb63c0bb-a6a1-473e-a146-6d0c067c3a4d"
+          "key": "8b1d42a6-48c0-42d2-9a5a-7ffb071cf77c"
         },
         {
           "label": "تلقائي — حسب جهاز الزائر، مع زر تبديل",
           "value": "auto",
-          "key": "a1a63305-1a26-4aaf-b164-91850eed23bd"
+          "key": "62dc91a3-9bd2-4f28-8a6f-11bba9a74b60"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "dark"
+      ]
     },
     {
       "id": "tc_dark_style",
@@ -3965,23 +4493,26 @@
         {
           "label": "فحمي (يناسب الهوية)",
           "value": "charcoal",
-          "key": "4d411ef6-2dab-4214-af1a-a7cb6c4ab501"
+          "key": "c6f93b8d-14c9-4348-a85d-7e1dea0e2af5"
         }
       ],
       "options": [
         {
           "label": "فحمي (يناسب الهوية)",
           "value": "charcoal",
-          "key": "4d411ef6-2dab-4214-af1a-a7cb6c4ab501"
+          "key": "c6f93b8d-14c9-4348-a85d-7e1dea0e2af5"
         },
         {
           "label": "أسود",
           "value": "black",
-          "key": "cf4e188e-ceed-4bc9-993d-b7fb5a0f939c"
+          "key": "43a24da3-581a-4dc1-8cf1-5b2ac035f894"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "dark"
+      ]
     },
     {
       "type": "boolean",
@@ -3999,6 +4530,9 @@
           "operation": "=",
           "value": "auto"
         }
+      ],
+      "groups": [
+        "dark"
       ]
     },
     {
@@ -4013,34 +4547,34 @@
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "38bd1123-130b-4dba-a894-2e17cb2fc709"
+          "key": "ee5d3f4a-2a2e-4e10-acf1-516a263e5765"
         }
       ],
       "options": [
         {
           "label": "كل الشاشات",
           "value": "all",
-          "key": "38bd1123-130b-4dba-a894-2e17cb2fc709"
+          "key": "ee5d3f4a-2a2e-4e10-acf1-516a263e5765"
         },
         {
           "label": "الكمبيوتر فقط",
           "value": "desktop",
-          "key": "5f1671b0-15aa-4d47-b906-4e1695162bf6"
+          "key": "17b85349-6b82-400d-a360-de65e063f9f9"
         },
         {
           "label": "الكمبيوتر والتابلت",
           "value": "wide",
-          "key": "2f803830-4969-4397-9049-d16a91fbfb8d"
+          "key": "dc1a7625-62df-464c-a020-bb5259e5865c"
         },
         {
           "label": "الجوال والتابلت",
           "value": "narrow",
-          "key": "e24840c7-822f-4f86-b423-431addb726da"
+          "key": "ac04a840-192b-4dfb-94fc-ebe5e5130f02"
         },
         {
           "label": "الجوال فقط",
           "value": "mobile",
-          "key": "29dbe16e-9208-4eca-9b20-04d3e22211ca"
+          "key": "39fe71a7-5165-4c5b-8a9e-49dc86fb8a14"
         }
       ],
       "source": "Manual",
@@ -4056,6 +4590,9 @@
           "operation": "=",
           "value": true
         }
+      ],
+      "groups": [
+        "dark"
       ]
     },
     {
@@ -4070,28 +4607,31 @@
         {
           "label": "بدون",
           "value": "none",
-          "key": "a8098203-c4ee-4c1f-af64-1f9989bcd0d3"
+          "key": "93e340c0-38d9-4203-aaef-8c21429f154b"
         }
       ],
       "options": [
         {
           "label": "بدون",
           "value": "none",
-          "key": "a8098203-c4ee-4c1f-af64-1f9989bcd0d3"
+          "key": "93e340c0-38d9-4203-aaef-8c21429f154b"
         },
         {
           "label": "آثار إطار",
           "value": "tread",
-          "key": "2e347fa0-a44b-43d2-ad4d-31bcb7dba2ff"
+          "key": "c0a57c5d-df7d-4500-9191-ce550c10a58c"
         },
         {
           "label": "نقاط",
           "value": "dots",
-          "key": "2f2cb908-7b7f-46a3-877b-ab64ecbc511d"
+          "key": "5d3c38a7-6483-4167-beb0-342196bc35ae"
         }
       ],
       "source": "Manual",
-      "required": false
+      "required": false,
+      "groups": [
+        "dark"
+      ]
     },
     {
       "type": "boolean",
@@ -4102,29 +4642,10 @@
       "format": "switch",
       "required": false,
       "value": false,
-      "selected": false
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "إظهار زر \"أعلمني عند التوفر\" في بطاقة المنتج",
-      "description": "يظهر زر إشعار التوفر في بطاقات المنتجات التي نفذت كميتها",
-      "id": "notify_when_available_in_card",
-      "format": "switch",
-      "required": false,
-      "value": true,
-      "selected": true
-    },
-    {
-      "type": "boolean",
-      "icon": "sicon-toggle-off",
-      "label": "تقريب حواف شريط التنقل السفلي في صفحة المنتج",
-      "description": "الافتراضي: شريط ملاصق لحواف الشاشة دون هوامش. عند التفعيل: يطابق الشكل الدائري العائم المستخدم في باقي الصفحات",
-      "id": "product_bottom_nav_rounded",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
+      "selected": false,
+      "groups": [
+        "dark"
+      ]
     }
   ],
   "components": [
@@ -15530,5 +16051,85 @@
   "description": {
     "ar": "مجموعة كبيرة من المزايا لدعم تجارتك وتقديم تجربة تسوق مثيرة لعملائك",
     "en": "A wide range of features to support your business and provide an exciting shopping experience for your customers"
-  }
+  },
+  "groups": [
+    {
+      "id": "tires",
+      "icon": "sicon-pencil-ruler",
+      "type": "page",
+      "label": "أساس متجر الإطارات (ابدأ من هنا)"
+    },
+    {
+      "id": "identity",
+      "icon": "sicon-format-fill",
+      "type": "page",
+      "label": "هوية المتجر"
+    },
+    {
+      "id": "topbar",
+      "icon": "sicon-add_row_before",
+      "type": "page",
+      "label": "الشريط العلوي"
+    },
+    {
+      "id": "header",
+      "icon": "sicon-add_row_before",
+      "type": "header",
+      "label": "الهيدر"
+    },
+    {
+      "id": "card",
+      "icon": "sicon-list",
+      "type": "page",
+      "label": "بطاقة المنتج"
+    },
+    {
+      "id": "mobile",
+      "icon": "sicon-pencil-ruler",
+      "type": "page",
+      "label": "الجوال"
+    },
+    {
+      "id": "float",
+      "icon": "sicon-link",
+      "type": "page",
+      "label": "الأزرار العائمة ونافذة الخصم"
+    },
+    {
+      "id": "footer",
+      "icon": "sicon-add_row_after",
+      "type": "footer",
+      "label": "الفوتر"
+    },
+    {
+      "id": "product",
+      "icon": "sicon-audio-wave",
+      "type": "page",
+      "label": "صفحة المنتج"
+    },
+    {
+      "id": "list",
+      "icon": "sicon-list",
+      "type": "page",
+      "label": "التصنيف والبحث"
+    },
+    {
+      "id": "cart",
+      "icon": "sicon-cart2",
+      "type": "page",
+      "label": "السلة"
+    },
+    {
+      "id": "pages",
+      "icon": "sicon-typography",
+      "type": "page",
+      "label": "باقي الصفحات"
+    },
+    {
+      "id": "dark",
+      "icon": "sicon-format-fill",
+      "type": "page",
+      "label": "مظهر متقدم: الوضع الداكن والخلفية"
+    }
+  ]
 }

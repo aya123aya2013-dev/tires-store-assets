@@ -361,27 +361,60 @@ const DEPS = {
   tc_list_nofind_title: ['tc_list_nofind', true], tc_list_nofind_text: ['tc_list_nofind', true], tc_list_nofind_msg: ['tc_list_nofind', true],
 };
 
+// Settings groups = the «اختر نوع الإعدادات» dropdown in the theme editor
+// (root `groups` in twilight.json + `groups: [id]` on each setting — Salla blog "Group Theme Settings").
+// Our own list, in this order. `header` / `footer` are Salla's predefined group types; the rest are custom pages.
+const GROUPS = [
+  { id: 'tires', icon: 'sicon-pencil-ruler', type: 'page', label: 'أساس متجر الإطارات (ابدأ من هنا)' },
+  { id: 'identity', icon: 'sicon-format-fill', type: 'page', label: 'هوية المتجر' },
+  { id: 'topbar', icon: 'sicon-add_row_before', type: 'page', label: 'الشريط العلوي' },
+  { id: 'header', icon: 'sicon-add_row_before', type: 'header', label: 'الهيدر' },
+  { id: 'card', icon: 'sicon-list', type: 'page', label: 'بطاقة المنتج' },
+  { id: 'mobile', icon: 'sicon-pencil-ruler', type: 'page', label: 'الجوال' },
+  { id: 'float', icon: 'sicon-link', type: 'page', label: 'الأزرار العائمة ونافذة الخصم' },
+  { id: 'footer', icon: 'sicon-add_row_after', type: 'footer', label: 'الفوتر' },
+  { id: 'product', icon: 'sicon-audio-wave', type: 'page', label: 'صفحة المنتج' },
+  { id: 'list', icon: 'sicon-list', type: 'page', label: 'التصنيف والبحث' },
+  { id: 'cart', icon: 'sicon-cart2', type: 'page', label: 'السلة' },
+  { id: 'pages', icon: 'sicon-typography', type: 'page', label: 'باقي الصفحات' },
+  { id: 'dark', icon: 'sicon-format-fill', type: 'page', label: 'مظهر متقدم: الوضع الداكن والخلفية' },
+];
+
+// base settings that belong to our groups (kept)
+const BASE_GROUP = {
+  product_show_breadcrumbs: 'product', show_tags: 'product', slider_background_size: 'product', sticky_add_to_cart: 'product', enable_add_product_toast: 'product',
+  product_index_show_breadcrumbs: 'list', notify_when_available_in_card: 'card', product_bottom_nav_rounded: 'mobile',
+};
+
+// base-theme settings replaced by the groups above
+const REMOVED = ['squar_photo_bg_image_size', 'vertical_fixed_products', 'is_more_button_enabled', 'imageZoom', 'header_is_sticky', 'topnav_is_dark', 'important_links', 'enable_more_menu', 'header_show_store_info', 'footer_is_dark',
+  'static-line1', 'static-label2', 'static-line3', 'static-label4', 'static-line5', 'static-label6'];
+const base = (json.settings || []).filter(x => !REMOVED.includes(x.id) && !/^tc[_-]/.test(x.id));
+
 // DEPS values: [parent, value] or a list of them (all must hold)
-const ALL = [...G_TIRES, ...G_IDENTITY, ...G_TOPBAR, ...G_HEADER, ...G_CARD, ...G_MOBILE, ...G_FLOAT, ...G_FOOTER, ...G_PRODUCT, ...G_LIST, ...G_CART, title('tc-set-pages', 'باقي الصفحات'), ...G_PAGES, ...G_DARK]
-  .map(f => (DEPS[f.id] ? (Array.isArray(DEPS[f.id][0]) ? DEPS[f.id] : [DEPS[f.id]]).reduce((g, d) => F.when(g, ...d), f) : f));
+const withDeps = f => (DEPS[f.id] ? (Array.isArray(DEPS[f.id][0]) ? DEPS[f.id] : [DEPS[f.id]]).reduce((g, d) => F.when(g, ...d), f) : f);
+const BY_GROUP = {
+  tires: G_TIRES, identity: G_IDENTITY, topbar: G_TOPBAR, header: G_HEADER, card: G_CARD, mobile: G_MOBILE, float: G_FLOAT,
+  footer: G_FOOTER, product: G_PRODUCT, list: G_LIST, cart: G_CART, pages: G_PAGES, dark: G_DARK,
+};
+const ALL = [];
+for (const g of GROUPS) {
+  // the group's name is shown by the dropdown, so the big yellow title row is dropped
+  const own = BY_GROUP[g.id].filter(f => f.format !== 'title');
+  const inherited = base.filter(x => BASE_GROUP[x.id] === g.id);
+  ALL.push(...[...own, ...inherited].map(f => ({ ...withDeps(f), groups: [g.id] })));
+}
 
 const ids = ALL.map(s => s.id);
 const dup = ids.filter((x, i) => ids.indexOf(x) !== i);
 if (dup.length) throw new Error('duplicate setting ids: ' + dup.join(', '));
 for (const k of Object.keys(DEPS)) for (const d of Array.isArray(DEPS[k][0]) ? DEPS[k] : [DEPS[k]]) if (!ids.includes(k) || !ids.includes(d[0])) throw new Error('bad DEPS entry ' + k);
+const unplaced = base.filter(x => !BASE_GROUP[x.id]).map(x => x.id);
+if (unplaced.length) console.warn('base settings left without a group (kept, ungrouped):', unplaced.join(', '));
 
-// base-theme settings replaced by the groups above
-const REMOVED = ['squar_photo_bg_image_size', 'vertical_fixed_products', 'is_more_button_enabled', 'imageZoom', 'header_is_sticky', 'topnav_is_dark', 'important_links', 'enable_more_menu', 'header_show_store_info', 'footer_is_dark',
-  'static-line1', 'static-label2', 'static-line3', 'static-label4', 'static-line5', 'static-label6'];
-// ours always lead, in this order; old tires ids no longer in the list are dropped; base settings kept after
-const base = (json.settings || []).filter(x => !REMOVED.includes(x.id) && !/^tc[_-]/.test(x.id));
-const productBase = PRODUCT_BASE.map(id => base.find(x => x.id === id)).filter(Boolean);
-const listBase = LIST_BASE.map(id => base.find(x => x.id === id)).filter(Boolean);
-const others = base.filter(x => !PRODUCT_BASE.includes(x.id) && !LIST_BASE.includes(x.id));
-const darkAt = ALL.findIndex(x => x.id === 'tc-set-dark');
-ALL.splice(ALL.findIndex(x => x.id === 'tc-set-cart'), 0, ...listBase);
-ALL.splice(ALL.findIndex(x => x.id === 'tc-set-list'), 0, ...productBase);
-json.settings = [...ALL, ...others];
+// ours always lead, in group order; old tires ids no longer in the list are dropped
+json.groups = GROUPS;
+json.settings = [...ALL, ...base.filter(x => !BASE_GROUP[x.id])];
 
 fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
 console.log('settings:', json.settings.length, '(tires:', ALL.length, ', conditional:', ALL.filter(s => s.conditions).length, ')');

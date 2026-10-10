@@ -33,3 +33,4 @@ Round 2 scope: components #15–#23 + re-check of round 1 fixes.
 
 **Settings groups (2026-10-10):** the «اختر نوع الإعدادات» dropdown — root `groups` (13, our own list from `tc-settings.cjs`) + `groups:[id]` on each setting (204, the 13 yellow title rows removed). Method from Salla blog "Group Theme Settings" (see memory settings-groups-twilight). typecheck + 78 tests pass. VERIFIED by owner in the Salla editor (works).
 **Update (2026-10-10):** per owner, the 13 yellow title rows are kept INSIDE each group (dropdown + old title look together); 217 settings again.
+**Settings groups FINAL (2026-10-10, b6489ec, verified by owner):** every setting has `groups: ["general", <own group>]` — `general` is Salla's built-in «الخيارات العامة» (shows ALL settings, old flat look with yellow titles) and the 13 groups (all type "page"; "header"/"footer" types are NOT listed in the dropdown) each show only their own.

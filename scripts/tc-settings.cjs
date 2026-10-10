@@ -254,6 +254,7 @@ const LIST_BASE = ['product_index_show_breadcrumbs'];
 
 // wishlist / brands / blog / article (app/components/tires/pages/TcPages.tsx)
 const G_PAGES = [
+  title('tc-set-pages', 'باقي الصفحات'),
   sub('tc-set-h-help', 'صفحة المساعدة (/help)'),
   F.text('tc_help_title', 'العنوان', 'كل اللي تحتاج تعرفه.', 60),
   F.sw('tc_help_size', 'دليل قراءة المقاس', true),
@@ -399,8 +400,8 @@ const BY_GROUP = {
 };
 const ALL = [];
 for (const g of GROUPS) {
-  // the group's name is shown by the dropdown, so the big yellow title row is dropped
-  const own = BY_GROUP[g.id].filter(f => f.format !== 'title');
+  // the dropdown shows the group name AND the old yellow title row stays at the top of the group (owner's choice)
+  const own = BY_GROUP[g.id];
   const inherited = base.filter(x => BASE_GROUP[x.id] === g.id);
   ALL.push(...[...own, ...inherited].map(f => ({ ...withDeps(f), groups: [g.id] })));
 }

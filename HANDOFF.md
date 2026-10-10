@@ -31,4 +31,5 @@ Round 2 scope: components #15–#23 + re-check of round 1 fixes.
 **Next:** owner pushes → owner preview check → Codex round 4 (inner pages) → cleanup (TcPreview/?tc-preview/?tc-samples, old tires components' store data) → Lighthouse (a11y≥90, perf≥60) → covers, demo store, 4 screenshots, description/price → image licensing reminder.
 **Turn:** Owner.
 
-**Settings groups (2026-10-10):** the «اختر نوع الإعدادات» dropdown — root `groups` (13, our own list from `tc-settings.cjs`) + `groups:[id]` on each setting (204, the 13 yellow title rows removed). Method from Salla blog "Group Theme Settings" (see memory settings-groups-twilight). typecheck + 78 tests pass. NOT verified in the Salla editor yet — icons (sicon-*) and `type` values (header/footer/page) unconfirmed there.
+**Settings groups (2026-10-10):** the «اختر نوع الإعدادات» dropdown — root `groups` (13, our own list from `tc-settings.cjs`) + `groups:[id]` on each setting (204, the 13 yellow title rows removed). Method from Salla blog "Group Theme Settings" (see memory settings-groups-twilight). typecheck + 78 tests pass. VERIFIED by owner in the Salla editor (works).
+**Update (2026-10-10):** per owner, the 13 yellow title rows are kept INSIDE each group (dropdown + old title look together); 217 settings again.

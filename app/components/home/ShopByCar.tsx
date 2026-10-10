@@ -16,7 +16,7 @@ import type { CarRow } from './tc/cars';
 const EN: Record<string, string> = {
   'ما تعرف مقاسك؟': "Don't know your size?", 'اختر سيارتك، ونطلع لك المقاس.': "Pick your car — we'll find the size.",
   'الماركة، الموديل، السنة — وبس.': 'Make, model, year — that’s it.',
-  'المقاس الأصلي من المصنع. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.': 'The factory size. Double-check it on your current tire or the driver-door sticker.',
+  'المقاس المرجعي لهذه السيارة حسب بيانات المتجر. تأكد منه على جانب إطارك الحالي أو ملصق باب السائق.': 'The factory size. Double-check it on your current tire or the driver-door sticker.',
   'اعرض الإطارات': 'Show tires', 'اختر سيارتك عشان نعرض المقاس والإطارات المتوفرة.': 'Pick your car to see its size and available tires.',
 };
 type Car = CarRow;
@@ -108,11 +108,25 @@ export function ShopByCar({ data }: { data: Row }) {
     <button type="button" key={label} className={[cls, on ? 'on' : ''].filter(Boolean).join(' ') || undefined} onClick={onClick}>{label}</button>
   );
 
-  const note = inEditor && pasteText.trim() && report.rejected.length > 0 && (
-    <p className="tc-editor-note" role="note">
-      {`تنبيه للتاجر (يظهر لك بالمحرر فقط): قُبلت ${report.cars.length} سيارة، ورُفض ${report.rejected.length} سطر — ${report.rejected.slice(0, 6).map(r => `سطر ${r.line}: ${REASON[r.reason]}`).join('، ')}`}
-    </p>
-  );
+  // merchant-only notes (editor preview): unreadable pasted lines, and rows of one model with overlapping years but different sizes
+  const lines: string[] = [];
+  if (inEditor && pasteText.trim() && report.rejected.length > 0) {
+    lines.push(`قُبلت ${report.cars.length} سيارة، ورُفض ${report.rejected.length} سطر — ${report.rejected.slice(0, 6).map(r => `سطر ${r.line}: ${REASON[r.reason]}`).join('، ')}`);
+  }
+  if (inEditor) {
+    const clashes: string[] = [];
+    for (let a = 0; a < cars.length && clashes.length < 4; a++) {
+      for (let b = a + 1; b < cars.length; b++) {
+        const x = cars[a], y = cars[b];
+        if (x.make === y.make && x.model === y.model && x.size !== y.size && x.from <= y.to && y.from <= x.to) {
+          clashes.push(`${x.make} ${x.model} (${x.from}–${x.to} و${y.from}–${y.to})`);
+          break;
+        }
+      }
+    }
+    if (clashes.length) lines.push(`سنوات متداخلة بمقاسين مختلفين: ${clashes.join('، ')} — الزبون يشوف المقاس الأول، راجع السنوات`);
+  }
+  const note = lines.length > 0 && <p className="tc-editor-note" role="note">{`تنبيه للتاجر (يظهر لك بالمحرر فقط): ${lines.join(' · ')}`}</p>;
   if (!cars.length) return note ? <Section data={data}><div className="wrap">{note}</div></Section> : null;
 
   return (

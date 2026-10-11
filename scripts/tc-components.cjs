@@ -107,7 +107,7 @@ const components = [
     F.text('text', 'النص الجانبي', 'الماركة، الموديل، السنة — وبس.', 120),
     F.head('h-cars', 'السيارات'),
     F.static('cars-help', '<div>طريقة القائمة:<br>• <b>القائمة الجاهزة</b> تشتغل لحالها (أشهر سيارات السوق السعودي).<br>• <b>لصق من إكسل</b>: يستبدل كل القوائم ويظهر بس اللي لصقته.<br>• <b>تفريغ القائمة الجاهزة</b> ثم <b>الإضافة اليدوية</b>: لعدد قليل من السيارات.</div>'),
-    F.area('cars_paste', 'لصق قائمة من إكسل (يستبدل كل القوائم)', '', 20000, { multilanguage: false, placeholder: 'تويوتا, كامري, 2018, 2024, 215/55 R17', description: 'سطر لكل سيارة: الماركة، الموديل، من سنة، إلى سنة، المقاس. انسخ الأعمدة من إكسل أو Google Sheets والصقها هنا. لإلغاء اللصق امسح الخانة.' }),
+    F.area('cars_paste', 'لصق قائمة من إكسل (يستبدل كل القوائم)', '', 1000, { multilanguage: false, placeholder: 'تويوتا, كامري, 2018, 2024, 215/55 R17', description: 'الحد ١٠٠٠ حرف (حوالي ٢٥ سيارة)، وللأكثر أضف الصفوف بقائمة السيارات اليدوية. سطر لكل سيارة: الماركة، الموديل، من سنة، إلى سنة، المقاس. انسخ الأعمدة من إكسل أو Google Sheets والصقها هنا. لإلغاء اللصق امسح الخانة.' }),
     F.sw('use_builtin', 'استخدام القائمة الجاهزة', true, 'أطفئها لتفريغ القائمة الجاهزة واستخدام السيارات اللي تضيفها يدوي فقط'),
     F.collection('cars', 'إضافة يدوية', 'سيارة', [
       F.plain('make', 'الماركة', 'تويوتا', { maxLength: 30 }),
@@ -309,9 +309,10 @@ if (fs.existsSync(dir)) {
 let after = 'home.size-finder';
 for (const c of components) { F.upsert(json, c, after); after = c.path; }
 // editor cover images (shot from the approved design), shipped inside the theme
-// public CDN copy of public/assets/covers (repo aya123aya2013-dev/tires-store-assets) — the editor can't read theme-relative URLs
+// the cover files live ONLY in the public assets repo (aya123aya2013-dev/tires-store-assets, local ../tires-store-assets) and are served by jsDelivr:
+// the editor can't read theme-relative URLs, and Salla's review limits the theme size to 1 MB, so they are not shipped in the theme
 const COVERS = 'https://cdn.jsdelivr.net/gh/aya123aya2013-dev/tires-store-assets@main/covers/';
-const coversDir = path.join(__dirname, '../public/assets/covers');
+const coversDir = path.join(__dirname, '../../tires-store-assets/covers');
 for (const c of json.components) {
   const key = c.path.replace(/^home\./, '');
   if (!fs.existsSync(path.join(coversDir, `${key}.webp`))) continue;
